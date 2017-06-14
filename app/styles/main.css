@@ -1,0 +1,63 @@
+body {
+    font-family: Helvetica, sans-serif;
+    color: #333;
+    background-color: #eee;
+}
+
+#map {
+    height: 800px;
+}
+
+.centre {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.centre > img {
+    display: block;
+    margin: auto;
+}
+
+.left {
+    text-align: left;
+}
+
+.icon-size {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.form-control {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.right {
+    float: right;
+}
+
+.sub-view {
+    border-left-style: solid;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+}
+
+td,
+th {
+    padding: 5px;
+}
+
+p {
+    margin-bottom: 1em;
+}

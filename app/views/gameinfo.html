@@ -1,0 +1,29 @@
+<div class="centre">
+    <h1 style="font-size: 40px" ng-bind="game.name">Next Game</h1>
+    <i ng-bind="game.description"></i>
+    <br>
+</div>
+<div>
+    Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
+    <br>
+    Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
+    <br>
+    <br>
+    Sign Up Days:
+    <ul>
+        <li ng-repeat="date in game.signUpDates">
+            <div ng-show="strikeThrough(date)">
+                <s ng-bind="getDateString(date)"></s>
+            </div>
+            <div ng-hide="strikeThrough(date)">
+                <span ng-bind="getDateString(date)"></span>
+            </div>
+        </li>
+    </ul>
+    Sign Up Locations:
+    <ul>
+        <li ng-repeat="location in game.signUpLocations">
+            <a ng-href="/map{{getLatLng(location)}}" ng-bind="location"></a>
+        </li>
+    </ul>
+</div>

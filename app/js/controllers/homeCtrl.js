@@ -4,12 +4,7 @@ function HomeCtrl($scope, GameService, AppSettings) {
     const months = AppSettings.months;
     $scope.nextGameString = null;
 
-    const game = GameService.getClosestOrCurrent(gameObj => {
-        setGameString(gameObj);
-    });
-    setGameString(game);
-
-    function setGameString(gameObj) {
+    GameService.getClosestOrCurrent(gameObj => {
         if (!gameObj) {
             $scope.nextGameString = null;
             return;
@@ -21,6 +16,10 @@ function HomeCtrl($scope, GameService, AppSettings) {
         } else {
             $scope.nextGameString = "The next game will start on: " + dateString;
         }
+    });
+
+    function setGameString(gameObj) {
+
     }
 
     function getGetOrdinal(n) {

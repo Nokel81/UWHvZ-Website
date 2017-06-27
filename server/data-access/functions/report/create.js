@@ -10,7 +10,7 @@ function Create (report, cb) {
             if (err) {
                 return cb({ error: err });
             }
-            cb({ body: report });
+            cb({ body: "You tagged " + newReport.taggedCode });
         });
     });
 };

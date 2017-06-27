@@ -14,11 +14,6 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "HomeCtrl",
                     templateUrl: "../views/home.html",
                     title: "Home"
-                },
-                user: {
-                    controller: "UserCtrl",
-                    templateUrl: "../views/user.html",
-                    title: "User"
                 }
             }
         })
@@ -29,11 +24,6 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "RulesCtrl as rules",
                     templateUrl: "../views/rules.html",
                     title: "Rules"
-                },
-                user: {
-                    controller: "UserCtrl as user",
-                    templateUrl: "../views/user.html",
-                    title: "User"
                 }
             }
         })
@@ -44,11 +34,6 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "InfoCtrl as info",
                     templateUrl: "../views/gameinfo.html",
                     title: "Game Info"
-                },
-                user: {
-                    controller: "UserCtrl as user",
-                    templateUrl: "../views/user.html",
-                    title: "User"
                 }
             }
         })
@@ -59,14 +44,19 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "MapCtrl as map",
                     templateUrl: "../views/map.html",
                     title: "Maps"
-                },
-                user: {
+                }
+            }
+        })
+        .state("User", {
+            url: "/user",
+            views: {
+                main: {
                     controller: "UserCtrl as user",
                     templateUrl: "../views/user.html",
                     title: "User"
                 }
             }
-        });
+        })
 
     $urlRouterProvider.otherwise("/");
 }

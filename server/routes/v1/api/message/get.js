@@ -1,7 +1,7 @@
 const query = rootRequire("server/data-access/functions/message/query");
 
 function Get(req, res, next) {
-    query(req.body.query, req.body.sort, (result) => {
+    query(req.query.query, req.query.sort, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

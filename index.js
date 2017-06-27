@@ -21,6 +21,7 @@ if (!fs.existsSync("./app/dist/")) {
     fs.mkdirSync("./app/dist/");
 }
 
+console.log("browserifying...");
 var bundler = browserify("./app/js/app.js");
 
 bundler
@@ -29,7 +30,7 @@ bundler
     .transform(ngAnnotate, {})
     .transform("brfs", {})
     .transform(bulkify, {})
-    .transform("uglifyify", { global: true })
+    // .transform("uglifyify", { global: true })
     .bundle()
     .pipe(fs.createWriteStream("./app/dist/app.js"));
 bundler

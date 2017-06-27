@@ -1,7 +1,7 @@
 const query = rootRequire("server/data-access/functions/readStatus/query");
 
 function Get(req, res, next) {
-    query(req.body.query, (result) => {
+    query(req.query.query, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

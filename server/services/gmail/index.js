@@ -6,7 +6,7 @@ const relative_resolve = resolve.relative(__dirname);
 
 const SERVICE = {};
 
-SERVICE.sendConfirmationEmail = function(userObj, confirmationLink) {
+SERVICE.sendConfirmationEmail = function(userObj, confirmationLink, cb) {
     let resolve_data = {
         name: userObj.playerName,
         link: confirmationLink,
@@ -18,7 +18,7 @@ SERVICE.sendConfirmationEmail = function(userObj, confirmationLink) {
         to: userObj.email,
         subject: "Confirm Registration",
         html: relative_resolve("./emails/confirmation.html", resolve_data)
-    })();
+    })({}, cb);
 };
 
 module.exports = SERVICE;

@@ -14,7 +14,7 @@ function InfoCtrl($scope, GameService, AppSettings) {
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
 
-    $scope.game = GameService.getClosestOrCurrent(gameObj => {
+    GameService.getClosestOrCurrent(gameObj => {
         $scope.game = gameObj;
     });
 
@@ -41,22 +41,7 @@ function InfoCtrl($scope, GameService, AppSettings) {
     };
 
     $scope.strikeThrough = function (date) {
-        if (!(date instanceof Date)) {
-            return false;
-        }
-        let now = new Date();
-        if (date.getFullYear() < now.getFullYear()) {
-            return true;
-        } else if (date.getFullYear() === now.getFullYear()) {
-            if (date.getMonth() < now.getMonth()) {
-                return true;
-            } else if (date.getMonth() === now.getMonth()) {
-                if (date.getDate() < now.getDate()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return GameService.isDateBeforeToday(date);
     };
 }
 

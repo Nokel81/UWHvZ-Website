@@ -1,7 +1,7 @@
 const findById = rootRequire("server/data-access/functions/message/findById");
 
 function Get (req, res, next) {
-    findById(req.body.id, (result) => {
+    findById(req.query.id, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

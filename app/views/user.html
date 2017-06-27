@@ -1,11 +1,23 @@
-<div ng-hide="isLoggedIn">
+<div ng-show="session == null">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-lg-9">
+            <div class="col-lg-4" style="margin-top: 50px;">
                 <form>
                     <input class="form-control" type="text" ng-model="email" placeholder="Email">
                     <input class="form-control" type="password" ng-model="password" placeholder="Password">
-                    <input class="form-control slideInDown" type="password" ng-model="password_check" placeholder="Password again" ng-show="button_state === 'signUp'">
+                    <div ng-show="button_state === 'signUp'">
+                        <input class="form-control" type="password" ng-model="password_check" placeholder="Password again">
+                        <div class="red_text">
+                            Passwords must contain be at least 8 characters long and have at least 3 of the following
+                            <ul>
+                                <li>Uppercase letter</li>
+                                <li>Lowercase letter</li>
+                                <li>Number</li>
+                                <li>Symbol</li>
+                            </ul>
+                        </div>
+                        <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
+                    </div>
                     <div class="right">
                         <div class="input-group">
                             <button class="btn btn-secondary" type="button" ng-click="signUp()">Sign Up</button>
@@ -18,6 +30,68 @@
         </div>
     </div>
 </div>
-<div ng-show="isLoggedIn">
+<div ng-hide="session == null">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Code" role="tab">Code</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a>
+        </li>
+    </ul>
 
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="Info" role="tabpanel">Info</div>
+        <div class="tab-pane" id="Messages" role="tabpanel">Messages</div>
+        <div class="tab-pane" id="Code" role="tabpanel">
+            <div class="centre font-20">
+                <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="centre">
+                            <textarea rows="4" cols="80" class="form-control" ng-model="taggedDescription" placeholder="Tagging Desciption"></textarea>
+                            <input type="text" class="form-control" ng-model="location" placeholder="Location...">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-group-no-top" ng-model="taggedCode" placeholder="Tagged Player's Code...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div class="centre">
+                <div class="input-group">
+                    <input type="text" class="form-control input-group-no-top" ng-model="supplyCode" placeholder="Supply Code...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="Settings" role="tabpanel">
+            <div class="container-fluid" style="padding: 10px;">
+                <button type="button" class="right btn btn-info" ng-click="logOut()">logout</button>
+                <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">
+                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="gEmail"></label>
+                <span class="tgl-label whitespace">    Recieve game play information emails</span>
+                <br>
+                <input id="pEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.promotionalEmails">
+                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="pEmail"></label>
+                <span class="tgl-label whitespace">    Recieve emails about upcoming events</span>
+            </div>
+        </div>
+    </div>
 </div>

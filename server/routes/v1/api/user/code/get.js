@@ -1,8 +1,7 @@
 const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
 
 function Get (req, res, next) {
-    const playerCode = req.body.playerCode;
-    getUserByPlayerCode(playerCode, (result) => {
+    getUserByPlayerCode(req.query.playerCode, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

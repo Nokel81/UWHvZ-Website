@@ -1,7 +1,7 @@
 const polygons = require("../../json/mapCoords.json");
 const colours = require("../../json/colours.json");
 
-function MapCtrl($scope, SessionService, $location) {
+function MapCtrl($scope, $location) {
     "ngInject";
     var marker = null;
     const mapOptions = {

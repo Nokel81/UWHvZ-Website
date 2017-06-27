@@ -1,4 +1,4 @@
-function NavCtrl($scope, SessionService) {
+function NavCtrl($scope) {
     "ngInject";
 }
 

@@ -1,8 +1,7 @@
 const getUserById = rootRequire("server/data-access/functions/user/getUserById");
 
 function Get(req, res, next) {
-    const id = req.body;
-    getUserById(id, (result) => {
+    getUserById(req.query.id, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

@@ -1,8 +1,7 @@
 const getUserBySession = rootRequire("server/data-access/functions/user/getUserBySession");
 
 function Get(req, res, next) {
-    const token = req.body.token;
-    getUserBySession(token, (result) => {
+    getUserBySession(req.query.session, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

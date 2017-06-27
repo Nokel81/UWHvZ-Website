@@ -22,17 +22,16 @@ function defineRoutes(app, dir, routePath) {
     if (files.length === 0) {
         return;
     }
-
-    let route = app.route(routePath);
+    let route = app.route(routePath.replace(/_/g, "/:"));
     (middleRequirements[dir] || [])
         .forEach(name => {
             let middleware = rootRequire(path.join("server/data-access/routes/middleware/", name));
             route.all(middleware());
         });
     files.forEach(file => {
-        let method = path.basename(file, path.extname(file)).toLowerCase();
+        let method = path.basename(file, path.extname(file)).toLowerCase().split("_");
         let allowed = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"];
-        if (allowed.indexOf(method) < 0) {
+        if (allowed.indexOf(method[0]) < 0) {
             return console.error("Invalid method name:" + method + "; in '" + dir + "'");
         }
 
@@ -42,5 +41,6 @@ function defineRoutes(app, dir, routePath) {
 
 // Automatically setting up the server routes by the folder structure
 module.exports = function (app) {
+    console.log("Defining Routes...");
     defineRoutesTop(app, "/");
 };

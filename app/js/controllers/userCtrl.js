@@ -1,4 +1,4 @@
-function UserCtrl($scope, UserService, $cookies, AlertService, $location) {
+function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope) {
     "ngInject";
 
     $scope.button_state = "logIn";
@@ -48,6 +48,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location) {
             $scope.session = null;
             $scope.user = null;
             $scope.settings = null;
+            $rootScope.isModerator = false;
         });
     };
 
@@ -64,6 +65,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location) {
                 $scope.user = user;
                 UserService.getUserSettings((err, settings) => {
                     $scope.settings = settings || {};
+                });
+                UserService.getUserType(type => {
+                    $rootScope.isModerator = type === "Moderator";
                 });
             }
         });

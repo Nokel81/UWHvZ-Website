@@ -20,6 +20,19 @@ function UserService($http, AppSettings, $cookies) {
         return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
     };
 
+    SERVICE.getUserType = function (cb) {
+        if (!SERVICE.userId) {
+            return cb(null);
+        }
+        $http.get(AppSettings.apiUrl + "/user/type?id=" + SERVICE.userId)
+            .then((res) => {
+                cb(res.data);
+            },
+            (err) => {
+                cb(null);
+            });
+    };
+
     SERVICE.updateSettings = function (newSettings) {
         if (!newSettings._id || !newSettings.userId) {
             return;

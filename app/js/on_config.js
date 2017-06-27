@@ -57,6 +57,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state("Moderator", {
+            url: "/moderators",
+            views: {
+                main: {
+                    controller: "ModCtrl as mod",
+                    templateUrl: "../views/mod.html",
+                    title: "Moderators"
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise("/");
 }

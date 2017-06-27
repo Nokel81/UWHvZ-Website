@@ -1,7 +1,7 @@
 const getUserType = rootRequire("server/data-access/functions/user/getUserType");
 
 function Get(req, res, next) {
-    getUserType(req.params.id, function (res) {
+    getUserType(req.query.id, function (result) {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

@@ -16,6 +16,8 @@ const routes = rootRequire("server/routes");
 const database = rootRequire("server/data-access/database");
 const config = rootRequire("server/config.json");
 
+var initialize = true;
+
 //Setting up the dist folder
 if (!fs.existsSync("./app/dist/")) {
     fs.mkdirSync("./app/dist/");
@@ -67,8 +69,13 @@ bundler
             // httpsServer.listen(config.port, function () {
             //     console.log("Listening on port: " + config.port);
             // });
+
+            if (!initialize) {
+                return;
+            }
             const listener = app.listen(config, () => {
                 console.log("Listening on port: " + listener.address().port);
+                initialize = false;
             });
         });
     });

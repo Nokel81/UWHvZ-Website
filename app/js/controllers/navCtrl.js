@@ -1,18 +1,28 @@
 function NavCtrl($scope, $rootScope, $location, UserService) {
     "ngInject";
-    UserService.getBySession(() => {
+    UserService.getBySession((user) => {
+        if (!user) {
+            return;
+        }
         UserService.getUserType(type => {
             $rootScope.isModerator = type === "Moderator";
+        });
+        UserService.isSuper(isSuper => {
+            $rootScope.isSuper = isSuper;
         });
     });
 
     $scope.$watch(function () {
         return $location.path();
     }, newVal => {
-        console.log(newVal);
         if (newVal) {
-            UserService.getUserType(type => {
-                $rootScope.isModerator = type === "Moderator";
+            UserService.getBySession((user) => {
+                UserService.getUserType(type => {
+                    $rootScope.isModerator = type === "Moderator";
+                });
+                UserService.isSuper(isSuper => {
+                    $rootScope.isSuper = isSuper;
+                });
             });
         }
     });

@@ -1,0 +1,53 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#GameSignups" role="tab">Game Signups</a>
+    </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="GameSignups" role="tabpanel">
+        <div ng-show="game != null">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-7">
+                        <b>Player Email</b>
+                    </div>
+                    <div class="col-md-3">
+                        <b>Player Team Preference</b>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="player in players">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" ng-model="player.userEmail" placeholder="Account email..." ng-disabled="editing != $index">
+                        </div>
+                        <div class="col-md-3">
+                            <div class="formish-control">
+                                <input id="teamPreference" class="tgl tgl-skewed" type="checkbox" ng-true-value="'Zombie'" ng-false-value="'Human'" ng-model="player.teamPreference" ng-disabled="editing != $index">
+                                <label class="tgl-btn" data-tg-off="Human" data-tg-on="Zombie" for="teamPreference"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="formish-control right">
+                                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only font-32" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
+                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
+        </div>
+        <div ng-show="game == null">
+            <b class="centre">No Game to sign up for</b>
+        </div>
+    </div>
+</div>

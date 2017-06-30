@@ -14,13 +14,11 @@ const gameSchema = new Schema({
     },
     signUpDates: {
         type: [Date],
-        required: true,
-        validate: minLength("signUpDates", 1)
+        required: true
     },
     signUpLocations: {
         type: [String],
-        required: true,
-        validate: minLength("signUpLocations", 1)
+        required: true
     },
     startDate: {
         type: Date,
@@ -31,53 +29,57 @@ const gameSchema = new Schema({
         required: true
     },
     moderators: {
-        type: [Schema.Types.ObjectId],
-        required: true,
-        validate: minLength("signUpLocations", 1)
+        type: [Schema.Types.ObjectId]
     },
     zombies: {
-        type: [Schema.Types.ObjectId],
-        required: true
+        type: [Schema.Types.ObjectId]
     },
     humans: {
-        type: [Schema.Types.ObjectId],
-        required: true
+        type: [Schema.Types.ObjectId]
     },
     suppliedValue: {
         type: Number,
         get: v => Math.round(v),
         set: v => Math.round(v),
-        required: true,
         default: 5
     },
     railPassValue: {
         type: Number,
         get: v => Math.round(v),
         set: v => Math.round(v),
-        required: true,
         default: 25
     },
     minorPassValue: {
         type: Number,
         get: v => Math.round(v),
         set: v => Math.round(v),
-        required: true,
         default: 50
     },
     majorPassValue: {
         type: Number,
         get: v => Math.round(v),
         set: v => Math.round(v),
-        required: true,
         default: 100
     },
     officerValue: {
         type: Number,
         get: v => Math.round(v),
         set: v => Math.round(v),
-        required: true,
         default: 200
     }
+});
+
+gameSchema.pre("validate", function (next) {
+    if (this.startDate >= this.endDate) {
+        return this.invalidate("startDate", "Must be before game's end time");
+    }
+
+    for (let i = 0; i < this.signUpDates.length; i++) {
+        if (this.signUpDates[i] >= this.startDate) {
+            return this.invalidate("signUpDates", "Must be before game's start time");
+        }
+    }
+    next();
 });
 
 module.exports = mongoose.model("Game", gameSchema);

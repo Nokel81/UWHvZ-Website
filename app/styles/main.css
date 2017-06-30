@@ -24,6 +24,25 @@ body {
     font-size: 24;
 }
 
+.font-32 {
+    font-size: 32;
+}
+
+.formish-control, .input-group-addon {
+    margin-top: 5px;
+}
+
+.control {
+    margin-bottom: 5px;
+}
+
+.icon-only {
+    padding: 0;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+}
+
 .close {
     color: black !important;
 }
@@ -33,7 +52,7 @@ body {
 }
 
 .alerting {
-    z-index: 2;
+    z-index: 10;
     position: absolute;
 }
 
@@ -94,7 +113,7 @@ p {
     text-indent: 30px;
 }
 
-p + ul {
+p+ul {
     margin-top: -15px;
 }
 
@@ -220,5 +239,19 @@ p + ul {
 }
 
 .whitespace {
-    white-space:pre;
+    white-space: pre;
 }
+
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+}
+
+.partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+}
+
+s

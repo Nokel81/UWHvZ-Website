@@ -34,7 +34,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a>
+            <a class="nav-link" data-toggle="tab" href="#Info" role="tab">Info</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a>
@@ -43,13 +43,13 @@
             <a class="nav-link" data-toggle="tab" href="#Code" role="tab">Code</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a>
+            <a class="nav-link active" data-toggle="tab" href="#Settings" role="tab">Settings</a>
         </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane active" id="Info" role="tabpanel">Info</div>
+        <div class="tab-pane" id="Info" role="tabpanel">Info</div>
         <div class="tab-pane" id="Messages" role="tabpanel">Messages</div>
         <div class="tab-pane" id="Code" role="tabpanel">
             <div class="centre font-20">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane" id="Settings" role="tabpanel">
+        <div class="tab-pane active" id="Settings" role="tabpanel">
             <div class="container-fluid" style="padding: 10px;">
                 <button type="button" class="right btn btn-info" ng-click="logOut()">logout</button>
                 <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">

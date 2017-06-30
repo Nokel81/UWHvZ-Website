@@ -1,4 +1,3 @@
-const Game = rootRequire("server/schemas/game");
 const FindCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 
 function GetUserType(id, cb) {

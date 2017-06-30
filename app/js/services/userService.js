@@ -1,4 +1,4 @@
-function UserService($http, AppSettings, $cookies) {
+function UserService($http, AppSettings, $cookies, $rootScope) {
     "ngInject";
     const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -166,12 +166,32 @@ function UserService($http, AppSettings, $cookies) {
             code: supplyCode
         };
         $http.put(AppSettings.apiUrl + "/supply", body)
-        .then((res) => {
-            cb(null, res.data);
-        },
-        (err) => {
-            cb(err.data);
-        });
+            .then((res) => {
+                cb(null, res.data);
+            },
+            (err) => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.isSuper = function (cb) {
+        $http.get(AppSettings.apiUrl + "/user/super?id=" + SERVICE.userId)
+            .then((res) => {
+                cb(res.data);
+            },
+            (err) => {
+                cb(false);
+            });
+    }
+
+    SERVICE.getByCode = function (code, cb) {
+        $http.get(AppSettings.apiUrl + "/user/code?playerCode=" + code)
+            .then((res) => {
+                cb(null, res.data);
+            },
+            (err) => {
+                cb(err.data);
+            });
     };
 
     return SERVICE;

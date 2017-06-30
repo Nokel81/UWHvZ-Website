@@ -2,6 +2,7 @@ const User = rootRequire("server/schemas/user");
 
 function GetUserByPlayerCode(code, cb) {
     User.findOne({ playerCode: code })
+        .select("-password -nonce")
         .exec((err, user) => {
             if (err) {
                 return cb({ error: err });

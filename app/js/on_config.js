@@ -67,6 +67,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state("Super", {
+            url: "/super",
+            views: {
+                main: {
+                    controller: "SuperCtrl as super",
+                    templateUrl: "../views/super.html",
+                    title: "Super User Panel"
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise("/");
 }

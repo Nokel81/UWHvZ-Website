@@ -1,14 +1,13 @@
 const User = rootRequire("server/schemas/user");
 
-function GetUserById(id, cb) {
+function IsSuper(id, cb) {
     User.findOne({ _id: id })
-        .select("-password -nonce")
         .exec((err, user) => {
             if (err) {
                 return cb({ error: err });
             }
-            cb({ body: user });
+            cb({ body: user.email === "webmaster.uwhvz@gmail.com" });
         });
 };
 
-module.exports = GetUserById;
+module.exports = IsSuper;

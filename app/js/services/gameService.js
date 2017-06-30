@@ -37,6 +37,84 @@ function GameService($http, AppSettings) {
         return false;
     };
 
+    SERVICE.registerPlayerForGame = function (player, cb) {
+        $http.post(AppSettings.apiUrl + "/game/signups", player)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.updatePlayerForGame = function (player, cb) {
+        $http.put(AppSettings.apiUrl + "/game/signups", player)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.getRegistrantsForGame = function (gameId, cb) {
+        $http.get(AppSettings.apiUrl + "/game/signups?gameId=" + gameId)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.removeRegistrantForGame = function (player, cb) {
+        $http.delete(AppSettings.apiUrl + "/game/signups?id=" + player._id)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.getAll = function (cb) {
+        $http.get(AppSettings.apiUrl + "/game/all")
+            .then(res => {
+                res.data.forEach(game => {
+                    game.startDate = new Date(game.startDate);
+                    game.endDate = new Date(game.endDate);
+                    game.signUpDates = game.signUpDates.map(date => new Date(date));
+                })
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.deleteGame = function (id, cb) {
+        $http.delete(AppSettings.apiUrl + "/game?id=" + id)
+            .then(res => {
+                cb(null);
+            }, err => {
+                cb(err.data || {});
+            });
+    };
+
+    SERVICE.updateGame = function (game, cb) {
+        $http.put(AppSettings.apiUrl + "/game", game)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data || {});
+            });
+    };
+
+    SERVICE.createGame = function (game, cb) {
+        console.log("inner");
+        $http.post(AppSettings.apiUrl + "/game", game)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data || {});
+            });
+    };
+
     return SERVICE;
 }
 

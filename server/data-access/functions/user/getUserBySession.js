@@ -3,6 +3,7 @@ const Session = rootRequire("server/schemas/session");
 
 function GetUserBySession(token, cb) {
     Session.findOne({ sessionToken: token })
+        .select("-password -nonce")
         .exec((err, session) => {
             if (err) {
                 return cb({ error: err });
@@ -12,8 +13,6 @@ function GetUserBySession(token, cb) {
                     if (err) {
                         return cb({ error: err });
                     }
-                    delete user.password;
-                    delete user.nonce;
                     cb({ body: user });
                 });
         });

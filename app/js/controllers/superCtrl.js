@@ -1,5 +1,6 @@
 function SuperCtrl($scope, UserService, $location, GameService, AlertService, $window) {
     "ngInject";
+    $scope.games = [];
     UserService.getBySession((user) => {
         UserService.isSuper(isSuper => {
             if (!isSuper) {
@@ -12,7 +13,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (err) {
             AlertService.warn(err);
         } else {
-            $scope.games = games;
+            $scope.games = games || [];
         }
     });
 

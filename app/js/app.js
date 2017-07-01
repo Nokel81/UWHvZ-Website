@@ -4,7 +4,7 @@ const angular = require("angular");
 const constants = require("./constants");
 const onConfig = require("./on_config");
 const onRun = require("./on_run");
-require("angular-ui-router");
+require("@uirouter/angularjs");
 require("angular-cookies");
 require("angular-animate");
 require("./controllers");

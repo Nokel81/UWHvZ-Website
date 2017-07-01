@@ -1,4 +1,4 @@
-const create = rootRequire("server/data-access/functions/gameSignUps/create");
+const create = rootRequire("server/data-access/functions/gameSignups/create");
 
 function Post(req, res, next) {
     const newRegistration = req.body;

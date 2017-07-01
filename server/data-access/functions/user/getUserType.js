@@ -6,7 +6,9 @@ function GetUserType(id, cb) {
             cb({ error: res.error });
         } else {
             let game = res.body;
-            if (game.moderators.indexOf(id) >= 0) {
+            if (!game) {
+                cb({ body: "NonPlayer" });
+            } else if (game.moderators.indexOf(id) >= 0) {
                 cb({ body: "Moderator" });
             } else if (game.zombies.indexOf(id) >= 0) {
                 cb({ body: "Zombie" });

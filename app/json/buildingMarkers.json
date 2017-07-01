@@ -8,5 +8,15 @@
         "title": "Student Life Centre",
         "lat": 43.471637,
         "lng": -80.545309
+    },
+    "STC": {
+        "title": "Science Teaching Complex",
+        "lat": 43.470559,
+        "lng": -80.543466
+    },
+    "CPH": {
+        "title": "Carl A. Pollock Hall",
+        "lat": 43.470938,
+        "lng": -80.539288
     }
 }

@@ -3,9 +3,7 @@ const User = rootRequire("server/schemas/user");
 
 function Create (game, cb) {
     game = new Game(game);
-    console.log(game);
     game.save(err => {
-        console.log(err);
         if (err) {
             return cb({ error: err });
         }

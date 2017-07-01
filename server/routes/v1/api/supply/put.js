@@ -5,7 +5,6 @@ function Get(req, res, next) {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
-            console.log(result.error);
             if (typeof result.error === "string") {
                 res.status(404).send(result.error);
             } else {

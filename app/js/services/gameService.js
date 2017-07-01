@@ -106,7 +106,6 @@ function GameService($http, AppSettings) {
     };
 
     SERVICE.createGame = function (game, cb) {
-        console.log("inner");
         $http.post(AppSettings.apiUrl + "/game", game)
             .then(res => {
                 cb(null, res.data);

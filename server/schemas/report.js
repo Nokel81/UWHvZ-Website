@@ -37,13 +37,11 @@ reportSchema.pre("validate", function (next) {
     }
     getUserByPlayerCode(this.taggerCode, res => {
         if (res.error) {
-            console.log(res.error);
             this.invalidate("taggedCode", "Something went wrong");
             return next();
         }
         getUserType(res.body._id, (taggerRes) => {
             if (taggerRes.error) {
-                console.log(taggerRes.error);
                 this.invalidate("taggedCode", "Something went wrong");
                 return next();
             }
@@ -55,13 +53,11 @@ reportSchema.pre("validate", function (next) {
             }
             getUserByPlayerCode(this.taggedCode, res => {
                 if (res.error) {
-                    console.log(res.error);
                     this.invalidate("taggedCode", "Something went wrong");
                     return next();
                 }
                 getUserType(res.body._id, (taggedRes) => {
                     if (taggerRes.error) {
-                        console.log(taggerRes.error);
                         this.invalidate("taggedCode", "Something went wrong");
                         return next();
                     }

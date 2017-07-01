@@ -22,23 +22,18 @@ function Create(user, cb) {
             promotionalEmails: true
         });
         newUser.validate(err => {
-            console.log(err);
             if (err) {
                 return cb({ error: err });
             }
             gmail_service.sendConfirmationEmail(newUser, "uwhvz.uwaterloo.ca/user?token=" + user.confirmationToken, (err, res) => {
-                console.log(err);
-                console.log(res);
                 if (err) {
                     return cb({ error: err });
                 }
                 newUser.save(err => {
-                    console.log(err);
                     if (err) {
                         return cb({ error: err });
                     }
                     userSettings.save(err => {
-                        console.log(err);
                         if (err) {
                             return cb({ error: err });
                         }

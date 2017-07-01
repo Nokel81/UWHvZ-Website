@@ -101,7 +101,6 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
     };
 
     $scope.saveGame = function (game) {
-        console.log($scope.games[game]);
         if (!$scope.games[game]) {
             return;
         }
@@ -114,7 +113,6 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
                 AlertService.info("Game updated");
             });
         } else {
-            console.log("in");
             GameService.createGame($scope.games[game], function (err, newGame) {
                 if (err) {
                     return AlertService.warn(err);

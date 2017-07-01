@@ -6,7 +6,6 @@ function Post (req, res, next) {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
-            console.log(result.error);
             res.status(401).send("Invalid email or password");
         } else {
             res.status(200).send(result.body);

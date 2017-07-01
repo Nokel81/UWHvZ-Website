@@ -36,7 +36,6 @@ function Update (game, cb) {
                                     res.moderator_objs = mods;
                                     res.human_objs = hums;
                                     res.zombie_objs = zombs;
-                                    console.log(res);
                                     cb({ body: res });
                                 });
                         });

@@ -5,7 +5,6 @@ function Post(req, res, next) {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
-            console.log(result.error);
             let errors = Object.keys(result.error.errors).map(error => result.error.errors[error].message).join(", ");
             res.status(400).send("Account not created: " + errors);
         } else {

@@ -2,7 +2,6 @@ const create = rootRequire("server/data-access/functions/game/create");
 
 function Post(req, res, next) {
     const newGame = req.body;
-    console.log(req.body);
     create(newGame, (result) => {
         if (!result) {
             res.status(500).send("Internal Server Error");

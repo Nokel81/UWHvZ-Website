@@ -14,7 +14,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     if ($location.search().token) {
         let token = $location.search().token;
-        console.log(token);
         $cookies.remove("session");
         $scope.session = null;
         UserService.session = null;

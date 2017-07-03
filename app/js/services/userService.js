@@ -74,7 +74,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             },
             (err) => {
                 $cookies.remove("session");
-                cb(err.error);
+                cb(err.data);
             });
     };
 

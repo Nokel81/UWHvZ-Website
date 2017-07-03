@@ -18,7 +18,7 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     const getLatLngs = function (names, cb) {
         let marker = MapService.getAllMarkers((err, markers) => {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 names.forEach(elem => {
                     let marker = markers.find(x => x.acronym == elem);

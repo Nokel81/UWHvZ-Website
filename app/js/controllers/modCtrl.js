@@ -20,7 +20,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
         }
         GameService.getRegistrantsForGame(game._id, (err, signups) => {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 $scope.players = signups;
                 $scope.game = game;
@@ -50,7 +50,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
         if ($scope.players[index]._id) {
             GameService.updatePlayerForGame($scope.players[index], function (err, players) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 } else {
                     $scope.players = players;
                     $scope.editing = null;
@@ -59,7 +59,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
         } else {
             GameService.registerPlayerForGame($scope.players[index], function (err, players) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 } else {
                     $scope.players = players;
                     $scope.editing = null;
@@ -82,7 +82,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
         if ($scope.players[index]._id) {
             GameService.removeRegistrantForGame($scope.players[index], function (err, players) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 } else {
                     $scope.players = players;
                     $scope.editing = null;

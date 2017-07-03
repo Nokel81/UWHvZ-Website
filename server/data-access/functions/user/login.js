@@ -42,6 +42,8 @@ function Login(account, cb) {
                             }
                         });
                     });
+                } else {
+                    return cb({ error: "User or password incorrect" });
                 }
             });
         });

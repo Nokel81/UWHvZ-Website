@@ -2,7 +2,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
     "ngInject";
     $scope.games = [];
     $scope.markers = [];
+    $scope.polygons = [];
     $scope.editingMarker = null;
+    $scope.editingPolygon = null;
 
     UserService.getBySession((user) => {
         UserService.isSuper(isSuper => {
@@ -14,7 +16,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     GameService.getAll((err, games) => {
         if (err) {
-            AlertService.warn(err);
+            AlertService.danger(err);
         } else {
             $scope.games = games || [];
         }
@@ -22,9 +24,17 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     MapService.getAllMarkers((err, markers) => {
         if (err) {
-            AlertService.warn(err);
+            AlertService.danger(err);
         } else {
             $scope.markers = markers || [];
+        }
+    });
+
+    MapService.getAllPolygons((err, polygons) => {
+        if (err) {
+            AlertService.danger(err);
+        } else {
+            $scope.polygons = polygons || [];
         }
     });
 
@@ -55,7 +65,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         let code = $window.prompt("New Moderator Player Code", "");
         UserService.getByCode(code, function (err, user) {
             if (err) {
-                return AlertService.warn(err);
+                return AlertService.danger(err);
             }
             $scope.games[game].moderator_objs.push(user);
             $scope.games[game].moderators.push(user._id);
@@ -73,7 +83,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         let code = $window.prompt("New Human Player Code", "");
         UserService.getByCode(code, function (err, user) {
             if (err) {
-                return AlertService.warn(err);
+                return AlertService.danger(err);
             }
             $scope.games[game].human_objs.push(user);
             $scope.games[game].humans.push(user._id);
@@ -91,7 +101,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         let code = $window.prompt("New Zombie Player Code", "");
         UserService.getByCode(code, function (err, user) {
             if (err) {
-                return AlertService.warn(err);
+                return AlertService.danger(err);
             }
             $scope.games[game].zombie_objs.push(user);
             $scope.games[game].zombies.push(user._id);
@@ -118,7 +128,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if ($scope.games[game]._id) {
             GameService.updateGame($scope.games[game], function (err, updatedGame) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 }
                 $scope.games[game] = updatedGame;
                 AlertService.info("Game updated");
@@ -126,7 +136,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         } else {
             GameService.createGame($scope.games[game], function (err, newGame) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 }
                 $scope.games[game] = newGame;
                 AlertService.info("Game created");
@@ -145,7 +155,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             }
             GameService.deleteGame($scope.games[game]._id, function (err) {
                 if (err) {
-                    AlertService.warn(err);
+                    AlertService.danger(err);
                 } else {
                     $scope.games.splice(game, 1);
                 }
@@ -167,7 +177,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if ($scope.markers[index]._id) {
             MapService.updatedMarker($scope.markers[index], function (err, res) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 }
                 $scope.markers = res;
                 $scope.editingMarker = null;
@@ -175,7 +185,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         } else {
             MapService.createMarker($scope.markers[index], function (err, res) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 }
                 $scope.markers = res;
                 $scope.editingMarker = null;
@@ -183,14 +193,14 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.removeMarker - function (index) {
+    $scope.removeMarker = function (index) {
         if ($scope.editingMarker !== index) {
             return;
         }
         if ($scope.markers[index]._id) {
             MapService.removeMarker($scope.markers[index]._id, function (err, res) {
                 if (err) {
-                    return AlertService.warn(err);
+                    return AlertService.danger(err);
                 }
                 $scope.markers = res;
                 $scope.editingMarker = null;

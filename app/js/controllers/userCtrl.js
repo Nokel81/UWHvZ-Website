@@ -21,7 +21,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $location.search("token", null);//Removes the search parameter
         UserService.confirmEmail(token, (err, res) => {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 AlertService.info(res);
             }
@@ -58,7 +58,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         UserService.login($scope.email, $scope.password, function (err, user) {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 $scope.session = UserService.session;
                 $scope.user = user;
@@ -79,7 +79,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         UserService.signUp($scope.email, $scope.password, $scope.password_check, $scope.name, function (err, res) {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 AlertService.info(res);
             }
@@ -92,7 +92,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         UserService.reportTag($scope.taggedCode, $scope.user.playerCode, $scope.taggedDescription, $scope.location, function (err, res) {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 delete $scope.taggedCode;
                 delete $scope.taggedDescription;
@@ -108,7 +108,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         UserService.reportSupplyCode($scope.supplyCode, $scope.user._id, function (err, res) {
             if (err) {
-                AlertService.warn(err);
+                AlertService.danger(err);
             } else {
                 delete $scope.supplyCode;
                 AlertService.info(res);

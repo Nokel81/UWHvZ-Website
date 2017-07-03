@@ -54,12 +54,13 @@ body {
 .alerting {
     z-index: 10;
     position: absolute;
+    width: auto;
 }
 
 .alerting>.alert {
-    opacity: 0.8;
     margin: 20px;
-    width: 450px;
+    min-width: inherit;
+    max-width: 450px;
 }
 
 .centre {

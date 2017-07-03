@@ -13,6 +13,9 @@ function Login(account, cb) {
             if (err) {
                 return cb({ error: err });
             }
+            if (!user) {
+                return cb({ error: "User or password incorrect" });
+            }
             if (user.confirmationToken) {
                 return cb({ error: "User email has not yet been confirmed" });
             }

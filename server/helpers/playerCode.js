@@ -6,7 +6,7 @@ function PlayerCode(length) {
     }
     let res = "";
     while (res.length < length) {
-        res += allow_characters[Math.round(Math.random() * allow_characters.length)];
+        res += allow_characters[Math.floor(Math.random() * allow_characters.length)];
     }
     return res;
 }

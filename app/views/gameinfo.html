@@ -23,7 +23,7 @@
     Sign Up Locations:
     <ul>
         <li ng-repeat="location in game.signUpLocations">
-            <a ng-href="/map{{getLatLng(location)}}" ng-bind="location"></a>
+            <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
         </li>
     </ul>
 </div>

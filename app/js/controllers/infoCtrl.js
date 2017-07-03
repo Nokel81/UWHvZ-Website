@@ -1,8 +1,9 @@
-function InfoCtrl($scope, GameService, AppSettings) {
+function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     "ngInject";
     $scope.game = {};
     const days = AppSettings.days;
     const months = AppSettings.months;
+    $scope.locationUrls = {};
 
     const addZero = function(i) {
         return (i < 10 ? "0" : "") + i;
@@ -14,17 +15,29 @@ function InfoCtrl($scope, GameService, AppSettings) {
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
 
-    GameService.getClosestOrCurrent(gameObj => {
-        $scope.game = gameObj;
-    });
-
-    $scope.getLatLng = function (name) {
-        let marker = AppSettings.buildingMarkerLocations[name];
-        if (!marker) {
-            return "";
-        }
-        return "?lat=" + marker.lat + "&lng=" + marker.lng + "&title=" + marker.title;
+    const getLatLngs = function (names, cb) {
+        let marker = MapService.getAllMarkers((err, markers) => {
+            if (err) {
+                AlertService.warn(err);
+            } else {
+                names.forEach(elem => {
+                    let marker = markers.find(x => x.acronym == elem);
+                    if (!marker) {
+                        $scope.locationUrls[elem] = "";
+                    } else {
+                        $scope.locationUrls[elem] = "?lat=" + marker.lat + "&lng=" + marker.lng + "&title=" + marker.title;
+                    }
+                });
+                cb();
+            }
+        });
     };
+
+    GameService.getClosestOrCurrent(gameObj => {
+        getLatLngs(gameObj.signUpLocations, () => {
+            $scope.game = gameObj;
+        });
+    });
 
     $scope.getDateString = function (date) {
         if (!(date instanceof Date)) {

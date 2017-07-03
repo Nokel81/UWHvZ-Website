@@ -1,6 +1,9 @@
-function SuperCtrl($scope, UserService, $location, GameService, AlertService, $window) {
+function SuperCtrl($scope, UserService, $location, GameService, AlertService, $window, MapService) {
     "ngInject";
     $scope.games = [];
+    $scope.markers = [];
+    $scope.editingMarker = null;
+
     UserService.getBySession((user) => {
         UserService.isSuper(isSuper => {
             if (!isSuper) {
@@ -14,6 +17,14 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             AlertService.warn(err);
         } else {
             $scope.games = games || [];
+        }
+    });
+
+    MapService.getAllMarkers((err, markers) => {
+        if (err) {
+            AlertService.warn(err);
+        } else {
+            $scope.markers = markers || [];
         }
     });
 
@@ -127,7 +138,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (!$scope.games[game]) {
             return;
         }
-        let res = $window.confirm("Are you sure you want to delete '" + $scope.games[game].title + "'?");
+        let res = $window.confirm("Are you sure you want to delete '" + $scope.games[game].name + "'?");
         if (res) {
             if (!$scope.games[game]._id) {
                 return $scope.games.splice(game, 1);
@@ -141,6 +152,62 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             });
         }
     };
+
+    $scope.editMarker = function (index) {
+        if ($scope.editingMarker !== null || !$scope.markers[index]) {
+            return;
+        }
+        $scope.editingMarker = index;
+    };
+
+    $scope.saveMarker = function (index) {
+        if ($scope.editingMarker !== index) {
+            return;
+        }
+        if ($scope.markers[index]._id) {
+            MapService.updatedMarker($scope.markers[index], function (err, res) {
+                if (err) {
+                    return AlertService.warn(err);
+                }
+                $scope.markers = res;
+                $scope.editingMarker = null;
+            });
+        } else {
+            MapService.createMarker($scope.markers[index], function (err, res) {
+                if (err) {
+                    return AlertService.warn(err);
+                }
+                $scope.markers = res;
+                $scope.editingMarker = null;
+            });
+        }
+    };
+
+    $scope.removeMarker - function (index) {
+        if ($scope.editingMarker !== index) {
+            return;
+        }
+        if ($scope.markers[index]._id) {
+            MapService.removeMarker($scope.markers[index]._id, function (err, res) {
+                if (err) {
+                    return AlertService.warn(err);
+                }
+                $scope.markers = res;
+                $scope.editingMarker = null;
+            });
+        } else {
+            $scope.markers.splice(index, 1);
+            $scope.editingMarker = null;
+        }
+    };
+
+    $scope.addMarker = function () {
+        if ($scope.editingMarker !== null) {
+            return;
+        }
+        $scope.editingMarker = $scope.markers.length;
+        $scope.markers.push({});
+    }
 }
 
 module.exports = {

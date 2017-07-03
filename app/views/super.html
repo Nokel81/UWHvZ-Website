@@ -1,16 +1,12 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#Games" role="tab">Games</a>
-    </li>
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Games" role="tab">Games</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Markers" role="tab">Markers</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane active" id="Games" role="tabpanel">
-        <div class="right">
-
-        </div>
         <div id="gamesAccordion" role="tablist" aria-multiselectable="true">
             <div class="card" ng-repeat="game in games" ng-init="$rootIndex = $index">
                 <div class="card-header" role="tab" id="heading{{$index}}">
@@ -150,6 +146,35 @@
                 </div>
             </div>
             <button class="right btn btn-success formish-control control" type="button" ng-click="addGame()"><i class="fa fa-plus"></i></button>
+        </div>
+    </div>
+    <div class="tab-pane" id="Markers" role="tabpanel">
+        <div class="container-fluid">
+            <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
+            <div class="row" ng-repeat="marker in markers">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" ng-model="marker.acronym" title="Acronym" placeholder="Acronym" ng-disabled="editingMarker != $index">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" ng-model="marker.lat" title="Latitude" placeholder="Latitude" ng-disabled="editingMarker != $index">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" ng-model="marker.lng" title="Longitude" placeholder="Longitude" ng-disabled="editingMarker != $index">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="marker.title" title="Title" placeholder="Title" ng-disabled="editingMarker != $index">
+                </div>
+                <div class="col-md-3">
+                    <div style="margin-top: 8px">
+                        <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
+                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                        <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="icon-only font-32" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
+                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

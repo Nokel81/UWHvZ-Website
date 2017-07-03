@@ -1,4 +1,5 @@
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
+const findByGame = rootRequire("server/data-access/functions/gameSignups/findByGame");
 
 function Create (gameSignUp, cb) {
     gameSignUp = new GameSignUp(gameSignUp);
@@ -10,14 +11,7 @@ function Create (gameSignUp, cb) {
             if (err) {
                 return cb({ error: err });
             }
-            GameSignUp.find({ gameId: gameSignUp.gameId })
-                .sort({ userEmail: 1 })
-                .exec((err, games) => {
-                    if (err) {
-                        return cb({ error: err });
-                    }
-                    cb({ body: games });
-                });
+            findByGame(gameSignUp.gameId, cb);
         });
     });
 };

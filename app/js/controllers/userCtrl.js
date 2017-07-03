@@ -68,6 +68,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 UserService.getUserType(type => {
                     $rootScope.isModerator = type === "Moderator";
                 });
+                UserService.isSuper(isSuper => {
+                    $rootScope.isSuper = isSuper;
+                });
             }
         });
     };

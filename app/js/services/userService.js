@@ -175,6 +175,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     };
 
     SERVICE.isSuper = function (cb) {
+        if (!SERVICE.userId) {
+            return cb(false);
+        }
         $http.get(AppSettings.apiUrl + "/user/super?id=" + SERVICE.userId)
             .then((res) => {
                 cb(res.data);

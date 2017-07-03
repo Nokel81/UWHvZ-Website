@@ -6,7 +6,7 @@ module.exports = {
         User.findOne({
             email: value
         }).exec((err, user) => {
-            respond(!err && user && !user.confirmationToken);
+            respond(!err && user);
         });
     },
     message: "Email must be from an activated account"

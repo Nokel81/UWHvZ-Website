@@ -59,6 +59,9 @@
                 <tr>
                     <td>
                         <div class="centre">
+                            <h3>Report a Stun/Tag</h3>
+                            <br>
+                            <br>
                             <textarea rows="4" cols="80" class="form-control" ng-model="taggedDescription" placeholder="Tagging Desciption"></textarea>
                             <input type="text" class="form-control" ng-model="location" placeholder="Location...">
                             <div class="input-group">
@@ -72,14 +75,23 @@
                 </tr>
             </table>
             <br>
-            <div class="centre">
-                <div class="input-group">
-                    <input type="text" class="form-control input-group-no-top" ng-model="supplyCode" placeholder="Supply Code...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
-                    </span>
-                </div>
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="centre">
+                            <h3>Use a Supply Code</h3>
+                            <br>
+                            <br>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-group-no-top" ng-model="supplyCode" placeholder="Supply Code...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="tab-pane active" id="Settings" role="tabpanel">
             <div class="container-fluid" style="padding: 10px;">

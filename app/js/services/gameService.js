@@ -99,12 +99,11 @@ function GameService($http, AppSettings, $cookies) {
     SERVICE.updateGame = function (game, cb) {
         $http.put(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
-                res.data.forEach(game => {
-                    game.startDate = new Date(game.startDate);
-                    game.endDate = new Date(game.endDate);
-                    game.signUpDates = game.signUpDates.map(date => new Date(date));
-                });
-                cb(null, res.data);
+                let game = res.data;
+                game.startDate = new Date(game.startDate);
+                game.endDate = new Date(game.endDate);
+                game.signUpDates = game.signUpDates.map(date => new Date(date));
+                cb(null, game);
             }, err => {
                 cb(err.data || {});
             });
@@ -113,12 +112,11 @@ function GameService($http, AppSettings, $cookies) {
     SERVICE.createGame = function (game, cb) {
         $http.post(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
-                res.data.forEach(game => {
-                    game.startDate = new Date(game.startDate);
-                    game.endDate = new Date(game.endDate);
-                    game.signUpDates = game.signUpDates.map(date => new Date(date));
-                });
-                cb(null, res.data);
+                let game = res.data;
+                game.startDate = new Date(game.startDate);
+                game.endDate = new Date(game.endDate);
+                game.signUpDates = game.signUpDates.map(date => new Date(date));
+                cb(null, game);
             }, err => {
                 cb(err.data || {});
             });

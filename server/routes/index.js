@@ -23,12 +23,12 @@ function defineRoutes(app, dir, routePath) {
         return;
     }
     let route = app.route(routePath.replace(/_/g, "/:"));
-    (middleRequirements[routePath] || [])
-        .forEach(name => {
-            console.log(name);
-            let middleware = rootRequire(path.join("server/routes/middleware/", name));
-            route.all(middleware());
-        });
+    // (middleRequirements[routePath] || [])
+    //     .forEach(name => {
+    //         console.log(name);
+    //         let middleware = rootRequire(path.join("server/routes/middleware/", name));
+    //         route.all(middleware());
+    //     });
     files.forEach(file => {
         let method = path.basename(file, path.extname(file)).toLowerCase().split("_");
         let allowed = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"];

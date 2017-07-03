@@ -19,12 +19,12 @@ const config = rootRequire("server/config.json");
 var initialize = true;
 
 //Setting up the dist folder
-if (!fs.existsSync("./app/dist/")) {
-    fs.mkdirSync("./app/dist/");
+if (!fs.existsSync(__dirname + "./app/dist/")) {
+    fs.mkdirSync(__dirname + "./app/dist/");
 }
 
 console.log("browserifying...");
-var bundler = browserify("./app/js/app.js");
+var bundler = browserify(__dirname + "./app/js/app.js");
 
 bundler
     .transform("babelify", { presets: ["es2015"] })
@@ -34,7 +34,7 @@ bundler
     .transform(bulkify, {})
     // .transform("uglifyify", { global: true })
     .bundle()
-    .pipe(fs.createWriteStream("./app/dist/app.js"));
+    .pipe(fs.createWriteStream(__dirname + "./app/dist/app.js"));
 bundler
     .pipeline
     .get("wrap")
@@ -51,7 +51,7 @@ bundler
         app.use(bodyParser.json());
         app.use(morgan("dev"));
 
-        app.use(express.static("./app"));
+        app.use(express.static(__dirname + "./app"));
         routes(app);
         app.use(function (req, res) {
             res.sendFile(__dirname + "/app/index.html");

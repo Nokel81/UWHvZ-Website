@@ -23,9 +23,12 @@ function defineRoutes(app, dir, routePath) {
         return;
     }
     let route = app.route(routePath.replace(/_/g, "/:"));
-    (middleRequirements[dir] || [])
+    console.log(routePath);
+    console.log(middleRequirements[routePath]);
+    (middleRequirements[routePath] || [])
         .forEach(name => {
-            let middleware = rootRequire(path.join("server/data-access/routes/middleware/", name));
+            console.log(name);
+            let middleware = rootRequire(path.join("server/routes/middleware/", name));
             route.all(middleware());
         });
     files.forEach(file => {

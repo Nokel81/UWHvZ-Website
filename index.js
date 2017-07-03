@@ -34,7 +34,7 @@ bundler
     .transform(bulkify, {})
     // .transform("uglifyify", { global: true })
     .bundle()
-    .pipe(fs.createWriteStream(path.join(__dirname, "./app/js/app.js")));
+    .pipe(fs.createWriteStream(path.join(__dirname, "./app/dist/js/app.js")));
 bundler
     .pipeline
     .get("wrap")

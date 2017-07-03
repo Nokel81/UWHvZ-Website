@@ -8,7 +8,7 @@ function Login(account, cb) {
     if (!account) {
         return cb({ error: "Account not defined" });
     }
-    User.findOne({ email: account.email })
+    User.findOne({ email: account.username })
         .exec((err, user) => {
             if (err) {
                 return cb({ error: err });

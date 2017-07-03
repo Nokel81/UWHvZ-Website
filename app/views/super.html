@@ -23,8 +23,8 @@
                             <span class="input-group-addon" id="description{{$index}}">Game Description:</span>
                             <input type="text" class="form-control" ng-model="game.description" title="Game Description" aria-describedby="description{{$index}}">
                         </div>
-                        <input type="date" class="form-control" ng-model="game.startDate" title="Game Start Date" aria-describedby="startDate{{$index}}">
-                        <input type="date" class="form-control" ng-model="game.endDate" title="Game End Date" aria-describedby="endDate{{$index}}">
+                        <input type="datetime-local" class="form-control" ng-model="game.startDate" title="Game Start Date" aria-describedby="startDate{{$index}}">
+                        <input type="datetime-local" class="form-control" ng-model="game.endDate" title="Game End Date" aria-describedby="endDate{{$index}}">
                         <div class="input-group">
                             <span class="input-group-addon" id="officer{{$index}}">Game Officer Badge Value:</span>
                             <input type="number" class="form-control" ng-model="game.officerValue" title="Game Officer Badge Value" aria-describedby="officer{{$index}}">

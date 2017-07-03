@@ -1,4 +1,4 @@
-function GameService($http, AppSettings) {
+function GameService($http, AppSettings, $cookies) {
     "ngInject";
 
     const SERVICE = {};
@@ -88,7 +88,7 @@ function GameService($http, AppSettings) {
     };
 
     SERVICE.deleteGame = function (id, cb) {
-        $http.delete(AppSettings.apiUrl + "/game?id=" + id)
+        $http.delete(AppSettings.apiUrl + "/game?id=" + id, {"set-cookie": $cookies.get("session")})
             .then(res => {
                 cb(null);
             }, err => {
@@ -97,7 +97,7 @@ function GameService($http, AppSettings) {
     };
 
     SERVICE.updateGame = function (game, cb) {
-        $http.put(AppSettings.apiUrl + "/game", game)
+        $http.put(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
                 cb(null, res.data);
             }, err => {
@@ -106,7 +106,7 @@ function GameService($http, AppSettings) {
     };
 
     SERVICE.createGame = function (game, cb) {
-        $http.post(AppSettings.apiUrl + "/game", game)
+        $http.post(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
                 cb(null, res.data);
             }, err => {

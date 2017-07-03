@@ -23,8 +23,6 @@ function defineRoutes(app, dir, routePath) {
         return;
     }
     let route = app.route(routePath.replace(/_/g, "/:"));
-    console.log(routePath);
-    console.log(middleRequirements[routePath]);
     (middleRequirements[routePath] || [])
         .forEach(name => {
             console.log(name);

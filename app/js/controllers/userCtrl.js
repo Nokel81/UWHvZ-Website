@@ -106,7 +106,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         ModalService.openWaiverModal()
             .result
             .then(res => {
-                UserService.signUp($scope.email, $scope.password, $scope.password_check, $scope.name, function (err, res) {
+                UserService.signUp($scope.email, $scope.password, $scope.name, function (err, res) {
                     if (err) {
                         AlertService.danger(err);
                     } else {

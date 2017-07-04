@@ -27,8 +27,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="formish-control">
-                                <input id="teamPreference" class="tgl tgl-skewed" type="checkbox" ng-true-value="'Zombie'" ng-false-value="'Human'" ng-model="player.teamPreference" ng-disabled="editing != $index">
-                                <label class="tgl-btn" data-tg-off="Human" data-tg-on="Zombie" for="teamPreference"></label>
+                                <input id="teamPreference{{$index}}" class="tgl tgl-skewed" type="checkbox" ng-true-value="'Zombie'" ng-false-value="'Human'" ng-model="player.teamPreference" ng-disabled="editing != $index">
+                                <label class="tgl-btn" data-tg-off="Human" data-tg-on="Zombie" for="teamPreference{{$index}}"></label>
                             </div>
                         </div>
                         <div class="col-md-2">

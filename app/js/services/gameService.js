@@ -7,10 +7,14 @@ function GameService($http, AppSettings, $cookies) {
         $http.get(AppSettings.apiUrl + "/game/next")
             .then(res => {
                 res = res.data;
-                res.startDate = new Date(res.startDate);
-                res.endDate = new Date(res.endDate);
-                res.signUpDates = res.signUpDates.map(date => new Date(date));
-                cb(res);
+                if (typeof res === "object") {
+                    res.startDate = new Date(res.startDate);
+                    res.endDate = new Date(res.endDate);
+                    res.signUpDates = res.signUpDates.map(date => new Date(date));
+                    cb(res);
+                } else {
+                    cb(null);
+                }
             },
             (err) => {
                 console.error(err);

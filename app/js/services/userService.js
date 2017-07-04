@@ -1,24 +1,11 @@
 function UserService($http, AppSettings, $cookies, $rootScope) {
     "ngInject";
-    const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     const SERVICE = {};
 
     SERVICE.email = "";
     SERVICE.password = "";
     SERVICE.session = $cookies.get("session");
     SERVICE.userId = null;
-
-    const check_passwords = function (password, password_check) {
-        if (password.length < 8 || password !== password_check) {
-            return false;
-        }
-        let hasUpperCase = /[A-Z]/.test(password);
-        let hasLowerCase = /[a-z]/.test(password);
-        let hasNumbers = /\d/.test(password);
-        let hasNonalphas = /\W/.test(password);
-        return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
-    };
 
     SERVICE.getUserType = function (cb) {
         if (!SERVICE.userId) {
@@ -97,13 +84,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.signUp = function (email, password, password_check, name, cb) {
-        if (!email.trim().toLowerCase().match(email_regex)) {
-            return cb("Email must be a valid email");
-        }
-        if (!check_passwords(password, password_check)) {
-            return cb("Passwords need to match and be complex enough");
-        }
+    SERVICE.signUp = function (email, password, name, cb) {
         let body = {
             email: email,
             password: password,

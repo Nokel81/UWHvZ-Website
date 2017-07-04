@@ -7,7 +7,16 @@ function Delete (id, cb) {
             if (err) {
                 return cb({ error: err });
             }
-            findByGame(doc.gameId, cb);
+            if (doc) {
+                findByGame(doc.gameId, cb);
+            } else {
+                FindCurrentOrNext(res => {
+                    if (res.error) {
+                        return cb({ error: res.error });
+                    }
+                    findByGame((res.body || {})._id, cb);
+                })
+            }
         });
 };
 

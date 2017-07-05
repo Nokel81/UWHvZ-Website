@@ -67,6 +67,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state("Reset", {
+            url: "/passwordReset",
+            views: {
+                main: {
+                    controller: "ResetCtrl as reset",
+                    templateUrl: "../views/reset.html",
+                    title: "Password Reset"
+                }
+            }
+        })
         .state("Super", {
             url: "/super",
             views: {

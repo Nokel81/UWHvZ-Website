@@ -32,6 +32,9 @@ const userSchema = new Schema({
     },
     confirmationToken: {
         type: String
+    },
+    passwordResetCode: {
+        type: String
     }
 });
 userSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});

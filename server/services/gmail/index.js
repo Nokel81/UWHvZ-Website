@@ -21,4 +21,18 @@ SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
     })({}, cb);
 };
 
+SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
+    const resolveData = {
+        name: userObj.playerName,
+        link: confirmationLink
+    };
+    send({
+        user: credentials.gmail_email,
+        pass: credentials.gmail_password,
+        to: userObj.email,
+        subject: "Password Reset Link",
+        html: relativeResolve("./emails/passwordReset.html", resolveData)
+    })({}, cb);
+};
+
 module.exports = SERVICE;

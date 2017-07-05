@@ -195,6 +195,27 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.sendPasswordResetEmail = function (email, cb) {
+        let body = {email};
+        $http.post(AppSettings.apiUrl + "/user/password", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.resetPassword = function (newPassword, code, cb) {
+        let body = {newPassword, code};
+        console.log(body);
+        $http.put(AppSettings.apiUrl + "/user/password/force", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

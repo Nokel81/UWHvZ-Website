@@ -53,6 +53,19 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         UserService.password = newVal;
     });
 
+    $scope.forgotPassword = function () {
+        if (!$scope.email) {
+            return AlertService.danger("No email provided");
+        }
+        UserService.sendPasswordResetEmail($scope.email, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+            }
+        });
+    };
+
     $scope.logOut = function () {
         UserService.logout(() => {
             $scope.session = null;

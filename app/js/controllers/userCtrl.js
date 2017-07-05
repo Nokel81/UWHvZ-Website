@@ -147,6 +147,28 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
     };
+
+    $scope.changePassword = function () {
+        if ($scope.newPassword !== $scope.newPasswordCheck) {
+            return AlertService.danger("New passwords don't match");
+        }
+        if (!checkPasswords($scope.newPassword, $scope.newPasswordCheck)) {
+            return AlertService.danger("New password is not complex enough");
+        }
+        UserService.changePassword($scope.oldPassword, $scope.newPassword, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+                $scope.buttonState = "logIn";
+                $scope.email = "";
+                $scope.password = "";
+                $scope.newPassword = "";
+                $scope.newPasswordCheck = "";
+                $scope.oldPassword = "";
+            }
+        });
+    };
 }
 
 module.exports = {

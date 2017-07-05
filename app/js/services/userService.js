@@ -178,6 +178,23 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.changePassword = function (oldPassword, newPassword, cb) {
+        if (!SERVICE.userId) {
+            return;
+        }
+        const body = {
+            oldPassword,
+            newPassword,
+            userId: SERVICE.userId
+        };
+        $http.put(AppSettings.apiUrl + "/user/password", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

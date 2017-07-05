@@ -74,12 +74,16 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
                 SERVICE.userId = null;
                 SERVICE.session = null;
                 $cookies.remove("session");
+                $rootScope.isModerator = false;
+                $rootScope.isSuper = false;
                 cb();
             },
             err => {
                 SERVICE.userId = null;
                 SERVICE.session = null;
                 $cookies.remove("session");
+                $rootScope.isModerator = false;
+                $rootScope.isSuper = false;
                 cb();
             });
     };

@@ -3,7 +3,6 @@ const User = rootRequire("server/schemas/user");
 
 function FindById(gameId, cb) {
     GameSignUp.find({gameId})
-        .sort({userEmail: 1})
         .exec((err, signUps) => {
             if (err) {
                 return cb({error: err});
@@ -28,6 +27,17 @@ function FindById(gameId, cb) {
                         name: users.find(user => signUp.userEmail === user.email).playerName
                     });
                 });
+                res.sort((a, b) => {
+                    const A = a.toUpperCase();
+                    const B = b.toUpperCase();
+                    if (A < B) {
+                        return -1;
+                    }
+                    if (A > B) {
+                        return 1;
+                    }
+                    return 0;
+                })
                 cb({body: res});
             });
         });

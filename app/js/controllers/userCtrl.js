@@ -1,7 +1,5 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
-    const emailRegex = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
     $scope.password = UserService.password;
@@ -93,14 +91,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             $scope.buttonState = "signUp";
             return;
         }
-        $scope.email = $scope.email.trim().toLowerCase();
-        if (!$scope.email.match(emailRegex)) {
+        if (!$scope.email) {
             return AlertService.danger("Email must be a valid email");
         }
-        if ($scope.password !== $scope.password_check) {
+        $scope.email = $scope.email.trim().toLowerCase();
+        if ($scope.password !== $scope.passwordCheck) {
             return AlertService.danger("Passwords do not match");
         }
-        if (!checkPasswords($scope.password, $scope.password_check)) {
+        if (!checkPasswords($scope.password, $scope.passwordCheck)) {
             return AlertService.danger("Password need to be more complex");
         }
         ModalService.openWaiverModal()

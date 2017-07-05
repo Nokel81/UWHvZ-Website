@@ -1,4 +1,4 @@
-const findByGame = rootRequire("server/data-access/functions/gameSignUps/findByGame");
+const findByGame = rootRequire("server/data-access/functions/gameSignups/findByGame");
 
 function FindById(gameId, cb) {
     findByGame(gameId, res => {

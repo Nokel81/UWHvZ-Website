@@ -16,6 +16,10 @@ const settingsSchema = new Schema({
     promotionalEmails: {
         type: Boolean,
         required: true
+    },
+    spectateGame: {
+        type: Boolean,
+        required: true
     }
 });
 settingsSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});

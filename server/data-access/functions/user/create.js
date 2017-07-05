@@ -19,7 +19,8 @@ function Create(user, cb) {
         const userSettings = new Settings({
             userId: newUser._id,
             gameEmails: true,
-            promotionalEmails: true
+            promotionalEmails: true,
+            spectateGame: false
         });
         newUser.validate(err => {
             if (err) {

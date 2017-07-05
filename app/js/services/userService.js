@@ -207,7 +207,6 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
 
     SERVICE.resetPassword = function (newPassword, code, cb) {
         let body = {newPassword, code};
-        console.log(body);
         $http.put(AppSettings.apiUrl + "/user/password/force", body)
             .then(res => {
                 cb(null, res.data);

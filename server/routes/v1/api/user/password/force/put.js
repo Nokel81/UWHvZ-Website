@@ -1,7 +1,6 @@
 const forceChangePassword = rootRequire("server/data-access/functions/user/forceChangePassword");
 
 function Put(req, res, next) {
-    console.log(req.body);
     forceChangePassword(req.body, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");

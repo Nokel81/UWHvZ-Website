@@ -1,7 +1,7 @@
 const getByAcronym = rootRequire("server/data-access/functions/buildingLocations/getByAcronym");
 
 function Get(req, res, next) {
-    getByAcronym(req.query.acronym, (result) => {
+    getByAcronym(req.query.acronym, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -10,6 +10,6 @@ function Get(req, res, next) {
             res.status(200).send(result.body);
         }
     });
-};
+}
 
 module.exports = Get;

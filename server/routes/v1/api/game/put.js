@@ -2,7 +2,7 @@ const update = rootRequire("server/data-access/functions/game/update");
 
 function Put(req, res, next) {
     const updatedGame = req.body;
-    update(updatedGame, (result) => {
+    update(updatedGame, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -11,6 +11,6 @@ function Put(req, res, next) {
             res.status(202).send(result.body);
         }
     });
-};
+}
 
 module.exports = Put;

@@ -20,7 +20,7 @@ const gameSignUp = new Schema({
         enum: ["Human", "Zombie"]
     }
 });
-gameSignUp.index({ gameId: 1, userEmail: 1}, { unique: true });
-gameSignUp.plugin(uniqueness, { message: "{PATH} needs to be unique" });
+gameSignUp.index({gameId: 1, userEmail: 1}, {unique: true});
+gameSignUp.plugin(uniqueness, {message: "{PATH} needs to be unique"});
 
 module.exports = mongoose.model("GameSignUp", gameSignUp);

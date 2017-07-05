@@ -5,26 +5,25 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     const months = AppSettings.months;
     $scope.locationUrls = {};
 
-    const addZero = function(i) {
+    const addZero = function (i) {
         return (i < 10 ? "0" : "") + i;
     };
 
-    const getGetOrdinal = function(n) {
+    const getGetOrdinal = function (n) {
         const s = ["th", "st", "nd", "rd"];
         const v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
 
     const getLatLngs = function (names, cb) {
-        let marker = MapService.getAllMarkers((err, markers) => {
+        MapService.getAllMarkers((err, markers) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 names.forEach(elem => {
-                    let marker = markers.find(x => x.acronym == elem);
-                    if (!marker) {
-                        $scope.locationUrls[elem] = "";
-                    } else {
+                    const marker = markers.find(x => x.acronym === elem);
+                    $scope.locationUrls[elem] = "";
+                    if (marker) {
                         $scope.locationUrls[elem] = "?lat=" + marker.lat + "&lng=" + marker.lng + "&title=" + marker.title;
                     }
                 });

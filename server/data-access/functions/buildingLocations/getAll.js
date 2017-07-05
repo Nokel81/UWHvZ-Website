@@ -5,10 +5,10 @@ function GetAll(cb) {
         .sort("acronym")
         .exec((err, markers) => {
             if (err) {
-                return cb({ error: err });
+                return cb({error: err});
             }
-            cb({ body: markers });
+            cb({body: markers});
         });
-};
+}
 
 module.exports = GetAll;

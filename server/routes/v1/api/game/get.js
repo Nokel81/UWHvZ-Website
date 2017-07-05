@@ -1,7 +1,7 @@
 const findById = rootRequire("server/data-access/functions/game/findById");
 
 function Get(req, res, next) {
-    findById(req.query.id, (result) => {
+    findById(req.query.id, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -10,6 +10,6 @@ function Get(req, res, next) {
             res.status(200).send(result.body);
         }
     });
-};
+}
 
 module.exports = Get;

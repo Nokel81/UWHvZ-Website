@@ -1,24 +1,24 @@
-const FindCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 
 function GetUserType(id, cb) {
-    FindCurrentOrNext(function (res) {
+    findCurrentOrNext(res => {
         if (res.error) {
-            cb({ error: res.error });
+            cb({error: res.error});
         } else {
-            let game = res.body;
+            const game = res.body;
             if (!game) {
-                cb({ body: "NonPlayer" });
+                cb({body: "NonPlayer"});
             } else if (game.moderators.indexOf(id) >= 0) {
-                cb({ body: "Moderator" });
+                cb({body: "Moderator"});
             } else if (game.zombies.indexOf(id) >= 0) {
-                cb({ body: "Zombie" });
+                cb({body: "Zombie"});
             } else if (game.humans.indexOf(id) >= 0) {
-                cb({ body: "Human" });
+                cb({body: "Human"});
             } else {
-                cb({ body: "NonPlayer" });
+                cb({body: "NonPlayer"});
             }
         }
     });
-};
+}
 
 module.exports = GetUserType;

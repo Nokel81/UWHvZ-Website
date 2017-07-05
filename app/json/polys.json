@@ -1,5 +1,5 @@
-{
-    "gameAreaPoly": {
+[
+    {
         "points": [
             { "lat": 43.470495, "lng": -80.557908 },
             { "lat": 43.475843, "lng": -80.542947 },
@@ -26,10 +26,9 @@
             { "lat": 43.469599, "lng": -80.556208 },
             { "lat": 43.470018, "lng": -80.557079 }
         ],
-        "colour": "game",
-        "text": "Main Campus - Game Area"
-    },
-    "slcAreaPoly": {
+        "colour": "#000000",
+        "name": "Main Campus - Game Area"
+    }, {
         "points": [
             { "lat": 43.472165, "lng": -80.545181 },
             { "lat": 43.472017, "lng": -80.545079 },
@@ -94,20 +93,18 @@
             { "lat": 43.472127, "lng": -80.545342 },
             { "lat": 43.472101, "lng": -80.545281 }
         ],
-        "colour": "safe",
-        "text": "SLC - Safe Area"
-    },
-    "SLC_PACAreaPoly": {
+        "colour": "#00ff00",
+        "name": "SLC - Safe Area"
+    }, {
         "points": [
             { "lat": 43.471876, "lng": -80.545489 },
             { "lat": 43.471905, "lng": -80.545484 },
             { "lat": 43.471971, "lng": -80.545833 },
             { "lat": 43.471950, "lng": -80.545840 }
         ],
-        "colour": "rail",
-        "text": "SLC PAC Bridge - Rail"
-    },
-    "BMHAreaPoly": {
+        "colour": "#8b4513",
+        "name": "SLC PAC Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.473133, "lng": -80.546464 },
             { "lat": 43.473006, "lng": -80.546372 },
@@ -171,10 +168,9 @@
             { "lat": 43.473150, "lng": -80.546373 },
             { "lat": 43.473162, "lng": -80.546382 }
         ],
-        "colour": "minor",
-        "text": "BMH - Minor Building"
-    },
-    "MCAreaPoly": {
+        "colour": "#0000ff",
+        "name": "BMH - Minor Building"
+    }, {
         "points": [
             { "lat": 43.472590, "lng": -80.543801 },
             { "lat": 43.472529, "lng": -80.543757 },
@@ -223,10 +219,9 @@
             { "lat": 43.472514, "lng": -80.543895 },
             { "lat": 43.472547, "lng": -80.543919 }
         ],
-        "colour": "major",
-        "text": "MC - Major Building"
-    },
-    "McM3DcPoly": {
+        "colour": "#ff0000",
+        "name": "MC - Major Building"
+    }, {
         "points": [
             { "lat": 43.472994, "lng": -80.543990 },
             { "lat": 43.472981, "lng": -80.544025 },
@@ -239,20 +234,18 @@
             { "lat": 43.472711, "lng": -80.543393 },
             { "lat": 43.472607, "lng": -80.543741 }
         ],
-        "colour": "rail",
-        "text": "MC M3 DC Bridge - Rail"
-    },
-    "McChemPoly": {
+        "colour": "#8b4513",
+        "name": "MC M3 DC Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.472084, "lng": -80.543518 },
             { "lat": 43.472063, "lng": -80.543502 },
             { "lat": 43.472125, "lng": -80.543334 },
             { "lat": 43.472146, "lng": -80.543350 }
         ],
-        "colour": "rail",
-        "text": "MC CHEM Tunnel - Rail"
-    },
-    "QNCPoly": {
+        "colour": "#8b4513",
+        "name": "MC CHEM Tunnel - Rail"
+    }, {
         "points": [
             { "lat": 43.471210, "lng": -80.544910 },
             { "lat": 43.471053, "lng": -80.544804 },
@@ -263,10 +256,9 @@
             { "lat": 43.471439, "lng": -80.543945 },
             { "lat": 43.471525, "lng": -80.544004 }
         ],
-        "colour": "minor",
-        "text": "QNC - Minor Building"
-    },
-    "QncMcPoly": {
+        "colour": "#0000ff",
+        "name": "QNC - Minor Building"
+    }, {
         "points": [
             { "lat": 43.471473, "lng": -80.543841 },
             { "lat": 43.471463, "lng": -80.543873 },
@@ -275,10 +267,9 @@
             { "lat": 43.471740, "lng": -80.543993 },
             { "lat": 43.471731, "lng": -80.543999 }
         ],
-        "colour": "rail",
-        "text": "QNC MC Bridge - Rail"
-    },
-    "FEDHallPoly": {
+        "colour": "#8b4513",
+        "name": "QNC MC Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.473208, "lng": -80.549003 },
             { "lat": 43.472905, "lng": -80.548548 },
@@ -298,10 +289,9 @@
             { "lat": 43.473427, "lng": -80.548580 },
             { "lat": 43.473480, "lng": -80.548671 }
         ],
-        "colour": "safe",
-        "text": "FED Hall - Safe Area"
-    },
-    "NeedlesHallPoly": {
+        "colour": "#00ff00",
+        "name": "FED Hall - Safe Area"
+    }, {
         "points": [
             { "lat": 43.469868, "lng": -80.543937 },
             { "lat": 43.469641, "lng": -80.543793 },
@@ -327,10 +317,9 @@
             { "lat": 43.470002, "lng": -80.543847 },
             { "lat": 43.469922, "lng": -80.543792 }
         ],
-        "colour": "safe",
-        "text": "Needles Hall - Safe Area"
-    },
-    "STCNeedlesPoly": {
+        "colour": "#00ff00",
+        "name": "Needles Hall - Safe Area"
+    }, {
         "points": [
             { "lat": 43.470296, "lng": -80.543738 },
             { "lat": 43.470291, "lng": -80.543689 },
@@ -339,20 +328,18 @@
             { "lat": 43.470430, "lng": -80.543706 },
             { "lat": 43.470419, "lng": -80.543704 }
         ],
-        "colour": "rail",
-        "text": "STC Needles Hall Bridge - Rail"
-    },
-    "QNCB2Poly": {
+        "colour": "#8b4513",
+        "name": "STC Needles Hall Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.471029, "lng": -80.543490 },
             { "lat": 43.471015, "lng": -80.543531 },
             { "lat": 43.471076, "lng": -80.543573 },
             { "lat": 43.471091, "lng": -80.543530 }
         ],
-        "colour": "rail",
-        "text": "QNC B2 Bridge - Rail"
-    },
-    "HealthPoly": {
+        "colour": "#8b4513",
+        "name": "QNC B2 Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.470315, "lng": -80.545737 },
             { "lat": 43.470438, "lng": -80.545750 },
@@ -381,10 +368,9 @@
             { "lat": 43.470395, "lng": -80.546473 },
             { "lat": 43.470213, "lng": -80.546449 }
         ],
-        "colour": "safe",
-        "text": "Health Services - Safe Area"
-    },
-    "TathamPoly": {
+        "colour": "#00ff00",
+        "name": "Health Services - Safe Area"
+    }, {
         "points": [
             { "lat": 43.468681, "lng": -80.540947 },
             { "lat": 43.469405, "lng": -80.541448 },
@@ -397,10 +383,9 @@
             { "lat": 43.468954, "lng": -80.541336 },
             { "lat": 43.468628, "lng": -80.541102 }
         ],
-        "colour": "safe",
-        "text": "Tatham Centre - Safe Area"
-    },
-    "PlantOpPoly": {
+        "colour": "#00ff00",
+        "name": "Tatham Centre - Safe Area"
+    }, {
         "points": [
             { "lat": 43.473128, "lng": -80.543404 },
             { "lat": 43.473445, "lng": -80.542530 },
@@ -415,10 +400,9 @@
             { "lat": 43.473531, "lng": -80.543867 },
             { "lat": 43.473593, "lng": -80.543684 }
         ],
-        "colour": "safe",
-        "text": "Plant Op & Police Complex - Safe Area"
-    },
-    "DCAreaPoly": {
+        "colour": "#00ff00",
+        "name": "Plant Op & Police Complex - Safe Area"
+    }, {
         "points": [
             { "lat": 43.472800, "lng": -80.543456 },
             { "lat": 43.472692, "lng": -80.543380 },
@@ -439,60 +423,54 @@
             { "lat": 43.473197, "lng": -80.541969 },
             { "lat": 43.473307, "lng": -80.542047 }
         ],
-        "colour": "major",
-        "text": "DC - Major Building"
-    },
-    "DCArea2Poly": {
+        "colour": "#ff0000",
+        "name": "DC - Major Building"
+    }, {
         "points": [
             { "lat": 43.471992, "lng": -80.541720 },
             { "lat": 43.471748, "lng": -80.541544 },
             { "lat": 43.471891, "lng": -80.541150 },
             { "lat": 43.472143, "lng": -80.541330 }
         ],
-        "colour": "major",
-        "text": "DC - Major Building"
-    },
-    "DCDCBridgePoly": {
+        "colour": "#ff0000",
+        "name": "DC - Major Building"
+    }, {
         "points": [
             { "lat": 43.472072, "lng": -80.541514 },
             { "lat": 43.472058, "lng": -80.541548 },
             { "lat": 43.472207, "lng": -80.541646 },
             { "lat": 43.472216, "lng": -80.541616 }
         ],
-        "colour": "rail",
-        "text": "DC DC Bridge - Rail"
-    },
-    "DCChemPoly": {
+        "colour": "#8b4513",
+        "name": "DC DC Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.472437, "lng": -80.542481 },
             { "lat": 43.472416, "lng": -80.542468 },
             { "lat": 43.472311, "lng": -80.542757 },
             { "lat": 43.472329, "lng": -80.542770 }
         ],
-        "colour": "rail",
-        "text": "DC CHEM Bridge - Rail"
-    },
-    "DCEITBridgePoly": {
+        "colour": "#8b4513",
+        "name": "DC CHEM Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.471748, "lng": -80.541544 },
             { "lat": 43.471776, "lng": -80.541564 },
             { "lat": 43.471707, "lng": -80.541768 },
             { "lat": 43.471681, "lng": -80.541748 }
         ],
-        "colour": "rail",
-        "text": "DC EIT Bridge - Rail"
-    },
-    "DCE3AreaPoly": {
+        "colour": "#8b4513",
+        "name": "DC EIT Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.471891, "lng": -80.541150 },
             { "lat": 43.471921, "lng": -80.541172 },
             { "lat": 43.471937, "lng": -80.541126 },
             { "lat": 43.471907, "lng": -80.541104 }
         ],
-        "colour": "rail",
-        "text": "DC E3 Bridge - Rail"
-    },
-    "EITAreaPoly": {
+        "colour": "#8b4513",
+        "name": "DC E3 Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.471457, "lng": -80.541599 },
             { "lat": 43.471930, "lng": -80.541919 },
@@ -507,20 +485,18 @@
             { "lat": 43.471198, "lng": -80.542024 },
             { "lat": 43.471284, "lng": -80.542083 }
         ],
-        "colour": "minor",
-        "text": "EIT - Minor Building"
-    },
-    "EITESCBridgePoly": {
+        "colour": "#0000ff",
+        "name": "EIT - Minor Building"
+    }, {
         "points": [
             { "lat": 43.471221, "lng": -80.542363 },
             { "lat": 43.471246, "lng": -80.542379 },
             { "lat": 43.471211, "lng": -80.542466 },
             { "lat": 43.471186, "lng": -80.542451 }
         ],
-        "colour": "rail",
-        "text": "EIT ESC Bridge - Rail"
-    },
-    "B2Area": {
+        "colour": "#8b4513",
+        "name": "EIT ESC Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.470322, "lng": -80.542904 },
             { "lat": 43.470319, "lng": -80.542856 },
@@ -542,10 +518,9 @@
             { "lat": 43.470476, "lng": -80.542920 },
             { "lat": 43.470421, "lng": -80.542966 }
         ],
-        "colour": "minor",
-        "text": "B2 - Minor Building"
-    },
-    "E3E5BridgePoly": {
+        "colour": "#0000ff",
+        "name": "B2 - Minor Building"
+    }, {
         "points": [
             { "lat": 43.472439, "lng": -80.539911 },
             { "lat": 43.472455, "lng": -80.539867 },
@@ -565,10 +540,9 @@
             { "lat": 43.472376, "lng": -80.539876 },
             { "lat": 43.472395, "lng": -80.539884 }
         ],
-        "colour": "rail",
-        "text": "E3 E5 Bridge - Rail"
-    },
-    "PHYSAreaPoly": {
+        "colour": "#8b4513",
+        "name": "E3 E5 Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.471295, "lng": -80.542059 },
             { "lat": 43.471377, "lng": -80.541827 },
@@ -603,30 +577,27 @@
             { "lat": 43.470595, "lng": -80.541767 },
             { "lat": 43.470647, "lng": -80.541619 }
         ],
-        "colour": "minor",
-        "text": "PHYS - Minor Building"
-    },
-    "PHYSE2BridgePoly": {
+        "colour": "#0000ff",
+        "name": "PHYS - Minor Building"
+    }, {
         "points": [
             { "lat": 43.470581, "lng": -80.541082 },
             { "lat": 43.470606, "lng": -80.541100 },
             { "lat": 43.470633, "lng": -80.541022 },
             { "lat": 43.470608, "lng": -80.541004 }
         ],
-        "colour": "rail",
-        "text": "PHYS E2 Bridge - Rail"
-    },
-    "E2RCHAreaPoly": {
+        "colour": "#8b4513",
+        "name": "PHYS E2 Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.470456, "lng": -80.540836 },
             { "lat": 43.470480, "lng": -80.540769 },
             { "lat": 43.470616, "lng": -80.540866 },
             { "lat": 43.470593, "lng": -80.540932 }
         ],
-        "colour": "rail",
-        "text": "E2 RCH Tunnel - Rail"
-    },
-    "RCHAreaPoly": {
+        "colour": "#8b4513",
+        "name": "E2 RCH Tunnel - Rail"
+    }, {
         "points": [
             { "lat": 43.470360, "lng": -80.541101 },
             { "lat": 43.470392, "lng": -80.541020 },
@@ -677,20 +648,18 @@
             { "lat": 43.470282, "lng": -80.541119 },
             { "lat": 43.470302, "lng": -80.541064 }
         ],
-        "colour": "minor",
-        "text": "RCH - Minor Building"
-    },
-    "RCHDWEAreaPoly": {
+        "colour": "#0000ff",
+        "name": "RCH - Minor Building"
+    }, {
         "points": [
             { "lat": 43.470101, "lng": -80.540708 },
             { "lat": 43.470113, "lng": -80.540673 },
             { "lat": 43.469913, "lng": -80.540548 },
             { "lat": 43.469903, "lng": -80.540584 }
         ],
-        "colour": "rail",
-        "text": "RCH DWE Tunnel - Rail"
-    },
-    "CPHArea": {
+        "colour": "#8b4513",
+        "name": "RCH DWE Tunnel - Rail"
+    }, {
         "points": [
             { "lat": 43.470705, "lng": -80.538892 },
             { "lat": 43.470775, "lng": -80.538940 },
@@ -739,40 +708,36 @@
             { "lat": 43.470642, "lng": -80.539246 },
             { "lat": 43.470591, "lng": -80.539210 }
         ],
-        "colour": "minor",
-        "text": "CPH - Major Building"
-    },
-    "CPHDWEAreaPoly": {
+        "colour": "#0000ff",
+        "name": "CPH - Major Building"
+    }, {
         "points": [
             { "lat": 43.470584, "lng": -80.538844 },
             { "lat": 43.470705, "lng": -80.538894 },
             { "lat": 43.470690, "lng": -80.538936 },
             { "lat": 43.470571, "lng": -80.538877 }
         ],
-        "colour": "rail",
-        "text": "CPH DWE Bridge - Rail"
-    },
-    "DWEOffAreaPoly": {
+        "colour": "#8b4513",
+        "name": "CPH DWE Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.470564, "lng": -80.538785 },
             { "lat": 43.470548, "lng": -80.538830 },
             { "lat": 43.470303, "lng": -80.538042 },
             { "lat": 43.470340, "lng": -80.538024 }
         ],
-        "colour": "rail",
-        "text": "DWE Off campus Bridge - Rail"
-    },
-    "ALArea": {
+        "colour": "#8b4513",
+        "name": "DWE Off campus Bridge - Rail"
+    }, {
         "points": [
             { "lat": 43.468829, "lng": -80.541487 },
             { "lat": 43.469143, "lng": -80.541701 },
             { "lat": 43.468969, "lng": -80.542175 },
             { "lat": 43.468659, "lng": -80.541962 }
         ],
-        "colour": "major",
-        "text": "AL - Major Building"
-    },
-    "EV3AreaPoly": {
+        "colour": "#ff0000",
+        "name": "AL - Major Building"
+    }, {
         "points": [
             { "lat": 43.468221, "lng": -80.543183 },
             { "lat": 43.468244, "lng": -80.543197 },
@@ -782,20 +747,18 @@
             { "lat": 43.468164, "lng": -80.543587 },
             { "lat": 43.468091, "lng": -80.543564 }
         ],
-        "colour": "minor",
-        "text": "EV3 - Minor Building"
-    },
-    "CHEMESCBridge": {
+        "colour": "#0000ff",
+        "name": "EV3 - Minor Building"
+    }, {
         "points": [
             { "lat": 43.471855, "lng": -80.543103 },
             { "lat": 43.471863, "lng": -80.543078 },
             { "lat": 43.471778, "lng": -80.543021 },
             { "lat": 43.471769, "lng": -80.543045 }
         ],
-        "colour": "rail",
-        "text": "CHEM ESC Bridge"
-    },
-    "ARTSTunnels": {
+        "colour": "#8b4513",
+        "name": "CHEM ESC Bridge"
+    }, {
         "points": [
             { "lat": 43.468158, "lng": -80.542101 },
             { "lat": 43.468170, "lng": -80.542067 },
@@ -810,17 +773,16 @@
             { "lat": 43.468809, "lng": -80.542481 },
             { "lat": 43.468792, "lng": -80.542529 }
         ],
-        "colour": "rail",
-        "text": "Art Tunnels"
-    },
-    "E2E3Bridge": {
+        "colour": "#8b4513",
+        "name": "Art Tunnels"
+    }, {
         "points": [
             { "lat": 43.471372, "lng": -80.540305 },
             { "lat": 43.471386, "lng": -80.540265 },
             { "lat": 43.471345, "lng": -80.540247 },
             { "lat": 43.471332, "lng": -80.540282 }
         ],
-        "colour": "rail",
-        "text": "E2 E3 Bridge"
+        "colour": "#8b4513",
+        "name": "E2 E3 Bridge"
     }
-}
+]

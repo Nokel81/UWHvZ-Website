@@ -4,15 +4,15 @@ function Create(message, cb) {
     const newMessage = new Message(message);
     newMessage.validate(err => {
         if (err) {
-            return cb({ error: err });
+            return cb({error: err});
         }
         newMessage.save((err, message) => {
             if (err) {
-                return cb({ error: err });
+                return cb({error: err});
             }
-            cb({ body: message });
+            cb({body: message});
         });
     });
-};
+}
 
 module.exports = Create;

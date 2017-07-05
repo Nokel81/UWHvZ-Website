@@ -13,7 +13,7 @@ require("./services");
 
 // Mount on window for testing
 window.app = angular.module("app", [
-    'ui.bootstrap',
+    "ui.bootstrap",
     "ui.router",
     "ngAnimate",
     "ngCookies",

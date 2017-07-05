@@ -1,7 +1,7 @@
 const updateById = rootRequire("server/data-access/functions/gameSignups/updateById");
 
 function Put(req, res, next) {
-    updateById(req.body, (result) => {
+    updateById(req.body, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -10,6 +10,6 @@ function Put(req, res, next) {
             res.status(200).send(result.body);
         }
     });
-};
+}
 
 module.exports = Put;

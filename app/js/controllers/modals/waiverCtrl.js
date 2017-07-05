@@ -7,7 +7,7 @@ function WaiverCtrl($scope, $uibModalInstance) {
 
     $scope.decline = function () {
         $uibModalInstance.dismiss();
-    }
+    };
 }
 
 module.exports = {

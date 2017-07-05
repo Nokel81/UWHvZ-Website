@@ -1,37 +1,37 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
-    const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex = /^(([^<>()[]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    $scope.button_state = "logIn";
+    $scope.buttonState = "logIn";
     $scope.email = UserService.email;
     $scope.password = UserService.password;
     $scope.session = UserService.session;
 
-    const check_passwords = function (password, password_check) {
-        if (password.length < 8 || password !== password_check) {
+    const checkPasswords = function (password, passwordCheck) {
+        if (password.length < 8 || password !== passwordCheck) {
             return false;
         }
-        let hasUpperCase = /[A-Z]/.test(password);
-        let hasLowerCase = /[a-z]/.test(password);
-        let hasNumbers = /\d/.test(password);
-        let hasNonalphas = /\W/.test(password);
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasNonalphas = /\W/.test(password);
         return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
     };
 
     UserService.getBySession(user => {
         $scope.user = user;
-        UserService.getUserSettings((err, settings) => {
+        UserService.getUserSettings(settings => {
             $scope.settings = settings || {};
         });
     });
 
     if ($location.search().token) {
-        let token = $location.search().token;
+        const token = $location.search().token;
         $cookies.remove("session");
         $scope.session = null;
         UserService.session = null;
         UserService.user = null;
-        $location.search("token", null);//Removes the search parameter
+        $location.search("token", null);// Removes the search parameter
         UserService.confirmEmail(token, (err, res) => {
             if (err) {
                 AlertService.danger(err);
@@ -65,17 +65,17 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.logIn = function () {
-        if ($scope.button_state !== "logIn") {
-            $scope.button_state = "logIn";
+        if ($scope.buttonState !== "logIn") {
+            $scope.buttonState = "logIn";
             return;
         }
-        UserService.login($scope.email, $scope.password, function (err, user) {
+        UserService.login($scope.email, $scope.password, (err, user) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 $scope.session = UserService.session;
                 $scope.user = user;
-                UserService.getUserSettings((err, settings) => {
+                UserService.getUserSettings(settings => {
                     $scope.settings = settings || {};
                 });
                 UserService.getUserType(type => {
@@ -89,24 +89,24 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.signUp = function () {
-        if ($scope.button_state !== "signUp") {
-            $scope.button_state = "signUp";
+        if ($scope.buttonState !== "signUp") {
+            $scope.buttonState = "signUp";
             return;
         }
         $scope.email = $scope.email.trim().toLowerCase();
-        if (!$scope.email.match(email_regex)) {
+        if (!$scope.email.match(emailRegex)) {
             return AlertService.danger("Email must be a valid email");
         }
         if ($scope.password !== $scope.password_check) {
             return AlertService.danger("Passwords do not match");
         }
-        if (!check_passwords($scope.password, $scope.password_check)) {
+        if (!checkPasswords($scope.password, $scope.password_check)) {
             return AlertService.danger("Password need to be more complex");
         }
         ModalService.openWaiverModal()
             .result
             .then(res => {
-                UserService.signUp($scope.email, $scope.password, $scope.name, function (err, res) {
+                UserService.signUp($scope.email, $scope.password, $scope.name, (err, res) => {
                     if (err) {
                         AlertService.danger(err);
                     } else {
@@ -122,7 +122,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.taggedCode || !$scope.taggedDescription) {
             return;
         }
-        UserService.reportTag($scope.taggedCode, $scope.user.playerCode, $scope.taggedDescription, $scope.location, function (err, res) {
+        UserService.reportTag($scope.taggedCode, $scope.user.playerCode, $scope.taggedDescription, $scope.location, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -138,7 +138,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.supplyCode) {
             return;
         }
-        UserService.reportSupplyCode($scope.supplyCode, $scope.user._id, function (err, res) {
+        UserService.reportSupplyCode($scope.supplyCode, $scope.user._id, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

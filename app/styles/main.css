@@ -268,3 +268,11 @@ p+ul {
     filter: alpha(opacity=50);
     opacity: .5;
 }
+
+.custom-select {
+    width: inherit;
+}
+
+.icon-form {
+    margin-top: 8px;
+}

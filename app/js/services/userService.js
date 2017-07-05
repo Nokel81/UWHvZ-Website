@@ -12,10 +12,10 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return cb(null);
         }
         $http.get(AppSettings.apiUrl + "/user/type?id=" + SERVICE.userId)
-            .then((res) => {
+            .then(res => {
                 cb(res.data);
             },
-            (err) => {
+            err => {
                 cb(null);
             });
     };
@@ -25,7 +25,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return;
         }
         $http.post(AppSettings.apiUrl + "/user/settings", newSettings)
-            .then((res) => {}, (err) => {
+            .then(res => {}, err => {
                 console.error(err);
             });
     };
@@ -35,31 +35,31 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return cb(null);
         }
         $http.get(AppSettings.apiUrl + "/user/session?session=" + SERVICE.session)
-            .then((res) => {
+            .then(res => {
                 SERVICE.userId = res.data._id;
                 cb(res.data);
             },
-            (err) => {
+            err => {
                 cb(null);
             });
-    }
+    };
 
     SERVICE.login = function (email, password, cb) {
         if (typeof email !== "string" || typeof password !== "string") {
             return cb("email or password is incorrect");
         }
-        let body = {
+        const body = {
             username: email.toString(),
             password: password.toString()
         };
         $http.post(AppSettings.apiUrl + "/user/login", body)
-            .then((res) => {
+            .then(res => {
                 SERVICE.session = res.data.session;
                 SERVICE.userId = res.data.user._id;
                 $cookies.put("session", res.data.session);
                 cb(null, res.data.user);
             },
-            (err) => {
+            err => {
                 $cookies.remove("session");
                 cb(err.data);
             });
@@ -70,13 +70,13 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return;
         }
         $http.post(AppSettings.apiUrl + "/user/logout/" + SERVICE.session)
-            .then((res) => {
+            .then(res => {
                 SERVICE.userId = null;
                 SERVICE.session = null;
                 $cookies.remove("session");
                 cb();
             },
-            (err) => {
+            err => {
                 SERVICE.userId = null;
                 SERVICE.session = null;
                 $cookies.remove("session");
@@ -85,29 +85,29 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     };
 
     SERVICE.signUp = function (email, password, name, cb) {
-        let body = {
-            email: email,
-            password: password,
+        const body = {
+            email,
+            password,
             playerName: name
         };
         $http.post(AppSettings.apiUrl + "/user", body)
-            .then((res) => {
+            .then(res => {
                 cb(null, res.data);
             },
-            (err) => {
+            err => {
                 cb(err.data);
             });
     };
 
     SERVICE.confirmEmail = function (token, cb) {
-        let body = {
-            token: token
+        const body = {
+            token
         };
         $http.post(AppSettings.apiUrl + "/user/token", body)
-            .then((res) => {
+            .then(res => {
                 cb(null, res.data);
             },
-            (err) => {
+            err => {
                 cb(err.data);
             });
     };
@@ -117,40 +117,40 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return cb(null);
         }
         $http.get(AppSettings.apiUrl + "/user/settings?userId=" + SERVICE.userId)
-            .then((res) => {
-                cb(null, res.data);
+            .then(res => {
+                cb(res.data);
             },
-            (err) => {
-                cb(err.data);
+            err => {
+                cb(null);
             });
     };
 
     SERVICE.reportTag = function (taggedCode, taggerCode, decription, location, cb) {
-        let body = {
-            taggerCode: taggerCode,
-            taggedCode: taggedCode,
-            decription: decription,
-            location: location
+        const body = {
+            taggerCode,
+            taggedCode,
+            decription,
+            location
         };
         $http.post(AppSettings.apiUrl + "/report", body)
-            .then((res) => {
+            .then(res => {
                 cb(null, res.data);
             },
-            (err) => {
+            err => {
                 cb(err.data);
             });
     };
 
     SERVICE.reportSupplyCode = function (supplyCode, userId, cb) {
-        let body = {
-            userId: userId,
+        const body = {
+            userId,
             code: supplyCode
         };
         $http.put(AppSettings.apiUrl + "/supply", body)
-            .then((res) => {
+            .then(res => {
                 cb(null, res.data);
             },
-            (err) => {
+            err => {
                 cb(err.data);
             });
     };
@@ -160,20 +160,20 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             return cb(false);
         }
         $http.get(AppSettings.apiUrl + "/user/super?id=" + SERVICE.userId)
-            .then((res) => {
+            .then(res => {
                 cb(res.data);
             },
-            (err) => {
+            err => {
                 cb(false);
             });
-    }
+    };
 
     SERVICE.getByCode = function (code, cb) {
         $http.get(AppSettings.apiUrl + "/user/code?playerCode=" + code)
-            .then((res) => {
+            .then(res => {
                 cb(null, res.data);
             },
-            (err) => {
+            err => {
                 cb(err.data);
             });
     };

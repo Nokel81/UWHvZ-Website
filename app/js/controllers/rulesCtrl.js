@@ -1,7 +1,7 @@
 function RulesCtrl($scope, $location, $anchorScroll) {
     "ngInject";
 
-    $scope.$watch(function () {
+    $scope.$watch(() => {
         return $location.hash();
     }, newVal => {
         if (newVal === "top") {

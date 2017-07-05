@@ -6,22 +6,22 @@ const Session = rootRequire("server/schemas/session");
 
 function Login(account, cb) {
     if (!account) {
-        return cb({ error: "Account not defined" });
+        return cb({error: "Account not defined"});
     }
-    User.findOne({ email: account.username })
+    User.findOne({email: account.username})
         .exec((err, user) => {
             if (err) {
-                return cb({ error: err });
+                return cb({error: err});
             }
             if (!user) {
-                return cb({ error: "User or password incorrect" });
+                return cb({error: "User or password incorrect"});
             }
             if (user.confirmationToken) {
-                return cb({ error: "User email has not yet been confirmed" });
+                return cb({error: "User email has not yet been confirmed"});
             }
             pbkdf2(account.password, Buffer.from(user.nonce, "utf8"), 128, 256, "sha512", (err, key) => {
                 if (err) {
-                    return cb({ error: err });
+                    return cb({error: err});
                 }
                 key = key.toString("hex");
                 if (user.password === key) {
@@ -31,22 +31,22 @@ function Login(account, cb) {
                     });
                     session.save((err, session) => {
                         if (err) {
-                            return cb({ error: err });
+                            return cb({error: err});
                         }
                         delete user.password;
                         delete user.nonce;
                         cb({
                             body: {
                                 session: session.sessionToken,
-                                user: user
+                                user
                             }
                         });
                     });
                 } else {
-                    return cb({ error: "User or password incorrect" });
+                    return cb({error: "User or password incorrect"});
                 }
             });
         });
-};
+}
 
 module.exports = Login;

@@ -18,6 +18,6 @@ const settingsSchema = new Schema({
         required: true
     }
 });
-settingsSchema.plugin(uniqueness, { message: "{PATH} needs to be unique" });
+settingsSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
 
 module.exports = mongoose.model("Settings", settingsSchema);

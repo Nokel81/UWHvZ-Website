@@ -33,6 +33,6 @@ const userSchema = new Schema({
         type: String
     }
 });
-userSchema.plugin(uniqueness, { message: "{PATH} needs to be unique" });
+userSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
 
 module.exports = mongoose.model("User", userSchema);

@@ -5,7 +5,9 @@
   "description": "This is the webserver & front end for the UW HvZ website and app",
   "license": "MIT",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "test": "xo"
+  },
   "xo": {
     "space": 4,
     "rules": {
@@ -27,7 +29,9 @@
       "no-use-extend-native/no-use-extend-native": "off",
       "import/no-unassigned-import": "off",
       "capitalized-comments": "off",
-      "no-throw-literal": "off"
+      "no-throw-literal": "off",
+      "max-params": "off",
+      "max-nested-callbacks": "off"
     },
     "globals": [
       "shouldCreateSourcemap",
@@ -67,7 +71,10 @@
     "mongoose": "^4.10.5",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "^1.8.2",
+    "pbkdf2": "^3.0.12",
     "uglifyify": "^3.0.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "xo": "^0.18.2"
+  }
 }

@@ -1,8 +1,8 @@
 const login = rootRequire("server/data-access/functions/user/login");
 
-function Post (req, res, next) {
+function Post(req, res, next) {
     const account = req.body;
-    login(account, (result) => {
+    login(account, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -11,6 +11,6 @@ function Post (req, res, next) {
             res.status(200).send(result.body);
         }
     });
-};
+}
 
 module.exports = Post;

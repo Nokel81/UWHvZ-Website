@@ -18,10 +18,6 @@ function HomeCtrl($scope, GameService, AppSettings) {
         }
     });
 
-    function setGameString(gameObj) {
-
-    }
-
     function getGetOrdinal(n) {
         const s = ["th", "st", "nd", "rd"];
         const v = n % 100;

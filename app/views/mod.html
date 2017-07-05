@@ -12,10 +12,13 @@
             <b>Players signed up: <span ng-bind="players.length"></span></b>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-4">
                         <b>Player Email</b>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <b>Player Name</b>
+                    </div>
+                    <div class="col-md-2">
                         <b>Player Team Preference</b>
                     </div>
                 </div>
@@ -23,10 +26,13 @@
             <div ng-repeat="player in players">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-4">
                             <input type="text" class="form-control" ng-model="player.userEmail" placeholder="Account email..." ng-disabled="editing != $index">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" ng-model="player.name" placeholder="Account name..." disabled>
+                        </div>
+                        <div class="col-md-2">
                             <div class="formish-control">
                                 <input id="teamPreference{{$index}}" class="tgl tgl-skewed" type="checkbox" ng-true-value="'Zombie'" ng-false-value="'Human'" ng-model="player.teamPreference" ng-disabled="editing != $index">
                                 <label class="tgl-btn" data-tg-off="Human" data-tg-on="Zombie" for="teamPreference{{$index}}"></label>

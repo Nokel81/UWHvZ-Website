@@ -4,7 +4,7 @@ function Put(req, res, next) {
     const usercode = req.body.usercode;
     const _id = req.body.messageId;
     const status = req.body.isRead;
-    createOrUpdate(usercode, _id, status, (result) => {
+    createOrUpdate(usercode, _id, status, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -13,6 +13,6 @@ function Put(req, res, next) {
             res.status(200).send(result.body);
         }
     });
-};
+}
 
 module.exports = Put;

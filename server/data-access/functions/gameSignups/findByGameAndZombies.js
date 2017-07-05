@@ -1,14 +1,13 @@
-const GameSignUp = rootRequire("server/schemas/gameSignUp");
+const findByGame = rootRequire("server/data-access/functions/gameSignUps/findByGame");
 
 function FindById(gameId, cb) {
-    GameSignUp.find({ gameId: gameId, teamPreference: 'Zombie' })
-        .sort({ userEmail: 1 })
-        .exec((err, signUps) => {
-            if (err) {
-                return cb({ error: err });
-            }
-            cb({ body: signUps });
-        });
-};
+    findByGame(gameId, res => {
+        if (res.error) {
+            cb(res);
+        }
+        res = res.filter(signUp => signUp.teamPreference === "Zombie");
+        cb({body: res});
+    });
+}
 
 module.exports = FindById;

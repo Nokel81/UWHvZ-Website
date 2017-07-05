@@ -1,16 +1,16 @@
-function ModCtrl($scope, $location, UserService, GameService, AlertService) {
+function ModCtrl($scope, $location, UserService, GameService, AlertService, $window) {
     "ngInject";
     $scope.players = [];
     $scope.editing = null;
     $scope.game = null;
 
-    UserService.getBySession((user) => {
+    UserService.getBySession(user => {
         UserService.getUserType(type => {
             UserService.isSuper(isSuper => {
                 if (type !== "Moderator" && !isSuper) {
                     $location.url("/");
                 }
-            })
+            });
         });
     });
 
@@ -48,22 +48,20 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
             return;
         }
         if ($scope.players[index]._id) {
-            GameService.updatePlayerForGame($scope.players[index], function (err, players) {
+            GameService.updatePlayerForGame($scope.players[index], (err, players) => {
                 if (err) {
                     return AlertService.danger(err);
-                } else {
-                    $scope.players = players;
-                    $scope.editing = null;
                 }
+                $scope.players = players;
+                $scope.editing = null;
             });
         } else {
-            GameService.registerPlayerForGame($scope.players[index], function (err, players) {
+            GameService.registerPlayerForGame($scope.players[index], (err, players) => {
                 if (err) {
                     return AlertService.danger(err);
-                } else {
-                    $scope.players = players;
-                    $scope.editing = null;
                 }
+                $scope.players = players;
+                $scope.editing = null;
             });
         }
     };
@@ -79,18 +77,20 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService) {
         if ($scope.editing !== index || !$scope.players[index] || !$scope.game) {
             return;
         }
-        if ($scope.players[index]._id) {
-            GameService.removeRegistrantForGame($scope.players[index], function (err, players) {
-                if (err) {
-                    return AlertService.danger(err);
-                } else {
+        const res = $window.confirm("Are you sure you want to delete '" + $scope.players[index].userEmail + "'?");
+        if (res) {
+            if ($scope.players[index]._id) {
+                GameService.removeRegistrantForGame($scope.players[index], (err, players) => {
+                    if (err) {
+                        return AlertService.danger(err);
+                    }
                     $scope.players = players;
                     $scope.editing = null;
-                }
-            });
-        } else {
-            $scope.players.splice(index, 1);
-            $scope.editing = null;
+                });
+            } else {
+                $scope.players.splice(index, 1);
+                $scope.editing = null;
+            }
         }
     };
 }

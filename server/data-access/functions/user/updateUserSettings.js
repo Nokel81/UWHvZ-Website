@@ -11,10 +11,10 @@ function UpdateUserSettings(newSettings, cb) {
         }
     }, (err, settings) => {
         if (err) {
-            return cb({ error: err });
+            return cb({error: err});
         }
-        cb({ body: settings });
+        cb({body: settings});
     });
-};
+}
 
 module.exports = UpdateUserSettings;

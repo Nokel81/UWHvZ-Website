@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const ignoreFiles = [ "middleware", "index.js" ];
+const ignoreFiles = ["middleware", "index.js"];
 const middleRequirements = rootRequire("server/routes/middleware/index.json");
 
 function defineRoutesTop(app, routePath) {
@@ -13,16 +13,16 @@ function defineRoutesTop(app, routePath) {
 }
 
 function defineRoutes(app, dir, routePath) {
-    let content = fs.readdirSync(dir);
-    let directories = content.filter(file => fs.statSync(path.join(dir, file)).isDirectory());
-    let files = content.filter(file => fs.statSync(path.join(dir, file)).isFile());
+    const content = fs.readdirSync(dir);
+    const directories = content.filter(file => fs.statSync(path.join(dir, file)).isDirectory());
+    const files = content.filter(file => fs.statSync(path.join(dir, file)).isFile());
 
     directories.forEach(directory => defineRoutes(app, path.join(dir, directory), path.posix.join(routePath, directory)));
 
     if (files.length === 0) {
         return;
     }
-    let route = app.route(routePath.replace(/_/g, "/:"));
+    const route = app.route(routePath.replace(/_/g, "/:"));
     // (middleRequirements[routePath] || [])
     //     .forEach(name => {
     //         console.log(name);
@@ -30,8 +30,8 @@ function defineRoutes(app, dir, routePath) {
     //         route.all(middleware());
     //     });
     files.forEach(file => {
-        let method = path.basename(file, path.extname(file)).toLowerCase().split("_");
-        let allowed = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"];
+        const method = path.basename(file, path.extname(file)).toLowerCase().split("_");
+        const allowed = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"];
         if (allowed.indexOf(method[0]) < 0) {
             return console.error("Invalid method name:" + method + "; in '" + dir + "'");
         }

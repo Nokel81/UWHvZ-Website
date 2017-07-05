@@ -1,7 +1,7 @@
 const findByUser = rootRequire("server/data-access/functions/supplyCode/findByUser");
 
 function Get(req, res, next) {
-    findByUser(req.query.userId, req.query.gameId, (result) => {
+    findByUser(req.query.userId, req.query.gameId, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -10,6 +10,6 @@ function Get(req, res, next) {
             res.status(201).send(result.body);
         }
     });
-};
+}
 
 module.exports = Get;

@@ -1,6 +1,6 @@
 function NavCtrl($scope, $rootScope, $location, UserService) {
     "ngInject";
-    UserService.getBySession((user) => {
+    UserService.getBySession(user => {
         if (!user) {
             return;
         }
@@ -12,11 +12,11 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
         });
     });
 
-    $scope.$watch(function () {
+    $scope.$watch(() => {
         return $location.path();
     }, newVal => {
         if (newVal) {
-            UserService.getBySession((user) => {
+            UserService.getBySession(user => {
                 UserService.getUserType(type => {
                     $rootScope.isModerator = type === "Moderator";
                 });

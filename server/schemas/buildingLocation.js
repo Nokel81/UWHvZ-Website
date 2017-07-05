@@ -11,17 +11,17 @@ const buildingLocationSchema = new Schema({
     },
     title: {
         type: String,
-        required: true,
+        required: true
     },
     lat: {
         type: Number,
-        required: true,
+        required: true
     },
     lng: {
         type: Number,
         required: true
-    },
+    }
 });
-buildingLocationSchema.plugin(uniqueness, { message: "{PATH} needs to be unique" });
+buildingLocationSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
 
 module.exports = mongoose.model("BuildingLocation", buildingLocationSchema);

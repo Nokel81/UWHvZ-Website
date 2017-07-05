@@ -9,8 +9,8 @@ function HasSession(req, res, next) {
         }
         next();
     });
-};
+}
 
-module.exports = function() {
+module.exports = function () {
     return HasSession;
 };

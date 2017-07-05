@@ -22,6 +22,6 @@ const supplyCodeSchema = new Schema({
         type: Schema.Types.ObjectId
     }
 });
-supplyCodeSchema.plugin(uniqueness, { message: "{PATH} needs to be unique" });
+supplyCodeSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
 
 module.exports = mongoose.model("SupplyCode", supplyCodeSchema);

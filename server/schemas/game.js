@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-const minLength = rootRequire("server/schemas/validators/setMinLength");
 const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({

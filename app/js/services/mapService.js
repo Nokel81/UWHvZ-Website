@@ -6,7 +6,7 @@ function MapService($http, AppSettings) {
     SERVICE.getAllMarkers = function (cb) {
         $http.get(AppSettings.apiUrl + "/map/buildingLocation/all")
             .then(res => {
-                cb(null, res.data)
+                cb(null, res.data);
             }, err => {
                 cb(err.data);
             });
@@ -15,7 +15,7 @@ function MapService($http, AppSettings) {
     SERVICE.createMarker = function (marker, cb) {
         $http.post(AppSettings.apiUrl + "/map/buildingLocation", marker)
             .then(res => {
-                cb(null, res.data)
+                cb(null, res.data);
             }, err => {
                 cb(err.data);
             });
@@ -24,7 +24,7 @@ function MapService($http, AppSettings) {
     SERVICE.updatedMarker = function (marker, cb) {
         $http.put(AppSettings.apiUrl + "/map/buildingLocation", marker)
             .then(res => {
-                cb(null, res.data)
+                cb(null, res.data);
             }, err => {
                 cb(err.data);
             });
@@ -33,7 +33,43 @@ function MapService($http, AppSettings) {
     SERVICE.removedMarker = function (id, cb) {
         $http.delete(AppSettings.apiUrl + "/map/buildingLocation?id=" + id)
             .then(res => {
-                cb(null, res.data)
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.getAllPolygons = function (cb) {
+        $http.get(AppSettings.apiUrl + "/map/polygon/all")
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.updatePolygon = function (polygon, cb) {
+        $http.put(AppSettings.apiUrl + "/map/polygon", polygon)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.createPolygon = function (polygon, cb) {
+        $http.post(AppSettings.apiUrl + "/map/polygon", polygon)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.deletePolygon = function (id, cb) {
+        $http.delete(AppSettings.apiUrl + "/map/polygon?id" + id)
+            .then(res => {
+                cb(null, res.data);
             }, err => {
                 cb(err.data);
             });

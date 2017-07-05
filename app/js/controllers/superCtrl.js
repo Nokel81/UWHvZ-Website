@@ -6,7 +6,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
     $scope.editingMarker = null;
     $scope.editingPolygon = null;
 
-    UserService.getBySession((user) => {
+    UserService.getBySession(user => {
         UserService.isSuper(isSuper => {
             if (!isSuper) {
                 $location.url("/");
@@ -56,54 +56,54 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     $scope.removeModerator = function (game, mod) {
         if ($scope.games[game]) {
-            let _id = ($scope.games[game].moderator_objs.splice(mod, 1)[0] || {})._id;
-            $scope.games[game].moderators = ($scope.games[game].moderators || []).filter(id => id != _id);
+            const _id = ($scope.games[game].moderatorObjs.splice(mod, 1)[0] || {})._id;
+            $scope.games[game].moderators = ($scope.games[game].moderators || []).filter(id => id !== _id);
         }
-    }
+    };
 
     $scope.addModerator = function (game) {
-        let code = $window.prompt("New Moderator Player Code", "");
-        UserService.getByCode(code, function (err, user) {
+        const code = $window.prompt("New Moderator Player Code", "");
+        UserService.getByCode(code, (err, user) => {
             if (err) {
                 return AlertService.danger(err);
             }
-            $scope.games[game].moderator_objs.push(user);
+            $scope.games[game].moderatorObjs.push(user);
             $scope.games[game].moderators.push(user._id);
         });
     };
 
     $scope.removeHuman = function (game, mod) {
         if ($scope.games[game]) {
-            let _id = ($scope.games[game].human_objs.splice(mod, 1)[0] || {})._id;
-            $scope.games[game].humans = ($scope.games[game].humans || []).filter(id => id != _id);
+            const _id = ($scope.games[game].humanObjs.splice(mod, 1)[0] || {})._id;
+            $scope.games[game].humans = ($scope.games[game].humans || []).filter(id => id !== _id);
         }
-    }
+    };
 
     $scope.addHuman = function (game) {
-        let code = $window.prompt("New Human Player Code", "");
-        UserService.getByCode(code, function (err, user) {
+        const code = $window.prompt("New Human Player Code", "");
+        UserService.getByCode(code, (err, user) => {
             if (err) {
                 return AlertService.danger(err);
             }
-            $scope.games[game].human_objs.push(user);
+            $scope.games[game].humanObjs.push(user);
             $scope.games[game].humans.push(user._id);
         });
     };
 
     $scope.removeZombie = function (game, mod) {
         if ($scope.games[game]) {
-            let _id = ($scope.games[game].zombie_objs.splice(mod, 1)[0] || {})._id;
-            $scope.games[game].zombies = ($scope.games[game].zombies || []).filter(id => id != _id);
+            const _id = ($scope.games[game].zombieObjs.splice(mod, 1)[0] || {})._id;
+            $scope.games[game].zombies = ($scope.games[game].zombies || []).filter(id => id !== _id);
         }
-    }
+    };
 
     $scope.addZombie = function (game) {
-        let code = $window.prompt("New Zombie Player Code", "");
-        UserService.getByCode(code, function (err, user) {
+        const code = $window.prompt("New Zombie Player Code", "");
+        UserService.getByCode(code, (err, user) => {
             if (err) {
                 return AlertService.danger(err);
             }
-            $scope.games[game].zombie_objs.push(user);
+            $scope.games[game].zombieObjs.push(user);
             $scope.games[game].zombies.push(user._id);
         });
     };
@@ -113,9 +113,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             humans: [],
             moderators: [],
             zombies: [],
-            human_objs: [],
-            moderator_objs: [],
-            zombie_objs: [],
+            humanObjs: [],
+            moderatorObjs: [],
+            zombieObjs: [],
             signUpDates: [],
             signUpLocations: []
         });
@@ -126,7 +126,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             return;
         }
         if ($scope.games[game]._id) {
-            GameService.updateGame($scope.games[game], function (err, updatedGame) {
+            GameService.updateGame($scope.games[game], (err, updatedGame) => {
                 if (err) {
                     return AlertService.danger(err);
                 }
@@ -134,7 +134,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
                 AlertService.info("Game updated");
             });
         } else {
-            GameService.createGame($scope.games[game], function (err, newGame) {
+            GameService.createGame($scope.games[game], (err, newGame) => {
                 if (err) {
                     return AlertService.danger(err);
                 }
@@ -148,12 +148,12 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (!$scope.games[game]) {
             return;
         }
-        let res = $window.confirm("Are you sure you want to delete '" + $scope.games[game].name + "'?");
+        const res = $window.confirm("Are you sure you want to delete '" + $scope.games[game].name + "'?");
         if (res) {
             if (!$scope.games[game]._id) {
                 return $scope.games.splice(game, 1);
             }
-            GameService.deleteGame($scope.games[game]._id, function (err) {
+            GameService.deleteGame($scope.games[game]._id, err => {
                 if (err) {
                     AlertService.danger(err);
                 } else {
@@ -175,7 +175,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             return;
         }
         if ($scope.markers[index]._id) {
-            MapService.updatedMarker($scope.markers[index], function (err, res) {
+            MapService.updatedMarker($scope.markers[index], (err, res) => {
                 if (err) {
                     return AlertService.danger(err);
                 }
@@ -183,7 +183,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
                 $scope.editingMarker = null;
             });
         } else {
-            MapService.createMarker($scope.markers[index], function (err, res) {
+            MapService.createMarker($scope.markers[index], (err, res) => {
                 if (err) {
                     return AlertService.danger(err);
                 }
@@ -198,7 +198,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             return;
         }
         if ($scope.markers[index]._id) {
-            MapService.removeMarker($scope.markers[index]._id, function (err, res) {
+            MapService.removeMarker($scope.markers[index]._id, (err, res) => {
                 if (err) {
                     return AlertService.danger(err);
                 }
@@ -217,7 +217,74 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
         $scope.editingMarker = $scope.markers.length;
         $scope.markers.push({});
-    }
+    };
+
+    $scope.editPolygon = function (index) {
+        if ($scope.editingPolygon !== null || !$scope.polygons[index]) {
+            return;
+        }
+        $scope.editingPolygon = index;
+    };
+
+    $scope.savePolygon = function (index) {
+        if ($scope.editingPolygon !== index) {
+            return;
+        }
+        console.log($scope.polygons[index]);
+        $scope.polygons[index].points = $scope.polygons[index].points.filter(point => typeof point.lat === "number" && typeof point.lng === "number");
+        if ($scope.polygons[index]._id) {
+            MapService.updatePolygon($scope.polygons[index], (err, res) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.polygons = res;
+                    $scope.editingPolygon = null;
+                }
+            });
+        } else {
+            MapService.createPolygon($scope.polygons[index], (err, res) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.polygons = res;
+                    $scope.editingPolygon = null;
+                }
+            });
+        }
+    };
+
+    $scope.removePolygon = function (index) {
+        if ($scope.editingPolygon !== index) {
+            return;
+        }
+        if ($scope.polygons[index]._id) {
+            MapService.deletePolygon($scope.polygons[index]._id, (err, res) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.polygons = res;
+                    $scope.editingPolygon = null;
+                }
+            });
+        } else {
+            $scope.polygons.splice(index + 1, 0, {});
+            $scope.editingPolygon = null;
+        }
+    };
+
+    $scope.addPointAfter = function (rootIndex, index) {
+        if ($scope.editingPolygon !== rootIndex || index > $scope.polygons[rootIndex].points.length) {
+            return;
+        }
+        $scope.polygons[rootIndex].points.splice(index + 1, 0, {});
+    };
+
+    $scope.removePoint = function (rootIndex, index) {
+        if ($scope.editingPolygon !== rootIndex || !$scope.polygons[rootIndex].points[index]) {
+            return;
+        }
+        $scope.polygons[rootIndex].points.splice(index, 1);
+    };
 }
 
 module.exports = {

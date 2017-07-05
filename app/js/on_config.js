@@ -76,7 +76,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     title: "Super User Panel"
                 }
             }
-        })
+        });
 
     $urlRouterProvider.otherwise("/");
 }

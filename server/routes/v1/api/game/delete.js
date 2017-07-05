@@ -1,7 +1,7 @@
 const deleteById = rootRequire("server/data-access/functions/game/deleteById");
 
 function Delete(req, res, next) {
-    deleteById(req.query.id, (result) => {
+    deleteById(req.query.id, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -10,6 +10,6 @@ function Delete(req, res, next) {
             res.sendStatus(204);
         }
     });
-};
+}
 
 module.exports = Delete;

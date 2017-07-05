@@ -16,7 +16,7 @@ function GameService($http, AppSettings, $cookies) {
                     cb(null);
                 }
             },
-            (err) => {
+            err => {
                 console.error(err);
                 cb(null);
             });
@@ -26,7 +26,7 @@ function GameService($http, AppSettings, $cookies) {
         if (!(date instanceof Date)) {
             return false;
         }
-        let now = new Date();
+        const now = new Date();
         if (date.getFullYear() < now.getFullYear()) {
             return true;
         } else if (date.getFullYear() === now.getFullYear()) {
@@ -103,7 +103,7 @@ function GameService($http, AppSettings, $cookies) {
     SERVICE.updateGame = function (game, cb) {
         $http.put(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
-                let game = res.data;
+                const game = res.data;
                 game.startDate = new Date(game.startDate);
                 game.endDate = new Date(game.endDate);
                 game.signUpDates = game.signUpDates.map(date => new Date(date));
@@ -116,7 +116,7 @@ function GameService($http, AppSettings, $cookies) {
     SERVICE.createGame = function (game, cb) {
         $http.post(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
             .then(res => {
-                let game = res.data;
+                const game = res.data;
                 game.startDate = new Date(game.startDate);
                 game.endDate = new Date(game.endDate);
                 game.signUpDates = game.signUpDates.map(date => new Date(date));

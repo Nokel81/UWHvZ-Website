@@ -1,12 +1,12 @@
-const allow_characters = "abcdefghjkmnpqrtuvwxyz2346789";
+const allowCharacters = "abcdefghjkmnpqrtuvwxyz2346789";
 
 function PlayerCode(length) {
-    if (typeof length !== "Number") {
+    if (typeof length !== "number") {
         length = 10;
     }
     let res = "";
     while (res.length < length) {
-        res += allow_characters[Math.floor(Math.random() * allow_characters.length)];
+        res += allowCharacters[Math.floor(Math.random() * allowCharacters.length)];
     }
     return res;
 }

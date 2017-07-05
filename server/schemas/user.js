@@ -27,7 +27,8 @@ const userSchema = new Schema({
     playerName: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        set: v => v.replace(/(\b[a-z](?!\s))/g, x => x.toUpperCase())
     },
     confirmationToken: {
         type: String

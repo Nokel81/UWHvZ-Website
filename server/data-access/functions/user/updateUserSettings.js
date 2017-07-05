@@ -7,7 +7,8 @@ function UpdateUserSettings(newSettings, cb) {
     }, {
         $set: {
             gameEmails: newSettings.gameEmails,
-            promotionalEmails: newSettings.promotionalEmails
+            promotionalEmails: newSettings.promotionalEmails,
+            spectateGame: newSettings.spectateGame
         }
     }, (err, settings) => {
         if (err) {

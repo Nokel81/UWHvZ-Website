@@ -2,7 +2,7 @@ const allowCharacters = "abcdefghjkmnpqrtuvwxyz2346789";
 
 function PlayerCode(length) {
     if (typeof length !== "number") {
-        length = 10;
+        length = 8;
     }
     let res = "";
     while (res.length < length) {

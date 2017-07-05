@@ -28,8 +28,8 @@ function FindById(gameId, cb) {
                     });
                 });
                 res.sort((a, b) => {
-                    const A = a.toUpperCase();
-                    const B = b.toUpperCase();
+                    const A = a.name.toUpperCase();
+                    const B = b.name.toUpperCase();
                     if (A < B) {
                         return -1;
                     }

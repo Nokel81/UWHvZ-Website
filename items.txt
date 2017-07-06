@@ -2,5 +2,4 @@
 - Generating supply codes (value, number) and display them
 - Starting the game
 - Zombie tree
-- User reset password
 - User send confirmation email again

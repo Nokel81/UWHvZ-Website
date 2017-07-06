@@ -9,6 +9,7 @@ require("angular-cookies");
 require("angular-ui-bootstrap");
 require("angular-animate");
 require("./controllers");
+require("./directives");
 require("./services");
 
 // Mount on window for testing
@@ -18,6 +19,7 @@ window.app = angular.module("app", [
     "ngAnimate",
     "ngCookies",
     "app.controllers",
+    "app.directives",
     "app.services"
 ]);
 

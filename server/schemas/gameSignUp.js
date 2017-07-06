@@ -17,7 +17,7 @@ const gameSignUp = new Schema({
     teamPreference: {
         type: String,
         required: true,
-        enum: ["Human", "Zombie"]
+        enum: ["Human", "Zombie", "Spectator"]
     }
 });
 gameSignUp.index({gameId: 1, userEmail: 1}, {unique: true});

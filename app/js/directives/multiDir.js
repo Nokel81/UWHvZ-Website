@@ -1,3 +1,5 @@
+const objectPath = require("object-path");
+
 function ToggleDirective() {
     "ngInject";
 
@@ -16,12 +18,9 @@ function ToggleDirective() {
             let values = JSON.parse("[" + scope.values.replace(/([^\\]?)'/g, "$1\"") + "]");
             let colours = JSON.parse("[" + scope.colours.replace(/([^\\]?)'/g, "$1\"") + "]");
             let titles = JSON.parse("[" + (scope.titles || "").replace(/([^\\]?)'/g, "$1\"") + "]");
-            let path = ngModel.$$attr.ngModel.split(".");
-            let tempVal = scope.$parent;
-            for (let i = 0; i < path.length; i++) {
-                tempVal = tempVal[path[i]];
-            }
-            var index = values.findIndex((elem) => elem === tempVal);
+            let tempVal = objectPath.get(scope.$parent, ngModel.$$attr.ngModel);
+            let index = values.findIndex((elem) => elem === tempVal);
+            let active = true;
             if (index === -1) {
                 index = 0;
             }
@@ -57,11 +56,23 @@ function ToggleDirective() {
                 "margin-bottom": ".5em"
             });
 
+            element.on('mouseover', function () {
+                if (attrs.disabled) {
+                    element.css("cursor", "disabled");
+                    active = false;
+                } else {
+                    element.css("cursor", "pointer");
+                    active = true
+                }
+            });
+
             element.on('click', function() {
-                index = (index + 1) % titles.length;
-                element.css("background", colours[index]);
-                element.text(titles[index]);
-                ngModel.$setViewValue(values[index]);
+                if (active) {
+                    index = (index + 1) % titles.length;
+                    element.css("background", colours[index]);
+                    element.text(titles[index]);
+                    ngModel.$setViewValue(values[index]);
+                }
             });
 
             scope.$watch(() => ngModel.$viewValue, function (newVal) {

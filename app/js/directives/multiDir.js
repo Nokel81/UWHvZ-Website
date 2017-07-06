@@ -58,7 +58,7 @@ function ToggleDirective() {
 
             element.on('mouseover', function () {
                 if (attrs.disabled) {
-                    element.css("cursor", "disabled");
+                    element.css("cursor", "not-allowed");
                     active = false;
                 } else {
                     element.css("cursor", "pointer");

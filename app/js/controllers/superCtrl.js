@@ -285,6 +285,14 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
         $scope.polygons[rootIndex].points.splice(index, 1);
     };
+
+    $scope.addPolygon = function () {
+        if ($scope.editingPolygon !== null) {
+            return;
+        }
+        $scope.editingPolygon = $scope.polygons.length;
+        $scope.polygons.push({points: [{}]});
+    };
 }
 
 module.exports = {

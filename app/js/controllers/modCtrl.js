@@ -1,4 +1,4 @@
-function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService) {
+function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll) {
     "ngInject";
     $scope.players = [];
     $scope.editing = null;
@@ -39,12 +39,13 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if ($scope.editing !== null || !$scope.game) {
             return;
         }
+        $scope.editing = $scope.players.length;
         $scope.players.push({
             userEmail: "",
             teamPreference: "Human",
             gameId: $scope.game._id
         });
-        $scope.editing = $scope.players.length - 1;
+        $anchorScroll("bottom");
     };
 
     $scope.savePlayer = function (index) {

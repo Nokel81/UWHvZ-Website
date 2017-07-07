@@ -8,6 +8,8 @@
 <div class="tab-content">
     <div class="tab-pane active" id="GameSignups" role="tabpanel">
         <div ng-show="game != null">
+            <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
+            <br>
             <b>Players signed up: <span ng-bind="players.length"></span></b>
             <div class="container-fluid">
                 <div class="row">
@@ -22,6 +24,7 @@
                     </div>
                 </div>
             </div>
+
             <div ng-repeat="player in players">
                 <div class="container-fluid">
                     <div class="row">
@@ -51,7 +54,7 @@
             </div>
             <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
             <br>
-            <br>
+            <br id="bottom">
         </div>
         <div ng-show="game == null">
             <b class="centre">No Game to sign up for</b>

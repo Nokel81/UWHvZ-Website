@@ -1,4 +1,4 @@
-function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
+function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $http, AppSettings) {
     "ngInject";
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
@@ -19,7 +19,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     UserService.getBySession(user => {
         $scope.user = user;
-
+        if (!user) {
+            return;
+        }
         UserService.getUserSettings(settings => {
             $scope.settings = settings || {};
         });
@@ -101,6 +103,11 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 });
                 UserService.isSuper(isSuper => {
                     $rootScope.isSuper = isSuper;
+                });
+                UserService.getValidRecipients(user._id, (err, recipients) => {
+                    if (recipients) {
+                        $scope.validRecipients = recipients;
+                    }
                 });
             }
         });
@@ -188,6 +195,21 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
+    $scope.upload = function () {
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+
+        $http.post(AppSettings.apiUrl + "/message/attachments", fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(function (d) {
+            console.log(d);
+        })
+    }
+
     $scope.sendMessage = function() {
         if (!$scope.messageTo) {
             return AlertService.danger("Please select a recipient");
@@ -198,39 +220,16 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.messageBody) {
             return AlertService.danger("Please type a message body");
         }
-        if ($scope.messageFiles.length === 0) {
-            UserService.sendMessageNoAttachments($scope.messageTo, $scope.messageSubject, $scope.messageBody, (err, res) => {
-                if (err) {
-                    AlertService.danger(err);
-                } else {
-                    AlertService.info(res);
-                }
-            });
-        } else {
-            var fileDatas = [];
-            for (let i = 0; i < $scope.messageFiles.length; i++) {
-                let file = $scope.messageFiles[i];
-                fileDatas.push({
-                    data: file,
-                    contentType: file.type || "text/plain",
-                    name: file.name
-                });
-                if (fileDatas.length === $scope.messageFiles.length) {
-                    UserService.sendMessageWithAttachments($scope.messageTo, $scope.messageSubject, $scope.messageBody, fileDatas, (err, res) => {
-                        if (err) {
-                            AlertService.danger(err);
-                        } else {
-                            AlertService.info(res);
-                        }
-                    });
-                }
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+        UserService.sendMessage($scope.messageTo, $scope.messageSubject, $scope.messageBody, fd, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
             }
-        }
-    };
-
-    $scope.uploadedFile = function(element) {
-        $scope.$apply(function($scope) {
-            $scope.messageFiles = element.files;
         });
     };
 }

@@ -41,6 +41,8 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             },
             err => {
                 cb(null);
+                SERVICE.session = null;
+                $cookies.remove("session");
             });
     };
 
@@ -228,23 +230,23 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.sendMessageNoAttachments = function (to, subject, body, cb) {
-
-    };
-
-    SERVICE.sendMessageWithAttachments = function (to, subject, body, attachments, cb) {
-        let file = attachments[0];
-        console.log(file);
-        var formData = new FormData();
-        formData.append('file', file);
-        $http.post(AppSettings.apiUrl + "/message/attachments", formData, {
-            headers: {'Content-Type': undefined }
+    SERVICE.sendMessage = function (to, subject, body, files, cb) {
+        $http.post(AppSettings.apiUrl + "/message/attachments", files, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
         })
-            .then(res => {
-                cb(null, res.data);
-            }, err => {
-                cb(err.data);
-            });
+        .then(res => {
+            let fileData = res.data;
+            let req = {to,subject,body,fileData};
+            $http.post(AppSettings.apiUrl + "/message", req)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                });
+        }, err => {
+            cb("File upload failed");
+        })
     };
 
     return SERVICE;

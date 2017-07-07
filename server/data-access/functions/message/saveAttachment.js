@@ -6,26 +6,22 @@ const attachmentStoreDirectory = path.resolve(__dirname, "../../../attachmentSto
 
 function SaveAttachments(request, cb) {
     var form = new multiparty.Form({uploadDir: attachmentStoreDirectory});
+    let res = [];
 
     form.on('file', (name, file) => {
-        console.log(name);
-        console.log(file);
-        cb({body: "All good"});
+        res.push({
+            fieldName: file.fieldName,
+            originalFilename: file.originalFilename,
+            path: file.path
+        });
     });
 
     form.on('error', error => {
         cb({error});
     });
 
-    form.on('progress', (byteRecieved, byteExpected) => {
-        console.log(byteRecieved + " : " + byteExpected);
-    });
+    form.on('close', () => cb({body: res}));
 
-    form.on('close', () => {
-        cb({body: "All good"});
-    });
-
-    console.log("parsing");
     form.parse(request);
 }
 

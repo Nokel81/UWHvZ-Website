@@ -52,7 +52,22 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane" id="Info" role="tabpanel">Info</div>
-        <div class="tab-pane" id="Messages" role="tabpanel">Messages</div>
+        <div class="tab-pane" id="Messages" role="tabpanel">
+            <div class="container-fluid">
+                <select class="formish-control custom-select full-width" ng-model="messageTo">
+                    <option value="" selected disabled>Message To:</option>
+                    <option value="{{validRecipient.value}}" ng-repeat="validRecipient in validRecipients">{{validRecipient.title}}</option>
+                </select>
+                <div class="input-group">
+                    <span class="input-group-addon" id="messageSubject">Subject</span>
+                    <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
+                </div>
+                <textarea rows="8" cols="80" class="form-control" ng-model="messageBody"></textarea>
+                <br>
+                <input type="file" multiple file-input="files" class="btn btn-info">
+                <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>
+            </div>
+        </div>
         <div class="tab-pane" id="Code" role="tabpanel">
             <div class="centre font-20">
                 <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
@@ -100,11 +115,11 @@
                 <button type="button" class="right btn btn-info" ng-click="logOut()">logout</button>
                 <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">
                 <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="gEmail"></label>
-                <span class="tgl-label whitespace">    Recieve game play information emails</span>
+                <span class="tgl-label whitespace">    Receive game play information emails</span>
                 <br>
                 <input id="pEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.promotionalEmails">
                 <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="pEmail"></label>
-                <span class="tgl-label whitespace">    Recieve emails about upcoming events</span>
+                <span class="tgl-label whitespace">    Receive emails about upcoming events</span>
                 <br>
                 <br>
                 <div class="row">

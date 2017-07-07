@@ -33,9 +33,11 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     };
 
     GameService.getClosestOrCurrent(gameObj => {
-        getLatLngs(gameObj.signUpLocations, () => {
-            $scope.game = gameObj;
-        });
+        if (gameObj) {
+            getLatLngs(gameObj.signUpLocations, () => {
+                $scope.game = gameObj;
+            });
+        }
     });
 
     $scope.getDateString = function (date) {

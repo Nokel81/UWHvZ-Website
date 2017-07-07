@@ -41,6 +41,8 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             },
             err => {
                 cb(null);
+                SERVICE.session = null;
+                $cookies.remove("session");
             });
     };
 
@@ -217,6 +219,34 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             }, err => {
                 cb(err.data);
             });
+    };
+
+    SERVICE.getValidRecipients = function (userId, cb) {
+        $http.get(AppSettings.apiUrl + "/message/recipients?userId=" + userId)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.sendMessage = function (to, subject, body, files, cb) {
+        $http.post(AppSettings.apiUrl + "/message/attachments", files, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(res => {
+            let fileData = res.data;
+            let req = {to,subject,body,fileData};
+            $http.post(AppSettings.apiUrl + "/message", req)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                });
+        }, err => {
+            cb("File upload failed");
+        })
     };
 
     return SERVICE;

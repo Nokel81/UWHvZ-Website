@@ -23,7 +23,6 @@ function FindByUser(gameId, cb) {
                     j.usedByName = (users.find(user => user._id.toString() === (j.usedBy || "").toString()) || {}).playerName || "";
                     res.push(j);
                 });
-                console.log(res);
                 cb({body: res});
             });
         });

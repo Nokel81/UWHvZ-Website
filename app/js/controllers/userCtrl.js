@@ -1,11 +1,12 @@
-function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
+function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $http, AppSettings) {
     "ngInject";
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
     $scope.password = UserService.password;
     $scope.session = UserService.session;
+    $scope.validRecipients = [];
 
-    const checkPasswords = function (password, passwordCheck) {
+    const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
             return false;
         }
@@ -18,8 +19,16 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     UserService.getBySession(user => {
         $scope.user = user;
+        if (!user) {
+            return;
+        }
         UserService.getUserSettings(settings => {
             $scope.settings = settings || {};
+        });
+        UserService.getValidRecipients(user._id, (err, recipients) => {
+            if (recipients) {
+                $scope.validRecipients = recipients;
+            }
         });
     });
 
@@ -29,7 +38,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $scope.session = null;
         UserService.session = null;
         UserService.user = null;
-        $location.search("token", null);// Removes the search parameter
+        $location.search("token", null); // Removes the search parameter
         UserService.confirmEmail(token, (err, res) => {
             if (err) {
                 AlertService.danger(err);
@@ -53,7 +62,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         UserService.password = newVal;
     });
 
-    $scope.forgotPassword = function () {
+    $scope.forgotPassword = function() {
         if (!$scope.email) {
             return AlertService.danger("No email provided");
         }
@@ -66,7 +75,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.logOut = function () {
+    $scope.logOut = function() {
         UserService.logout(() => {
             $scope.session = null;
             $scope.user = null;
@@ -75,7 +84,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.logIn = function () {
+    $scope.logIn = function() {
         if ($scope.buttonState !== "logIn") {
             $scope.buttonState = "logIn";
             return;
@@ -95,11 +104,16 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 UserService.isSuper(isSuper => {
                     $rootScope.isSuper = isSuper;
                 });
+                UserService.getValidRecipients(user._id, (err, recipients) => {
+                    if (recipients) {
+                        $scope.validRecipients = recipients;
+                    }
+                });
             }
         });
     };
 
-    $scope.signUp = function () {
+    $scope.signUp = function() {
         if ($scope.buttonState !== "signUp") {
             $scope.buttonState = "signUp";
             return;
@@ -129,7 +143,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             });
     };
 
-    $scope.tagCode = function () {
+    $scope.tagCode = function() {
         if (!$scope.taggedCode || !$scope.taggedDescription) {
             return;
         }
@@ -145,7 +159,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.supplyCodeReport = function () {
+    $scope.supplyCodeReport = function() {
         if (!$scope.supplyCode) {
             return;
         }
@@ -159,7 +173,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.changePassword = function () {
+    $scope.changePassword = function() {
         if ($scope.newPassword !== $scope.newPasswordCheck) {
             return AlertService.danger("New passwords don't match");
         }
@@ -177,6 +191,44 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $scope.newPassword = "";
                 $scope.newPasswordCheck = "";
                 $scope.oldPassword = "";
+            }
+        });
+    };
+
+    $scope.upload = function () {
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+
+        $http.post(AppSettings.apiUrl + "/message/attachments", fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(function (d) {
+            console.log(d);
+        })
+    }
+
+    $scope.sendMessage = function() {
+        if (!$scope.messageTo) {
+            return AlertService.danger("Please select a recipient");
+        }
+        if (!$scope.messageSubject) {
+            return AlertService.danger("Please type a subject");
+        }
+        if (!$scope.messageBody) {
+            return AlertService.danger("Please type a message body");
+        }
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+        UserService.sendMessage($scope.messageTo, $scope.messageSubject, $scope.messageBody, fd, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
             }
         });
     };

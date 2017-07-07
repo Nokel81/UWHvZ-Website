@@ -1,14 +1,13 @@
 const Game = rootRequire("server/schemas/game");
 
 function FindCurrentOrNext(cb) {
-    Game.find({endDate: {$gte: new Date()}})
-        .limit(1)
+    Game.findOne({endDate: {$gte: new Date()}})
         .sort({endDate: -1})
-        .exec((err, games) => {
+        .exec((err, game) => {
             if (err) {
                 return cb({error: err});
             }
-            cb({body: games[0]});
+            cb({body: game});
         });
 }
 

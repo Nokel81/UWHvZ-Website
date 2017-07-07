@@ -273,6 +273,10 @@ p+ul {
     width: inherit;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .icon-form {
     margin-top: 8px;
 }

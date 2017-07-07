@@ -52,7 +52,23 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane" id="Info" role="tabpanel">Info</div>
-        <div class="tab-pane" id="Messages" role="tabpanel">Messages</div>
+        <div class="tab-pane" id="Messages" role="tabpanel">
+            <div class="container-fluid">
+                <select class="formish-control custom-select full-width" ng-model="messageTo">
+                    <option value="" selected disabled>Message To:</option>
+                    <option value="{{validRecipient.value}}" ng-repeat="validRecipient in validRecipients">{{validRecipient.title}}</option>
+                </select>
+                <div class="input-group">
+                    <span class="input-group-addon" id="messageSubject">Subject</span>
+                    <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
+                </div>
+                <textarea rows="8" cols="80" minlength="50" class="form-control" ng-model="messageBody"></textarea>
+                <span class="right">Minumum length 50 characters</span>
+                <br>
+                <input type="file" id="messageFiles" multiple class="btn btn-info" onchange="angular.element(this).scope().uploadedFile(this)">
+                <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>
+            </div>
+        </div>
         <div class="tab-pane" id="Code" role="tabpanel">
             <div class="centre font-20">
                 <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>

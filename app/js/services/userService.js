@@ -219,6 +219,34 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.getValidRecipients = function (userId, cb) {
+        $http.get(AppSettings.apiUrl + "/message/recipients?userId=" + userId)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.sendMessageNoAttachments = function (to, subject, body, cb) {
+
+    };
+
+    SERVICE.sendMessageWithAttachments = function (to, subject, body, attachments, cb) {
+        let file = attachments[0];
+        console.log(file);
+        var formData = new FormData();
+        formData.append('file', file);
+        $http.post(AppSettings.apiUrl + "/message/attachments", formData, {
+            headers: {'Content-Type': undefined }
+        })
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

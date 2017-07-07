@@ -25,7 +25,7 @@ function Create(user, cb) {
             if (err) {
                 return cb({error: err});
             }
-            gmailService.sendConfirmationEmail(newUser, "uwhvz.uwaterloo.ca/user?token=" + user.confirmationToken, (err, res) => {
+            gmailService.sendConfirmationEmail(newUser, "https://uwhvz.uwaterloo.ca/user?token=" + user.confirmationToken, (err, res) => {
                 if (err) {
                     return cb({error: err});
                 }

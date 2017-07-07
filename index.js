@@ -41,10 +41,6 @@ bundler
     .on("end", () => {
         // Setting up the server
 
-        // const credentials = {
-        //     key: fs.readFileSync("./ssl-key/key.pem", "utf8"),
-        //     cert: fs.readFileSync("./ssl-key/cert.pem", "utf8")
-        // };
         const app = express();
 
         app.use(bodyParser.urlencoded({extended: true}));
@@ -63,12 +59,6 @@ bundler
                 return;
             }
             console.log(res.sucess);
-
-            // TODO: Activate SSL, but don't bother with it yet
-            // var httpsServer = https.createServer(credentials, app);
-            // httpsServer.listen(config.port, function () {
-            //     console.log("Listening on port: " + config.port);
-            // });
 
             if (!initialize) {
                 return;

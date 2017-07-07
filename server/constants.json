@@ -1,0 +1,10 @@
+{
+    "recipientCodes": {
+        "toAllPlayers": "AllPlayers",
+        "toModerators": "Moderators",
+        "toWebmaster": "Webmaster",
+        "toZombies": "Zombies",
+        "toAllUsers": "AllUsers",
+        "toHumans": "Humans"
+    }
+}

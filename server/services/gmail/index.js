@@ -50,13 +50,10 @@ SERVICE.sendMessage = function (message, cb) {
             if (err) {
                 return cb({error: err});
             }
-            count++;
-            if (count === message.to.length) {
-                cb({body: "Message sent"});
-                message.fileData.forEach(fileData => {
-                    fs.unlink(fileData.path);
-                });
-            }
+            cb({body: "Message sent"});
+            message.fileData.forEach(fileData => {
+                fs.unlink(fileData.path);
+            });
         });
     } else {
         send({

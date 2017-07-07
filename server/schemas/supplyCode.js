@@ -18,7 +18,7 @@ const supplyCodeSchema = new Schema({
     usedBy: {
         type: Schema.Types.ObjectId
     },
-    usedInGame: {
+    forGame: {
         type: Schema.Types.ObjectId
     }
 });

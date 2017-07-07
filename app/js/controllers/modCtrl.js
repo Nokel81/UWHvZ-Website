@@ -1,4 +1,4 @@
-function ModCtrl($scope, $location, UserService, GameService, AlertService, $window) {
+function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService) {
     "ngInject";
     $scope.players = [];
     $scope.editing = null;
@@ -24,6 +24,13 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             } else {
                 $scope.players = signups;
                 $scope.game = game;
+            }
+        });
+        ModService.getSupplyCodes(game._id, (err, codes) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                $scope.supplyCodes = codes;
             }
         });
     });
@@ -92,6 +99,25 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 $scope.editing = null;
             }
         }
+    };
+
+    $scope.addCodes = function () {
+        ModalService.openSupplyCodeModal($scope.game._id)
+            .result
+            .then(res => {
+                ModService.saveSupplyCodes(res, $scope.game._id, function (err, codes) {
+                    if (err) {
+                        return AlertService.danger(err);
+                    }
+                    AlertService.info("Supply codes saved");
+                    $scope.supplyCodes = codes;
+                });
+            })
+            .catch(err => {
+                if (err) {
+                    AlertService.danger(err);
+                }
+            });
     };
 }
 

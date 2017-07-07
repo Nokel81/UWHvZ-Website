@@ -1,0 +1,29 @@
+<div class="modal-header">
+    Add new supply codes
+</div>
+<div class="modal-body">
+    <div class="input-group">
+        <span class="input-group-addon" id="numberOfCodes">Number Of Codes:</span>
+        <input type="number" class="form-control" ng-model="numberOfCodes" aria-describedby="numberOfCodes">
+        <input type="number" class="form-control" placeholder="Code Value" ng-model="codeValue">
+        <button type="button" class="btn btn-success formish-control" ng-click="generate()">Generate</button>
+    </div>
+    <br>
+    <br>
+    <table ng-show="codes.length">
+        <tr>
+            <th>Code</th>
+            <th>Value</th>
+        </tr>
+        <tr ng-repeat="code in codes">
+            <td>{{code.code}}</td>
+            <td>{{code.value}}</td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <div class="right">
+        <button type="button" class="btn btn-success" ng-show="codes.length" ng-click="save()">Save Codes</button>
+        <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

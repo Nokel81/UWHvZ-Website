@@ -1,18 +1,16 @@
 const SupplyCode = rootRequire("server/schemas/supplyCode");
+const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGame");
 
-function Create(supplyCode, cb) {
-    const newSupplyCode = new SupplyCode(supplyCode);
-    newSupplyCode.validate(err => {
-        if (err) {
-            return cb({error: err});
-        }
-        newSupplyCode.save((err, supplyCode) => {
+function Create(supplyCodes, gameId, cb) {
+    SupplyCode.insertMany(supplyCodes, (err, codes) => {
             if (err) {
                 return cb({error: err});
             }
-            cb({body: "Supply Code create with code: " + supplyCode.code});
+            if (supplyCodes.length === 0) {
+                return cb({body: []});
+            }
+            findByGame(gameId, cb);
         });
-    });
 }
 
 module.exports = Create;

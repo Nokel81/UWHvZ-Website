@@ -1,8 +1,9 @@
 const create = rootRequire("server/data-access/functions/supplyCode/create");
 
 function Post(req, res, next) {
-    const supplyCode = req.body;
-    create(supplyCode, result => {
+    const supplyCodes = req.body.codes;
+    const gameId = req.body.gameId;
+    create(supplyCodes, gameId, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

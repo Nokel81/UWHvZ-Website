@@ -11,6 +11,22 @@ function ModalService($uibModal) {
         });
     };
 
+    SERVICE.openSupplyCodeModal = function (gameId, defaultValue) {
+        return $uibModal.open({
+            controller: "SupplyCtrl",
+            templateUrl: "views/modals/supplyCodes.html",
+            resolve: {
+                GameId: function () {
+                    return gameId;
+                },
+                DefaultValue: function () {
+                    return 5;
+                }
+            },
+            size: "lg"
+        });
+    };
+
     return SERVICE;
 }
 

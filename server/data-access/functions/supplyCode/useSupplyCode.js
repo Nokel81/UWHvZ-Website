@@ -22,18 +22,17 @@ function FindByUser(info, cb) {
                 SupplyCode.findOneAndUpdate({
                     code: info.code,
                     usedBy: {$exists: false},
-                    usedInGame: {$exists: false}
+                    forGame: game._id
                 }, {
                     $set: {
-                        usedBy: info.userId,
-                        usedInGame: game._id
+                        usedBy: info.userId
                     }
                 }, (err, supplyCode) => {
                     if (err) {
                         return cb({error: err});
                     }
                     if (!supplyCode) {
-                        return cb({error: "Supply Code already used"});
+                        return cb({error: "Supply Code already used or does not exist for this game"});
                     }
                     cb({body: "Supply code used"});
                 });

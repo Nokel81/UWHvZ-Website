@@ -38,27 +38,24 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
 
 SERVICE.sendMessage = function (message, cb) {
     if (Array.isArray(message.to)) {
-        let count = 0;
-        message.to.forEach(email => {
-            send({
-                user: credentials.gmail_email,
-                pass: credentials.gmail_password,
-                to: email,
-                subject: message.subject,
-                text: message.body,
-                files: message.fileData.map(fileData => fileData.path)
-            })({}, (err, res) => {
-                if (err) {
-                    return cb({error: err});
-                }
-                count++;
-                if (count === message.to.length) {
-                    cb({body: "Message sent"});
-                    message.fileData.forEach(fileData => {
-                        fs.unlink(fileData.path);
-                    });
-                }
-            });
+        send({
+            user: credentials.gmail_email,
+            pass: credentials.gmail_password,
+            bcc: message.to,
+            subject: message.subject,
+            text: message.body,
+            files: message.fileData.map(fileData => fileData.path)
+        })({}, (err, res) => {
+            if (err) {
+                return cb({error: err});
+            }
+            count++;
+            if (count === message.to.length) {
+                cb({body: "Message sent"});
+                message.fileData.forEach(fileData => {
+                    fs.unlink(fileData.path);
+                });
+            }
         });
     } else {
         send({

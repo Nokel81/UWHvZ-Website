@@ -41,6 +41,7 @@ SERVICE.sendMessage = function (message, cb) {
         send({
             user: credentials.gmail_email,
             pass: credentials.gmail_password,
+            to: 'messages.uwhvz@gmail.com',
             bcc: message.to,
             subject: message.subject,
             text: message.body,

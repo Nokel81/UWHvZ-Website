@@ -19,6 +19,10 @@ function FindById(gameId, cb) {
                 }
                 const res = [];
                 signUps.forEach(signUp => {
+                    if (!users.find(user => signUp.userEmail === user.email)) {
+                        console.error(signUps.userEmail);
+                        return;
+                    }
                     res.push({
                         userEmail: signUp.userEmail,
                         _id: signUp._id,

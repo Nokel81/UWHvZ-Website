@@ -26,11 +26,11 @@ function GetUserRecipients(userId, cb) {
                 if (type === "NonPlayer" || type === "Spectator") {
                     return cb({body: recipients});
                 }
+                recipients.push({
+                    title: "All Players",
+                    value: recipientCodes.toAllPlayers
+                });
                 if (type === "Human") {
-                    recipients.push({
-                        title: "Humans",
-                        value: recipientCodes.toAllPlayers
-                    });
                     return cb({body: recipients});
                 }
                 recipients.push({
@@ -43,10 +43,6 @@ function GetUserRecipients(userId, cb) {
                 recipients.push({
                     title: "Humans",
                     value: recipientCodes.toHumans
-                });
-                recipients.push({
-                    title: "All Players",
-                    value: recipientCodes.toAllPlayers
                 });
                 recipients.push({
                     title: "All Users",

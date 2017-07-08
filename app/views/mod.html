@@ -35,7 +35,7 @@
                             <input type="text" class="form-control" ng-model="player.name" placeholder="Account name..." disabled>
                         </div>
                         <div class="col-md-2">
-                            <div class="formish-control">
+                            <div class="formish-control" ng-show="editing === $index">
                                 <div hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-disabled="editing != $index"></div>
                             </div>
                         </div>

@@ -86,7 +86,7 @@ function SendMessage(message, cb) {
                     if (err) {
                         return cb({error: err});
                     }
-                    let validUserIds = settings.filter(group => group.gameEmails);
+                    let validUserIds = settings.filter(group => group.gameEmails).map(group => group.userId);
                     User.find({_id: {$in: validUserIds}})
                         .select("email")
                         .exec((err, users) => {

@@ -7,6 +7,9 @@ function GetUserById(id, cb) {
             if (err) {
                 return cb({error: err});
             }
+            if (!user) {
+                return cb({error: "User not found"});
+            }
             cb({body: user});
         });
 }

@@ -70,20 +70,27 @@ SERVICE.sendMessage = function (message, cb) {
         files: message.fileData.map(fileData => fileData.path)
     };
     if (Array.isArray(message.to)) {
-        mailOptions.to = 'uwhumansvszombies@gmail.com';
-        mailOptions.bcc = message.to;
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error(error);
-                return cb("Email not sent");
-            }
-            cb(null, "Message sent");
-            message.fileData.forEach(fileData => {
-                fs.unlink(fileData.path);
+        let count = 0;
+        message.to.forEach((to, index, tos) => {
+            let email = JSON.parse(JSON.stringify(mailOptions));
+            email.to = to;
+            transporter.sendMail(email, (error, info) => {
+                if (error) {
+                    console.error(error);
+                    return cb("Email not sent");
+                }
+                count++;
+                if (count === tos.length) {
+                    cb(null, "Message sent");
+                    message.fileData.forEach(fileData => {
+                        fs.unlink(fileData.path);
+                    });
+                }
             });
         });
     } else {
-        mailOptions.to = message.to;transporter.sendMail(mailOptions, (error, info) => {
+        mailOptions.to = message.to;
+        transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.error(error);
                 return cb("Email not sent");

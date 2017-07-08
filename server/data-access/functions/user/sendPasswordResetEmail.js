@@ -1,5 +1,5 @@
 const User = rootRequire("server/schemas/user");
-const gmailService = rootRequire("server/services/gmail");
+const mailService = rootRequire("server/services/mail");
 const randomString = require("crypto-random-string");
 
 function ConfirmUser(email, cb) {
@@ -17,7 +17,7 @@ function ConfirmUser(email, cb) {
                     return cb({error: err});
                 }
                 const confirmationLink = "https://uwhvz.uwaterloo.ca/passwordReset?code=" + user.passwordResetCode;
-                gmailService.sendPasswordResetEmail(user, confirmationLink, (err, res) => {
+                mailService.sendPasswordResetEmail(user, confirmationLink, (err, res) => {
                     if (err) {
                         return cb({error: err});
                     }

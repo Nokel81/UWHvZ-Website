@@ -90,11 +90,12 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.signUp = function (email, password, name, cb) {
+    SERVICE.signUp = function (email, password, name, teamPreference, cb) {
         const body = {
             email,
             password,
-            playerName: name
+            playerName: name,
+            teamPreference
         };
         $http.post(AppSettings.apiUrl + "/user", body)
             .then(res => {

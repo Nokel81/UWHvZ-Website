@@ -128,10 +128,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!checkPasswords($scope.password, $scope.passwordCheck)) {
             return AlertService.danger("Password need to be more complex");
         }
+        if (!$scope.joinNextGame) {
+            $scope.teamPreference = null;
+        }
         ModalService.openWaiverModal()
             .result
             .then(res => {
-                UserService.signUp($scope.email, $scope.password, $scope.name, (err, res) => {
+                UserService.signUp($scope.email, $scope.password, $scope.name, $scope.teamPreference, (err, res) => {
                     if (err) {
                         AlertService.danger(err);
                     } else {

@@ -1,5 +1,5 @@
 const recipientCodes = rootRequire("server/constants.json").recipientCodes;
-const gmailService = rootRequire('server/services/gmail');
+const mailService = rootRequire('server/services/mail');
 const User = rootRequire('server/schemas/user');
 const Settings = rootRequire('server/schemas/settings');
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
@@ -29,7 +29,7 @@ function SendMessage(message, cb) {
                     return cb({error: "Recipient not found"});
                 }
                 message.to = user.email;
-                gmailService.sendMessage(message, cb);
+                mailService.sendMessage(message, cb);
             });
     } else if (message.to === recipientCodes.toAllUsers) {
         User.find({})
@@ -46,12 +46,12 @@ function SendMessage(message, cb) {
                         }
                         let emails = users.filter(user => settings.find(group => group.userId === user._id).promotionalEmails);
                         message.to = emails;
-                        gmailService.sendMessage(message, cb);
+                        mailService.sendMessage(message, cb);
                     });
             });
     } else if (message.to === recipientCodes.toWebmaster) {
         message.to = "sebastian@malton.name";
-        gmailService.sendMessage(message, cb);
+        mailService.sendMessage(message, cb);
     } else {
         findCurrentOrNext(res => {
             if (res.error) {
@@ -85,7 +85,7 @@ function SendMessage(message, cb) {
                             }
                             let emails = users.map(user => user.email);
                             message.to = emails;
-                            gmailService.sendMessage(message, cb);
+                            mailService.sendMessage(message, cb);
                         });
                 });
         });

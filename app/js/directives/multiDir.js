@@ -53,7 +53,8 @@ function ToggleDirective() {
                 "line-height": "2em",
                 "color": "#fff",
                 "text-shadow": "0 1px 0 rgba(0, 0, 0, 0.4)",
-                "margin-bottom": ".5em"
+                "margin-bottom": ".5em",
+                "display": "inline-block"
             });
 
             element.on('mouseover', function () {

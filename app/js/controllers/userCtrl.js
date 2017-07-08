@@ -225,11 +225,15 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         angular.forEach($scope.files, function (file) {
             fd.append('file', file);
         });
+        AlertService.info("For many recipients this may take a few seconds to send");
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, $scope.messageBody, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 AlertService.info(res);
+                $scope.messageTo = "";
+                $scope.messageSubject = "";
+                $scope.messageBody = "";
             }
         });
     };

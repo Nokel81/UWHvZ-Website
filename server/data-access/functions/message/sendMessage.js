@@ -29,7 +29,12 @@ function SendMessage(message, cb) {
                     return cb({error: "Recipient not found"});
                 }
                 message.to = user.email;
-                mailService.sendMessage(message, cb);
+                mailService.sendMessage(message, (err, body) => {
+                    if (err) {
+                        return cb({error: err});
+                    }
+                    cb({body});
+                });
             });
     } else if (message.to === recipientCodes.toAllUsers) {
         User.find({})
@@ -46,7 +51,12 @@ function SendMessage(message, cb) {
                         }
                         let emails = users.filter(user => settings.find(group => group.userId === user._id).promotionalEmails);
                         message.to = emails;
-                        mailService.sendMessage(message, cb);
+                        mailService.sendMessage(message, (err, body) => {
+                            if (err) {
+                                return cb({error: err});
+                            }
+                            cb({body});
+                        });
                     });
             });
     } else if (message.to === recipientCodes.toWebmaster) {
@@ -85,7 +95,12 @@ function SendMessage(message, cb) {
                             }
                             let emails = users.map(user => user.email);
                             message.to = emails;
-                            mailService.sendMessage(message, cb);
+                            mailService.sendMessage(message, (err, body) => {
+                                if (err) {
+                                    return cb({error: err});
+                                }
+                                cb({body});
+                            });
                         });
                 });
         });

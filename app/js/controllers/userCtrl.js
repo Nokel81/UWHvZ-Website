@@ -208,9 +208,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-        .then(function (d) {
-            console.log(d);
-        })
+        .then(function (res) {})
     }
 
     $scope.sendMessage = function() {

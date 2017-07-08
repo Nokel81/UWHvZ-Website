@@ -230,7 +230,6 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if ($scope.editingPolygon !== index) {
             return;
         }
-        console.log($scope.polygons[index]);
         $scope.polygons[index].points = $scope.polygons[index].points.filter(point => typeof point.lat === "number" && typeof point.lng === "number");
         if ($scope.polygons[index]._id) {
             MapService.updatePolygon($scope.polygons[index], (err, res) => {

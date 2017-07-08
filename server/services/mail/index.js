@@ -62,7 +62,6 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
 };
 
 SERVICE.sendMessage = function (message, cb) {
-    console.log(message.fileData);
     const mailOptions = {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',

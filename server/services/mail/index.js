@@ -1,6 +1,5 @@
 const send = require("nodemailer");
 const resolve = require("html_resolve");
-const credentials = require("./client_secret.json");
 const fs = require('fs');
 
 const relativeResolve = resolve.relative(__dirname);

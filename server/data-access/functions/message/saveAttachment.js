@@ -11,7 +11,7 @@ function SaveAttachments(request, cb) {
     form.on('file', (name, file) => {
         res.push({
             fieldName: file.fieldName,
-            originalFilename: file.originalFilename,
+            filename: file.originalFilename,
             path: file.path
         });
     });

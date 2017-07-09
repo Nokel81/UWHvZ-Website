@@ -118,7 +118,7 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
         reportType: word,
         fromName,
         reportTime: getDateString(report.time),
-        isZombieText: report.type === "Tag" ? " and thus you have become a zombie, your status on the website has been updated accordingly" : "",
+        isZombieText: report.reportType === "Tag" ? " and thus you have become a zombie, your status on the website has been updated accordingly" : "",
         reportDescription: report.description,
         reportLocation: report.location
     };

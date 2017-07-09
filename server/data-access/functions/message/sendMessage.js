@@ -49,7 +49,7 @@ function SendMessage(message, cb) {
                         if (err) {
                             return cb({error: err});
                         }
-                        let emails = users.filter(user => settings.find(group => group.userId.toString() === user._id.toString()).promotionalEmails);
+                        let emails = users.filter(user => settings.find(group => group.userId.toString() === user._id.toString()).promotionalEmails).map(user => user.email);
                         message.to = emails;
                         mailService.sendMessage(message, (err, body) => {
                             if (err) {

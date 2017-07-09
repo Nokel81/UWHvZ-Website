@@ -1,4 +1,4 @@
-function GameService($http, AppSettings, $cookies) {
+function GameService($http, AppSettings, $cookies, UserService) {
     "ngInject";
 
     const SERVICE = {};
@@ -124,6 +124,24 @@ function GameService($http, AppSettings, $cookies) {
             }, err => {
                 cb(err.data || {});
             });
+    };
+
+    SERVICE.getGamePlayerInfo = function (gameId, cb) {
+        UserService.getBySession(user => {
+            let id = "";
+            if (!user) {
+                id = null;
+            } else {
+                id = user._id;
+            }
+
+            $http.get(AppSettings.apiUrl + "/game/lists?gameId=" + gameId + "&userId=" + id)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                })
+        });
     };
 
     return SERVICE;

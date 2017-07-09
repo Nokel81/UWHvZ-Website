@@ -1,30 +1,64 @@
 <div class="centre">
     <br>
-    <h1 style="font-size: 40px" ng-bind="game.name">Next Game</h1>
+    <h1 style="font-size: 40px" ng-bind="game.name || 'Next Game'"></h1>
     <i ng-bind="game.description"></i>
-    <br>
 </div>
 <div>
-    Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
-    <br>
-    Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
-    <br>
-    <br>
-    Sign Up Days:
-    <ul>
-        <li ng-repeat="date in game.signUpDates">
-            <div ng-show="strikeThrough(date)">
-                <s ng-bind="getDateString(date)"></s>
-            </div>
-            <div ng-hide="strikeThrough(date)">
-                <span ng-bind="getDateString(date)"></span>
-            </div>
-        </li>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
     </ul>
-    Sign Up Locations:
-    <ul>
-        <li ng-repeat="location in game.signUpLocations">
-            <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
-        </li>
-    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="Info" role="tabpanel">
+            <br>
+            Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
+            <br>
+            Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
+            <br>
+            <br>
+            Sign Up Days:
+            <ul>
+                <li ng-repeat="date in game.signUpDates">
+                    <div ng-show="strikeThrough(date)">
+                        <s ng-bind="getDateString(date)"></s>
+                    </div>
+                    <div ng-hide="strikeThrough(date)">
+                        <span ng-bind="getDateString(date)"></span>
+                    </div>
+                </li>
+            </ul>
+            Sign Up Locations:
+            <ul>
+                <li ng-repeat="location in game.signUpLocations">
+                    <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane" id="Players" role="tabpanel">
+            <table>
+                <thead>
+                    <th>Player Name</th>
+                    <th>Player Team</th>
+                </thead>
+                <tr ng-repeat="player in gamePlayers">
+                    <td ng-bind="player.playerName"></td>
+                    <td ng-bind="player.team"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-pane" id="Moderators" role="tabpanel">
+            <table>
+                <thead>
+                    <th>Moderator Name</th>
+                    <th>Moderator Email</th>
+                </thead>
+                <tr ng-repeat="player in gameMods">
+                    <td ng-bind="player.playerName"></td>
+                    <td><a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

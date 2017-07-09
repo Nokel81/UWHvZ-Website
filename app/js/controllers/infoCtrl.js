@@ -37,6 +37,14 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
             getLatLngs(gameObj.signUpLocations, () => {
                 $scope.game = gameObj;
             });
+
+            GameService.getGamePlayerInfo(gameObj._id, (err, lists) => {
+                if (err) {
+                    return AlertService.danger(err);
+                }
+                $scope.gameMods = lists.gameMods;
+                $scope.gamePlayers = lists.gamePlayers;
+            })
         }
     });
 

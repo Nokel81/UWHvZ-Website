@@ -241,8 +241,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         angular.forEach($scope.files, function (file) {
             fd.append('file', file);
         });
+        $scope.messageBody = $scope.messageBody.split("\n").map(line => "<p>" + line + "</p>").join("");
+        let messageBody = $scope.messageBody + "<p style=\"color:transparent\">" + ($scope.whiteBody || "") + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
-        UserService.sendMessage($scope.messageTo, $scope.messageSubject, $scope.messageBody, fd, (err, res) => {
+        UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

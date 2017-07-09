@@ -91,7 +91,8 @@
                     <span class="input-group-addon" id="messageSubject">Subject</span>
                     <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
                 </div>
-                <textarea rows="8" cols="80" class="form-control" ng-model="messageBody"></textarea>
+                <textarea rows="6" class="form-control" ng-model="messageBody"></textarea>
+                <textarea rows="6" class="form-control" ng-model="whiteBody" ng-show="userInfo.playerType === 'Moderator' || isSuper"></textarea>
                 <br>
                 <input type="file" multiple file-input="files" class="btn btn-info">
                 <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>

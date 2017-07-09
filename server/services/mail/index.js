@@ -67,7 +67,7 @@ SERVICE.sendMessage = function (message, cb) {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         subject: message.subject,
-        text: message.body,
+        html: message.body,
         attachments: message.fileData
     };
     if (Array.isArray(message.to)) {

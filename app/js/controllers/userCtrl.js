@@ -102,6 +102,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             $scope.user = null;
             $scope.settings = null;
             $rootScope.isModerator = false;
+            $scope.userInfo = {
+                status: "Please wait, loading..."
+            };
         });
     };
 

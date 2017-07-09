@@ -19,10 +19,10 @@ const reportSchema = new Schema({
         type: String,
         required: true
     },
-    decription: {
+    description: {
         type: String,
         required: true,
-        minlength: 25
+        minlength: [25, "The description has been at least 25 characters long"]
     },
     gameId: {
         type: Schema.Types.ObjectId,
@@ -36,7 +36,7 @@ const reportSchema = new Schema({
 });
 
 reportSchema.pre("validate", function (next) {
-    if (this.taggerCode.toString() === this.taggedCode.toString()) {
+    if (this.tagger.toString() === this.tagged.toString()) {
         this.invalidate("taggedCode", "Cannot tag yourself");
     }
     next();

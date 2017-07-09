@@ -132,12 +132,13 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.reportTag = function (taggedCode, tagger, decription, location, cb) {
+    SERVICE.reportTag = function (taggedCode, tagger, description, location, time, cb) {
         const body = {
             tagger,
             taggedCode,
-            decription,
-            location
+            description,
+            location,
+            time
         };
         $http.post(AppSettings.apiUrl + "/report", body)
             .then(res => {
@@ -247,7 +248,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
                 });
         }, err => {
             cb("File upload failed");
-        })
+        });
     };
 
     SERVICE.getUserInfo = function (userId, cb) {

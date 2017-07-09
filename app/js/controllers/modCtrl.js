@@ -24,6 +24,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             } else {
                 $scope.players = signups;
                 $scope.game = game;
+                $scope.gameStarted = !game || game.startDate < new Date();
             }
         });
         ModService.getSupplyCodes(game._id, (err, codes) => {
@@ -35,7 +36,20 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     });
 
-    $scope.addPlayer = function () {
+    $scope.$watch("players", (newval) => {
+        if (!newval) {
+            return;
+        }
+        $scope.OZplayers = newval.filter(player => player.teamPreference === "Zombie").map(player => {
+            return {
+                name: player.name,
+                startingTeam: "Human",
+                email: player.userEmail
+            };
+        });
+    });
+
+    $scope.addPlayer = function() {
         if ($scope.editing !== null || !$scope.game) {
             return;
         }
@@ -48,7 +62,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         $anchorScroll("bottom");
     };
 
-    $scope.savePlayer = function (index) {
+    $scope.savePlayer = function(index) {
         if ($scope.editing !== index || !$scope.players[index] || !$scope.game) {
             return;
         }
@@ -74,14 +88,14 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         }
     };
 
-    $scope.editPlayer = function (index) {
+    $scope.editPlayer = function(index) {
         if ($scope.editing !== null || !$scope.players[index] || !$scope.game) {
             return;
         }
         $scope.editing = index;
     };
 
-    $scope.removePlayer = function (index) {
+    $scope.removePlayer = function(index) {
         if ($scope.editing !== index || !$scope.players[index] || !$scope.game) {
             return;
         }
@@ -102,11 +116,11 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         }
     };
 
-    $scope.addCodes = function () {
+    $scope.addCodes = function() {
         ModalService.openSupplyCodeModal($scope.game._id)
             .result
             .then(res => {
-                ModService.saveSupplyCodes(res, $scope.game._id, function (err, codes) {
+                ModService.saveSupplyCodes(res, $scope.game._id, function(err, codes) {
                     if (err) {
                         return AlertService.danger(err);
                     }
@@ -119,6 +133,60 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                     AlertService.danger(err);
                 }
             });
+    };
+
+    $scope.randomlyChooseOZs = function () {
+        let number = Number($window.prompt("New Zombie Player Code", ""));
+        if (isNaN(number)) {
+            return AlertService.danger("Type a number");
+        }
+        number = Math.ceil(number);
+        if (number < 1) {
+            return AlertService.danger("Type a positive number");
+        }
+        let maxRange = $scope.OZplayers.length;
+        let count = 0;
+        do {
+            let index = Math.floor(Math.random() * maxRange);
+            if ($scope.OZplayers[index].startingTeam === "Human") {
+                $scope.OZplayers[index].startingTeam = "Zombie";
+                $scope.OZplayers[index].random = "True";
+                count++;
+            }
+        } while (count < number);
+    };
+
+    $scope.$watch("OZplayers", newval => {
+        if (!newval) {
+            return;
+        }
+        newval.forEach(player => {
+            if (player.startingTeam === "Human") {
+                player.random = "";
+            }
+        });
+    }, true);
+
+    $scope.startGame = function () {
+        if (!$window.confirm("Are you sure you want to start the game?")) {
+            return;
+        }
+        if (!$scope.lore) {
+            return AlertService.danger("Please type the game lore");
+        }
+        let lore = $scope.lore.split("\n").map(lore => "<p>" + lore + "</p>").join("") + "<p style=\"color:transparent\">" + ($scope.whiteLore || "") + "</p>";
+        var fd = new FormData();
+        angular.forEach($scope.files, function (file) {
+            fd.append('file', file);
+        });
+        const startingZombies = $scope.OZplayers.filter(player => player.startingTeam === "Zombie").map(player => player.email);
+        ModService.startGame(startingZombies, $scope.game._id, lore, fd, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+            }
+        });
     };
 }
 

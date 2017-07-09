@@ -6,6 +6,7 @@ function GetUserType(id, cb) {
             return cb({error: res.error});
         }
         const game = res.body;
+        id = id.toString();
         if (!game) {
             cb({body: "NonPlayer"});
         } else if (game.moderators.indexOf(id) >= 0) {

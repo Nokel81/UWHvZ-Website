@@ -68,6 +68,10 @@ const gameSchema = new Schema({
         get: v => Math.round(v),
         set: v => Math.round(v),
         default: 200
+    },
+    isStarted: {
+        type: Boolean,
+        required: true
     }
 });
 

@@ -1,24 +1,7 @@
 const Report = rootRequire("server/schemas/report");
 const User = rootRequire("server/schemas/user");
 const SupplyCode = rootRequire("server/schemas/supplyCode");
-
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-function getGetOrdinal(n) {
-    const s = ["th", "st", "nd", "rd"];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
-
-function getDateString(date) {
-    let hours = date.getHours();
-    let noonHalf = "AM"
-    if (hours >= 12) {
-        noonHalf = "PM";
-    }
-    return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear() + " at " + hours + ":" + date.getMinutes() + noonHalf;
-}
+const getDateString = rootRequire("server/helpers/getDateString");
 
 function FindUserScore(gameId, playerId, cb, forTeamScore) {
     let reportScore = null;
@@ -86,6 +69,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                 let score = 0;
                 let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
                 reports.forEach(report => {
+                    report.time = new Date(report.time * 1000); //Multiplied by 1000 so that it is in miniseconds and not seconds
                     let tagger = report.tagger.toString();
                     let tagged = report.tagged.toString();
                     let thisTimeTagged = report.time.getTime();
@@ -96,7 +80,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                         return;
                     }
                     if (tagged in stunTimes) {
-                        let lastTimeTagged = stunTimes[tagged].time.getTime(); //This is in milliseconds since Unix Epoch (signed)
+                        let lastTimeTagged = stunTimes[tagged].time; //This is in milliseconds since Unix Epoch (signed)
                         let timeDiff = thisTimeTagged - lastTimeTagged;
                         let hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
                         let scoreRegenerated = Math.min(hoursDiff + stunTimes[tagged].value, 5);
@@ -135,6 +119,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                     let tagdescriptions = [];
                     let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
                     reports.forEach(report => {
+                        report.time = new Date(report.time * 1000); //Multiplied by 1000 so that it is in miniseconds and not seconds
                         let tagger = report.tagger.toString();
                         let tagged = report.tagged.toString();
                         let thisTimeTagged = report.time.getTime();
@@ -146,7 +131,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                             return;
                         }
                         if (tagged in stunTimes) {
-                            let lastTimeTagged = stunTimes[tagged].time.getTime(); //This is in milliseconds since Unix Epoch (signed)
+                            let lastTimeTagged = stunTimes[tagged].time; //This is in milliseconds since Unix Epoch (signed)
                             let timeDiff = thisTimeTagged - lastTimeTagged;
                             let hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
                             let scoreRegenerated = Math.min(hoursDiff + stunTimes[tagged].value, 5);

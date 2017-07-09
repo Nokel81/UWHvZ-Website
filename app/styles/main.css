@@ -45,6 +45,7 @@ body {
 
 .close {
     color: black !important;
+    padding: 1rem !important;
 }
 
 .red_text {

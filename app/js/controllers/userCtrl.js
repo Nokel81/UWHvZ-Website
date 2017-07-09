@@ -1,4 +1,4 @@
-function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $http, AppSettings) {
+function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
@@ -119,6 +119,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             } else {
                 $scope.session = UserService.session;
                 $scope.user = user;
+                delete $scope.taggedCode;
+                delete $scope.taggedDescription;
+                delete $scope.location;
+                delete $scope.time;
                 UserService.getUserSettings(settings => {
                     $scope.settings = settings || {};
                 });
@@ -171,16 +175,17 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.tagCode = function() {
-        if (!$scope.taggedCode || !$scope.taggedDescription) {
-            return;
+        if (!$scope.taggedCode || !$scope.taggedDescription || !$scope.time) {
+            return AlertService.danger("Need more information");
         }
-        UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, (err, res) => {
+        UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 delete $scope.taggedCode;
                 delete $scope.taggedDescription;
                 delete $scope.location;
+                delete $scope.time;
                 AlertService.info(res);
             }
         });
@@ -221,19 +226,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
     };
-
-    $scope.upload = function () {
-        var fd = new FormData();
-        angular.forEach($scope.files, function (file) {
-            fd.append('file', file);
-        });
-
-        $http.post(AppSettings.apiUrl + "/message/attachments", fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .then(function (res) {})
-    }
 
     $scope.sendMessage = function() {
         if (!$scope.messageTo) {

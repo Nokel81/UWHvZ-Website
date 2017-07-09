@@ -2,6 +2,7 @@ const send = require("nodemailer");
 const resolve = require("html_resolve");
 const fs = require('fs');
 
+const getDateString = rootRequire("server/helpers/getDateString");
 const relativeResolve = resolve.relative(__dirname);
 
 const transporter = new send.createTransport({
@@ -109,12 +110,103 @@ SERVICE.sendMessage = function (message, cb) {
     }
 };
 
-SERVICE.sendTaggedEmail = function (userId, cb) {
-
+SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
+    let word = report.reportType.toLowerCase();
+    word += word[word.length - 1];
+    const resolveData = {
+        toName,
+        reportType: word,
+        fromName,
+        reportTime: getDateString(report.time),
+        isZombieText: report.type === "Tag" ? " and thus you have become a zombie, your status on the website has been updated accordingly" : "",
+        reportDescription: report.description,
+        reportLocation: report.location
+    };
+    console.log(resolveData);
+    console.log(report);
+    const html = relativeResolve("./emails/tagged.html", resolveData);
+    const mailOptions = {
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
+        replyTo: 'uwhumansvszombies@gmail.com',
+        subject: "You have been " + word + "ed",
+        to: toEmail,
+        html: html
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            return cb("Email not sent");
+        }
+        cb(null, "Message sent");
+    });
 };
 
-SERVICE.sendTaggerEmail = function (userId, cb) {
+SERVICE.sendTaggerEmail = function (email, taggedName, report, cb) {
+    const resolveData = {
+        taggedName,
+        tagTime: getDateString(report.time)
+    }
+    const html = relativeResolve("./emails/tagger.html", resolveData);
+    const mailOptions = {
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
+        replyTo: 'uwhumansvszombies@gmail.com',
+        subject: "You have been tagged",
+        to: email,
+        html: html
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            return cb("Email not sent");
+        }
+        cb(null, "Message sent");
+    });
+};
 
+SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb) {
+    const resolveData = {
+        suppliedValue: game.suppliedValue,
+        railPassValue: game.railPassValue,
+        minorPassValue: game.minorPassValue,
+        majorPassValue: game.majorPassValue,
+        officerValue: game.officerValue,
+        HTMLlore
+    };
+    const html = relativeResolve("./emails/" + team + "Start.html", resolveData);
+    const mailOptions = {
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
+        replyTo: 'uwhumansvszombies@gmail.com',
+        subject: "Welcome to the game",
+        html: HTMLlore,
+        attachments: fileData
+    };
+    if (team === "zombie") {
+        let email = JSON.parse(JSON.stringify(mailOptions));
+        email.to = toList;
+        transporter.sendMail(email, (error, info) => {
+            if (error) {
+                console.error(error);
+                return cb("Email not sent");
+            }
+            cb(null, "Message sent");
+        });
+    } else {
+        let count = 0;
+        toList.forEach((to, index, tos) => {
+            let email = JSON.parse(JSON.stringify(mailOptions));
+            email.to = to;
+            transporter.sendMail(email, (error, info) => {
+                if (error) {
+                    console.error(error);
+                    return cb("Email not sent");
+                }
+                count++;
+                if (count === tos.length) {
+                    cb(null, "Message sent");
+                }
+            });
+        });
+    }
 };
 
 module.exports = SERVICE;

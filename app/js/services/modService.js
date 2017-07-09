@@ -25,6 +25,25 @@ function ModService($http, AppSettings) {
             });
     };
 
+    SERVICE.startGame = function (OZemails, gameId, HTMLlore, files, cb) {
+        $http.post(AppSettings.apiUrl + "/message/attachments", files, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(res => {
+            let fileData = res.data;
+            let body = {OZemails, gameId, HTMLlore, fileData};
+            $http.post(AppSettings.apiUrl + "/game/start", body)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                });
+        }, err => {
+            cb("File upload failed");
+        });
+    };
+
     return SERVICE;
 }
 

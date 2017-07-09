@@ -5,6 +5,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.password = UserService.password;
     $scope.session = UserService.session;
     $scope.validRecipients = [];
+    $scope.userInfo = {
+        status: "Please wait, loading..."
+    };
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -28,6 +31,24 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         UserService.getValidRecipients(user._id, (err, recipients) => {
             if (recipients) {
                 $scope.validRecipients = recipients;
+            }
+        });
+        UserService.getUserInfo(user._id, (err, info) => {
+            if (info) {
+                if (typeof info === "string") {
+                    $scope.userInfo.status = info;
+                    return;
+                }
+                delete $scope.userInfo.status;
+                $scope.userInfo.teamScore = info.teamScore;
+                $scope.userInfo.playerScore = info.score.reportScore.score + info.score.reportScore.tagScore + info.score.supplyCodeScore.score;
+                $scope.userInfo.playerStunScore = info.score.reportScore.score;
+                $scope.userInfo.playerTagScore = info.score.reportScore.tagScore;
+                $scope.userInfo.playerSupplyScore = info.score.supplyCodeScore.score;
+                $scope.userInfo.playerType = info.playerType;
+                $scope.userInfo.stuns = info.score.reportScore.descriptions;
+                $scope.userInfo.tags = info.score.reportScore.tagDescriptions;
+                $scope.userInfo.codes = info.score.supplyCodeScore.descriptions;
             }
         });
     });
@@ -150,7 +171,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.taggedCode || !$scope.taggedDescription) {
             return;
         }
-        UserService.reportTag($scope.taggedCode, $scope.user.playerCode, $scope.taggedDescription, $scope.location, (err, res) => {
+        UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

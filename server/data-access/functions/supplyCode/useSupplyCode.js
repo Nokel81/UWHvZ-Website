@@ -16,8 +16,8 @@ function FindByUser(info, cb) {
                     return cb(res);
                 }
                 const game = res.body;
-                if (!game) {
-                    return cb({error: "There is no current game"});
+                if (game.humans.concat(game.zombies).find(player => player.toString() === info.userId.toString())) {
+                    return cb({error: "You have to be playing to use a supply code"});
                 }
                 SupplyCode.findOneAndUpdate({
                     code: info.code,

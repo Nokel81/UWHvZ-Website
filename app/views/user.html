@@ -54,7 +54,33 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane" id="Info" role="tabpanel">Info</div>
+        <div class="tab-pane" id="Info" role="tabpanel">
+            <div class="centre" ng-show="userInfo.status">
+                <br>
+                <span ng-bind="userInfo.status"></span>
+            </div>
+            <div ng-hide="userInfo.status">
+                <br>
+                <h3>Your team: <span ng-bind="userInfo.playerType || 'NonPlayer'"></span></h3>
+                <br>
+                <h3>Your score: <span ng-bind="userInfo.playerScore || '0'"></span></h3>
+                <h5>Stuns: <span ng-bind="userInfo.playerStunScore || '0'"></span></h5>
+                <ul>
+                    <li ng-repeat="description in userInfo.stuns"><span ng-bind="description"></span></li>
+                </ul>
+                <h5>Tags: <span ng-bind="userInfo.playerTagScore || '0'"></span></h5>
+                <ul>
+                    <li ng-repeat="description in userInfo.tags"><span ng-bind="description"></span></li>
+                </ul>
+                <h5>Supply Codes: <span ng-bind="userInfo.playerSupplyScore || '0'"></span></h5>
+                <ul>
+                    <li ng-repeat="description in userInfo.codes"><span ng-bind="description"></span></li>
+                </ul>
+                <br>
+                <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>
+                <br>
+            </div>
+        </div>
         <div class="tab-pane" id="Messages" role="tabpanel">
             <div class="container-fluid">
                 <select class="formish-control custom-select full-width" ng-model="messageTo">

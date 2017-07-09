@@ -1,20 +1,15 @@
 const mongoose = require("mongoose");
 
-const ValidCode = rootRequire("server/schemas/validators/validCode");
-const getUserType = rootRequire("server/data-access/functions/user/getUserType");
-const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
 const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
-    taggerCode: {
-        type: String,
-        required: true,
-        validate: ValidCode
+    tagger: {
+        type: Schema.Types.ObjectId,
+        required: true
     },
-    taggedCode: {
-        type: String,
-        required: true,
-        validate: ValidCode
+    tagged: {
+        type: Schema.Types.ObjectId,
+        required: true
     },
     time: {
         type: Date,
@@ -28,11 +23,20 @@ const reportSchema = new Schema({
         type: String,
         required: true,
         minlength: 25
+    },
+    gameId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    reportType: {
+        type: String,
+        required: true,
+        enum: ["Tag", "Stun"]
     }
 });
 
 reportSchema.pre("validate", function (next) {
-    if (this.taggerCode === this.taggedCode) {
+    if (this.taggerCode.toString() === this.taggedCode.toString()) {
         this.invalidate("taggedCode", "Cannot tag yourself");
     }
     next();

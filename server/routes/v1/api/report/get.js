@@ -1,7 +1,7 @@
 const findByUser = rootRequire("server/data-access/functions/report/findByUser");
 
 function Get(req, res, next) {
-    findByUser(req.query.userCode, result => {
+    findByUser(req.query.userId, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

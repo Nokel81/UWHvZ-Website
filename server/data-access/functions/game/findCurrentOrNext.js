@@ -1,4 +1,5 @@
 const Game = rootRequire("server/schemas/game");
+const findById = rootRequire("server/data-access/functions/game/findById");
 
 function FindCurrentOrNext(cb) {
     Game.findOne({endDate: {$gte: new Date()}})
@@ -7,7 +8,10 @@ function FindCurrentOrNext(cb) {
             if (err) {
                 return cb({error: err});
             }
-            cb({body: game});
+            if (!game) {
+                return cb({error: "No next or current game"});
+            }
+            findById(game._id, cb);
         });
 }
 

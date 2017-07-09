@@ -132,9 +132,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.reportTag = function (taggedCode, taggerCode, decription, location, cb) {
+    SERVICE.reportTag = function (taggedCode, tagger, decription, location, cb) {
         const body = {
-            taggerCode,
+            tagger,
             taggedCode,
             decription,
             location
@@ -248,6 +248,32 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         }, err => {
             cb("File upload failed");
         })
+    };
+
+    SERVICE.getUserInfo = function (userId, cb) {
+        $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=score")
+            .then(res => {
+                let score = res.data;
+                $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=teamscore")
+                    .then(res => {
+                        let teamScore = res.data;
+                        $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=type")
+                            .then(res => {
+                                let playerType = res.data;
+                                cb(null, {
+                                    score,
+                                    teamScore,
+                                    playerType
+                                });
+                            }, err => {
+                                cb(err.data);
+                            });
+                    }, err => {
+                        cb(err.data);
+                    });
+            }, err => {
+                cb(err.data);
+            });
     };
 
     return SERVICE;

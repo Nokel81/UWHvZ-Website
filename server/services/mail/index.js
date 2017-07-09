@@ -70,6 +70,12 @@ SERVICE.sendMessage = function (message, cb) {
         attachments: message.fileData
     };
     if (Array.isArray(message.to)) {
+        if (message.to.length === 0) {
+            message.fileData.forEach(fileData => {
+                fs.unlink(fileData.path);
+            });
+            return cb("Email not sent, no one to send to");
+        }
         let count = 0;
         message.to.forEach((to, index, tos) => {
             let email = JSON.parse(JSON.stringify(mailOptions));
@@ -101,6 +107,14 @@ SERVICE.sendMessage = function (message, cb) {
             });
         });
     }
+};
+
+SERVICE.sendTaggedEmail = function (userId, cb) {
+
+};
+
+SERVICE.sendTaggerEmail = function (userId, cb) {
+
 };
 
 module.exports = SERVICE;

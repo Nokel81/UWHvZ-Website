@@ -11,7 +11,7 @@ function GetUserBySession(userId, infoType, cb) {
                 return cb(res);
             }
             let game = res.body;
-            if (game.startDate > new Date()) {
+            if (game.startDate >= new Date().toISOString()) {
                 return cb({body: "Game has not started yet"});
             }
             findUserScore(game._id, userId, cb);
@@ -22,7 +22,7 @@ function GetUserBySession(userId, infoType, cb) {
                 return cb(res);
             }
             let game = res.body;
-            if (game.startDate > new Date()) {
+            if (game.startDate >= new Date().toISOString()) {
                 return cb({body: "Game has not started yet"});
             }
             getUserType(userId, res => {

@@ -39,7 +39,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Info" role="tab">Info</a>
+            <a class="nav-link" data-toggle="tab" href="#Score" role="tab">Score</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a>
@@ -54,10 +54,10 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane" id="Info" role="tabpanel">
+        <div class="tab-pane" id="Score" role="tabpanel">
             <div class="centre" ng-show="userInfo.status">
                 <br>
-                <span ng-bind="userInfo.status"></span>
+                <h4 ng-bind="userInfo.status"></h4>
             </div>
             <div ng-hide="userInfo.status">
                 <br>

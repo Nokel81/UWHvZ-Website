@@ -35,8 +35,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
         UserService.getUserInfo(user._id, (err, info) => {
             if (info) {
-                if (typeof info === "string") {
-                    $scope.userInfo.status = info;
+                if (typeof info.score === "string") {
+                    $scope.userInfo.status = info.score;
                     return;
                 }
                 delete $scope.userInfo.status;

@@ -39,24 +39,24 @@
         <div class="tab-pane" id="Players" role="tabpanel">
             <div class="fluid-control">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <b>Player Name</b>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <b>Player Team</b>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <b>Player Score</b>
                     </div>
                 </div>
                 <div class="row" ng-repeat="player in gamePlayers">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <span ng-bind="player.playerName"></span>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <span ng-bind="player.team"></span>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                         <span ng-bind="player.score"></span>
                     </div>
                     <hr>
@@ -66,18 +66,18 @@
         <div class="tab-pane" id="Moderators" role="tabpanel">
             <div class="fluid-control">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <b>Moderator Name</b>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <b>Moderator Email</b>
                     </div>
                 </div>
                 <div class="row" ng-repeat="player in gameMods">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <span ng-bind="player.playerName"></span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
                     </div>
                     <hr>

@@ -1,5 +1,7 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
+    CKEDITOR.replace('MessageBodyTextArea');
+
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
     $scope.password = UserService.password;
@@ -252,9 +254,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         angular.forEach($scope.files, function (file) {
             fd.append('file', file);
         });
-        let messageBody = $scope.messageBody.split("\n").map(line => "<p>" + line + "</p>").join("");
-        messageBody += "<p>- " + $scope.user.playerName + "</p>";
-        messageBody += "<p style=\"color:transparent\">" + ($scope.whiteBody || "") + "</p>";
+        let messageBody = $scope.messageBody + "<p>- " + $scope.user.playerName + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
             if (err) {

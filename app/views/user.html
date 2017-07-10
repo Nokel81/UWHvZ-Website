@@ -92,8 +92,7 @@
                     <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
                 </div>
                 <b>Your Name will be appened to your message!</b>
-                <textarea rows="6" class="form-control" ng-model="messageBody" placeholder="Message Body"></textarea>
-                <textarea rows="6" class="form-control" ng-model="whiteBody" ng-show="userInfo.playerType === 'Moderator' || isSuper" placeholder="White Text"></textarea>
+                <textarea rows="6" ng-model="messageBody" placeholder="Message Body" id="MessageBodyTextArea"></textarea>
                 <br>
                 <input type="file" multiple file-input="files" class="btn btn-info">
                 <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>

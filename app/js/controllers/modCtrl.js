@@ -1,5 +1,7 @@
 function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll) {
     "ngInject";
+    CKEDITOR.replace('GameLoreTextArea');
+
     $scope.players = [];
     $scope.editing = null;
     $scope.game = null;
@@ -187,13 +189,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!$scope.lore) {
             return AlertService.danger("Please type the game lore");
         }
-        let lore = $scope.lore.split("\n").map(lore => "<p>" + lore + "</p>").join("") + "<p style=\"color:transparent\">" + ($scope.whiteLore || "") + "</p>";
         var fd = new FormData();
         angular.forEach($scope.files, function (file) {
             fd.append('file', file);
         });
         const startingZombies = $scope.OZplayers.filter(player => player.startingTeam === "Zombie").map(player => player.email);
-        ModService.startGame(startingZombies, $scope.game._id, lore, fd, (err, res) => {
+        ModService.startGame(startingZombies, $scope.game._id, $scope.lore, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

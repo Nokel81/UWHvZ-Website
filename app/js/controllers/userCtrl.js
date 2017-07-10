@@ -5,6 +5,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.password = UserService.password;
     $scope.session = UserService.session;
     $scope.validRecipients = [];
+    $scope.time = new Date();
+    $scope.time.setMilliseconds(0);
+    $scope.time.setSeconds(0);
     $scope.userInfo = {
         status: "Please wait, loading..."
     };
@@ -19,6 +22,12 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         const hasNonalphas = /\W/.test(password);
         return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
     };
+
+    $scope.$watch(() => $location.hash(), () => {
+        $scope.time = new Date();
+        $scope.time.setMilliseconds(0);
+        $scope.time.setSeconds(0);
+    });
 
     UserService.getBySession(user => {
         $scope.user = user;
@@ -185,7 +194,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 delete $scope.taggedCode;
                 delete $scope.taggedDescription;
                 delete $scope.location;
-                delete $scope.time;
+                $scope.time = new Date();
+                $scope.time.setMilliseconds(0);
+                $scope.time.setSeconds(0);
                 AlertService.info(res);
             }
         });

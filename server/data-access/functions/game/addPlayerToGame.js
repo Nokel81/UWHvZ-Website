@@ -14,7 +14,7 @@ function AddPlayerToGame(newPlayer, cb) {
         let user = res.body;
         let updateQuery = {$push: {}};
         updateQuery.$push[newPlayer.team] = user._id;
-        Game.findOneAndUpdate({_id: game._id}, updateQuery, err => {
+        Game.findOneAndUpdate({_id: newPlayer.gameId}, updateQuery, err => {
             if (err) {
                 return cb({error: err});
             }

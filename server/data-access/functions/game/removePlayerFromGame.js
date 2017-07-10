@@ -8,7 +8,7 @@ function AddPlayerToGame(oldPlayer, cb) {
     oldPlayer.team += "s";
     let updateQuery = {$pull: {}};
     updateQuery.$pull[oldPlayer.team] = oldPlayer.userId;
-    Game.findOneAndUpdate({_id: game._id}, updateQuery, err => {
+    Game.findOneAndUpdate({_id: oldPlayer.gameId}, updateQuery, err => {
         if (err) {
             return cb({error: err});
         }

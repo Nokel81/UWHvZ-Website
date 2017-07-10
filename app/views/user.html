@@ -103,21 +103,39 @@
             <div class="centre font-20">
                 <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
             </div>
+            <div class="centre">
+                <h3>Report a Stun/Tag</h3>
+            </div>
             <table>
                 <tr>
                     <td>
-                        <div class="centre">
-                            <h3>Report a Stun/Tag</h3>
-                            <br>
-                            <br>
-                            <textarea rows="4" cols="80" class="form-control" ng-model="taggedDescription" placeholder="Tagging Desciption"></textarea>
-                            <input type="text" class="form-control" ng-model="location" placeholder="Location...">
-                            <input type="datetime-local" class="form-control" ng-model="time" step="0">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-group-no-top" ng-model="taggedCode" placeholder="Tagged Player's Code...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
-                                </span>
+                        <div class="fluid-control" style="padding: 15px;">
+                            <div class="row">
+                                <textarea rows="4" cols="80" class="form-control" ng-model="taggedDescription" placeholder="Tagging Desciption"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1 padding-less">
+                                    <label class="btn btn-secondary formish-control" style="width: 100%" style="">Location:</label>
+                                </div>
+                                <div class="col-sm-11 padding-less">
+                                    <input type="text" class="form-control" ng-model="location" step="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1 padding-less">
+                                    <label class="btn btn-secondary formish-control" style="width: 100%; height: 42px;" style="">Time:</label>
+                                </div>
+                                <div class="col-sm-11 padding-less">
+                                    <input type="datetime-local" class="form-control" ng-model="time" step="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-group-no-top" ng-model="taggedCode" placeholder="Tagged Player's Code...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </td>

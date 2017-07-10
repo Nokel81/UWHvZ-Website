@@ -36,6 +36,12 @@ hr {
 
 .formish-control, .input-group-addon {
     margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.padding-less {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .control {

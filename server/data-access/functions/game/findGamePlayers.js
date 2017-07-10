@@ -7,7 +7,7 @@ function FindGamePlayers(gameId, userId, cb) {
             return cb(res);
         }
         let game = res.body;
-        if (game.humans.indexOf(userId) >= 0 || userId == null) {
+        if (game.humans.indexOf(userId) >= 0 || !userId || userId == "null") {
             const players = game.humans.concat(game.zombies);
             User.find({_id: {$in: players}})
                 .select("playerName")

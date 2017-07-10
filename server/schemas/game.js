@@ -71,7 +71,7 @@ const gameSchema = new Schema({
     },
     isStarted: {
         type: Boolean,
-        required: true
+        default: false
     }
 });
 

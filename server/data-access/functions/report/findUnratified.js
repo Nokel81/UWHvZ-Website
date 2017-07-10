@@ -16,7 +16,7 @@ function FindUnratified(gameId, cb) {
                     return;
                 }
                 let rep = JSON.parse(JSON.stringify(report));
-                User.find({_id: rep.tagger})
+                User.findOne({_id: rep.tagger})
                     .select("playerName")
                     .exec((err, user) => {
                         if (err) {
@@ -26,8 +26,15 @@ function FindUnratified(gameId, cb) {
                             errored = true;
                             return cb({error: err});
                         }
+                        if (!user) {
+                            if (errored) {
+                                return;
+                            }
+                            errored = true;
+                            return cb({error: "Tagger not found"});
+                        }
                         rep.taggerName = user.playerName;
-                        User.find({_id: rep.tagged})
+                        User.findOne({_id: rep.tagged})
                             .select("playerName")
                             .exec((err, user) => {
                                 if (err) {
@@ -36,6 +43,13 @@ function FindUnratified(gameId, cb) {
                                     }
                                     errored = true;
                                     return cb({error: err});
+                                }
+                                if (!user) {
+                                    if (errored) {
+                                        return;
+                                    }
+                                    errored = true;
+                                    return cb({error: "Tagged not found"});
                                 }
                                 rep.taggedName = user.playerName;
                                 rep.time = getDateString(new Date(rep.time));

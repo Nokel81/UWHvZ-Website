@@ -32,7 +32,7 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             views: {
                 main: {
                     controller: "InfoCtrl as info",
-                    templateUrl: "../views/gameinfo.html",
+                    templateUrl: "../views/info.html",
                     title: "Game Info"
                 }
             }

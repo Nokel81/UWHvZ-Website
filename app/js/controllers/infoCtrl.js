@@ -44,6 +44,8 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                 }
                 $scope.gameMods = lists.gameMods;
                 $scope.gamePlayers = lists.gamePlayers;
+                $scope.zombieCount = lists.zombieCount;
+                $scope.stunCount = lists.stunCount;
             })
         }
     });

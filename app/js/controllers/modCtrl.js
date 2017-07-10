@@ -18,22 +18,20 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!game) {
             return;
         }
+        $scope.game = game;
         GameService.getRegistrantsForGame(game._id, (err, signups) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 $scope.players = signups;
-                $scope.game = game;
                 $scope.gameStarted = !game || game.startDate < new Date();
             }
         });
-        GameService.getGamePlayerInfoForMods(game._id, (err, signups) => {
+        GameService.getGamePlayerInfoForMods(game._id, (err, players) => {
             if (err) {
                 AlertService.danger(err);
             } else {
-                $scope.players = signups;
-                $scope.game = game;
-                $scope.gameStarted = !game || game.startDate < new Date();
+                $scope.gamePlayers = players;
             }
         });
         ModService.getSupplyCodes(game._id, (err, codes) => {

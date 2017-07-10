@@ -69,7 +69,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                 let score = 0;
                 let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
                 reports.forEach(report => {
-                    report.time = new Date(report.time * 1000); //Multiplied by 1000 so that it is in miniseconds and not seconds
+                    report.time = new Date(report.time); //Multiplied by 1000 so that it is in miniseconds and not seconds
                     let tagger = report.tagger.toString();
                     let tagged = report.tagged.toString();
                     let thisTimeTagged = report.time.getTime();
@@ -119,7 +119,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                     let tagdescriptions = [];
                     let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
                     reports.forEach(report => {
-                        report.time = new Date(report.time * 1000); //Multiplied by 1000 so that it is in miniseconds and not seconds
+                        report.time = new Date(report.time); //Multiplied by 1000 so that it is in miniseconds and not seconds
                         let tagger = report.tagger.toString();
                         let tagged = report.tagged.toString();
                         let thisTimeTagged = report.time.getTime();

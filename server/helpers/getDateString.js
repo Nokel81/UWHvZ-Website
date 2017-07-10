@@ -13,6 +13,13 @@ function getDateString(date) {
     if (hours >= 12) {
         noonHalf = "PM";
     }
+    if (hours < 10) {
+        hours = "0" + hours.toString();
+    }
+    let minutes = date.getMinutes();
+    if (minutes < 10) {
+        minutes = "0" + minutes.toString();
+    }
     return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear() + " at " + hours + ":" + date.getMinutes() + noonHalf;
 }
 

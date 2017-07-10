@@ -4,6 +4,7 @@ const getDateString = rootRequire("server/helpers/getDateString");
 
 function FindUnratified(gameId, cb) {
     Report.find({gameId, ratified: false})
+        .sort("time")
         .exec((err, reports) => {
             if (err) {
                 return cb({error: err});

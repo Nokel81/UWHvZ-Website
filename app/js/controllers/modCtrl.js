@@ -203,7 +203,16 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
     };
 
     $scope.ratify = function (index) {
-
+        if (!$scope.reports[index]) {
+            return;
+        }
+        GameService.ratifyReport($scope.reports[index]._ids, $scope.reports[index].gameId, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+            }
+        });
     };
 }
 

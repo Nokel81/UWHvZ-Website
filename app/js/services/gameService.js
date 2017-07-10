@@ -187,6 +187,16 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
+    SERVICE.ratifyReport = function (reportId, gameId, cb) {
+        let body = {reportId, gameId};
+        $http.put(AppSettings.apiUrl + "/report", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

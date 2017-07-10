@@ -26,7 +26,7 @@ function SupplyCtrl($scope, $uibModalInstance, GameId, DefaultValue, AlertServic
 
         for (let i = 0; i < $scope.numberOfCodes; i++) {
             $scope.codes.push({
-                code: supplyCode(8),
+                code: supplyCode(6),
                 value: $scope.codeValue,
                 forGame: GameId
             });

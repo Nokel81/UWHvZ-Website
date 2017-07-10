@@ -130,12 +130,25 @@ function GameService($http, AppSettings, $cookies, UserService) {
         UserService.getBySession(user => {
             let id = "";
             if (!user) {
-                id = null;
-            } else {
                 id = user._id;
             }
 
             $http.get(AppSettings.apiUrl + "/game/lists?gameId=" + gameId + "&userId=" + id)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                });
+        });
+    };
+
+    SERVICE.getGamePlayerInfoForMods = function (gameId, cb) {
+        let id = "";
+        if (user) {
+            id = user._id;
+        }
+        UserService.getBySession(user => {
+            $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId + "&userId=" + id)
                 .then(res => {
                     cb(null, res.data);
                 }, err => {

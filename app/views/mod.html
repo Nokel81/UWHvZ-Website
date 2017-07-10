@@ -3,6 +3,7 @@
     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#GameSignups" role="tab">Game Signups</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab">Start Game</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab">Player Codes</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -132,6 +133,28 @@
         </div>
         <div ng-show="gameStarted">
             <h4 class="centre">No Game to start or game has already started</h4>
+        </div>
+    </div>
+    <div class="tab-pane" id="PlayerCode" role="tabpanel">
+        <div class="fluid-control">
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>Player Name</b>
+                </div>
+                <div class="col-sm-6">
+                    <b>Player Code</b>
+                </div>
+                <hr>
+            </div>
+            <div class="row" ng-repeat="player in gamePlayers">
+                <div class="col-sm-6">
+                    <span ng-bind="player.playerName"></span>
+                </div>
+                <div class="col-sm-6">
+                    <span ng-bind="player.playerCode"></span>
+                </div>
+                <hr>
+            </div>
         </div>
     </div>
 </div>

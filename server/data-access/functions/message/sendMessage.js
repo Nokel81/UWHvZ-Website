@@ -73,7 +73,7 @@ function SendMessage(message, cb) {
             const game = res.body;
             let userIds = [];
             if (message.to === recipientCodes.toAllPlayers) {
-                userIds = game.spectators.concat(game.humans).concat(game.zombies);
+                userIds = game.spectators.concat(game.humans).concat(game.zombies).concat(game.moderators);
             } else if (message.to === recipientCodes.toModerators) {
                 userIds = game.moderators;
             } else if (message.to === recipientCodes.toZombies) {

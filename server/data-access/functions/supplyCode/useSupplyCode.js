@@ -2,7 +2,7 @@ const SupplyCode = rootRequire("server/schemas/supplyCode");
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 const User = rootRequire("server/schemas/user");
 
-function FindByUser(info, cb) {
+function UseSupplyCode(info, cb) {
     User.findOne({_id: info.userId})
         .exec((err, user) => {
             if (err) {
@@ -16,7 +16,7 @@ function FindByUser(info, cb) {
                     return cb(res);
                 }
                 const game = res.body;
-                if (game.humans.concat(game.zombies).find(player => player.toString() === info.userId.toString())) {
+                if (game.humans.concat(game.zombies).indexOf(info.userId.toString()) < 0) {
                     return cb({error: "You have to be playing to use a supply code"});
                 }
                 SupplyCode.findOneAndUpdate({
@@ -40,4 +40,4 @@ function FindByUser(info, cb) {
         });
 }
 
-module.exports = FindByUser;
+module.exports = UseSupplyCode;

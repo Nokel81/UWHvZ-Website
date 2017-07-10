@@ -91,6 +91,7 @@
                     <span class="input-group-addon" id="messageSubject">Subject</span>
                     <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
                 </div>
+                <b>Your Name will be appened to your message!</b>
                 <textarea rows="6" class="form-control" ng-model="messageBody" placeholder="Message Body"></textarea>
                 <textarea rows="6" class="form-control" ng-model="whiteBody" ng-show="userInfo.playerType === 'Moderator' || isSuper" placeholder="White Text"></textarea>
                 <br>

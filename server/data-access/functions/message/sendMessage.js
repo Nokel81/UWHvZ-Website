@@ -77,9 +77,9 @@ function SendMessage(message, cb) {
             } else if (message.to === recipientCodes.toModerators) {
                 userIds = game.moderators;
             } else if (message.to === recipientCodes.toZombies) {
-                userIds = game.spectators.concat(game.zombies);
+                userIds = game.spectators.concat(game.zombies).concat(game.moderators);
             } else if (message.to === recipientCodes.toHumans) {
-                userIds = game.spectators.concat(game.humans);
+                userIds = game.spectators.concat(game.humans).concat(game.moderators);
             }
             Settings.find({userId: {$in: userIds}})
                 .exec((err, settings) => {

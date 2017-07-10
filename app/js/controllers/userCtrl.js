@@ -253,6 +253,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             fd.append('file', file);
         });
         let messageBody = $scope.messageBody.split("\n").map(line => "<p>" + line + "</p>").join("");
+        messageBody += "<p>- " + $scope.user.playerName + "</p>";
         messageBody += "<p style=\"color:transparent\">" + ($scope.whiteBody || "") + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {

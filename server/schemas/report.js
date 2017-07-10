@@ -32,12 +32,19 @@ const reportSchema = new Schema({
         type: String,
         required: true,
         enum: ["Tag", "Stun"]
+    },
+    ratified: {
+        type: Boolean,
+        default: false
     }
 });
 
 reportSchema.pre("validate", function (next) {
     if (this.tagger.toString() === this.tagged.toString()) {
         this.invalidate("taggedCode", "Cannot tag yourself");
+    }
+    if (this.reportType === "Tag") {
+        this.ratified = true;
     }
     next();
 });

@@ -34,6 +34,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 $scope.gamePlayers = gamePlayers;
             }
         });
+        GameService.getUnratifiedReports(game._id, (err, reports) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            $scope.reports = reports;
+        });
         ModService.getSupplyCodes(game._id, (err, codes) => {
             if (err) {
                 AlertService.danger(err);
@@ -194,6 +200,10 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 AlertService.info(res);
             }
         });
+    };
+
+    $scope.ratify = function (index) {
+
     };
 }
 

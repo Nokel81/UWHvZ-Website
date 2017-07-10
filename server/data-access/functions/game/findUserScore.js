@@ -57,7 +57,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
         finish();
     });
 
-    Report.find({gameId})
+    Report.find({gameId, ratified: true})
         .sort("time")
         .exec((err, reports) => {
             if (err) {

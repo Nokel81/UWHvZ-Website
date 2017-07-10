@@ -27,11 +27,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 $scope.gameStarted = !game || game.startDate < new Date();
             }
         });
-        GameService.getGamePlayerInfoForMods(game._id, (err, players) => {
+        GameService.getGamePlayerInfoForMods(game._id, (err, gamePlayers) => {
             if (err) {
                 AlertService.danger(err);
             } else {
-                $scope.gamePlayers = players;
+                console.log(gamePlayers);
+                $scope.gamePlayers = gamePlayers;
             }
         });
         ModService.getSupplyCodes(game._id, (err, codes) => {

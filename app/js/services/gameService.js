@@ -144,11 +144,10 @@ function GameService($http, AppSettings, $cookies, UserService) {
 
     SERVICE.getGamePlayerInfoForMods = function (gameId, cb) {
         UserService.getBySession(user => {
-            let id = "";
-            if (user) {
-                id = user._id;
+            if (!user) {
+                return cb("User not found");
             }
-
+            let id = user._id;
             $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId + "&userId=" + id)
                 .then(res => {
                     cb(null, res.data);

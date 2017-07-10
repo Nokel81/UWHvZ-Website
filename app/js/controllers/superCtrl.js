@@ -66,6 +66,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             return;
         }
         const code = $window.prompt("New " + team + " player Code", "");
+        if (!code) {
+            return;
+        }
         GameService.addPlayerByCode($scope.games[game]._id, code, team, (err, games) => {
             if (err) {
                 return AlertService.danger(err);

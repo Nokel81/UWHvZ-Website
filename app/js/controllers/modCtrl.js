@@ -31,7 +31,6 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             if (err) {
                 AlertService.danger(err);
             } else {
-                console.log(gamePlayers);
                 $scope.gamePlayers = gamePlayers;
             }
         });

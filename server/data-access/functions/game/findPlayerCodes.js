@@ -16,7 +16,6 @@ function FindGamePlayers(gameId, userId, cb) {
                     if (err) {
                         return cb({error: err});
                     }
-                    console.log(users);
                     return cb({body: users});
                 })
         } else {

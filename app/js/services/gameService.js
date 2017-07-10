@@ -178,7 +178,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getUnratifiedReports = function (gameId) {
+    SERVICE.getUnratifiedReports = function (gameId, cb) {
         $http.get(AppSettings.apiUrl + "/game/reports?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);

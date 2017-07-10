@@ -140,8 +140,36 @@ function GameService($http, AppSettings, $cookies, UserService) {
                     cb(null, res.data);
                 }, err => {
                     cb(err.data);
-                })
+                });
         });
+    };
+
+    SERVICE.addPlayerByCode = function (gameId, playerCode, team, cb) {
+        let body = {
+            gameId,
+            playerCode,
+            team
+        };
+        $http.post(AppSettings.apiUrl + "/game/add", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
+    SERVICE.removePlayerById = function (gameId, playerId, team, cb) {
+        let body = {
+            gameId,
+            playerId,
+            team
+        };
+        $http.delete(AppSettings.apiUrl + "/game/add", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
     };
 
     return SERVICE;

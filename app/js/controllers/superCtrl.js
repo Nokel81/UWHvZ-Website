@@ -61,61 +61,33 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.addModerator = function (game) {
-        const code = $window.prompt("New Moderator Player Code", "");
-        UserService.getByCode(code, (err, user) => {
-            if (err) {
-                return AlertService.danger(err);
-            }
-            $scope.games[game].moderatorObjs.push(user);
-            $scope.games[game].moderators.push(user._id);
-        });
-    };
-
-    $scope.removeSpectator = function (game, index) {
-        if ($scope.games[game]) {
-            const _id = ($scope.games[game].spectatorObjs.splice(index, 1)[0] || {})._id;
-            $scope.games[game].spectators = ($scope.games[game].spectators || []).filter(id => id !== _id);
-        }
-    };
-
-    $scope.removeHuman = function (game, index) {
-        if ($scope.games[game]) {
-            const _id = ($scope.games[game].humanObjs.splice(index, 1)[0] || {})._id;
-            $scope.games[game].humans = ($scope.games[game].humans || []).filter(id => id !== _id);
-        }
-    };
-
-    $scope.addHuman = function (game) {
-        const code = $window.prompt("New Human Player Code", "");
-        UserService.getByCode(code, (err, user) => {
-            if (err) {
-                return AlertService.danger(err);
-            }
-            $scope.games[game].humanObjs.push(user);
-            $scope.games[game].humans.push(user._id);
-        });
-    };
-
-    $scope.removeZombie = function (game, mod) {
-        if ($scope.games[game]) {
-            const _id = ($scope.games[game].zombieObjs.splice(mod, 1)[0] || {})._id;
-            $scope.games[game].zombies = ($scope.games[game].zombies || []).filter(id => id !== _id);
-        }
-    };
-
-    $scope.addZombie = function (game) {
+    $scope.addPlayer = function (game, team) {
         if (!$scope.games[game]) {
             return;
         }
-        const code = $window.prompt("New Zombie Player Code", "");
-        GameService.addZombieByCode($scope.games[game]._id, code, (err, games) => {
+        const code = $window.prompt("New " + team + " player Code", "");
+        GameService.addPlayerByCode($scope.games[game]._id, code, team, (err, games) => {
             if (err) {
                 return AlertService.danger(err);
             }
+            AlertService.info("Player Added");
             $scope.games = games;
         });
     };
+
+    $scope.removePlayer = function (game, index, team) {
+        if (!$scope.games[game] || !$scope.games[game][team + "s"] || !$scope.games[game][team + "s"][index]) {
+            return;
+        }
+        let id = $scope.games[game][team + "s"][index]._id;
+        GameService.removePlayerById($scope.games[game]._id, id, team, (err, games) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            AlertService.info("Player Removed");
+            $scope.games = games;
+        });
+    }
 
     $scope.addGame = function () {
         $scope.games.push({

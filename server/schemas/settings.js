@@ -11,11 +11,15 @@ const settingsSchema = new Schema({
     },
     gameEmails: {
         type: Boolean,
-        required: true
+        default: true
     },
     promotionalEmails: {
         type: Boolean,
-        required: true
+        default: true
+    },
+    showScore: {
+        type: Boolean,
+        default: true
     }
 });
 settingsSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});

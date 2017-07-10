@@ -20,7 +20,7 @@ function getDateString(date) {
     if (minutes < 10) {
         minutes = "0" + minutes.toString();
     }
-    return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear() + " at " + hours + ":" + date.getMinutes() + noonHalf;
+    return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear() + " at " + hours + ":" + minutes + noonHalf;
 }
 
 module.exports = getDateString;

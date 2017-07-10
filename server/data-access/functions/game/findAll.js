@@ -1,66 +1,42 @@
 const Game = rootRequire("server/schemas/game");
-const User = rootRequire("server/schemas/user");
+const findById = rootRequire("server/data-access/functions/game/findById");
 
 function FindAll(cb) {
     Game.find({})
+        .select("_id")
         .exec((err, games) => {
             if (err) {
                 return cb({error: err});
             }
             let gameCount = 0;
             let errored = false;
-            const res = [];
-            games.forEach((game, index) => {
-                User.find({
-                    _id: {$in: game.moderators}
-                })
-                    .select("-password -nonce")
-                    .exec((err, mods) => {
-                        if (err) {
-                            if (!errored) {
-                                errored = true;
-                                cb({error: err});
-                            }
+            const resGames = [];
+            games.forEach(game => {
+                if (errored) {
+                    return;
+                }
+                findById(game, res => {
+                    if (res.error) {
+                        if (errored) {
                             return;
                         }
-                        User.find({
-                            _id: {$in: game.humans}
-                        })
-                            .select("-password -nonce")
-                            .exec((err, hums) => {
-                                if (err) {
-                                    if (!errored) {
-                                        errored = true;
-                                        cb({error: err});
-                                    }
-                                    return;
-                                }
-
-                                User.find({
-                                    _id: {$in: game.zombies}
-                                })
-                                    .select("-password -nonce")
-                                    .exec((err, zombs) => {
-                                        if (err) {
-                                            if (!errored) {
-                                                errored = true;
-                                                cb({error: err});
-                                            }
-                                            return;
-                                        }
-                                        const gameRes = JSON.parse(JSON.stringify(game));
-                                        gameRes.moderatorObjs = mods;
-                                        gameRes.humanObjs = hums;
-                                        gameRes.zombieObjs = zombs;
-
-                                        res.push(gameRes);
-                                        gameCount++;
-                                        if (gameCount >= games.length) {
-                                            cb({body: res});
-                                        }
-                                    });
-                            });
-                    });
+                        return cb(res);
+                    }
+                    resGames.push(res.body);
+                    gameCount++;
+                    if (gameCount === games.length) {
+                        resGames.sort((a, b) => {
+                            if (a.startDate < b.startDate) {
+                                return -1;
+                            }
+                            if (a.startDate === b.startDate) {
+                                return 0;
+                            }
+                            return 1;
+                        });
+                        cb({body: resGames});
+                    }
+                });
             });
         });
 }

@@ -139,6 +139,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="accordion_spectators{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingSpectators{{$index}}">
+                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_spectators{{$index}}" href="#collapseSpectators{{$index}}" aria-expanded="true" aria-controls="collapseSpectators{{$index}}">Game Zombies</a></h6>
+                                </div>
+
+                                <div id="collapseSpectators{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingSpectators{{$index}}">
+                                    <div class="card-block">
+                                        <div class="input-group" ng-repeat="zombie in game.spectatorObjs">
+                                            <input type="text" class="form-control" ng-model="zombie.playerName" title="Game Zombie Name" disabled>
+                                            <span class="input-group-btn formish-control">
+                                                <button class="btn btn-danger" type="button" ng-click="removeSpectator($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                                            </span>
+                                        </div>
+                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addSpectator($rootIndex)"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="right formish-control control">
                             <button class="btn btn-success" type="button" ng-click="saveGame($index)"><i class="fa fa-save"></i></button>
                             <button class="btn btn-danger" type="button" ng-click="removeGame($index)"><i class="fa fa-times"></i></button>

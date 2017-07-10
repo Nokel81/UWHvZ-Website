@@ -8,9 +8,9 @@ function FindGamePlayers(gameId, userId, cb) {
         }
         let game = res.body;
         if (game.humans.indexOf(userId) >= 0 || !userId || userId == "null") {
-            const players = game.humans.concat(game.zombies);
+            const players = game.humans.concat(game.zombies).concat(game.spectators);
             User.find({_id: {$in: players}})
-                .select("playerName")
+                .select("playerName _id")
                 .sort("playerName")
                 .exec((err, users) => {
                     if (err) {
@@ -19,10 +19,14 @@ function FindGamePlayers(gameId, userId, cb) {
                     const gamePlayers = JSON.parse(JSON.stringify(users));
                     gamePlayers.forEach(user => {
                         user.team = "Human";
+                        if (game.spectators.indexOf(user._id.toString()) >= 0) {
+                            user.team = "Spectator";
+                        }
+                        delete user._id;
                     });
 
                     User.find({_id: {$in: game.moderators}})
-                        .select("playerName email")
+                        .select("playerName")
                         .sort("playerName")
                         .exec((err, gameMods) => {
                             if (err) {
@@ -32,7 +36,7 @@ function FindGamePlayers(gameId, userId, cb) {
                         });
                 });
         } else {
-            const players = game.humans.concat(game.zombies);
+            const players = game.humans.concat(game.zombies).concat(game.spectators);
             User.find({_id: {$in: players}})
                 .select("_id playerName")
                 .sort("playerName")
@@ -42,14 +46,15 @@ function FindGamePlayers(gameId, userId, cb) {
                     }
                     const gamePlayers = JSON.parse(JSON.stringify(users));
                     gamePlayers.forEach(user => {
-                        if (game.humans.indexOf(user._id) >= 0) {
-                            user.team = "Human";
-                        } else {
+                        if (game.zombies.indexOf(user._id) >= 0) {
                             user.team = "Zombie";
+                        } else if (game.spectators.indexOf(user._id) >= 0) {
+                            user.team = "Spectator";
+                        } else {
+                            user.team = "Human";
                         }
                         delete user._id;
                     });
-                    console.log(game.moderators);
                     User.find({_id: {$in: game.moderators}})
                         .select("playerName email")
                         .sort("playerName")

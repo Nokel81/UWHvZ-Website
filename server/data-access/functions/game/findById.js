@@ -16,11 +16,7 @@ function FindById(id, cb) {
             .select("-password -nonce")
             .exec((err, mods) => {
                 if (err) {
-                    if (!errored) {
-                        errored = true;
-                        cb({error: err});
-                    }
-                    return;
+                    return cb({error: err});
                 }
                 User.find({
                     _id: {$in: game.humans}
@@ -28,11 +24,7 @@ function FindById(id, cb) {
                 .select("-password -nonce")
                 .exec((err, hums) => {
                     if (err) {
-                        if (!errored) {
-                            errored = true;
-                            cb({error: err});
-                        }
-                        return;
+                        return cb({error: err});
                     }
 
                     User.find({
@@ -41,18 +33,24 @@ function FindById(id, cb) {
                     .select("-password -nonce")
                     .exec((err, zombs) => {
                         if (err) {
-                            if (!errored) {
-                                errored = true;
-                                cb({error: err});
-                            }
-                            return;
+                            return cb({error: err});
                         }
-                        const gameRes = JSON.parse(JSON.stringify(game));
-                        gameRes.moderatorObjs = mods;
-                        gameRes.humanObjs = hums;
-                        gameRes.zombieObjs = zombs;
+                        User.find({
+                            _id: {$in: game.spectators}
+                        })
+                        .select("-password -nonce")
+                        .exec((err, specs) => {
+                            if (err) {
+                                return cb({error: err});
+                            }
+                            const gameRes = JSON.parse(JSON.stringify(game));
+                            gameRes.moderatorObjs = mods;
+                            gameRes.humanObjs = hums;
+                            gameRes.zombieObjs = zombs;
+                            gameRes.spectatorObjs = specs;
 
-                        cb({body: gameRes});
+                            cb({body: gameRes});
+                        });
                     });
                 });
             });

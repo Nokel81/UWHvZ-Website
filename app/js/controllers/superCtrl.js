@@ -72,9 +72,16 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         });
     };
 
-    $scope.removeHuman = function (game, mod) {
+    $scope.removeSpectator = function (game, index) {
         if ($scope.games[game]) {
-            const _id = ($scope.games[game].humanObjs.splice(mod, 1)[0] || {})._id;
+            const _id = ($scope.games[game].spectatorObjs.splice(index, 1)[0] || {})._id;
+            $scope.games[game].spectators = ($scope.games[game].spectators || []).filter(id => id !== _id);
+        }
+    };
+
+    $scope.removeHuman = function (game, index) {
+        if ($scope.games[game]) {
+            const _id = ($scope.games[game].humanObjs.splice(index, 1)[0] || {})._id;
             $scope.games[game].humans = ($scope.games[game].humans || []).filter(id => id !== _id);
         }
     };
@@ -98,13 +105,15 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
     };
 
     $scope.addZombie = function (game) {
+        if (!$scope.games[game]) {
+            return;
+        }
         const code = $window.prompt("New Zombie Player Code", "");
-        UserService.getByCode(code, (err, user) => {
+        GameService.addZombieByCode($scope.games[game]._id, code, (err, games) => {
             if (err) {
                 return AlertService.danger(err);
             }
-            $scope.games[game].zombieObjs.push(user);
-            $scope.games[game].zombies.push(user._id);
+            $scope.games = games;
         });
     };
 
@@ -116,8 +125,10 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             humanObjs: [],
             moderatorObjs: [],
             zombieObjs: [],
+            spectatorObjs: [],
             signUpDates: [],
-            signUpLocations: []
+            signUpLocations: [],
+            isStarted: false
         });
     };
 

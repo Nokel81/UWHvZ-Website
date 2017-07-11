@@ -1,5 +1,5 @@
 const Report = rootRequire("server/schemas/report");
-const findUnratified = rootRequire("server/data-access/functions/report/findUnratified");
+const findByGame = rootRequire("server/data-access/functions/report/findByGame");
 
 function Ratify(reportId, gameId, cb) {
     Report.findOneAndUpdate({_id: reportId}, {
@@ -10,7 +10,7 @@ function Ratify(reportId, gameId, cb) {
         if (err) {
             return cb({error: err});
         }
-        findUnratified(gameId, cb);
+        findByGame(gameId, true, cb);
     });
 }
 

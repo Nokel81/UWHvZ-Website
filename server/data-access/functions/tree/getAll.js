@@ -29,7 +29,11 @@ function GetAll(userId, cb) {
             let nodes = game.zombieObjs.map(zombie => {
                 return {
                     id: zombie._id,
-                    label: zombie.playerName
+                    label: zombie.playerName,
+                    color: {
+                        border: "#000000",
+                        background: rgba(0, 0, 0, 0.70710678118)
+                    }
                 };
             });
             nodes.push({id: "OZ", label: "Necromancer"});

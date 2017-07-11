@@ -9,6 +9,9 @@ function FindUnratified(gameId, cb) {
             if (err) {
                 return cb({error: err});
             }
+            if (reports.length === 0) {
+                return cb({body: []});
+            }
             let count = 0;
             let errored = false;
             let resPorts = [];

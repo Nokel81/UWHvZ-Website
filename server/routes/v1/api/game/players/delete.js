@@ -1,7 +1,7 @@
 const removePlayerFromGame = rootRequire("server/data-access/functions/game/removePlayerFromGame");
 
 function Post(req, res, next) {
-    const oldPlayer = req.body;
+    const oldPlayer = req.query;
     removePlayerFromGame(oldPlayer, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");

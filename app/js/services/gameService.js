@@ -156,7 +156,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             playerCode,
             team
         };
-        $http.post(AppSettings.apiUrl + "/game/add", body)
+        $http.post(AppSettings.apiUrl + "/game/players", body)
             .then(res => {
                 let games = res.data;
                 games.forEach(game => {
@@ -170,12 +170,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.removePlayerById = function (gameId, playerId, team, cb) {
-        let body = {
-            gameId,
-            playerId,
-            team
-        };
-        $http.delete(AppSettings.apiUrl + "/game/add", body)
+        $http.delete(AppSettings.apiUrl + "/game/players?gameId=" + gameId + "&playerId=" + playerId + "&team=" + team)
             .then(res => {
                 let games = res.data;
                 games.forEach(game => {

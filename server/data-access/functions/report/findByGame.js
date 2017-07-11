@@ -2,13 +2,8 @@ const Report = rootRequire("server/schemas/report");
 const User = rootRequire("server/schemas/user");
 const getDateString = rootRequire("server/helpers/getDateString");
 
-function FindUnratified(gameId, needToBeRatified cb) {
-    const QUERY;
-    if (needToBeRatified) {
-        QUERY = Report.find({gameId, ratified: false});
-    } else {
-        QUERY = Report.find({gameId});
-    }
+function FindUnratified(gameId, needToBeRatified, cb) {
+    const QUERY = needToBeRatified ? Report.find({gameId, ratified: false}) : Report.find({gameId});
     QUERY.sort("time")
         .exec((err, reports) => {
             if (err) {

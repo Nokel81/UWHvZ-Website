@@ -1,8 +1,8 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#GameSignups" role="tab">Game Signups</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab">Start Game</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab">Player Codes</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Unratified" role="tab">Ratification</a></li>
 </ul>
@@ -10,7 +10,11 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane active" id="GameSignups" role="tabpanel">
-        <div ng-show="game != null">
+
+        <div ng-show="gameStarted">
+            <h4 class="centre">No Game to sign up for or game has already started</h4>
+        </div>
+        <div ng-hide="gameStarted">
             <br>
             <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
             <br>
@@ -60,38 +64,6 @@
             <br>
             <br id="bottom">
         </div>
-        <div ng-show="game == null">
-            <b class="centre">No Game to sign up for</b>
-        </div>
-    </div>
-    <div class="tab-pane" id="SupplyCodes" role="tabpanel">
-        <div class="container-fluid">
-            <button type="button" class="btn btn-success right formish-control" ng-click="addCodes()">Add More Codes</button>
-            <br>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <b>Supply Code</b>
-                </div>
-                <div class="col-md-4">
-                    <b>Value</b>
-                </div>
-                <div class="col-md-4">
-                    <b>Used By</b>
-                </div>
-            </div>
-            <div class="row" ng-repeat="code in supplyCodes">
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.code">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.value">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.usedByName">
-                </div>
-            </div>
-        </div>
     </div>
     <div class="tab-pane" id="StartGame" role="tabpanel">
         <div ng-hide="gameStarted">
@@ -133,6 +105,35 @@
         </div>
         <div ng-show="gameStarted">
             <h4 class="centre">No Game to start or game has already started</h4>
+        </div>
+    </div>
+    <div class="tab-pane" id="SupplyCodes" role="tabpanel">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-success right formish-control" ng-click="addCodes()">Add More Codes</button>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <b>Supply Code</b>
+                </div>
+                <div class="col-md-4">
+                    <b>Value</b>
+                </div>
+                <div class="col-md-4">
+                    <b>Used By</b>
+                </div>
+            </div>
+            <div class="row" ng-repeat="code in supplyCodes">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" disabled ng-model="code.code">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" disabled ng-model="code.value">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" disabled ng-model="code.usedByName">
+                </div>
+            </div>
         </div>
     </div>
     <div class="tab-pane" id="PlayerCodes" role="tabpanel">

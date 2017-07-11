@@ -32,6 +32,8 @@ function GetAll(userId, cb) {
                     label: zombie.playerName
                 };
             });
+            nodes.push({id: "OZ", label: "Necromancer"});
+
             Report.find({gameId: game._id, reportType: "Tag"})
                 .exec((err, reports) => {
                     if (err) {
@@ -45,9 +47,22 @@ function GetAll(userId, cb) {
                     let edges = reports.map(report => {
                         return {
                             from: report.tagger,
-                            to: report.tagged
+                            to: report.tagged,
+                            arrows: {
+                                to: true
+                            }
                         };
                     });
+                    game.originalZombies.forEach(zom => {
+                        edges.push({
+                            from: "OZ",
+                            to: zom,
+                            arrows: {
+                                to: true
+                            }
+                        });
+                    });
+
                     trees[index] = {nodes, edges, name: game.name};
                     count++;
                     if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {

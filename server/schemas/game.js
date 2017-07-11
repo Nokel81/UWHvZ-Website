@@ -39,6 +39,9 @@ const gameSchema = new Schema({
     spectators: {
         type: [Schema.Types.ObjectId]
     },
+    originalZombies: {
+        type: [Schema.Types.ObjectId]
+    },
     suppliedValue: {
         type: Number,
         get: v => Math.round(v),

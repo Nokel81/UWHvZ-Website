@@ -211,6 +211,15 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
+    SERVICE.getTrees = function (userId, cb) {
+        $http.get(AppSettings.apiUrl + "/trees?userId=" + userId)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

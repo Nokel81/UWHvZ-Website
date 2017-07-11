@@ -77,6 +77,16 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state("ZombieTree", {
+            url: "/trees",
+            views: {
+                main: {
+                    controller: "TreeCtrl as tree",
+                    templateUrl: "../views/tree.html",
+                    title: "Zombie Family Trees"
+                }
+            }
+        })
         .state("Super", {
             url: "/super",
             views: {

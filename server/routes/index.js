@@ -35,7 +35,6 @@ function defineRoutes(app, dir, routePath) {
         if (allowed.indexOf(method[0]) < 0) {
             return console.error("Invalid method name:" + method + "; in '" + dir + "'");
         }
-
         route[method](require(path.join(dir, file)));
     });
 }

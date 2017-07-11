@@ -3,6 +3,7 @@ const findById = rootRequire("server/data-access/functions/game/findById");
 
 function FindAll(cb) {
     Game.find({})
+        .sort("startDate")
         .select("_id")
         .exec((err, games) => {
             if (err) {
@@ -11,7 +12,8 @@ function FindAll(cb) {
             let gameCount = 0;
             let errored = false;
             const resGames = [];
-            games.forEach(game => {
+            games.forEach((game, index) => {
+                resGames.push();
                 if (errored) {
                     return;
                 }
@@ -22,18 +24,9 @@ function FindAll(cb) {
                         }
                         return cb(res);
                     }
-                    resGames.push(res.body);
+                    resGames[index] = res.body;
                     gameCount++;
                     if (gameCount === games.length) {
-                        resGames.sort((a, b) => {
-                            if (a.startDate < b.startDate) {
-                                return -1;
-                            }
-                            if (a.startDate === b.startDate) {
-                                return 0;
-                            }
-                            return 1;
-                        });
                         cb({body: resGames});
                     }
                 });

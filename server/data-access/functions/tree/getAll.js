@@ -52,7 +52,7 @@ function GetAll(userId, cb) {
                                 to: true
                             },
                             scaling: {
-                                max: 50
+                                max: 100
                             }
                         };
                     });

@@ -52,9 +52,7 @@ function GetAll(userId, cb) {
                                 to: true
                             },
                             scaling: {
-                                label: {
-                                    max: 50
-                                }
+                                max: 50
                             }
                         };
                     });

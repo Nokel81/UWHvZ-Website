@@ -28,6 +28,7 @@ function FindGamePlayers(gameId, userId, cb) {
                         let count = 0;
                         let errored = false;
                         let isHumanKnowledge = game.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
+                        let isModerator = game.moderators.indexOf(userId) >= 0;
                         gamePlayers.forEach(user => {
                             if (errored) {
                                 return;
@@ -65,7 +66,7 @@ function FindGamePlayers(gameId, userId, cb) {
                                                 cb({body: {gameMods, gamePlayers, zombieCount, stunCount}});
                                             });
                                     };
-                                    if (settings.showScore) {
+                                    if (settings.showScore || isModerator) {
                                         findUserScore(gameId, user._id, res => {
                                             if (res.error) {
                                                 if (errored) {

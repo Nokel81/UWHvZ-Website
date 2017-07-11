@@ -32,7 +32,7 @@ function GetAll(userId, cb) {
                     label: zombie.playerName,
                     color: {
                         border: "#000000",
-                        background: rgba(0, 0, 0, 0.70710678118)
+                        background: "#aaaaaa"
                     }
                 };
             });

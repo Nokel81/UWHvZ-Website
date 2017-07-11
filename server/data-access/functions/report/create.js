@@ -12,8 +12,17 @@ function Create(report, cb) {
             return cb(res);
         }
         let game = res.body;
-        if (game.startGame >= new Date().toISOString()) {
+        if (game.startDate >= new Date().toISOString()) {
             return cb({error: "Game has not started yet"});
+        }
+        if (game.endDate < new Date().toISOString()) {
+            return cb({error: "Game has ended"});
+        }
+        if (report.time < game.startDate) {
+            return cb({error: "You cannot play before the game has begun"});
+        }
+        if (report.time > game.endDate) {
+            return cb({error: "You cannot play after the game has ended"});
         }
         getUserById(report.tagger, res => {
             if (res.error) {

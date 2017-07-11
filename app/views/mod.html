@@ -4,6 +4,7 @@
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab">Start Game</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab">Player Codes</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerReports" role="tab">Player Reports</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Unratified" role="tab">Ratification</a></li>
 </ul>
 
@@ -153,6 +154,46 @@
                 </div>
                 <div class="col-sm-6">
                     <span ng-bind="player.playerCode"></span>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="PlayerReports" role="tabpanel">
+        <div class="fluid-control">
+            <div class="row">
+                <div class="col-sm-2">
+                    <b>Tagger</b>
+                </div>
+                <div class="col-sm-2">
+                    <b>Tagged</b>
+                </div>
+                <div class="col-sm-2">
+                    <b>Time</b>
+                </div>
+                <div class="col-sm-2">
+                    <b>Location</b>
+                </div>
+                <div class="col-sm-3">
+                    <b>Description</b>
+                </div>
+                <hr>
+            </div>
+            <div class="row" ng-repeat="report in allReports">
+                <div class="col-sm-2">
+                    <span ng-bind="report.taggerName"></span>
+                </div>
+                <div class="col-sm-2">
+                    <span ng-bind="report.taggedName"></span>
+                </div>
+                <div class="col-sm-2">
+                    <span ng-bind="report.time"></span>
+                </div>
+                <div class="col-sm-2">
+                    <span ng-bind="report.location"></span>
+                </div>
+                <div class="col-sm-3">
+                    <span ng-bind="report.description"></span>
                 </div>
                 <hr>
             </div>

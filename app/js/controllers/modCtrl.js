@@ -42,6 +42,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             }
             $scope.reports = reports;
         });
+        GameService.getAllReports(game._id, (err, reports) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            $scope.allReports = reports;
+        });
         ModService.getSupplyCodes(game._id, (err, codes) => {
             if (err) {
                 AlertService.danger(err);

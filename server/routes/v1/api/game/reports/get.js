@@ -1,7 +1,7 @@
 const findUnratified = rootRequire("server/data-access/functions/report/findUnratified");
 
 function Get(req, res, next) {
-    findUnratified(req.query.gameId, result => {
+    findUnratified(req.query.gameId, req.query.needToBeRatified === "true", result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

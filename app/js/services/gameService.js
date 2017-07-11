@@ -158,7 +158,12 @@ function GameService($http, AppSettings, $cookies, UserService) {
         };
         $http.post(AppSettings.apiUrl + "/game/add", body)
             .then(res => {
-                cb(null, res.data);
+                let games = res.data;
+                games.forEach(game => {
+                    game.startDate = new Date(game.startDate);
+                    game.endDate = new Date(game.endDate);
+                });
+                cb(null, games);
             }, err => {
                 cb(err.data);
             });
@@ -172,7 +177,12 @@ function GameService($http, AppSettings, $cookies, UserService) {
         };
         $http.delete(AppSettings.apiUrl + "/game/add", body)
             .then(res => {
-                cb(null, res.data);
+                let games = res.data;
+                games.forEach(game => {
+                    game.startDate = new Date(game.startDate);
+                    game.endDate = new Date(game.endDate);
+                });
+                cb(null, games);
             }, err => {
                 cb(err.data);
             });

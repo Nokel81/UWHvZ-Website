@@ -13,6 +13,9 @@ function getDateString(date) {
     if (hours >= 12) {
         noonHalf = "PM";
     }
+    if (hours > 12) {
+        hours -= 12;
+    }
     if (hours < 10) {
         hours = "0" + hours.toString();
     }

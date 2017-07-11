@@ -12,7 +12,8 @@ function FindUnratified(gameId, cb) {
             let count = 0;
             let errored = false;
             let resPorts = [];
-            reports.forEach(report => {
+            reports.forEach((report, index) => {
+                resPorts.push();
                 if (errored) {
                     return;
                 }
@@ -54,7 +55,7 @@ function FindUnratified(gameId, cb) {
                                 }
                                 rep.taggedName = user.playerName;
                                 rep.time = getDateString(new Date(rep.time));
-                                resPorts.push(rep);
+                                resPorts[index] = rep;
                                 count++;
                                 if (count === reports.length) {
                                     cb({body: resPorts});

@@ -32,111 +32,58 @@ function FindGamePlayers(gameId, userId, cb) {
                             if (errored) {
                                 return;
                             }
-                            if (isHumanKnowledge) {
-                                Settings.findOne({userId: user._id})
-                                    .exec((err, settings) => {
-                                        if (err) {
-                                            if (errored) {
-                                                return;
-                                            }
-                                            errored = true;
-                                            return cb({error: err});
+                            Settings.findOne({userId: user._id})
+                                .exec((err, settings) => {
+                                    if (err) {
+                                        if (errored) {
+                                            return;
                                         }
-                                        let end = function () {
-                                            if (count !== gamePlayers.length) {
-                                                return;
-                                            }
-                                            gamePlayers.forEach(user => {
+                                        errored = true;
+                                        return cb({error: err});
+                                    }
+                                    let end = function () {
+                                        if (count !== gamePlayers.length) {
+                                            return;
+                                        }
+                                        gamePlayers.forEach(user => {
+                                            if (game.zombies.indexOf(user._id) >= 0) {
+                                                user.team = isHumanKnowledge ? "Human" : "Zombie";
+                                            } else if (game.spectators.indexOf(user._id) >= 0) {
+                                                user.team = "Spectator";
+                                            } else {
                                                 user.team = "Human";
-                                                if (game.spectators.indexOf(user._id.toString()) >= 0) {
-                                                    user.team = "Spectator";
+                                            }
+                                            delete user._id;
+                                        });
+                                        User.find({_id: {$in: game.moderators}})
+                                            .select(isHumanKnowledge ? "playerName" : "playerName email")
+                                            .sort("playerName")
+                                            .exec((err, gameMods) => {
+                                                if (err) {
+                                                    return cb({error: err});
                                                 }
-                                                delete user._id;
+                                                cb({body: {gameMods, gamePlayers, zombieCount, stunCount}});
                                             });
-
-                                            User.find({_id: {$in: game.moderators}})
-                                                .select("playerName")
-                                                .sort("playerName")
-                                                .exec((err, gameMods) => {
-                                                    if (err) {
-                                                        return cb({error: err});
-                                                    }
-                                                    cb({body: {gameMods, gamePlayers, zombieCount, stunCount}});
-                                                });
-                                        };
-                                        if (settings.showScore) {
-                                            findUserScore(gameId, user._id, res => {
-                                                if (res.error) {
-                                                    if (errored) {
-                                                        return;
-                                                    }
-                                                    errored = true;
-                                                    return cb(res);
+                                    };
+                                    if (settings.showScore) {
+                                        findUserScore(gameId, user._id, res => {
+                                            if (res.error) {
+                                                if (errored) {
+                                                    return;
                                                 }
-                                                user.score = res.body;
-                                                count++;
-                                                end();
-                                            }, true);
-                                        } else {
-                                            user.score = "HIDDEN";
+                                                errored = true;
+                                                return cb(res);
+                                            }
+                                            user.score = res.body;
                                             count++;
                                             end();
-                                        }
-                                    });
-                            } else {
-                                Settings.findOne({userId: user._id})
-                                    .exec((err, settings) => {
-                                        if (err) {
-                                            if (errored) {
-                                                return;
-                                            }
-                                            errored = true;
-                                            return cb({error: err});
-                                        }
-                                        let end = function () {
-                                            if (count !== gamePlayers.length) {
-                                                return;
-                                            }
-                                            gamePlayers.forEach(user => {
-                                                if (game.zombies.indexOf(user._id) >= 0) {
-                                                    user.team = "Zombie";
-                                                } else if (game.spectators.indexOf(user._id) >= 0) {
-                                                    user.team = "Spectator";
-                                                } else {
-                                                    user.team = "Human";
-                                                }
-                                                delete user._id;
-                                            });
-                                            User.find({_id: {$in: game.moderators}})
-                                                .select("playerName email")
-                                                .sort("playerName")
-                                                .exec((err, gameMods) => {
-                                                    if (err) {
-                                                        return cb({error: err});
-                                                    }
-                                                    cb({body: {gameMods, gamePlayers, zombieCount, stunCount}});
-                                                });
-                                        };
-                                        if (settings.showScore) {
-                                            findUserScore(gameId, user._id, res => {
-                                                if (res.error) {
-                                                    if (errored) {
-                                                        return;
-                                                    }
-                                                    errored = true;
-                                                    return cb(res);
-                                                }
-                                                user.score = res.body;
-                                                count++;
-                                                end();
-                                            }, true);
-                                        } else {
-                                            user.score = "HIDDEN";
-                                            count++;
-                                            end();
-                                        }
-                                    });
-                            }
+                                        }, true);
+                                    } else {
+                                        user.score = "HIDDEN";
+                                        count++;
+                                        end();
+                                    }
+                                });
                         });
                     });
             });

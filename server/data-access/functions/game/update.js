@@ -7,9 +7,7 @@ function Update(game, cb) {
             if (err) {
                 return cb({error: err});
             }
-            User.find({
-                _id: {$in: game.moderators}
-            })
+            User.find({_id: {$in: game.moderators}})
                 .select("-password -nonce")
                 .exec((err, mods) => {
                     if (err) {
@@ -24,9 +22,7 @@ function Update(game, cb) {
                                 return cb({error: err});
                             }
 
-                            User.find({
-                                _id: {$in: game.zombies}
-                            })
+                            User.find({_id: {$in: game.zombies}})
                                 .select("-password -nonce")
                                 .exec((err, zombs) => {
                                     if (err) {

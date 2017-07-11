@@ -116,9 +116,9 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                     let score = 0;
                     let tagScore = 0;
                     let descriptions = [];
-                    let tagdescriptions = [];
+                    let tagDescriptions = [];
                     let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
-                    reports.forEach(report => {
+                    reports.forEach((report, index) => {
                         report.time = new Date(report.time); //Multiplied by 1000 so that it is in miniseconds and not seconds
                         let tagger = report.tagger.toString();
                         let tagged = report.tagged.toString();
@@ -126,7 +126,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                         if (report.reportType === "Tag") {
                             if (tagger === player) {
                                 tagScore += 5;
-                                tagdescriptions.push("5 points for tagging " + userMap[tagged] + " on " + getDateString(report.time));
+                                tagDescriptions.push("5 points for tagging " + userMap[tagged] + " on " + getDateString(report.time));
                             }
                             return;
                         }
@@ -156,7 +156,7 @@ function FindUserScore(gameId, playerId, cb, forTeamScore) {
                             }
                         }
                     });
-                    reportScore = {tagScore, score, descriptions, tagdescriptions};
+                    reportScore = {tagScore, score, descriptions, tagDescriptions};
                     finish();
                 });
         });

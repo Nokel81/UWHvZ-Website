@@ -13,6 +13,7 @@ function FindById(id, cb) {
             User.find({
                 _id: {$in: game.moderators}
             })
+            .sort("playerName")
             .select("-password -nonce")
             .exec((err, mods) => {
                 if (err) {
@@ -21,6 +22,7 @@ function FindById(id, cb) {
                 User.find({
                     _id: {$in: game.humans}
                 })
+                .sort("playerName")
                 .select("-password -nonce")
                 .exec((err, hums) => {
                     if (err) {
@@ -30,6 +32,7 @@ function FindById(id, cb) {
                     User.find({
                         _id: {$in: game.zombies}
                     })
+                    .sort("playerName")
                     .select("-password -nonce")
                     .exec((err, zombs) => {
                         if (err) {
@@ -38,6 +41,7 @@ function FindById(id, cb) {
                         User.find({
                             _id: {$in: game.spectators}
                         })
+                        .sort("playerName")
                         .select("-password -nonce")
                         .exec((err, specs) => {
                             if (err) {

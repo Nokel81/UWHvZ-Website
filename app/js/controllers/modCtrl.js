@@ -211,7 +211,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             if (err) {
                 AlertService.danger(err);
             } else {
-                AlertService.info(res);
+                $scope.reports = res;
             }
         });
     };

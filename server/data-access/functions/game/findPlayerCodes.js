@@ -10,14 +10,15 @@ function FindGamePlayers(gameId, userId, cb) {
         }
         let game = res.body;
         if (game.moderators.indexOf(userId) >= 0) {
-            User.find({_id: {$in: game.zombies.concat(game.humans)}})
+            User.find({})
+                .sort("playerName")
                 .select("playerName playerCode")
                 .exec((err, users) => {
                     if (err) {
                         return cb({error: err});
                     }
                     return cb({body: users});
-                })
+                });
         } else {
             cb({error: "You are not a moderator"});
         }

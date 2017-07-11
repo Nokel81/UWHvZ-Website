@@ -50,6 +50,11 @@ function GetAll(userId, cb) {
                             to: report.tagged,
                             arrows: {
                                 to: true
+                            },
+                            scaling: {
+                                label: {
+                                    max: 50
+                                }
                             }
                         };
                     });

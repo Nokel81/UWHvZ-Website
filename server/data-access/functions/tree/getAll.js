@@ -30,13 +30,22 @@ function GetAll(userId, cb) {
                 return {
                     id: zombie._id,
                     label: zombie.playerName,
-                    color: {
-                        border: "#000000",
-                        background: "#aaaaaa"
+                    chosen: {
+                        node: false
                     }
                 };
             });
-            nodes.push({id: "OZ", label: "Necromancer"});
+            nodes.push({
+                id: "OZ",
+                label: "Necromancer",
+                color: {
+                    border: "#000000",
+                    background: "#aaaaaa"
+                },
+                chosen: {
+                    node: false
+                }
+            });
 
             Report.find({gameId: game._id, reportType: "Tag"})
                 .exec((err, reports) => {

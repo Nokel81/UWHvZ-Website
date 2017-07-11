@@ -186,7 +186,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!$window.confirm("Are you sure you want to start the game?")) {
             return;
         }
-        if (!$scope.lore) {
+        if (!CKEDITOR.instances.GameLoreTextArea.getData()) {
             return AlertService.danger("Please type the game lore");
         }
         var fd = new FormData();
@@ -194,7 +194,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             fd.append('file', file);
         });
         const startingZombies = $scope.OZplayers.filter(player => player.startingTeam === "Zombie").map(player => player.email);
-        ModService.startGame(startingZombies, $scope.game._id, $scope.lore, fd, (err, res) => {
+        ModService.startGame(startingZombies, $scope.game._id, CKEDITOR.instances.GameLoreTextArea.getData(), fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

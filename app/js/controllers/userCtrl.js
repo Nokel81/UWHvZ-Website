@@ -247,14 +247,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.messageSubject) {
             return AlertService.danger("Please type a subject");
         }
-        if (!$scope.messageBody) {
+        if (!CKEDITOR.instances.MessageBodyTextArea.getData()) {
             return AlertService.danger("Please type a message body");
         }
         var fd = new FormData();
         angular.forEach($scope.files, function (file) {
             fd.append('file', file);
         });
-        let messageBody = $scope.messageBody + "<p>- " + $scope.user.playerName + "</p>";
+        let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
             if (err) {

@@ -6,6 +6,7 @@ function AddPlayerToGame(oldPlayer, cb) {
     if (["spectator", "moderator", "human", "zombie"].indexOf(oldPlayer.team) < 0) {
         return cb({error: "Invalid team name"});
     }
+    console.log(oldPlayer);
     oldPlayer.team += "s";
     let updateQuery = {$pull: {}};
     updateQuery.$pull[oldPlayer.team] = oldPlayer.userId;

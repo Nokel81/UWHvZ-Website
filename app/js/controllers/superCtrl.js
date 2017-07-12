@@ -19,6 +19,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             AlertService.danger(err);
         } else {
             $scope.games = games || [];
+            console.log(games);
         }
     });
 
@@ -82,8 +83,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (!$scope.games[game] || !$scope.games[game][team + "s"] || !$scope.games[game][team + "s"][index]) {
             return;
         }
-        let id = $scope.games[game][team + "s"][index]._id;
-        GameService.removePlayerById($scope.games[game]._id, id, team, (err, games) => {
+        let userId = $scope.games[game][team + "Objs"][index]._id;
+        let gameId = $scope.games[game]._id
+        GameService.removePlayerById(gameId, userId, team, (err, games) => {
             if (err) {
                 return AlertService.danger(err);
             }

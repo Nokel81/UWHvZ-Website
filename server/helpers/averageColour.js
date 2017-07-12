@@ -11,14 +11,10 @@ var averageColour = function(c1, c2) {
     if (c1[0] != '#' || c2[0] != '#') {
         return null;
     }
-    console.log(c1);
-    console.log(c2);
     c1 = c1.substring(1).toLowerCase();
     c2 = c2.substring(1).toLowerCase();
     c1 = c1.length < 6 ? c1[0] + c1[0] + c1[1] + c1[1] + c1[2] + c1[2] : c1.substr(0, 6);
     c2 = c2.length < 6 ? c2[0] + c2[0] + c2[1] + c2[1] + c2[2] + c2[2] : c2.substr(0, 6);
-    console.log(c1);
-    console.log(c2);
 
     if (!c1.match(/[0-9a-f]+/g) || !c2.match(/[0-9a-f]+/g)) {
         return null;

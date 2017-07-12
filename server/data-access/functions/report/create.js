@@ -108,7 +108,7 @@ function Create(report, cb) {
 
                         if (taggedType === taggerType) {
                             if (taggerType === "Zombie") {
-                                if (game.originalZombies.indexOf(tagger._id.toString() >= 0)) {
+                                if (game.originalZombies.indexOf(tagger._id.toString()) >= 0) {
                                     return cb({error: "You cannot tag an original zombie"});
                                 }
                                 Report.count({

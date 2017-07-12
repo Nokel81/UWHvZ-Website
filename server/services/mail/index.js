@@ -122,8 +122,6 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
         reportDescription: report.description,
         reportLocation: report.location
     };
-    console.log(resolveData);
-    console.log(report);
     const html = relativeResolve("./emails/tagged.html", resolveData);
     const mailOptions = {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address

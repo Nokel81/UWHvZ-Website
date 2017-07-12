@@ -50,14 +50,30 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                     return AlertService.danger(err);
                 }
                 let container = document.getElementById('reportGraphs');
+                let groups = new vis.DataSet();
+                groups.add({
+                    id: "Stuns",
+                    content: "Stuns",
+                    options: {
+                        drawPoints: false
+                    }
+                });
+                groups.add({
+                    id: "Zombies",
+                    content: "Zombies",
+                    options: {
+                        drawPoints: false
+                    }
+                });
                 let options = {
                     width:  '100%',
+                    legend: true,
+                    sort: false,
                     start: gameObj.startDate.toISOString(),
                     end: gameObj.endDate.toISOString()
                 };
                 var dataset = new vis.DataSet(graphs);
-                new vis.Graph2d(container, dataset, options);
-                console.log(graphs);
+                new vis.Graph2d(container, dataset, groups, options);
             });
         }
     });

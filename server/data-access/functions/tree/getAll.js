@@ -66,7 +66,6 @@ function GetAll(userId, cb) {
                             borderWidth: 2
                         };
                     }));
-                    console.log(nodes);
 
                     Report.find({gameId: game._id, reportType: "Tag"})
                         .exec((err, reports) => {
@@ -99,7 +98,6 @@ function GetAll(userId, cb) {
                                     }
                                 });
                             });
-                            console.log(edges);
 
                             trees[index] = {nodes, edges, name: game.name};
                             count++;

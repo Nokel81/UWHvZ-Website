@@ -50,61 +50,84 @@ function Create(report, cb) {
                         if (taggedType !== "Human" && taggedType !== "Zombie") {
                             return cb({error: "You have to tag either a Human or a Zombie"});
                         }
-                        if (taggedType === taggerType && taggerType === "Zombie") {
-                            return cb({error: "You have to tag someone who is on the other team"});
-                        }
-                        report.reportType = taggedType === "Human" ? "Tag" : "Stun";
-                        report.tagged = tagged._id;
-                        report.gameId = game._id;
-                        let newReport = new Report(report);
-                        newReport.validate(err => {
-                            if (err) {
-                                return cb({error: err});
-                            }
-                            newReport.save((err, report) => {
+
+                        let end = function () {
+                            report.reportType = taggedType === "Human" ? "Tag" : "Stun";
+                            report.tagged = tagged._id;
+                            report.gameId = game._id;
+                            let newReport = new Report(report);
+                            newReport.validate(err => {
                                 if (err) {
                                     return cb({error: err});
                                 }
-                                let newZombies = [];
-                                if (report.reportType === "Tag") {
-                                    newZombies.push(tagged._id);
-                                    if (taggerType === "Human") {
-                                        newZombies.push(tagger._id);
-                                    }
-                                }
-                                Game.findOneAndUpdate({_id: game._id}, {
-                                    $push: {
-                                        zombies: {
-                                            $each: newZombies
-                                        }
-                                    },
-                                    $pullAll: {
-                                        humans: newZombies
-                                    }
-                                }, err => {
+                                newReport.save((err, report) => {
                                     if (err) {
                                         return cb({error: err});
                                     }
-                                    mailService.sendTaggedEmail(tagged.email, tagged.playerName, tagger.playerName, report, err => {
+                                    let newZombies = [];
+                                    if (report.reportType === "Tag") {
+                                        newZombies.push(tagged._id);
+                                        if (taggerType === "Human") {
+                                            newZombies.push(tagger._id);
+                                        }
+                                    }
+                                    Game.findOneAndUpdate({_id: game._id}, {
+                                        $push: {
+                                            zombies: {
+                                                $each: newZombies
+                                            }
+                                        },
+                                        $pullAll: {
+                                            humans: newZombies
+                                        }
+                                    }, err => {
                                         if (err) {
                                             return cb({error: err});
                                         }
-                                        let word = report.reportType.toLowerCase();
-                                        word += word[word.length - 1];
-                                        if (taggerType === "Human" && taggedType === "Human") {
-                                            mailService.sendTaggerEmail(tagger.email, tagged.playerName, report, err => {
-                                                if (err) {
-                                                    return cb({error: err});
-                                                }
+                                        mailService.sendTaggedEmail(tagged.email, tagged.playerName, tagger.playerName, report, err => {
+                                            if (err) {
+                                                return cb({error: err});
+                                            }
+                                            let word = report.reportType.toLowerCase();
+                                            word += word[word.length - 1];
+                                            if (taggerType === "Human" && taggedType === "Human") {
+                                                mailService.sendTaggerEmail(tagger.email, tagged.playerName, report, err => {
+                                                    if (err) {
+                                                        return cb({error: err});
+                                                    }
+                                                    cb({body: "You " + word + "ed " + tagged.playerName});
+                                                });
+                                            } else {
                                                 cb({body: "You " + word + "ed " + tagged.playerName});
-                                            });
-                                        } else {
-                                            cb({body: "You " + word + "ed " + tagged.playerName});
-                                        }
+                                            }
+                                        });
                                     });
                                 });
                             });
-                        });
+                        };
+
+                        if (taggedType === taggerType) {
+                            if (taggerType === "Zombie") {
+                                if (game.originalZombies.indexOf(tagger._id.toString() >= 0) {
+                                    return cb({error: "You cannot tag an original zombie"});
+                                }
+                                Report.count({
+                                    tagged: tagged._id,
+                                    reportType: "Tag"
+                                })
+                                .exec((err, numberOfReports) => {
+                                    if (err) {
+                                        return cb({error: err});
+                                    }
+                                    if (numberOfReports) {
+                                        return cb({error: "You cannot tag someone who is already tagged"});
+                                    }
+                                    end();
+                                });
+                            }
+                        } else {
+                            end();
+                        }
                     });
                 });
             });

@@ -205,6 +205,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 AlertService.danger(err);
             } else {
                 AlertService.info(res);
+                CKEDITOR.instances.GameLoreTextArea.setData("");
             }
         });
     };

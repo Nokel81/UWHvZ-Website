@@ -13,6 +13,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.userInfo = {
         status: "Please wait, loading..."
     };
+    var currentlyTagging = false;
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -186,10 +187,15 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.tagCode = function() {
+        if (currentlyTagging) {
+            return;
+        }
         if (!$scope.taggedCode || !$scope.taggedDescription || !$scope.time) {
             return AlertService.danger("Need more information");
         }
+        currentlyTagging = true;
         UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
+            currentlyTagging = false;
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -263,7 +269,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 AlertService.info(res);
                 $scope.messageTo = "";
                 $scope.messageSubject = "";
-                $scope.messageBody = "";
+                CKEDITOR.instances.MessageBodyTextArea.setData("");
             }
         });
     };

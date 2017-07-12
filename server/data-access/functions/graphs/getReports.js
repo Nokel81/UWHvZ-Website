@@ -53,7 +53,6 @@ function GetReports(userId, cb) {
 
                 cb({body: graph});
             });
-        });
     });
 }
 

@@ -61,7 +61,7 @@ function GetAllTrees(userId, cb) {
                                 border: treeNodeColour
                             },
                             font: {
-                                color: treeNodeColour
+                                color: "#000000"
                             },
                             borderWidth: 2
                         };

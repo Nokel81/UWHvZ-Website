@@ -52,8 +52,8 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                 let container = document.getElementById('reportGraphs');
                 let options = {
                     width:  '100%',
-                    start: game.startDate.toISOString(),
-                    end: game.endDate.toISOString()
+                    start: gameObj.startDate.toISOString(),
+                    end: gameObj.endDate.toISOString()
                 };
                 var dataset = new vis.DataSet(graphs);
                 new vis.Graph2d(container, dataset, options);

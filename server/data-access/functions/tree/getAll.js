@@ -1,5 +1,7 @@
 const findAll = rootRequire('server/data-access/functions/game/findAll');
+const averageColour = rootRequire('server/helpers/averageColour');
 const Report = rootRequire('server/schemas/report');
+const Settings = rootRequire('server/schemas/settings');
 
 function GetAll(userId, cb) {
     findAll(res => {
@@ -25,17 +27,7 @@ function GetAll(userId, cb) {
                 return;
             }
             trees.push();
-
-            let nodes = game.zombieObjs.map(zombie => {
-                return {
-                    id: zombie._id,
-                    label: zombie.playerName,
-                    chosen: {
-                        node: false
-                    }
-                };
-            });
-            nodes.push({
+            let nodes = [{
                 id: "OZ",
                 label: "Necromancer",
                 color: {
@@ -45,10 +37,10 @@ function GetAll(userId, cb) {
                 chosen: {
                     node: false
                 }
-            });
+            }];
 
-            Report.find({gameId: game._id, reportType: "Tag"})
-                .exec((err, reports) => {
+            Settings.find({userId: {$in: game.zombies}})
+                .exec((err, settingObjs) => {
                     if (err) {
                         if (errored) {
                             return;
@@ -56,34 +48,65 @@ function GetAll(userId, cb) {
                         errored = true;
                         return cb({error: err});
                     }
-
-                    let edges = reports.map(report => {
+                    nodes = nodes.concat(game.zombieObjs.map(zombie => {
+                        let treeNodeColour = (settingObjs.find(setting => setting.userId.toString() === zombie._id.toString()) || {treeNodeColour: "#0000ff"}).treeNodeColour;
                         return {
-                            from: report.tagger,
-                            to: report.tagged,
-                            arrows: {
-                                to: true
+                            id: zombie._id,
+                            label: zombie.playerName,
+                            chosen: {
+                                node: false
                             },
-                            scaling: {
-                                max: 100
-                            }
+                            color: {
+                                background: averageColour(treeNodeColour, "#ffffff"),
+                                border: treeNodeColour
+                            },
+                            font: {
+                                color: treeNodeColour
+                            },
+                            borderWidth: 2
                         };
-                    });
-                    game.originalZombies.forEach(zom => {
-                        edges.push({
-                            from: "OZ",
-                            to: zom,
-                            arrows: {
-                                to: true
+                    }));
+                    console.log(nodes);
+
+                    Report.find({gameId: game._id, reportType: "Tag"})
+                        .exec((err, reports) => {
+                            if (err) {
+                                if (errored) {
+                                    return;
+                                }
+                                errored = true;
+                                return cb({error: err});
+                            }
+
+                            let edges = reports.map(report => {
+                                return {
+                                    from: report.tagger,
+                                    to: report.tagged,
+                                    arrows: {
+                                        to: true
+                                    },
+                                    scaling: {
+                                        max: 100
+                                    }
+                                };
+                            });
+                            game.originalZombies.forEach(zom => {
+                                edges.push({
+                                    from: "OZ",
+                                    to: zom,
+                                    arrows: {
+                                        to: true
+                                    }
+                                });
+                            });
+                            console.log(edges);
+
+                            trees[index] = {nodes, edges, name: game.name};
+                            count++;
+                            if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {
+                                cb({body: trees});
                             }
                         });
-                    });
-
-                    trees[index] = {nodes, edges, name: game.name};
-                    count++;
-                    if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {
-                        cb({body: trees});
-                    }
                 });
         });
     });

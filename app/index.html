@@ -18,13 +18,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.js"></script>
     <script src="/js/externals/ckeditor/ckeditor.js"></script>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/colorpicker.css">
 </head>
 
 <body id="top" ng-cloak>
     <div class="alerting">
         <div ng-class="alert.class" ng-repeat="alert in alerts">
             <span ng-bind="alert.text"></span>
-            <button type="button" class="close fa fa-times" aria-label="Close" ng-click="alerts.splice(alerts.indexOf(alert), 1)"></button>
+            <button type="button" class="close-alerts fa fa-times" aria-label="Close" ng-click="alerts.splice(alerts.indexOf(alert), 1)"></button>
         </div>
     </div>
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-fixed-top" ng-controller="NavCtrl" style="position: static">

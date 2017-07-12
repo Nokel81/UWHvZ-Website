@@ -8,7 +8,8 @@ function UpdateUserSettings(newSettings, cb) {
         $set: {
             gameEmails: newSettings.gameEmails,
             promotionalEmails: newSettings.promotionalEmails,
-            showScore: newSettings.showScore
+            showScore: newSettings.showScore,
+            treeNodeColour: newSettings.treeNodeColour
         }
     }, (err, settings) => {
         if (err) {

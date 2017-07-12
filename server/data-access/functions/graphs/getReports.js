@@ -8,7 +8,7 @@ function GetReports(userId, cb) {
         }
         let game = res.body;
         let graph = [];
-        let isHumanKnowledge = lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
+        let isHumanKnowledge = game.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
 
         let zombieCount = 0;
         let stunCount = 0;

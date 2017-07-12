@@ -150,6 +150,18 @@ function GameService($http, AppSettings, $cookies, UserService) {
         });
     };
 
+    SERVICE.getGameReportGraphs = function (cb) {
+        UserService.getBySession(user => {
+            let id = (user || {})._id;
+            $http.get(AppSettings.apiUrl + "/graphs/report?userId=" + id)
+                .then(res => {
+                    cb(null, res.data);
+                }, err => {
+                    cb(err.data);
+                });
+        });
+    };
+
     SERVICE.addPlayerByCode = function (gameId, playerCode, team, cb) {
         let body = {
             gameId,
@@ -214,7 +226,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.getTrees = function (userId, cb) {
-        $http.get(AppSettings.apiUrl + "/trees?userId=" + userId)
+        $http.get(AppSettings.apiUrl + "/graphs/tree?userId=" + userId)
             .then(res => {
                 cb(null, res.data);
             }, err => {

@@ -1,4 +1,4 @@
-const getAll = rootRequire("server/data-access/functions/tree/getAll");
+const getAll = rootRequire("server/data-access/functions/graphs/getAllTrees");
 
 function Get(req, res, next) {
     getAll(req.query.userId, result => {

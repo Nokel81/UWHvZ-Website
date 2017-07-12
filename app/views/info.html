@@ -8,6 +8,7 @@
         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
     </ul>
 
     <div class="tab-content">
@@ -46,14 +47,6 @@
         </div>
         <div class="tab-pane" id="Players" role="tabpanel">
             <div class="fluid-control">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <b>Number of zombies: </b> <span ng-bind="zombieCount"></span>
-                    </div>
-                    <div class="col-sm-6">
-                        <b>Number of stuns: </b> <span ng-bind="stunCount"></span>
-                    </div>
-                </div>
                 <br>
                 <div class="row">
                     <div class="col-sm-6">
@@ -100,6 +93,9 @@
                     <hr>
                 </div>
             </div>
+        </div>
+        <div class="tab-pane" id="Graphs" role="tabpanel">
+            <div id="reportGraphs"></div>
         </div>
     </div>
 </div>

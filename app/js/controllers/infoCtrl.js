@@ -44,9 +44,21 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                 }
                 $scope.gameMods = lists.gameMods;
                 $scope.gamePlayers = lists.gamePlayers;
-                $scope.zombieCount = lists.zombieCount;
-                $scope.stunCount = lists.stunCount;
-            })
+            });
+            GameService.getGameReportGraphs((err, graphs) => {
+                if (err) {
+                    return AlertService.danger(err);
+                }
+                let container = document.getElementById('reportGraphs');
+                let options = {
+                    width:  '100%',
+                    start: game.startDate.toISOString(),
+                    end: game.endDate.toISOString()
+                };
+                var dataset = new vis.DataSet(graphs);
+                new vis.Graph2d(container, dataset, options);
+                console.log(graphs);
+            });
         }
     });
 

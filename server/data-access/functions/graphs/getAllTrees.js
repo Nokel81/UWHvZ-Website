@@ -3,18 +3,18 @@ const averageColour = rootRequire('server/helpers/averageColour');
 const Report = rootRequire('server/schemas/report');
 const Settings = rootRequire('server/schemas/settings');
 
-function GetAll(userId, cb) {
+function GetAllTrees(userId, cb) {
     findAll(res => {
         if (res.error) {
             return cb(res);
         }
-        if (res.length === 0) {
+        let games = res.body;
+        if (games.length === 0) {
             return cb({body: []});
         }
         let trees = [];
         let count = 0;
         let errored = false;
-        let games = res.body;
         let lastGame = games[games.length - 1];
         let lastGameIndex = games.length - 1;
         let isHumanKnowledge = lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
@@ -110,4 +110,4 @@ function GetAll(userId, cb) {
     });
 }
 
-module.exports = GetAll;
+module.exports = GetAllTrees;

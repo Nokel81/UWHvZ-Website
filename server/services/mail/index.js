@@ -18,6 +18,7 @@ const transporter = new send.createTransport({
 const SERVICE = {};
 
 SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
+    let sent = false;
     const resolveData = {
         name: userObj.playerName,
         link: confirmationLink,
@@ -34,6 +35,10 @@ SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
+            if (sent) {
+                return;
+            }
+            sent = true;
             return cb("Email not sent");
         }
         cb(null, "Confirmation email has been sent");
@@ -41,6 +46,7 @@ SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
 };
 
 SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
+    let sent = false;
     const resolveData = {
         name: userObj.playerName,
         link: confirmationLink
@@ -56,6 +62,10 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
+            if (sent) {
+                return;
+            }
+            sent = true;
             return cb("Email not sent");
         }
         cb(null, "Password reset email has been sent");
@@ -63,6 +73,7 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
 };
 
 SERVICE.sendMessage = function (message, cb) {
+    let sent = false;
     const mailOptions = {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
@@ -84,6 +95,10 @@ SERVICE.sendMessage = function (message, cb) {
             transporter.sendMail(email, (error, info) => {
                 if (error) {
                     console.error(error);
+                    if (sent) {
+                        return;
+                    }
+                    sent = true;
                     return cb("Email not sent");
                 }
                 count++;
@@ -100,6 +115,10 @@ SERVICE.sendMessage = function (message, cb) {
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.error(error);
+                if (sent) {
+                    return;
+                }
+                sent = true;
                 return cb("Email not sent");
             }
             cb(null, "Message sent");
@@ -111,6 +130,7 @@ SERVICE.sendMessage = function (message, cb) {
 };
 
 SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
+    let sent = false;
     let word = report.reportType.toLowerCase();
     word += word[word.length - 1];
     const resolveData = {
@@ -133,6 +153,10 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
+            if (sent) {
+                return;
+            }
+            sent = true;
             return cb("Email not sent");
         }
         cb(null, "Message sent");
@@ -140,6 +164,7 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
 };
 
 SERVICE.sendTaggerEmail = function (email, taggedName, report, cb) {
+    let sent = false;
     const resolveData = {
         taggedName,
         tagTime: getDateString(report.time)
@@ -155,6 +180,10 @@ SERVICE.sendTaggerEmail = function (email, taggedName, report, cb) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error(error);
+            if (sent) {
+                return;
+            }
+            sent = true;
             return cb("Email not sent");
         }
         cb(null, "Message sent");
@@ -162,6 +191,7 @@ SERVICE.sendTaggerEmail = function (email, taggedName, report, cb) {
 };
 
 SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb) {
+    let sent = false;
     const resolveData = {
         suppliedValue: game.suppliedValue,
         railPassValue: game.railPassValue,
@@ -184,6 +214,10 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb
         transporter.sendMail(email, (error, info) => {
             if (error) {
                 console.error(error);
+                if (sent) {
+                    return;
+                }
+                sent = true;
                 return cb("Email not sent");
             }
             cb(null, "Message sent");
@@ -196,6 +230,10 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb
             transporter.sendMail(email, (error, info) => {
                 if (error) {
                     console.error(error);
+                    if (sent) {
+                        return;
+                    }
+                    sent = true;
                     return cb("Email not sent");
                 }
                 count++;

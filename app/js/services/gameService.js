@@ -162,6 +162,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
                 games.forEach(game => {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
+                    game.signUpDates = game.signUpDates.map(date => new Date(date));
                 });
                 cb(null, games);
             }, err => {
@@ -176,6 +177,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
                 games.forEach(game => {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
+                    game.signUpDates = game.signUpDates.map(date => new Date(date));
                 });
                 cb(null, games);
             }, err => {

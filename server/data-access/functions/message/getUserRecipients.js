@@ -50,6 +50,7 @@ function GetUserRecipients(userId, cb) {
                 });
                 User.find({email: {$ne: "webmaster.uwhvz@gmail.com"}})
                     .select("_id playerName")
+                    .sort("playerName")
                     .exec((err, users) => {
                         if (err) {
                             return cb({error: err});

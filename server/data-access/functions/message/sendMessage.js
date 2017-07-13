@@ -76,16 +76,17 @@ function SendMessage(message, cb) {
                 return cb({error: "No game to send messages within"});
             }
             const game = res.body;
-            let userIds = [];
-            if (message.to === recipientCodes.toAllPlayers) {
-                userIds = game.spectators.concat(game.humans).concat(game.zombies).concat(game.moderators);
-            } else if (message.to === recipientCodes.toModerators) {
-                userIds = game.moderators;
-            } else if (message.to === recipientCodes.toZombies) {
-                userIds = game.spectators.concat(game.zombies).concat(game.moderators);
-            } else if (message.to === recipientCodes.toHumans) {
-                userIds = game.spectators.concat(game.humans).concat(game.moderators);
+            let userIds = game.moderators;
+            if (message.to !== recipientCodes.toModerators) {
+                userIds = userIds.concat(game.spectators);
             }
+            if (message.to === recipientCodes.toAllPlayers || message.to === recipientCodes.toHumans) {
+                userIds = userIds.concat(game.humans);
+            }
+            if (message.to === recipientCodes.toAllPlayers || message.to === recipientCodes.toZombies) {
+                userIds = userIds.concat(game.zombies);
+            }
+
             Settings.find({userId: {$in: userIds}})
                 .exec((err, settings) => {
                     if (err) {

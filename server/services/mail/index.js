@@ -6,9 +6,13 @@ const getDateString = rootRequire("server/helpers/getDateString");
 const relativeResolve = resolve.relative(__dirname);
 
 const transporter = new send.createTransport({
-    sendmail: true,
-    newline: 'unix',
-    path: '/user/sbin/sendmail'
+    host: 'mail.csclub.uwaterloo.ca',
+    port: 587,
+    secure: false,
+    auth: {
+         user: 'snmalton',
+         pass: '9Y7Fm59y0W3qWx'
+    }
 });
 
 const SERVICE = {};
@@ -22,7 +26,7 @@ SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
     };
     const html = relativeResolve("./emails/confirmation.html", resolveData);
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address,
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address,
         replyTo: 'uwhumansvszombies@gmail.com',
         to: userObj.email,
         subject: "Confirm Registration",
@@ -49,7 +53,7 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
     };
     const html = relativeResolve("./emails/passwordReset.html", resolveData);
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         to: userObj.email,
         subject: "Password Reset Link",
@@ -71,7 +75,7 @@ SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
 SERVICE.sendMessage = function (message, cb) {
     let sent = false;
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         subject: message.subject,
         html: message.body,
@@ -140,7 +144,7 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report, cb) {
     };
     const html = relativeResolve("./emails/tagged.html", resolveData);
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         subject: "You have been " + word + "ed",
         to: toEmail,
@@ -167,7 +171,7 @@ SERVICE.sendTaggerEmail = function (email, taggedName, report, cb) {
     }
     const html = relativeResolve("./emails/tagger.html", resolveData);
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         subject: "You have been tagged",
         to: email,
@@ -198,7 +202,7 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb
     };
     const html = relativeResolve("./emails/" + team + "Start.html", resolveData);
     const mailOptions = {
-        from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
+        from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
         subject: "Welcome to the game",
         html: HTMLlore,

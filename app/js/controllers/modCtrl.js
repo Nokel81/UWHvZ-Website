@@ -210,7 +210,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.ratify = function (index) {
+    $scope.ratifyReport = function (index) {
         if (!$scope.reports[index]) {
             return;
         }
@@ -223,7 +223,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.delete = function (index) {
+    $scope.deleteReport = function (index) {
         if (!$scope.reports[index]) {
             return;
         }

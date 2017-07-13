@@ -1,6 +1,26 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
-    CKEDITOR.replace('MessageBodyTextArea');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        CKEDITOR.replace('MessageBodyTextArea', {
+            toolbarGroups: [{
+                    name: 'document',
+                    groups: ['mode', 'document']
+                }, {
+                    name: 'clipboard',
+                    groups: ['clipboard', 'undo']
+                }, {
+                    name: 'insert'
+                }, {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup']
+                }, {
+                    name: 'links'
+                }
+            ]
+        });
+    } else {
+        CKEDITOR.replace('MessageBodyTextArea');
+    }
 
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
@@ -197,7 +217,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         currentlyTagging = true;
         AlertService.info("Sending report");
         UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
-            currentlyTagging = false;
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -209,6 +228,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $scope.time.setSeconds(0);
                 AlertService.info(res);
             }
+            currentlyTagging = false;
         });
     };
 
@@ -262,14 +282,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             return AlertService.danger("Please type a message body");
         }
         var fd = new FormData();
-        angular.forEach($scope.files, function (file) {
+        angular.forEach($scope.files, function(file) {
             fd.append('file', file);
         });
         let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
         currentlySending = true;
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
-            currentlySending = false;
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -278,6 +297,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $scope.messageSubject = "";
                 CKEDITOR.instances.MessageBodyTextArea.setData("");
             }
+            currentlySending = false;
         });
     };
 }

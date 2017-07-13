@@ -73,6 +73,8 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                     end: gameObj.endDate.toISOString()
                 };
                 var dataset = new vis.DataSet(graphs);
+                $scope.numberOfZombies = (graphs.filter(node => node.group === "Zombies").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
+                $scope.numberOfStuns = (graphs.filter(node => node.group === "Stuns").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
                 new vis.Graph2d(container, dataset, groups, options);
             });
         }

@@ -70,7 +70,7 @@ hr {
 
 .alerting {
     z-index: 10;
-    position: absolute;
+    position: fixed;
     width: auto;
 }
 

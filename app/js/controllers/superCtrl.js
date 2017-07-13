@@ -19,7 +19,6 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             AlertService.danger(err);
         } else {
             $scope.games = games || [];
-            console.log(games);
         }
     });
 

@@ -286,8 +286,11 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             fd.append('file', file);
         });
         let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
-        AlertService.info("For many recipients this may take a few seconds to send");
+        if (["AllPlayers", "Moderators", "Zombies", "AllUsers", "Humans"].indexOf($scope.messageTo) >= 0) {
+            AlertService.info("With many recipients this message while take some time to send");
+        }
         currentlySending = true;
+        AlertService.info("Sending message");
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);

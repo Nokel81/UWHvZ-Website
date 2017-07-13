@@ -45,10 +45,10 @@
             <a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#Code" role="tab">Code</a>
+            <a class="nav-link active" data-toggle="tab" href="#Code" role="tab">Code</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#Settings" role="tab">Settings</a>
+            <a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a>
         </li>
     </ul>
 
@@ -98,7 +98,7 @@
                 <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>
             </div>
         </div>
-        <div class="tab-pane" id="Code" role="tabpanel">
+        <div class="tab-pane active" id="Code" role="tabpanel">
             <div class="centre font-20">
                 <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
             </div>
@@ -159,7 +159,7 @@
                 </tr>
             </table>
         </div>
-        <div class="tab-pane active" id="Settings" role="tabpanel">
+        <div class="tab-pane" id="Settings" role="tabpanel">
             <div class="container-fluid" style="padding: 10px;">
                 <button type="button" class="right btn btn-info" ng-click="logOut()">logout</button>
                 <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">

@@ -37,6 +37,7 @@ function StartGame(OZemails, gameId, HTMLlore, fileData, cb) {
                             const spectatorIds = users.filter(user => spectatorEmails.indexOf(user.email) >= 0).map(user => user._id);
                             const humanIds = users.filter(user => humanEmails.indexOf(user.email) >= 0).map(user => user._id);
                             const zombieIds = users.filter(user => zombieEmails.indexOf(user.email) >= 0).map(user => user._id);
+                            game.originalZombies = zombieIds;
                             game.zombies = zombieIds;
                             game.spectators = spectatorIds;
                             game.humans = humanIds;

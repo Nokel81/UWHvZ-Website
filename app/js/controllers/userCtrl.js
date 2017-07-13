@@ -35,6 +35,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
     var currentlyTagging = false;
     var currentlySending = false;
+    var hasTimeBeenChanged = false;
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -51,6 +52,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $scope.time = new Date();
         $scope.time.setMilliseconds(0);
         $scope.time.setSeconds(0);
+        hasTimeBeenChanged = true;
+    });
+
+    $scope.$watch("time", (newval, oldval) => {
+        if (newval && newval !== oldval) {
+            hasTimeBeenChanged = true;
+        }
     });
 
     UserService.getBySession(user => {
@@ -214,6 +222,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.taggedCode || !$scope.taggedDescription || !$scope.time) {
             return AlertService.danger("Need more information");
         }
+        if (!hasTimeBeenChanged && !$window.confirm("You have not changed the time that the event happened, are you sure it just happened?")) {
+            return;
+        }
         currentlyTagging = true;
         AlertService.info("Sending report");
         UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
@@ -227,6 +238,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $scope.time.setMilliseconds(0);
                 $scope.time.setSeconds(0);
                 AlertService.info(res);
+                hasTimeBeenChanged = false;
             }
             currentlyTagging = false;
         });

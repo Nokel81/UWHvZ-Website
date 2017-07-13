@@ -16,8 +16,8 @@ function UseSupplyCode(info, cb) {
                     return cb(res);
                 }
                 const game = res.body;
-                if (game.humans.concat(game.zombies).indexOf(info.userId.toString()) < 0) {
-                    return cb({error: "You have to be playing to use a supply code"});
+                if (game.humans.indexOf(info.userId.toString()) < 0) {
+                    return cb({error: "You have to be a human to use a supply code"});
                 }
                 SupplyCode.findOneAndUpdate({
                     code: info.code,

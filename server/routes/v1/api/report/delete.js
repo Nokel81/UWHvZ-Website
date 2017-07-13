@@ -1,9 +1,9 @@
-const ratify = rootRequire("server/data-access/functions/report/ratify");
+const deleteReport = rootRequire("server/data-access/functions/report/deleteReport");
 
-function Put(req, res, next) {
+function Delete(req, res, next) {
     const reportId = req.body.reportId;
     const gameId = req.body.gameId;
-    ratify(reportId, gameId, result => {
+    deleteReport(reportId, gameId, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {
@@ -19,4 +19,4 @@ function Put(req, res, next) {
     });
 }
 
-module.exports = Put;
+module.exports = Delete;

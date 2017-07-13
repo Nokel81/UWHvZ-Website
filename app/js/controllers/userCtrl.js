@@ -14,6 +14,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         status: "Please wait, loading..."
     };
     var currentlyTagging = false;
+    var currentlySending = false;
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -194,6 +195,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             return AlertService.danger("Need more information");
         }
         currentlyTagging = true;
+        AlertService.info("Sending report");
         UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
             currentlyTagging = false;
             if (err) {
@@ -247,6 +249,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.sendMessage = function() {
+        if (currentlySending) {
+            return;
+        }
         if (!$scope.messageTo) {
             return AlertService.danger("Please select a recipient");
         }
@@ -262,7 +267,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
         let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
         AlertService.info("For many recipients this may take a few seconds to send");
+        currentlySending = true;
         UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
+            currentlySending = false;
             if (err) {
                 AlertService.danger(err);
             } else {

@@ -222,6 +222,19 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             }
         });
     };
+
+    $scope.delete = function (index) {
+        if (!$scope.reports[index]) {
+            return;
+        }
+        GameService.deleteReport($scope.reports[index]._id, $scope.reports[index].gameId, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                $scope.reports = res;
+            }
+        });
+    };
 }
 
 module.exports = {

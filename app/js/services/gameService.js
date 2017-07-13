@@ -225,6 +225,16 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
+    SERVICE.delteReport = function (reportId, gameId, cb) {
+        let body = {reportId, gameId};
+        $http.delete(AppSettings.apiUrl + "/report", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.getTrees = function (userId, cb) {
         $http.get(AppSettings.apiUrl + "/graphs/tree?userId=" + userId)
             .then(res => {

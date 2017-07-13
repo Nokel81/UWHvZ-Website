@@ -214,6 +214,9 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!$scope.reports[index]) {
             return;
         }
+        if (!$window.confirm("Are you sure that you want to ratify this stun report?")) {
+            return;
+        }
         GameService.ratifyReport($scope.reports[index]._id, $scope.reports[index].gameId, (err, res) => {
             if (err) {
                 AlertService.danger(err);

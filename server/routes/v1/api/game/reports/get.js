@@ -1,7 +1,8 @@
 const findByGame = rootRequire("server/data-access/functions/report/findByGame");
 
 function Get(req, res, next) {
-    findByGame(req.query.gameId, req.query.needToBeRatified === "true", result => {
+    findByGame(req.query.gameId, false, result => {
+        console.log(result.body);
         if (!result) {
             res.status(500).send("Internal Server Error");
         } else if (result.error) {

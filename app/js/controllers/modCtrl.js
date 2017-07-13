@@ -227,6 +227,9 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!$scope.reports[index]) {
             return;
         }
+        if (!$window.confirm("Are you sure that you want to delete that stun report?")) {
+            return;
+        }
         GameService.deleteReport($scope.reports[index]._id, $scope.reports[index].gameId, (err, res) => {
             if (err) {
                 AlertService.danger(err);

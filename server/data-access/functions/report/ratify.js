@@ -10,7 +10,7 @@ function Ratify(reportId, gameId, cb) {
         if (err) {
             return cb({error: err});
         }
-        findByGame(gameId, true, cb);
+        findByGame(gameId, false, cb);
     });
 }
 

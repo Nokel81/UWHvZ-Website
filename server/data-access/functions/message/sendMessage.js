@@ -60,8 +60,13 @@ function SendMessage(message, cb) {
                     });
             });
     } else if (message.to === recipientCodes.toWebmaster) {
-        message.to = "sebastian@malton.name";
-        mailService.sendMessage(message, cb);
+        message.to = "webmaster.uwhvz@gmail.com";
+        mailService.sendMessage(message, (err, res) => {
+            if (err) {
+                return cb({error: res});
+            }
+            cb({body: res});
+        });
     } else {
         findCurrentOrNext(res => {
             if (res.error) {

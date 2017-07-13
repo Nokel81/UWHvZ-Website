@@ -226,8 +226,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.deleteReport = function (reportId, gameId, cb) {
-        let body = {reportId, gameId};
-        $http.delete(AppSettings.apiUrl + "/report", body)
+        $http.delete(AppSettings.apiUrl + "/report?reportId=" + reportId + "&gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
             }, err => {

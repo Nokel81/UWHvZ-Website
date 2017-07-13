@@ -1,8 +1,8 @@
 const deleteReport = rootRequire("server/data-access/functions/report/deleteReport");
 
 function Delete(req, res, next) {
-    const reportId = req.body.reportId;
-    const gameId = req.body.gameId;
+    const reportId = req.query.reportId;
+    const gameId = req.query.gameId;
     deleteReport(reportId, gameId, result => {
         if (!result) {
             res.status(500).send("Internal Server Error");

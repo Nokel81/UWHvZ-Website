@@ -45,6 +45,9 @@
             </ul>
         </div>
         <div class="tab-pane" id="Players" role="tabpanel">
+            <div ng-hide="gamePlayers">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre"></i>
+            </div>
             <div class="fluid-control hidden-sm-down">
                 <div class="row" ng-show="gamePlayers">
                     <div class="col-sm-6">

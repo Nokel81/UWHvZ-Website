@@ -7,7 +7,7 @@ function getGetOrdinal(n) {
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-function getDateString(date) {
+function getDateString(date, short) {
     let hours = date.getHours();
     let noonHalf = "AM"
     if (hours >= 12) {
@@ -22,6 +22,9 @@ function getDateString(date) {
     let minutes = date.getMinutes();
     if (minutes < 10) {
         minutes = "0" + minutes.toString();
+    }
+    if (short) {
+        return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear();
     }
     return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear() + " at " + hours + ":" + minutes + noonHalf;
 }

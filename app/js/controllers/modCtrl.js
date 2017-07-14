@@ -238,9 +238,6 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             return;
         }
         ModService.unsuppliedDeath($scope.game._id, (err, res) => {
-            console.log(err);
-            console.log(res);
-            return;
             if (err) {
                 AlertService.danger(err);
             } else {

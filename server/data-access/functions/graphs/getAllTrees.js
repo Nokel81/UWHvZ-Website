@@ -97,11 +97,8 @@ function GetAllTrees(userId, cb) {
                                 };
                             });
                             game.originalZombies.forEach(zom => {
-                                if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
-                                    zombiesToKeep.push(report.tagger.toString())
-                                }
-                                if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
-                                    zombiesToKeep.push(report.tagged.toString())
+                                if (zombiesToKeep.indexOf(zom.toString()) < 0) {
+                                    zombiesToKeep.push(zom.toString())
                                 }
                                 edges.push({
                                     from: "OZ",
@@ -112,7 +109,7 @@ function GetAllTrees(userId, cb) {
                                 });
                             });
                             let staying = nodes.filter(node => node.id === "OZ" || zombiesToKeep.indexOf(node.id.toString()) >= 0);
-                            let starved = nodes.filter(node => zombiesToKeep.indexOf(node.id.toString()) < 0).map(node => node.label);
+                            let starved = nodes.filter(node => node.id !== "OZ" && zombiesToKeep.indexOf(node.id.toString()) < 0).map(node => node.label);
                             nodes = staying;
 
                             trees[index] = {nodes, edges, name: game.name, starved};

@@ -10,10 +10,9 @@
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
     </ul>
-
+    <br>
     <div class="tab-content">
         <div class="tab-pane active" id="Info" role="tabpanel">
-            <br>
             Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
             <br>
             Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
@@ -46,8 +45,7 @@
             </ul>
         </div>
         <div class="tab-pane" id="Players" role="tabpanel">
-            <div class="fluid-control">
-                <br>
+            <div class="fluid-control hidden-sm hidden-xs">
                 <div class="row">
                     <div class="col-sm-6">
                         <b>Player Name</b>
@@ -70,6 +68,16 @@
                         <span ng-bind="player.score"></span>
                     </div>
                     <hr>
+                </div>
+            </div>
+            <div class="fluid-control visible-sm visible-xs">
+                <div class="row" ng-repeat="player in gamePlayers">
+                    <b>Name: </b><span ng-bind="player.playerName"></span>
+                    <br>
+                    <b>Team: </b><span ng-bind="player.team"></span>
+                    <br>
+                    <b>Score: </b><span ng-bind="player.score"></span>
+                    <br>
                 </div>
             </div>
         </div>

@@ -118,16 +118,18 @@
             </div>
         </div>
         <div class="tab-pane" id="Graphs" role="tabpanel">
-            <div ng-hide="numberOfZombies != undefined">
+            <div ng-hide="gamePlayers && numberOfZombies != undefined">
                 <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
             </div>
-            <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>
-            <br>
-            <b>Number of Zombies: </b><span ng-bind="numberOfZombies"></span>
-            <br>
-            <b>Number of Stuns: </b><span ng-bind="numberOfStuns"></span>
-            <br>
-            <div id="reportGraphs"></div>
+            <div ng-show="gamePlayers && numberOfZombies != undefined">
+                <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>
+                <br>
+                <b>Number of Zombies: </b><span ng-bind="numberOfZombies"></span>
+                <br>
+                <b>Number of Stuns: </b><span ng-bind="numberOfStuns"></span>
+                <br>
+                <div id="reportGraphs"></div>
+            </div>
         </div>
     </div>
 </div>

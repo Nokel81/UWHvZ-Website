@@ -46,7 +46,7 @@
         </div>
         <div class="tab-pane" id="Players" role="tabpanel">
             <div ng-hide="gamePlayers">
-                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre"></i>
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
             </div>
             <div class="fluid-control hidden-sm-down">
                 <div class="row" ng-show="gamePlayers">
@@ -85,6 +85,9 @@
             </div>
         </div>
         <div class="tab-pane" id="Moderators" role="tabpanel">
+            <div ng-hide="gameMods">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            </div>
             <div class="fluid-control hidden-sm-down" ng-show="gameMods">
                 <div class="row">
                     <div class="col-sm-6">
@@ -115,6 +118,9 @@
             </div>
         </div>
         <div class="tab-pane" id="Graphs" role="tabpanel">
+            <div ng-hide="numberOfZombies != undefined">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            </div>
             <b>Number of Zombies: </b><span ng-bind="numberOfZombies"></span>
             <br>
             <b>Number of Stuns: </b><span ng-bind="numberOfStuns"></span>

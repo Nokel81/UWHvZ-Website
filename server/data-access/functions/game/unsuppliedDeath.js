@@ -44,7 +44,7 @@ function UnsuppliedDeath(gameId, cb) {
                             if (err) {
                                 return cb({error: err});
                             }
-                            sendUnsuppliedEmail(users, (err, res) => {
+                            sendUnsuppliedEmail(users, game.suppliedValue, (err, res) => {
                                 if (err) {
                                     return cb({error: err});
                                 }

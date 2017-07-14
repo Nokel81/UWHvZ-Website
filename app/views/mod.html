@@ -171,53 +171,66 @@
         </div>
     </div>
     <div class="tab-pane" id="PlayerReports" role="tabpanel">
-        {{reports}}
-        <div class="fluid-control">
-            <div class="row">
-                <div class="col-sm-2">
-                    <b>Tagger</b>
+        <div ng-repeat="day in reports">
+            <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingDays{{$index}}">
+                        <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_days{{$index}}" href="#collapseDays{{$index}}" aria-expanded="true" aria-controls="collapseDays{{$index}}" ng-bind="day.name"></a></h6>
+                    </div>
+
+                    <div id="collapseDays{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingDays{{$index}}">
+                        <div class="card-block">
+                            <div class="fluid-control">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <b>Tagger</b>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Tagged</b>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Time</b>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <b>Location</b>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <b>Description</b>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <b>Type</b>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row" ng-repeat="report in day.reports">
+                                    <div class="col-sm-2">
+                                        <span ng-bind="report.taggerName"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span ng-bind="report.taggedName"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span ng-bind="report.time"></span>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span ng-bind="report.location"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span ng-bind="report.description"></span>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <span ng-bind="report.reportType"></span>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-warning" ng-click="ratifyReport(report._id)" ng-show="!report.ratified">Ratify</button>
+                                        <button type="button" class="btn btn-danger" ng-click="deleteReport(report._id)">Delete</button>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-2">
-                    <b>Tagged</b>
-                </div>
-                <div class="col-sm-2">
-                    <b>Time</b>
-                </div>
-                <div class="col-sm-1">
-                    <b>Location</b>
-                </div>
-                <div class="col-sm-2">
-                    <b>Description</b>
-                </div>
-                <div class="col-sm-1">
-                    <b>Type</b>
-                </div>
-                <hr>
-            </div>
-            <div class="row" ng-repeat="report in reports">
-                <div class="col-sm-2">
-                    <span ng-bind="report.taggerName"></span>
-                </div>
-                <div class="col-sm-2">
-                    <span ng-bind="report.taggedName"></span>
-                </div>
-                <div class="col-sm-2">
-                    <span ng-bind="report.time"></span>
-                </div>
-                <div class="col-sm-1">
-                    <span ng-bind="report.location"></span>
-                </div>
-                <div class="col-sm-2">
-                    <span ng-bind="report.description"></span>
-                </div>
-                <div class="col-sm-1">
-                    <span ng-bind="report.reportType"></span>
-                </div>
-                <div class="col-sm-2">
-                    <button type="button" class="btn btn-warning" ng-click="ratifyReport($index)" ng-show="!report.ratified">Ratify</button>
-                    <button type="button" class="btn btn-danger" ng-click="deleteReport($index)">Delete</button>
-                </div>
-                <hr>
             </div>
         </div>
     </div>

@@ -204,14 +204,11 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.ratifyReport = function (index) {
-        if (!$scope.reports[index]) {
-            return;
-        }
+    $scope.ratifyReport = function (reportId) {
         if (!$window.confirm("Are you sure that you want to ratify this stun report?")) {
             return;
         }
-        GameService.ratifyReport($scope.reports[index]._id, $scope.reports[index].gameId, (err, res) => {
+        GameService.ratifyReport(reportId, $scope.game._id, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -220,14 +217,11 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.deleteReport = function (index) {
-        if (!$scope.reports[index]) {
-            return;
-        }
+    $scope.deleteReport = function (reportId) {
         if (!$window.confirm("Are you sure that you want to delete that stun report?")) {
             return;
         }
-        GameService.deleteReport($scope.reports[index]._id, $scope.reports[index].gameId, (err, res) => {
+        GameService.deleteReport(reportId, $scope.game._id, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

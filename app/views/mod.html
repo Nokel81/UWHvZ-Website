@@ -120,7 +120,10 @@
         </div>
     </div>
     <div class="tab-pane active" id="SupplyCodes" role="tabpanel">
-        <div class="container-fluid">
+        <div ng-hide="supplyCodes">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+        </div>
+        <div class="container-fluid" ng-show="supplyCodes">
             <button type="button" class="btn btn-success right formish-control" ng-click="addCodes()">Add More Codes</button>
             <br>
             <br>
@@ -149,7 +152,10 @@
         </div>
     </div>
     <div class="tab-pane" id="PlayerCodes" role="tabpanel">
-        <div class="fluid-control">
+        <div ng-hide="gamePlayers">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+        </div>
+        <div class="fluid-control" ng-hide="gamePlayers">
             <div class="row">
                 <div class="col-sm-6">
                     <b>Player Name</b>
@@ -171,6 +177,9 @@
         </div>
     </div>
     <div class="tab-pane" id="PlayerReports" role="tabpanel">
+        <div ng-hide="reports">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+        </div>
         <div ng-repeat="day in reports">
             <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
                 <div class="card">

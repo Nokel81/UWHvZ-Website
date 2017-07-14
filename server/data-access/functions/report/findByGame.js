@@ -5,7 +5,7 @@ const getDateString = rootRequire("server/helpers/getDateString");
 
 function daysBetween(d1, d2) {
     const N = 86400000;
-    return Math.round((d1.getTime() - d2.getTime()) / N);
+    return Math.round((d2.getTime() - d1.getTime()) / N);
 }
 
 function FindUnratified(gameId, needToBeRatified, cb) {
@@ -26,11 +26,11 @@ function FindUnratified(gameId, needToBeRatified, cb) {
             let count = 0;
             let errored = false;
             let resPorts = [];
-            let dayNames = [];
+            let days = [];
             let dayValues = [];
             let collections = [];
-            let firstDay = new Date(game.startDate.getTime());
-            for (let i = 0; i < daysBetween(game.startDate, game.endDate); i++) {
+            let firstDay = new Date(game.startDate);
+            for (let i = 0; i < daysBetween(new Date(game.startDate), new Date(game.endDate)); i++) {
                 days.push(getDateString(firstDay, true));
                 dayValues.push(firstDay.getTime());
                 firstDay.setDate(firstDay.getDate() + 1);
@@ -81,13 +81,20 @@ function FindUnratified(gameId, needToBeRatified, cb) {
                                     return cb({error: "Tagged not found"});
                                 }
                                 rep.taggedName = user.playerName;
+                                rep.timeValue = new Date(rep.time).getTime();
                                 rep.time = getDateString(new Date(rep.time));
-                                rep.timeValue = (new Date(rep.time)).getTime();
                                 resPorts[index] = rep;
                                 count++;
                                 if (count === reports.length) {
                                     let collection = [];
-                                    resPorts.forEach(report => {
+                                    resPorts.forEach((report, index) => {
+                                        if (dayValues.length === 0) {
+                                            delete report.timeValue;
+                                            collection.push(report);
+                                            if (index != resPorts.length - 1) {
+                                                return;
+                                            }
+                                        }
                                         if (report.timeValue < dayValues[dayValues.length - 1]) {
                                             delete report.timeValue;
                                             collection.push(report);
@@ -98,6 +105,7 @@ function FindUnratified(gameId, needToBeRatified, cb) {
                                             });
                                             days.pop();
                                             dayValues.pop();
+                                            collection = [];
                                         }
                                     });
 

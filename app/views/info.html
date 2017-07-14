@@ -46,7 +46,7 @@
         </div>
         <div class="tab-pane" id="Players" role="tabpanel">
             <div class="fluid-control hidden-sm-down">
-                <div class="row">
+                <div class="row" ng-show="gamePlayers">
                     <div class="col-sm-6">
                         <b>Player Name</b>
                     </div>
@@ -73,7 +73,7 @@
             <div class="fluid-control hidden-md-up">
                 <div ng-repeat="player in gamePlayers">
                     <b>Name: </b><span ng-bind="player.playerName"></span>
-                    <br/>
+                    <br>
                     <b>Team: </b><span ng-bind="player.team"></span>
                     <br>
                     <b>Score: </b><span ng-bind="player.score"></span>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="tab-pane" id="Moderators" role="tabpanel">
-            <div class="fluid-control">
+            <div class="fluid-control hidden-sm-down" ng-show="gameMods">
                 <div class="row">
                     <div class="col-sm-6">
                         <b>Moderator Name</b>
@@ -97,6 +97,16 @@
                     </div>
                     <div class="col-sm-6">
                         <a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="fluid-control hidden-md-up">
+                <div ng-repeat="player in gameMods">
+                    <b>Name: </b><span ng-bind="player.playerName"></span>
+                    <div ng-show="player.email">
+                        <br>
+                        <b>Email: </b><a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
                     </div>
                     <hr>
                 </div>

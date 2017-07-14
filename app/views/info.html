@@ -105,7 +105,6 @@
                 <div ng-repeat="player in gameMods">
                     <b>Name: </b><span ng-bind="player.playerName"></span>
                     <div ng-show="player.email">
-                        <br>
                         <b>Email: </b><a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
                     </div>
                     <hr>

@@ -245,4 +245,35 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb
     }
 };
 
+SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue, cb) {
+    let sent = false;
+    const resolveData = { suppliedValue };
+    toList.forEach((to, index) => {
+        let data = JSON.parse(JSON.stringify(resolveData));
+        data.toName = names[index];
+        const html = relativeResolve("./emails/unsupplied.html", data);
+        const mailOptions = {
+            from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
+            replyTo: 'uwhumansvszombies@gmail.com',
+            subject: "Unsupplied Zombification",
+            to,
+            html
+        };
+        transporter.sendMail(email, (error, info) => {
+            if (error) {
+                console.error(error);
+                if (sent) {
+                    return;
+                }
+                sent = true;
+                return cb("Email not sent");
+            }
+            count++;
+            if (count === tos.length) {
+                cb(null, "Messages sent");
+            }
+        });
+    });
+};
+
 module.exports = SERVICE;

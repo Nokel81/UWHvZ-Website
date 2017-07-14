@@ -235,6 +235,22 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             }
         });
     };
+
+    $scope.unsuppliedDeath = function () {
+        if (!$window.confirm("Are you sure you want to kill all unsupplied humans?")) {
+            return;
+        }
+        if (!$scope.game) {
+            return;
+        }
+        ModService.unsuppliedDeath($scope.game._id, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+            }
+        });
+    }
 }
 
 module.exports = {

@@ -70,7 +70,8 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                     legend: true,
                     sort: false,
                     start: gameObj.startDate.toISOString(),
-                    end: gameObj.endDate.toISOString()
+                    end: gameObj.endDate.toISOString(),
+                    interpolation: false
                 };
                 var dataset = new vis.DataSet(graphs);
                 $scope.numberOfZombies = (graphs.filter(node => node.group === "Zombies").find((e, i, a) => i === a.length - 1) || {y: 0}).y;

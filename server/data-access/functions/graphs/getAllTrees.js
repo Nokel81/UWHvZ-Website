@@ -76,8 +76,15 @@ function GetAllTrees(userId, cb) {
                                 errored = true;
                                 return cb({error: err});
                             }
+                            let zombiesToKeep = [];
 
                             let edges = reports.map(report => {
+                                if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
+                                    zombiesToKeep.push(report.tagger.toString())
+                                }
+                                if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
+                                    zombiesToKeep.push(report.tagged.toString())
+                                }
                                 return {
                                     from: report.tagger,
                                     to: report.tagged,
@@ -98,6 +105,7 @@ function GetAllTrees(userId, cb) {
                                     }
                                 });
                             });
+                            nodes = nodes.filter(node => node._id === "OZ" || zombiesToKeep.indexOf(node._id) >= 0);
 
                             trees[index] = {nodes, edges, name: game.name};
                             count++;

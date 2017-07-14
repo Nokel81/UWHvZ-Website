@@ -19,6 +19,85 @@ hr {
     max-height: 800px;
 }
 
+#modtabs .nav-item.dropdown {
+    display: none;
+}
+
+#modtabs .nav-item.dropdown div > a {
+    display: none;
+}
+
+@media(max-width: 850px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6 {
+        display: inherit;
+    }
+    #modtabs #NL6 {
+        display: none;
+    }
+}
+
+@media(max-width: 778px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5 {
+        display: inherit;
+    }
+    #modtabs #NL6, #modtabs #NL5 {
+        display: none;
+    }
+}
+
+@media(max-width: 640px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5,
+    #modtabs .nav-item.dropdown div #DD4 {
+        display: inherit;
+    }
+    #modtabs #NL6,
+    #modtabs #NL5,
+    #modtabs #NL4 {
+        display: none;
+    }
+}
+
+@media(max-width: 510px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5,
+    #modtabs .nav-item.dropdown div #DD4,
+    #modtabs .nav-item.dropdown div #DD3 {
+        display: inherit;
+    }
+    #modtabs #NL6,
+    #modtabs #NL5,
+    #modtabs #NL4,
+    #modtabs #NL3 {
+        display: none;
+    }
+}
+
 .input-group-no-top {
     margin-top: 0 !important;
 }

@@ -105,9 +105,11 @@ function GetAllTrees(userId, cb) {
                                     }
                                 });
                             });
-                            nodes = nodes.filter(node => node._id === "OZ" || zombiesToKeep.indexOf(node.id) >= 0);
+                            let staying = nodes.filter(node => node.id === "OZ" || zombiesToKeep.indexOf(node.id.toString()) >= 0);
+                            let starved = nodes.filter(node => zombiesToKeep.indexOf(node.id.toString()) < 0).map(node => node.label);
+                            nodes = staying;
 
-                            trees[index] = {nodes, edges, name: game.name};
+                            trees[index] = {nodes, edges, name: game.name, starved};
                             count++;
                             if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {
                                 cb({body: trees});

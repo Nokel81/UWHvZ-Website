@@ -23,6 +23,7 @@ function TreeCtrl($scope, GameService, $cookies, UserService, AlertService) {
             height: "calc(100% - 100px)"
         };
         new vis.Network(container, data, options);
+        $scope.starved = $scope.trees[index].starved;
     });
 }
 

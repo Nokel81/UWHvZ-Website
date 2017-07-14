@@ -71,13 +71,13 @@
                 </div>
             </div>
             <div class="fluid-control hidden-md-up">
-                <div class="row" ng-repeat="player in gamePlayers">
+                <div ng-repeat="player in gamePlayers">
                     <b>Name: </b><span ng-bind="player.playerName"></span>
-                    <br>
+                    <br/>
                     <b>Team: </b><span ng-bind="player.team"></span>
                     <br>
                     <b>Score: </b><span ng-bind="player.score"></span>
-                    <br>
+                    <hr>
                 </div>
             </div>
         </div>

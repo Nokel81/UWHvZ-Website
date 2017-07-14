@@ -105,7 +105,7 @@ function GetAllTrees(userId, cb) {
                                     }
                                 });
                             });
-                            nodes = nodes.filter(node => node._id === "OZ" || zombiesToKeep.indexOf(node._id) >= 0);
+                            nodes = nodes.filter(node => node._id === "OZ" || zombiesToKeep.indexOf(node.id) >= 0);
 
                             trees[index] = {nodes, edges, name: game.name};
                             count++;

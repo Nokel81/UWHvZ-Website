@@ -47,8 +47,8 @@ bundler
         app.use(bodyParser.json());
         app.use(morgan("dev"));
 
-        app.use(express.static(path.join(__dirname, "./app")));
         routes(app);
+        app.use(express.static(path.join(__dirname, "./app")));
         app.use((req, res) => {
             res.sendFile(path.join(__dirname, "./app/index.html"));
         });

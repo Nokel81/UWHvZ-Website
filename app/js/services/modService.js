@@ -45,7 +45,7 @@ function ModService($http, AppSettings) {
     };
 
     SERVICE.unsuppliedDeath = function (gameId, cb) {
-        $http.delete(AppSettings.apiUrl = "/game/unsupplied?gameId=" + gameId)
+        $http.delete(AppSettings.apiUrl + "/game/unsupplied?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
             }, err => {

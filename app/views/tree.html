@@ -4,3 +4,18 @@
 </select>
 
 <div id="zombieTree"></div>
+
+<div class="fluid-control">
+    <div ng-show="starved.length > 0">
+        <div class="row">
+            <div class="col-sm-12">
+                <b>Once Starved Humans:</b>
+            </div>
+        </div>
+        <div class="row" ng-repeat="starving in starved">
+            <div class="col-sm-12">
+                <span ng-bind="starving"></span>
+            </div>
+        </div>
+    </div>
+</div>

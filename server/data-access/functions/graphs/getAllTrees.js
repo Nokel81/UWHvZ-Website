@@ -97,6 +97,12 @@ function GetAllTrees(userId, cb) {
                                 };
                             });
                             game.originalZombies.forEach(zom => {
+                                if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
+                                    zombiesToKeep.push(report.tagger.toString())
+                                }
+                                if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
+                                    zombiesToKeep.push(report.tagged.toString())
+                                }
                                 edges.push({
                                     from: "OZ",
                                     to: zom,

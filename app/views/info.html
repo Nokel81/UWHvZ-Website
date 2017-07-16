@@ -1,134 +1,141 @@
-<div class="centre">
+<div class="centre" ng-show="game">
     <br>
-    <h1 style="font-size: 40px" ng-bind="game.name || 'Next Game'"></h1>
-    <i ng-bind="game.description"></i>
+    <h1>Well that's all folks!</h1>
+    <p>No next game has been made please come back later</p>
 </div>
-<div>
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
-    </ul>
-    <br>
-    <div class="tab-content">
-        <div class="tab-pane active" id="Info" role="tabpanel">
-            Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
-            <br>
-            Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
-            <br>
-            <br>
-            Sign Up Days:
-            <ul>
-                <li ng-repeat="date in game.signUpDates">
-                    <div ng-show="strikeThrough(date)">
-                        <s ng-bind="getDateString(date)"></s>
-                    </div>
-                    <div ng-hide="strikeThrough(date)">
-                        <span ng-bind="getDateString(date)"></span>
-                    </div>
-                </li>
-            </ul>
-            Sign Up Locations:
-            <ul>
-                <li ng-repeat="location in game.signUpLocations">
-                    <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
-                </li>
-            </ul>
-            Human Point Requirments:
-            <ul>
-                <li><span ng-bind="game.suppliedValue"></span> points to be supplied</li>
-                <li><span ng-bind="game.railPassValue"></span> points for a rail pass</li>
-                <li><span ng-bind="game.minorPassValue"></span> points for a minor building pass</li>
-                <li><span ng-bind="game.majorPassValue"></span> points for a major building pass</li>
-                <li><span ng-bind="game.officerValue"></span> points for an officer badge</li>
-            </ul>
-        </div>
-        <div class="tab-pane" id="Players" role="tabpanel">
-            <div ng-hide="gamePlayers">
-                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+<div ng-hide="game">
+    <div class="centre">
+        <br>
+        <h1 style="font-size: 40px" ng-bind="game.name"></h1>
+        <i ng-bind="game.description"></i>
+    </div>
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
+        </ul>
+        <br>
+        <div class="tab-content">
+            <div class="tab-pane active" id="Info" role="tabpanel">
+                Game Starts: <span ng-bind="getDateString(game.startDate)"></span> at <span ng-bind="getTimeString(game.startDate)"></span>
+                <br>
+                Game Ends: <span ng-bind="getDateString(game.endDate)"></span> at <span ng-bind="getTimeString(game.endDate)"></span>
+                <br>
+                <br>
+                Sign Up Days:
+                <ul>
+                    <li ng-repeat="date in game.signUpDates">
+                        <div ng-show="strikeThrough(date)">
+                            <s ng-bind="getDateString(date)"></s>
+                        </div>
+                        <div ng-hide="strikeThrough(date)">
+                            <span ng-bind="getDateString(date)"></span>
+                        </div>
+                    </li>
+                </ul>
+                Sign Up Locations:
+                <ul>
+                    <li ng-repeat="location in game.signUpLocations">
+                        <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
+                    </li>
+                </ul>
+                Human Point Requirments:
+                <ul>
+                    <li><span ng-bind="game.suppliedValue"></span> points to be supplied</li>
+                    <li><span ng-bind="game.railPassValue"></span> points for a rail pass</li>
+                    <li><span ng-bind="game.minorPassValue"></span> points for a minor building pass</li>
+                    <li><span ng-bind="game.majorPassValue"></span> points for a major building pass</li>
+                    <li><span ng-bind="game.officerValue"></span> points for an officer badge</li>
+                </ul>
             </div>
-            <div class="fluid-control hidden-sm-down">
-                <div class="row" ng-show="gamePlayers">
-                    <div class="col-sm-6">
-                        <b>Player Name</b>
+            <div class="tab-pane" id="Players" role="tabpanel">
+                <div ng-hide="gamePlayers">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                </div>
+                <div class="fluid-control hidden-xs-down">
+                    <div class="row" ng-show="gamePlayers">
+                        <div class="col-sm-6">
+                            <b>Player Name</b>
+                        </div>
+                        <div class="col-sm-3">
+                            <b>Player Team</b>
+                        </div>
+                        <div class="col-sm-3">
+                            <b>Player Score</b>
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <b>Player Team</b>
-                    </div>
-                    <div class="col-sm-3">
-                        <b>Player Score</b>
+                    <div class="row" ng-repeat="player in gamePlayers">
+                        <div class="col-sm-6">
+                            <span ng-bind="player.playerName"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span ng-bind="player.team"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <span ng-bind="player.score"></span>
+                        </div>
+                        <hr>
                     </div>
                 </div>
-                <div class="row" ng-repeat="player in gamePlayers">
-                    <div class="col-sm-6">
-                        <span ng-bind="player.playerName"></span>
+                <div class="fluid-control hidden-sm-up">
+                    <div ng-repeat="player in gamePlayers">
+                        <b>Name: </b><span ng-bind="player.playerName"></span>
+                        <br>
+                        <b>Team: </b><span ng-bind="player.team"></span>
+                        <br>
+                        <b>Score: </b><span ng-bind="player.score"></span>
+                        <hr>
                     </div>
-                    <div class="col-sm-3">
-                        <span ng-bind="player.team"></span>
-                    </div>
-                    <div class="col-sm-3">
-                        <span ng-bind="player.score"></span>
-                    </div>
-                    <hr>
                 </div>
             </div>
-            <div class="fluid-control hidden-md-up">
-                <div ng-repeat="player in gamePlayers">
-                    <b>Name: </b><span ng-bind="player.playerName"></span>
+            <div class="tab-pane" id="Moderators" role="tabpanel">
+                <div ng-hide="gameMods">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                </div>
+                <div class="fluid-control hidden-xs-down" ng-show="gameMods">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <b>Moderator Name</b>
+                        </div>
+                        <div class="col-sm-6">
+                            <b>Moderator Email</b>
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="player in gameMods">
+                        <div class="col-sm-6">
+                            <span ng-bind="player.playerName"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="fluid-control hidden-sm-up">
+                    <div ng-repeat="player in gameMods">
+                        <b>Name: </b><span ng-bind="player.playerName"></span>
+                        <div ng-show="player.email">
+                            <b>Email: </b><a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="Graphs" role="tabpanel">
+                <div ng-hide="gamePlayers && numberOfZombies != undefined">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                </div>
+                <div ng-show="gamePlayers && numberOfZombies != undefined">
+                    <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>
                     <br>
-                    <b>Team: </b><span ng-bind="player.team"></span>
+                    <b>Number of Zombies: </b><span ng-bind="numberOfZombies"></span>
                     <br>
-                    <b>Score: </b><span ng-bind="player.score"></span>
-                    <hr>
+                    <b>Number of Stuns: </b><span ng-bind="numberOfStuns"></span>
+                    <br>
+                    <div id="reportGraphs"></div>
                 </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="Moderators" role="tabpanel">
-            <div ng-hide="gameMods">
-                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
-            </div>
-            <div class="fluid-control hidden-sm-down" ng-show="gameMods">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <b>Moderator Name</b>
-                    </div>
-                    <div class="col-sm-6">
-                        <b>Moderator Email</b>
-                    </div>
-                </div>
-                <div class="row" ng-repeat="player in gameMods">
-                    <div class="col-sm-6">
-                        <span ng-bind="player.playerName"></span>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
-                    </div>
-                    <hr>
-                </div>
-            </div>
-            <div class="fluid-control hidden-md-up">
-                <div ng-repeat="player in gameMods">
-                    <b>Name: </b><span ng-bind="player.playerName"></span>
-                    <div ng-show="player.email">
-                        <b>Email: </b><a href="{{'mailto:' + player.email}}" ng-bind="player.email"></a>
-                    </div>
-                    <hr>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="Graphs" role="tabpanel">
-            <div ng-hide="gamePlayers && numberOfZombies != undefined">
-                <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
-            </div>
-            <div ng-show="gamePlayers && numberOfZombies != undefined">
-                <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>
-                <br>
-                <b>Number of Zombies: </b><span ng-bind="numberOfZombies"></span>
-                <br>
-                <b>Number of Stuns: </b><span ng-bind="numberOfStuns"></span>
-                <br>
-                <div id="reportGraphs"></div>
             </div>
         </div>
     </div>

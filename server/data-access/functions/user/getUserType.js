@@ -20,7 +20,7 @@ function GetUserType(id, cb) {
         } else {
             cb({body: "NonPlayer"});
         }
-    });
+    }, true);
 }
 
 module.exports = GetUserType;

@@ -3,6 +3,7 @@ const mailService = rootRequire('server/services/mail');
 const User = rootRequire('server/schemas/user');
 const Settings = rootRequire('server/schemas/settings');
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const findById = rootRequire("server/data-access/functions/game/findById");
 
 function SendMessage(message, cb) {
     if (!Array.isArray(message.fileData)) {
@@ -18,7 +19,30 @@ function SendMessage(message, cb) {
         return cb({error: "Missing the 'body' field"});
     }
     let validRecipientCodes = Object.keys(recipientCodes).map(recipientCode => recipientCodes[recipientCode]);
-    if (validRecipientCodes.indexOf(message.to) < 0) {
+    if (message.to[0] === "#") {
+        let gameId = message.to.slice(1);
+        findById(gameId, res => {
+            if (res.error) {
+                return cb(res);
+            }
+            let game = res.body;
+            let recipients = game.humans.concat(game.moderators).concat(game.zombies).concat(game.spectators);
+            User.find({_id: {$in: recipients}})
+                .select("email")
+                .exec((err, users) => {
+                    if (err) {
+                        return cb({error: err});
+                    }
+                    message.to = users.map(user => user.email);
+                    mailService.sendMessage(message, (err, body) => {
+                        if (err) {
+                            return cb({error: err});
+                        }
+                        cb({body});
+                    });
+                });
+        });
+    } else if (validRecipientCodes.indexOf(message.to) < 0) {
         User.findOne({_id: message.to})
             .select("email")
             .exec((err, user) => {

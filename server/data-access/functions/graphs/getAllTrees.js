@@ -112,7 +112,7 @@ function GetAllTrees(userId, cb) {
                             let starved = nodes.filter(node => node.id !== "OZ" && zombiesToKeep.indexOf(node.id.toString()) < 0).map(node => node.label);
                             nodes = staying;
 
-                            trees[index] = {nodes, edges, name: game.name, starved};
+                            trees[index] = {nodes, edges, name: game.name + " - " + new Date(game.startDate).getFullYear(), starved};
                             count++;
                             if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {
                                 cb({body: trees});

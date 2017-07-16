@@ -198,6 +198,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.joinNextGame) {
             $scope.teamPreference = null;
         }
+        if (!$scope.name || $scope.name[0] === "#") {
+            return AlertService.danger("Please type in your name");
+        }
         ModalService.openWaiverModal()
             .result
             .then(res => {

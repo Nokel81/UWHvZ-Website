@@ -3,7 +3,7 @@
     <option ng-repeat="tree in trees track by $index" value="{{$index}}" ng-bind="tree.name"></option>
 </select>
 
-<div id="zombieTree"></div>
+<div id="zombieTree" style="height: calc(100% - 100px)"></div>
 
 <div class="fluid-control">
     <div ng-show="starved.length > 0">

@@ -247,10 +247,14 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, fileData, cb
 
 SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue, cb) {
     let sent = false;
-    const resolveData = { suppliedValue };
+    let count = 0;
+    console.log(suppliedValue);
     toList.forEach((to, index) => {
-        let data = JSON.parse(JSON.stringify(resolveData));
-        data.toName = names[index];
+        let data = {
+            suppliedValue,
+            toName: names[index]
+        };
+        console.log(data);
         const html = relativeResolve("./emails/unsupplied.html", data);
         const mailOptions = {
             from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
@@ -259,7 +263,7 @@ SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue, cb) {
             to,
             html
         };
-        transporter.sendMail(email, (error, info) => {
+        transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.error(error);
                 if (sent) {
@@ -269,7 +273,7 @@ SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue, cb) {
                 return cb("Email not sent");
             }
             count++;
-            if (count === tos.length) {
+            if (count === toList.length) {
                 cb(null, "Messages sent");
             }
         });

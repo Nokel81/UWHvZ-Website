@@ -25,7 +25,7 @@ function GetAllTrees(userId, cb) {
             if (errored) {
                 return;
             }
-            if (index === lastGameIndex && skipLast) {
+            if (game === lastGame && skipLast) {
                 return;
             }
             trees.push();

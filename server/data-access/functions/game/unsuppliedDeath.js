@@ -51,10 +51,10 @@ function UnsuppliedDeath(gameId, cb) {
                                 Game.findOneAndUpdate({_id: gameId}, {
                                     $push: {
                                         zombies: {
-                                            $all: starvingHumans
+                                            $each: starvingHumans
                                         }
                                     },
-                                    $pullall: {
+                                    $pullAll: {
                                         humans: starvingHumans
                                     }
                                 }, err => {

@@ -16,14 +16,16 @@ function GetAllTrees(userId, cb) {
         let count = 0;
         let errored = false;
         let lastGame = games[games.length - 1];
-        let lastGameIndex = games.length - 1;
-        let isHumanKnowledge = lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
+        let skipLast = lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
+        if (new Date(lastGame.endDate) < new Date()) {
+            skipLast = false;
+        }
 
         games.forEach((game, index) => {
             if (errored) {
                 return;
             }
-            if (index === lastGameIndex && isHumanKnowledge) {
+            if (index === lastGameIndex && skipLast) {
                 return;
             }
             trees.push();

@@ -4,6 +4,8 @@
     "mongoose_options": {
         "socketOptions": {
             "autoReconnect": true
-        }
+        },
+        "user": "server",
+        "pass": "uwHvZ2017"
     }
 }

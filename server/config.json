@@ -1,11 +1,9 @@
 {
-    "dbIP": "mongodb://localhost:27017",
+    "dbIP": "mongodb://server:uwHvZ2017@localhost:27017/hvz?authSource=test",
     "port": 3000,
+    "debug": false,
     "mongoose_options": {
-        "socketOptions": {
-            "autoReconnect": true
-        },
-        "user": "server",
-        "pass": "uwHvZ2017"
+        "useMongoClient": true,
+        "autoReconnect": true
     }
 }

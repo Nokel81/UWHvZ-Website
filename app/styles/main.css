@@ -108,6 +108,13 @@ hr {
     cursor: pointer;
 }
 
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
 .input-group-no-top {
     margin-top: 0 !important;
 }

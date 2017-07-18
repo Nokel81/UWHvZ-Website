@@ -1,5 +1,0 @@
-- Mod Messaging to emails
-- Generating supply codes (value, number) and display them
-- Starting the game
-- Zombie tree
-- User send confirmation email again

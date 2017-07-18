@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="formish-control" ng-show="editing === $index">
-                                <div hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-disabled="editing != $index"></div>
+                                <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-disabled="editing != $index"></hvz-toggle>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -103,7 +103,7 @@
                         <span ng-bind="player.name"></span>
                     </div>
                     <div class="col-md-5">
-                        <div hvz-toggle values="'Human','Zombie'" titles="'Human','Original Zombie'" width="9em" ng-model="player.startingTeam" colours="'#4286f4','#f4c741'"></div>
+                        <hvz-toggle values="'Human','Zombie'" titles="'Human','Original Zombie'" width="9em" ng-model="player.startingTeam" colours="'#4286f4','#f4c741'"></hvz-toggle>
                     </div>
                     <div class="col-md-2">
                         <b ng-bind="player.random"></b>

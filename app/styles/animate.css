@@ -1,0 +1,18 @@
+hvz-toggle {
+    user-select: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    outline: 0px;
+    height: 2em;
+    position: relative;
+    transform: skewX(-10deg);
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 2em;
+    color: #ffffff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    margin-bottom: .5em;
+    display: inline-block;
+    transition: background 0.2s ease;
+}

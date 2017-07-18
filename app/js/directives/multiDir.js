@@ -4,7 +4,7 @@ function ToggleDirective() {
     "ngInject";
 
     return {
-        restrict: 'EA',
+        restrict: 'E',
         templateUrl: '../views/directives/toggle.html',
         transclude: true,
         require: 'ngModel',
@@ -35,44 +35,26 @@ function ToggleDirective() {
             element.text(titles[index]);
             ngModel.$setViewValue(values[index]);
             element.css({
-                "-webkit-user-select": "none",
-                "-moz-user-select": "none",
-                "-ms-user-select": "none",
-                "cursor": "pointer",
-                "box-sizing": "border-box",
-                "outline": "0",
                 "width": scope.width,
-                "height": "2em",
-                "position": "relative",
-                "-webkit-transform": "skew(-10deg)",
-                "transform": "skew(-10deg)",
-                "font-weight": "bold",
-                "font-family": "sans-serif",
-                "background": colours[index] || "#888",
-                "text-align": "center",
-                "line-height": "2em",
-                "color": "#fff",
-                "text-shadow": "0 1px 0 rgba(0, 0, 0, 0.4)",
-                "margin-bottom": ".5em",
-                "display": "inline-block"
+                "background": colours[index] || "#888"
             });
 
             element.on('mouseover', function () {
                 if (attrs.disabled) {
-                    element.css("cursor", "not-allowed");
                     active = false;
+                    element.css("cursor", "not-allowed");
                 } else {
-                    element.css("cursor", "pointer");
                     active = true
+                    element.css("cursor", "pointer");
                 }
             });
 
             element.on('click', function() {
                 if (active) {
                     index = (index + 1) % titles.length;
-                    element.css("background", colours[index]);
                     element.text(titles[index]);
                     ngModel.$setViewValue(values[index]);
+                    element.css("background", colours[index]);
                 }
             });
 

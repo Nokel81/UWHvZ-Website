@@ -18,8 +18,8 @@
                         </div>
                         <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
                         <b>Do you wish to join the next game?</b>
-                        <div hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"></div>
-                        <div hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888','#86d993','#966100'" ng-show="joinNextGame"></div>
+                        <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"></hvz-toggle>
+                        <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888','#86d993','#966100'" ng-show="joinNextGame"></hvz-toggle>
                     </div>
                     <div class="right">
                         <div class="input-group">

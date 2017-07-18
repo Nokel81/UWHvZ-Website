@@ -1,5 +1,6 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $window) {
     "ngInject";
+    $scope.supportsColour = true;
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
         CKEDITOR.replace('MessageBodyTextArea', {
             toolbarGroups: [{
@@ -20,6 +21,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     } else {
         CKEDITOR.replace('MessageBodyTextArea');
+    }
+
+    try {
+        var input = document.createElement("input");
+        input.type = "color";
+        supportsColour = input.type === "color";
+    } catch(e) {
+        supportsColour = false;
     }
 
     $scope.buttonState = "logIn";

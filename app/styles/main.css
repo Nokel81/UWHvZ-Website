@@ -98,6 +98,16 @@ hr {
     }
 }
 
+.colourpicker {
+    padding: 0px;
+    width: 64px;
+    height: 32px;
+    transform: skew(-10deg);
+    border: 0;
+    background-color: #eee;
+    cursor: pointer;
+}
+
 .input-group-no-top {
     margin-top: 0 !important;
 }

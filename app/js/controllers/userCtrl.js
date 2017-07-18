@@ -26,9 +26,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     try {
         var input = document.createElement("input");
         input.type = "color";
-        supportsColour = input.type === "color";
+        $scope.supportsColour = input.type === "color";
     } catch(e) {
-        supportsColour = false;
+        $scope.supportsColour = false;
     }
 
     $scope.buttonState = "logIn";

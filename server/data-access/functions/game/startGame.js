@@ -1,3 +1,4 @@
+const Promise = require('bluebird');
 const fs = require("fs");
 
 const Game = rootRequire("server/schemas/game");
@@ -5,7 +6,7 @@ const User = rootRequire("server/schemas/user");
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
 const sendStartingEmail = rootRequire("server/data-access/functions/message/sendStartingEmail");
 
-function StartGame(OZemails, gameId, HTMLlore, fileData, cb) {
+function StartGame(OZemails, gameId, HTMLlore, fileData) {
     Game.findOne({_id: gameId})
         .exec((err, game) => {
             if (err) {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
 const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
@@ -12,5 +13,6 @@ const sessionSchema = new Schema({
         required: true
     }
 });
+errorNotFound(sessionSchema);
 
 module.exports = mongoose.model("Session", sessionSchema);

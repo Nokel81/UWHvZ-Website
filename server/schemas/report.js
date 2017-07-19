@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
 const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
@@ -48,5 +49,6 @@ reportSchema.pre("validate", function (next) {
     }
     next();
 });
+errorNotFound(reportSchema);
 
 module.exports = mongoose.model("Report", reportSchema);

@@ -89,14 +89,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 }
                 delete $scope.userInfo.status;
                 $scope.userInfo.teamScore = info.teamScore;
-                $scope.userInfo.playerScore = info.score.reportScore.score + info.score.reportScore.tagScore + info.score.supplyCodeScore.score;
-                $scope.userInfo.playerStunScore = info.score.reportScore.score;
-                $scope.userInfo.playerTagScore = info.score.reportScore.tagScore;
-                $scope.userInfo.playerSupplyScore = info.score.supplyCodeScore.score;
+                $scope.userInfo.playerScore = info.score.stunScore + info.score.tagScore + info.score.codeScore;
+                $scope.userInfo.playerStunScore = info.score.stunScore;
+                $scope.userInfo.playerTagScore = info.score.tagScore;
+                $scope.userInfo.playerSupplyScore = info.score.codeScore;
                 $scope.userInfo.playerType = info.playerType;
-                $scope.userInfo.stuns = info.score.reportScore.descriptions;
-                $scope.userInfo.tags = info.score.reportScore.tagDescriptions;
-                $scope.userInfo.codes = info.score.supplyCodeScore.descriptions;
+                $scope.userInfo.stuns = info.score.stunDescriptions;
+                $scope.userInfo.tags = info.score.tagDescriptions;
+                $scope.userInfo.codes = info.score.codeDescriptions;
             }
         });
     });

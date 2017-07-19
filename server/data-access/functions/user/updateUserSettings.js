@@ -5,12 +5,7 @@ function UpdateUserSettings(newSettings, cb) {
         _id: newSettings._id,
         userId: newSettings.userId
     }, {
-        $set: {
-            gameEmails: newSettings.gameEmails,
-            promotionalEmails: newSettings.promotionalEmails,
-            showScore: newSettings.showScore,
-            treeNodeColour: newSettings.treeNodeColour
-        }
+        $set: newSettings
     }, (err, settings) => {
         if (err) {
             return cb({error: err});

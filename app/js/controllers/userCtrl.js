@@ -269,6 +269,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.changePassword = function() {
+        if (!$scope.newPassword) {
+            return;
+        }
         if ($scope.newPassword !== $scope.newPasswordCheck) {
             return AlertService.danger("New passwords don't match");
         }

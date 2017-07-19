@@ -86,8 +86,18 @@
                 <b>Your Name will be appended to your message!</b>
                 <textarea rows="6" ng-model="messageBody" placeholder="Message Body" id="MessageBodyTextArea"></textarea>
                 <br>
-                <input type="file" multiple file-input="files" class="btn btn-info">
-                <button type="button" class="btn btn-success right" ng-click="sendMessage()">Send Message</button>
+                <div class="hidden-sm-up">
+                    <input type="file" multiple file-input="files" class="btn btn-info" style="width: 100%">
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-success right" ng-click="sendMessage()" style="width: 100%">Send Message</button>
+                    <br>
+                </div>
+                <div class="hidden-xs-down">
+                    <input type="file" multiple file-input="files" class="btn btn-info">
+                    <button type="button" class="btn btn-success right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
+                </div>
+                <br>
             </div>
         </div>
         <div class="tab-pane active" id="Code" role="tabpanel">

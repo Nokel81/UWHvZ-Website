@@ -1,4 +1,4 @@
-const getUserInfo = rootRequire("server/data-access/functions/user/getUserInfo");
+const getUserInfo = rootRequire("server/data-access/functions/user/findUserInfo");
 
 function Get(req, res, next) {
     getUserInfo(req.query.id, req.query.infoType, result => {

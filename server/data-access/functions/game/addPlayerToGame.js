@@ -1,7 +1,7 @@
 const Promise = require('bluebird');
 
 const Game = rootRequire("server/schemas/game");
-const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
+const getUserByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
 const findAll = rootRequire("server/data-access/functions/game/findAll");
 
 function AddPlayerToGame(newPlayer) {

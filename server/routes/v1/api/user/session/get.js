@@ -1,4 +1,4 @@
-const getUserBySession = rootRequire("server/data-access/functions/user/getUserBySession");
+const getUserBySession = rootRequire("server/data-access/functions/user/findBySession");
 
 function Get(req, res, next) {
     getUserBySession(req.query.session, result => {

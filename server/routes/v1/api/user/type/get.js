@@ -1,4 +1,4 @@
-const getUserType = rootRequire("server/data-access/functions/user/getUserType");
+const getUserType = rootRequire("server/data-access/functions/user/findUserType");
 
 function Get(req, res, next) {
     getUserType(req.query.id, result => {

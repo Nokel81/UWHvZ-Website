@@ -1,4 +1,4 @@
-const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
+const getUserByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
 
 function Get(req, res, next) {
     getUserByPlayerCode(req.query.playerCode, result => {

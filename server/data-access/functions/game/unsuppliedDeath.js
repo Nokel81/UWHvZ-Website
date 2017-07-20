@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const Game = rootRequire("server/schemas/game");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");
 const findGameById = rootRequire("server/data-access/functions/game/findById");
-const findUserById = rootRequire("server/data-access/functions/user/getUserById");
+const findUserById = rootRequire("server/data-access/functions/user/findById");
 const sendUnsuppliedEmail = rootRequire("server/data-access/functions/message/sendUnsuppliedEmail");
 
 function UnsuppliedDeath(gameId) {

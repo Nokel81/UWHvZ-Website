@@ -1,4 +1,4 @@
-const getUserById = rootRequire("server/data-access/functions/user/getUserById");
+const getUserById = rootRequire("server/data-access/functions/user/findById");
 
 function Get(req, res, next) {
     getUserById(req.query.id, result => {

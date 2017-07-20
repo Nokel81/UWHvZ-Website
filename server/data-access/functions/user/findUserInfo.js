@@ -1,4 +1,4 @@
-const getUserType = rootRequire("server/data-access/functions/user/getUserType");
+const getUserType = rootRequire("server/data-access/functions/user/findUserType");
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 const findTeamScore = rootRequire("server/data-access/functions/game/findTeamScore");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");

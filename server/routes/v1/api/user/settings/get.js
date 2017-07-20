@@ -1,4 +1,4 @@
-const getUserSettings = rootRequire("server/data-access/functions/user/getUserSettings");
+const getUserSettings = rootRequire("server/data-access/functions/user/findUserSettings");
 
 function Get(req, res, next) {
     getUserSettings(req.query.userId, result => {

@@ -1,10 +1,10 @@
 const Report = rootRequire("server/schemas/report");
 const Game = rootRequire("server/schemas/game");
 const mailService = rootRequire("server/services/mail");
-const getUserType = rootRequire("server/data-access/functions/user/getUserType");
+const getUserType = rootRequire("server/data-access/functions/user/findUserType");
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
-const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
-const getUserById = rootRequire("server/data-access/functions/user/getUserById");
+const getUserByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
+const getUserById = rootRequire("server/data-access/functions/user/findById");
 
 function Create(report, cb) {
     findCurrentOrNext(res => {

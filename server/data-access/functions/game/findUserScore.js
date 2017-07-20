@@ -63,7 +63,8 @@ function scoreFromReports(reports, userMap) {
 
 function FindUserScore(gameId, playerId, forTeamScore) {
     return new Promise(function(resolve, reject) {
-        Promise.join(SupplyCode.find({forGame: gameId, usedBy: playerId}).exec(), Report.find({gameId, ratified: true}).sort("time").exec(), (codes, reports) => {
+        Promise.join(SupplyCode.find({forGame: gameId, usedBy: playerId}).exec(),
+                     Report.find({gameId, ratified: true}).sort("time").exec(), (codes, reports) => {
             let finalScore = 0;
             let codeScore = 0;
             let codeCount = {};

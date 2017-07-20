@@ -1,21 +1,27 @@
+const Promise = require('bluebird');
+
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
 const findByGame = rootRequire("server/data-access/functions/gameSignups/findByGame");
 
-function Create(gameSignUp, cb, skipDoFindByGame) {
-    gameSignUp = new GameSignUp(gameSignUp);
-    gameSignUp.validate(err => {
-        if (err) {
-            return cb({error: err});
-        }
-        gameSignUp.save(err => {
-            if (err) {
-                return cb({error: err});
-            }
-            if (!skipDoFindByGame) {
-                findByGame(gameSignUp.gameId, cb);
+function Create(gameSignUp, skipDoFindByGame) {
+    return new Promise(function(resolve, reject) {
+        gameSignUp = new GameSignUp(gameSignUp);
+        gameSignUp.validate()
+        .then(noerror => {
+            return gameSignUp.save();
+        })
+        .then(noerror => {
+            if (skipDoFindByGame) {
+                resolve("User signed up and Email confirmation has been sent");
             } else {
-                cb({body: "User signed up and Email confirmation has been sent"});
+                return findByGame(gameSignUp.gameId);
             }
+        })
+        .then(game => {
+            resolve(game);
+        })
+        .catch(error => {
+            reject(error);
         });
     });
 }

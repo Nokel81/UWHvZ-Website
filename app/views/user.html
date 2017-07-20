@@ -21,7 +21,7 @@
                         <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"></hvz-toggle>
                         <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888','#86d993','#966100'" ng-show="joinNextGame"></hvz-toggle>
                     </div>
-                    <div class="right">
+                    <div class="float-right">
                         <div class="input-group">
                             <button class="btn btn-warning" type="button" ng-click="forgotPassword()">Forgot Password</button>
                             <hr style="margin: 2.5px">
@@ -37,11 +37,18 @@
 </div>
 <div ng-hide="session == null">
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist" id="modtabs">
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Score" role="tab">Score</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a></li>
-        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Code" role="tab">Code</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a></li>
+        <li class="nav-item hidden-xs-down"><a class="nav-link active" data-toggle="tab" href="#Code" role="tab">Code</a></li>
+        <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a></li>
+        <li class="nav-item dropdown hidden-sm-up">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Code" role="tab">Code</a>
+                <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Settings" role="tab">Settings</a>
+            </div>
+        </li>
     </ul>
 
     <!-- Tab panes -->
@@ -90,12 +97,12 @@
                     <input type="file" multiple file-input="files" class="btn btn-info" style="width: 100%">
                     <br>
                     <br>
-                    <button type="button" class="btn btn-success right" ng-click="sendMessage()" style="width: 100%">Send Message</button>
+                    <button type="button" class="btn btn-success float-right" ng-click="sendMessage()" style="width: 100%">Send Message</button>
                     <br>
                 </div>
                 <div class="hidden-xs-down">
                     <input type="file" multiple file-input="files" class="btn btn-info">
-                    <button type="button" class="btn btn-success right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
+                    <button type="button" class="btn btn-success float-right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
                 </div>
                 <br>
             </div>
@@ -163,7 +170,7 @@
         </div>
         <div class="tab-pane" id="Settings" role="tabpanel">
             <div class="container-fluid" style="padding: 10px;">
-                <button type="button" class="right btn btn-info" ng-click="logOut()">logout</button>
+                <button type="button" class="float-right btn btn-info" ng-click="logOut()">logout</button>
                 <div class="hidden-sm-up">
                     <br>
                     <br>

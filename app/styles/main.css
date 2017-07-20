@@ -19,85 +19,6 @@ hr {
     height: calc(100% - 100px);
 }
 
-#modtabs .nav-item.dropdown {
-    display: none;
-}
-
-#modtabs .nav-item.dropdown div > a {
-    display: none;
-}
-
-@media(max-width: 864px) {
-    #modtabs .nav-item.dropdown {
-        display: inherit;
-    }
-    #modtabs .nav-item.dropdown div > a {
-        display: none;
-    }
-    #modtabs .nav-item.dropdown div #DD6 {
-        display: inherit;
-    }
-    #modtabs #NL6 {
-        display: none;
-    }
-}
-
-@media(max-width: 795px) {
-    #modtabs .nav-item.dropdown {
-        display: inherit;
-    }
-    #modtabs .nav-item.dropdown div > a {
-        display: none;
-    }
-    #modtabs .nav-item.dropdown div #DD6,
-    #modtabs .nav-item.dropdown div #DD5 {
-        display: inherit;
-    }
-    #modtabs #NL6, #modtabs #NL5 {
-        display: none;
-    }
-}
-
-@media(max-width: 656px) {
-    #modtabs .nav-item.dropdown {
-        display: inherit;
-    }
-    #modtabs .nav-item.dropdown div > a {
-        display: none;
-    }
-    #modtabs .nav-item.dropdown div #DD6,
-    #modtabs .nav-item.dropdown div #DD5,
-    #modtabs .nav-item.dropdown div #DD4 {
-        display: inherit;
-    }
-    #modtabs #NL6,
-    #modtabs #NL5,
-    #modtabs #NL4 {
-        display: none;
-    }
-}
-
-@media(max-width: 525px) {
-    #modtabs .nav-item.dropdown {
-        display: inherit;
-    }
-    #modtabs .nav-item.dropdown div > a {
-        display: none;
-    }
-    #modtabs .nav-item.dropdown div #DD6,
-    #modtabs .nav-item.dropdown div #DD5,
-    #modtabs .nav-item.dropdown div #DD4,
-    #modtabs .nav-item.dropdown div #DD3 {
-        display: inherit;
-    }
-    #modtabs #NL6,
-    #modtabs #NL5,
-    #modtabs #NL4,
-    #modtabs #NL3 {
-        display: none;
-    }
-}
-
 .colourpicker {
     padding: 0px;
     width: 64px;
@@ -181,10 +102,6 @@ input[type="color"]::-webkit-color-swatch {
     text-align: center;
 }
 
-.left {
-    text-align: left;
-}
-
 .icon-size {
     max-width: 40px;
     max-height: 40px;
@@ -193,10 +110,6 @@ input[type="color"]::-webkit-color-swatch {
 .form-control {
     margin-bottom: 5px;
     margin-top: 5px;
-}
-
-.right {
-    float: right;
 }
 
 .sub-view {

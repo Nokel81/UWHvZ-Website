@@ -10,11 +10,18 @@
         <i ng-bind="game.description"></i>
     </div>
     <div>
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs" role="tablist" id="modtabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
+            <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
+            <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
+            <li class="nav-item dropdown hidden-sm-up">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Moderators" role="tab">Moderators</a>
+                    <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Graphs" role="tab">Graphs</a>
+                </div>
+            </li>
         </ul>
         <br>
         <div class="tab-content">

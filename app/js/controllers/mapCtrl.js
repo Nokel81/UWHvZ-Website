@@ -52,6 +52,7 @@ function MapCtrl($scope, $location, MapService, AlertService) {
             title: tit
         });
         marker.setMap(map);
+        map.setCenter(marker.getPosition());
     });
 }
 

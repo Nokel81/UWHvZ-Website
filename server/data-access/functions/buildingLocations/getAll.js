@@ -1,14 +1,19 @@
+const Promise = require('bluebird');
+
 const BuildingLocation = rootRequire("server/schemas/buildingLocation");
 
-function GetAll(cb) {
-    BuildingLocation.find({})
+function GetAll() {
+    return new Promise(function(resolve, reject) {
+        BuildingLocation.find({})
         .sort("acronym")
-        .exec((err, markers) => {
-            if (err) {
-                return cb({error: err});
-            }
-            cb({body: markers});
+        .exec()
+        .then(locations => {
+            resolve(locations);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = GetAll;

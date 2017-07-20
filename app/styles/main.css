@@ -40,22 +40,6 @@ input[type="color"]::-webkit-color-swatch {
     margin-top: 0 !important;
 }
 
-.font-16 {
-    font-size: 16;
-}
-
-.font-20 {
-    font-size: 20;
-}
-
-.font-24 {
-    font-size: 24;
-}
-
-.font-32 {
-    font-size: 32;
-}
-
 .formish-control, .input-group-addon {
     margin-top: 5px;
 }
@@ -95,11 +79,6 @@ input[type="color"]::-webkit-color-swatch {
     margin: 20px;
     min-width: inherit;
     max-width: 450px;
-}
-
-.centre {
-    display: block;
-    text-align: center;
 }
 
 .icon-size {
@@ -268,39 +247,8 @@ p+ul {
     white-space: pre;
 }
 
-.full button span {
-    background-color: limegreen;
-    border-radius: 32px;
-    color: black;
-}
-
-.partially button span {
-    background-color: orange;
-    border-radius: 32px;
-    color: black;
-}
-
-.fade.in {
-    opacity: 1;
-}
-
-.modal.in .modal-dialog {
-    -webkit-transform: translate(0, 0);
-    -o-transform: translate(0, 0);
-    transform: translate(0, 0);
-}
-
-.modal-backdrop.in {
-    filter: alpha(opacity=50);
-    opacity: .5;
-}
-
 .custom-select {
     width: inherit;
-}
-
-.full-width {
-    width: 100%;
 }
 
 .icon-form {

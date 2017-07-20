@@ -23,7 +23,7 @@
     <div class="tab-pane" id="GameSignups" role="tabpanel">
 
         <div ng-show="gameStarted">
-            <h4 class="centre">No Game to sign up for or game has already started</h4>
+            <h4 class="text-center">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
             <br>
@@ -60,12 +60,12 @@
                         </div>
                         <div class="col-md-2">
                             <div class="formish-control float-right">
-                                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
+                                <button type="button" class="icon-only h2 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only h2 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only h2 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
@@ -119,12 +119,12 @@
             </div>
         </div>
         <div ng-show="gameStarted">
-            <h4 class="centre">No Game to start or game has already started</h4>
+            <h4 class="text-center">No Game to start or game has already started</h4>
         </div>
     </div>
     <div class="tab-pane active" id="SupplyCodes" role="tabpanel">
         <div ng-hide="supplyCodes">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="container-fluid" ng-show="supplyCodes">
             <button type="button" class="btn btn-success float-right formish-control" ng-click="addCodes()">Add More Codes</button>
@@ -156,7 +156,7 @@
     </div>
     <div class="tab-pane" id="PlayerCodes" role="tabpanel">
         <div ng-hide="gamePlayers">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="fluid-control" ng-show="gamePlayers">
             <div class="row">
@@ -181,7 +181,7 @@
     </div>
     <div class="tab-pane" id="PlayerReports" role="tabpanel">
         <div ng-hide="reports">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div ng-repeat="day in reports">
             <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">

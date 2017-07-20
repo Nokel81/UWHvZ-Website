@@ -54,11 +54,15 @@
 
                                 <div id="collapseLocations{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingLocation{{$index}}">
                                     <div class="card-block">
-                                        <div class="input-group" ng-repeat="location in game.signUpLocations track by $index">
-                                            <input type="text" class="form-control" ng-model="game.signUpLocations[$index]" title="Game Singup Location">
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removeLocation($rootIndex, $index)"><i class="fa fa-times"></i></button>
-                                            </span>
+                                        <div ng-repeat="location in game.signUpLocations track by $index">
+                                            <div class="input-group control">
+                                                <select class="custom-select" ng-model="game.signUpLocations[$index]">
+                                                    <option value="{{marker.acronym}}" ng-repeat="marker in markers" ng-bind="marker.title"></option>
+                                                </select>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-danger" type="button" ng-click="removeLocation($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                                                </span>
+                                            </div>
                                         </div>
                                         <button class="right btn btn-success formish-control control" type="button" ng-click="addLocation($rootIndex)"><i class="fa fa-plus"></i></button>
                                     </div>
@@ -170,7 +174,7 @@
     </div>
     <div class="tab-pane" id="Markers" role="tabpanel">
         <div class="container-fluid">
-            <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
+            <button type="button" class="icon-only h5 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
             <div class="row" ng-repeat="marker in markers">
                 <div class="col-md-2">
                     <input type="text" class="form-control" ng-model="marker.acronym" title="Acronym" placeholder="Acronym" ng-disabled="editingMarker != $index">
@@ -186,12 +190,12 @@
                 </div>
                 <div class="col-md-3">
                     <div class="icon-form">
-                        <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                        <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
+                        <button type="button" class="icon-only h5 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
+                        <button type="button" class="icon-only h5" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                        <button type="button" class="icon-only h5 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="icon-only h5" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="icon-only h5 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
+                        <button type="button" class="icon-only h5" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -199,7 +203,7 @@
     </div>
     <div class="tab-pane" id="Polygons" role="tabpanel">
         <div class="container-fluid">
-            <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
+            <button type="button" class="icon-only h5 text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
             <div ng-repeat="polygon in polygons" ng-init="$rootIndex = $index">
                 <div class="row">
                     <div class="col-md-3">
@@ -240,12 +244,12 @@
                     </div>
                     <div class="col-md-3">
                         <div class="icon-form">
-                            <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
+                            <button type="button" class="icon-only h5 text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="icon-only h5" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                            <button type="button" class="icon-only h5 text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="icon-only h5" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
+                            <button type="button" class="icon-only h5 text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
+                            <button type="button" class="icon-only h5" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
                         </div>
                     </div>
                 </div>

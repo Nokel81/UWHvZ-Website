@@ -1,12 +1,12 @@
-<div class="centre" ng-hide="game">
+<div class="text-center" ng-hide="game">
     <br>
     <h1>Well that's all folks!</h1>
     <p>No next game has been made please come back later</p>
 </div>
 <div ng-show="game">
-    <div class="centre">
+    <div class="text-center">
         <br>
-        <h1 style="font-size: 40px" ng-bind="game.name"></h1>
+        <h1 ng-bind="game.name"></h1>
         <i ng-bind="game.description"></i>
     </div>
     <div>
@@ -59,7 +59,7 @@
             </div>
             <div class="tab-pane" id="Players" role="tabpanel">
                 <div ng-hide="gamePlayers">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div class="fluid-control hidden-xs-down">
                     <div class="row" ng-show="gamePlayers">
@@ -99,7 +99,7 @@
             </div>
             <div class="tab-pane" id="Moderators" role="tabpanel">
                 <div ng-hide="gameMods">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div class="fluid-control hidden-xs-down" ng-show="gameMods">
                     <div class="row">
@@ -132,7 +132,7 @@
             </div>
             <div class="tab-pane" id="Graphs" role="tabpanel">
                 <div ng-hide="gamePlayers && numberOfZombies != undefined">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div ng-show="gamePlayers && numberOfZombies != undefined">
                     <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>

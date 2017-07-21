@@ -1,14 +1,19 @@
+const Promise = require('bluebird');
+
 const SupplyCode = rootRequire("server/schemas/supplyCode");
 
-function FindByUser(id, gameId, cb) {
-    SupplyCode.find({usedBy: id, forGame: gameId})
+function FindByUser(id, gameId) {
+    return new Promise(function(resolve, reject) {
+        SupplyCode.find({usedBy: id, forGame: gameId})
         .sort("code")
-        .exec((err, codes) => {
-            if (err) {
-                return cb({error: err});
-            }
-            cb({body: codes});
-        });
+        .exec()
+        .then(codes => {
+            resolve(codes);
+        })
+        .catch(error => {
+            reject(error);
+        })
+    });
 }
 
 module.exports = FindByUser;

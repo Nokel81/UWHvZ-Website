@@ -30,9 +30,12 @@ function StartGame(zombieEmails, gameId, HTMLlore, fileData) {
             game.spectators = users.filter(user => spectatorEmails.indexOf(user.email) >= 0).map(user => user._id);
             game.humans = users.filter(user => humanEmails.indexOf(user.email) >= 0).map(user => user._id);
             game.isStarted = true;
+            return User.find({_id: {$in: game.zombies}}).select("playerName").exec();
+        })
+        .then(users => {
             return Promise.join(sendStartingEmail(spectatorEmails, "Spectator", game, HTMLlore, fileData),
                                 sendStartingEmail(humanEmails, "Human", game, HTMLlore, fileData),
-                                sendStartingEmail(zombieEmails, "Zombie", game, HTMLlore, fileData));
+                                sendStartingEmail(zombieEmails, "Zombie", game, HTMLlore, fileData, clone(users).map(user => user.playerName)));
         })
         .then(noerror => {
             fileData.forEach(fileData => {

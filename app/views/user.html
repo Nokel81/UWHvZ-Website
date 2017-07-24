@@ -8,12 +8,12 @@
                     <div ng-show="buttonState === 'signUp'">
                         <input class="form-control" type="password" ng-model="passwordCheck" placeholder="Password again">
                         <div class="red_text">
-                            Passwords must contain be at least 8 characters long and have at least 3 of the following
+                            Passwords must have the following:
                             <ul>
-                                <li>Uppercase letter</li>
-                                <li>Lowercase letter</li>
-                                <li>Number</li>
-                                <li>Symbol</li>
+                                <li>An Uppercase letter</li>
+                                <li>A Lowercase letter</li>
+                                <li>A Number</li>
+                                <li>At least 8 characters in length</li>
                             </ul>
                         </div>
                         <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
@@ -28,6 +28,7 @@
                             <button class="btn btn-secondary" type="button" ng-click="signUp()">Sign Up</button>
                             <hr style="margin: 2.5px">
                             <button class="btn btn-success" type="button" ng-click="logIn()">Log In</button>
+                            <button type="submit" style="display:none" ng-click="submitAuthenticationForm()"></button>
                         </div>
                     </div>
                 </form>

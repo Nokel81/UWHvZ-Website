@@ -4,20 +4,19 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
         CKEDITOR.replace('MessageBodyTextArea', {
             toolbarGroups: [{
-                    name: 'document',
-                    groups: ['mode', 'document']
-                }, {
-                    name: 'clipboard',
-                    groups: ['clipboard', 'undo']
-                }, {
-                    name: 'insert'
-                }, {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup']
-                }, {
-                    name: 'links'
-                }
-            ]
+                name: 'document',
+                groups: ['mode', 'document']
+            }, {
+                name: 'clipboard',
+                groups: ['clipboard', 'undo']
+            }, {
+                name: 'insert'
+            }, {
+                name: 'basicstyles',
+                groups: ['basicstyles', 'cleanup']
+            }, {
+                name: 'links'
+            }]
         });
     } else {
         CKEDITOR.replace('MessageBodyTextArea');
@@ -27,7 +26,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         var input = document.createElement("input");
         input.type = "color";
         $scope.supportsColour = input.type === "color";
-    } catch(e) {
+    } catch (e) {
         $scope.supportsColour = false;
     }
 
@@ -63,7 +62,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $scope.hasTimeBeenChanged = false;
     });
 
-    $scope.timeHasChanged = function () {
+    $scope.timeHasChanged = function() {
         $scope.hasTimeBeenChanged = true;
     }
 
@@ -224,7 +223,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             });
     };
 
-    $scope.submitAuthenticationForm = function () {
+    $scope.submitAuthenticationForm = function() {
         if ($scope.buttonState === "logIn") {
             $scope.logIn();
         } else if ($scope.buttonState === "signUp") {

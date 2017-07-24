@@ -16,7 +16,7 @@ function UseSupplyCode(info) {
             if (game.humans.indexOf(info.userId.toString()) < 0) {
                 return reject("You have to be a human to use a supply code");
             }
-            return SupplyCode.findOneAndUpdate({code: info.code, usedBy: {$exists: false}, forGame: game._id}, {$set: {usedBy: info.userId}).exec();
+            return SupplyCode.updateOne({code: info.code, usedBy: {$exists: false}, forGame: game._id}, {$set: {usedBy: info.userId}).exec();
         })
         .then(code => {
             if (!code) {

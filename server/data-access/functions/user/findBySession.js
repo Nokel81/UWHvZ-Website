@@ -1,21 +1,23 @@
-const User = rootRequire("server/schemas/user");
+const Promise = require('bluebird');
+
+const findById = rootRequire("server/data-access/functions/user/findById");
 const Session = rootRequire("server/schemas/session");
 
-function GetUserBySession(token, cb) {
-    Session.findOne({sessionToken: token})
+function FindBySession(sessionToken) {
+    return new Promise(function(resolve, reject) {
+        Session.findOne({sessionToken})
         .select("-password -nonce")
-        .exec((err, session) => {
-            if (err) {
-                return cb({error: err});
-            }
-            User.findOne({_id: session.userId})
-                .exec((err, user) => {
-                    if (err) {
-                        return cb({error: err});
-                    }
-                    cb({body: user});
-                });
+        .exec()
+        .then(session => {
+            return findById(session.userId);
+        })
+        .then(user => {
+            resolve(user);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
-module.exports = GetUserBySession;
+module.exports = FindBySession;

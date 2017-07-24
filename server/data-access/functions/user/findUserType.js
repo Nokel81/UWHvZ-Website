@@ -1,40 +1,34 @@
+const Promise = require('bluebird');
+
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 
-function GetUserType(id, cb, game) {
-    if (game) {
-        if (game.moderators.indexOf(id) >= 0) {
-            cb({body: "Moderator"});
-        } else if (game.zombies.indexOf(id) >= 0) {
-            cb({body: "Zombie"});
-        } else if (game.humans.indexOf(id) >= 0) {
-            cb({body: "Human"});
-        } else if (game.spectators.indexOf(id) >= 0) {
-            cb({body: "Spectator"});
-        } else {
-            cb({body: "NonPlayer"});
-        }
-        return;
-    }
-    findCurrentOrNext(res => {
-        if (res.error) {
-            return cb({error: res.error});
-        }
-        const game = res.body;
-        id = id.toString();
+function GetUserType(id, game) {
+    id = id.toString();
+    return new Promise(function(resolve, reject) {
+        let promise = new Promise(function(resolve, reject) {
+            resolve(game);
+        });
         if (!game) {
-            cb({body: "NonPlayer"});
-        } else if (game.moderators.indexOf(id) >= 0) {
-            cb({body: "Moderator"});
-        } else if (game.zombies.indexOf(id) >= 0) {
-            cb({body: "Zombie"});
-        } else if (game.humans.indexOf(id) >= 0) {
-            cb({body: "Human"});
-        } else if (game.spectators.indexOf(id) >= 0) {
-            cb({body: "Spectator"});
-        } else {
-            cb({body: "NonPlayer"});
+            promise = findCurrentOrNext();
         }
-    }, true);
+
+        promise.then(game => {
+            if (game.moderators.indexOf(id) >= 0) {
+                resolve("Moderator");
+            } else if (game.zombies.indexOf(id) >= 0) {
+                resolve("Zombie");
+            } else if (game.humans.indexOf(id) >= 0) {
+                resolve("Human");
+            } else if (game.spectators.indexOf(id) >= 0) {
+                resolve("Spectator");
+            } else {
+                resolve("NonPlayer");
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
 }
 
 module.exports = GetUserType;

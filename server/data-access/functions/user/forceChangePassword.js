@@ -1,27 +1,27 @@
+const Promise = require('bluebird');
+
 const User = rootRequire("server/schemas/user");
 const hashPassword = rootRequire("server/helpers/hashPassword");
 
-function ForcePasswordChange(passwordReset, cb) {
-    User.findOne({passwordResetCode: passwordReset.code})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
-            }
-            if (!user) {
-                return cb({body: "Password has been changed"});
-            }
-            const hashedNewPassword = hashPassword(passwordReset.newPassword, user.nonce);
-            if (typeof hashedOldPassword === "object") {
-                return cb({error: hashedOldPassword});
-            }
-            User.findOneAndUpdate({_id: user._id}, {$set: {password: hashedNewPassword, passwordResetCode: undefined}})
-                .exec((err, user) => {
-                    if (err) {
-                        return cb({error: err});
-                    }
-                    cb({body: "Password has been changed"});
-                });
+function ForcePasswordChange(passwordReset) {
+    return new Promise(function(resolve, reject) {
+        let _id = null;
+        User.findOne({passwordResetCode: passwordReset.code})
+        .exec()
+        .then(user => {
+            _id = user._id;
+            return hashPassword(passwordReset.newPassword, user.nonce);
+        })
+        .then(buffer => {
+            return User.updateOne({_id}, {$set: {password: buffer.toString("hex")}, $unset: {passwordResetCode: 1}}).exec()
+        })
+        .then(user => {
+            resolve("Password has been changed");
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = ForcePasswordChange;

@@ -1,34 +1,27 @@
+const Promise = require('bluebird');
+
 const User = rootRequire("server/schemas/user");
+const findById = rootRequire("server/data-access/functions/user/findById");
 const hashPassword = rootRequire("server/helpers/hashPassword");
 
-function ConfirmUser(passwordChange, cb) {
-    User.findOne({_id: passwordChange.userId})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
-            }
-            if (!user) {
-                return cb({error: "User not found"});
-            }
-            const hashedOldPassword = hashPassword(passwordChange.oldPassword, user.nonce);
-            if (typeof hashedOldPassword === "object") {
-                return cb({error: hashedOldPassword});
-            }
-            if (hashedOldPassword !== user.password) {
-                return cb({error: "Old password is incorrect"});
-            }
-            const hashedNewPassword = hashPassword(passwordChange.newPassword, user.nonce);
-            if (typeof hashedOldPassword === "object") {
-                return cb({error: hashedNewPassword});
-            }
-            User.findOneAndUpdate({_id: user._id}, {$set: {password: hashedNewPassword}})
-                .exec((err, user) => {
-                    if (err) {
-                        return cb({error: err});
-                    }
-                    cb({body: "Password changed"});
-                });
+function ConfirmUser(passwordChange) {
+    return new Promise(function(resolve, reject) {
+        findById(passwordChange.userId)
+        .then(user => {
+            return Promise.join(hashPassword(passwordChange.oldPassword, user.nonce), hashPassword(passwordChange.newPassword, user.nonce), (oldHash, newHash) => {
+                if (oldHash !== user.password) {
+                    return reject("Old password is incorrect");
+                }
+                return User.updateOne({_id: user._id}, {$set: {password: newHash}}).exec();
+            });
+        })
+        .then(user => {
+            resolve("Password changed");
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = ConfirmUser;

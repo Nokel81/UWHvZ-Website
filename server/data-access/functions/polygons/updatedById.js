@@ -5,7 +5,7 @@ const getAll = rootRequire("server/data-access/functions/polygons/getAll");
 
 function UpdateById(poly) {
     return new Promise(function(resolve, reject) {
-        Polygon.findOneAndUpdate({_id: poly._id}, poly)
+        Polygon.updateOne({_id: poly._id}, poly)
         .exec()
         .then(polygon => {
             return getAll();

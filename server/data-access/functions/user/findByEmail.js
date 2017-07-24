@@ -2,9 +2,9 @@ const Promise = require('bluebird');
 
 const User = rootRequire("server/schemas/user");
 
-function FindByPlayerCode(playerCode) {
+function FindById(email) {
     return new Promise(function(resolve, reject) {
-        User.findOne({playerCode})
+        User.findOne({email})
         .select("-password -nonce")
         .exec()
         .then(user => {
@@ -16,4 +16,4 @@ function FindByPlayerCode(playerCode) {
     });
 }
 
-module.exports = FindByPlayerCode;
+module.exports = FindById;

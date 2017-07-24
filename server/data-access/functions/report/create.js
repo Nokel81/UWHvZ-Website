@@ -88,7 +88,7 @@ function Create(report) {
                     }
                 }
                 return new Promise(function(resolve, reject) {
-                    Game.findOneAndUpdate({_id: game._id}, {
+                    Game.updateOne({_id: game._id}, {
                         $push: {
                             zombies: {
                                 $each: newZombies

@@ -5,7 +5,7 @@ const findByGame = rootRequire("server/data-access/functions/gameSignups/findByG
 
 function Update(signUp) {
     return new Promise(function(resolve, reject) {
-        GameSignUp.findOneAndUpdate({_id: signUp._id}, signUp)
+        GameSignUp.updateOne({_id: signUp._id}, signUp)
         .exec()
         .then(signUp => {
             return findByGame(signUp.gameId);

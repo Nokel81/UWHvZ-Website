@@ -1,13 +1,18 @@
+const Promise = require('bluebird');
+
 const Settings = rootRequire("server/schemas/settings");
 
-function GetUserSettings(id, cb) {
-    Settings.findOne({userId: id})
-        .exec((err, settings) => {
-            if (err) {
-                return cb({error: err});
-            }
-            cb({body: settings});
+function FindUserSettings(userId) {
+    return new Promise(function(resolve, reject) {
+        Settings.findOne({userId})
+        .exec()
+        .then(settings => {
+            resolve(settings);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
-module.exports = GetUserSettings;
+module.exports = FindUserSettings;

@@ -15,7 +15,7 @@ function AddPlayerToGame(newPlayer) {
             .then(player => {
                 let updateQuery = {$push: {}};
                 updateQuery.$push[newPlayer.team] = user._id;
-                return Game.findOneAndUpdate({_id: newPlayer.gameId}, updateQuery).exec();
+                return Game.updateOne({_id: newPlayer.gameId}, updateQuery).exec();
             })
             then(game => {
                 return findAll();

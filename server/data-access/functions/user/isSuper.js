@@ -1,13 +1,18 @@
-const User = rootRequire("server/schemas/user");
+const Promise = require('bluebird');
 
-function IsSuper(id, cb) {
-    User.findOne({_id: id})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
-            }
-            cb({body: user.email === "webmaster.uwhvz@gmail.com"});
+const findById = rootRequire("server/data-access/functions/user/findById");
+const config = rootRequire("server/config.json");
+
+function IsSuper(userId) {
+    return new Promise(function(resolve, reject) {
+        findById(userId)
+        .then(user => {
+            resolve(user.email === config.webmasterEmail)
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = IsSuper;

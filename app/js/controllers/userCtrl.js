@@ -82,21 +82,20 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
         UserService.getUserInfo(user._id, (err, info) => {
+            // TODO: Fix this mess into being consistant with the data from the server
+            if (err) {
+                return $scope.userInfoError = err;
+            }
             if (info) {
-                if (typeof info.score === "string") {
-                    $scope.userInfo.status = info.score;
-                    return;
-                }
-                delete $scope.userInfo.status;
                 $scope.userInfo.teamScore = info.teamScore;
-                $scope.userInfo.playerScore = info.score.stunScore + info.score.tagScore + info.score.codeScore;
-                $scope.userInfo.playerStunScore = info.score.stunScore;
-                $scope.userInfo.playerTagScore = info.score.tagScore;
-                $scope.userInfo.playerSupplyScore = info.score.codeScore;
-                $scope.userInfo.playerType = info.playerType;
-                $scope.userInfo.stuns = info.score.stunDescriptions;
-                $scope.userInfo.tags = info.score.tagDescriptions;
-                $scope.userInfo.codes = info.score.codeDescriptions;
+                $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
+                $scope.userInfo.playerStunScore = info.userScore.stunScore;
+                $scope.userInfo.playerTagScore = info.userScore.tagScore;
+                $scope.userInfo.playerSupplyScore = info.userScore.codeScore;
+                $scope.userInfo.userType = info.userType;
+                $scope.userInfo.stuns = info.userScore.stunDescriptions;
+                $scope.userInfo.tags = info.userScore.tagDescriptions;
+                $scope.userInfo.codes = info.userScore.codeDescriptions;
             }
         });
     });

@@ -1,52 +1,39 @@
-const pbkdf2 = require("pbkdf2").pbkdf2;
+const Promise = require('bluebird');
 const randomString = require("crypto-random-string");
 
 const User = rootRequire("server/schemas/user");
+const hashPassword = rootRequire("server/helpers/hashPassword");
+const findByEmail = rootRequire("server/data-access/functions/user/findByEmail");
 const Session = rootRequire("server/schemas/session");
 
-function Login(account, cb) {
-    if (!account) {
-        return cb({error: "Account not defined"});
-    }
-    User.findOne({email: account.username})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
+function Login(account) {
+    return new Promise(function(resolve, reject) {
+        let user = null;
+        findByEmail(account.username)
+        .then(userObj => {
+            user = userObj;
+            if (!user.confirmationToken) {
+                return reject("User email has not yet been confirmed");
             }
-            if (!user) {
-                return cb({error: "User or password incorrect"});
+            return hashPassword(user.password, user.nonce);
+        })
+        .then(buffer => {
+            let password = buffer.toString("hex");
+            if (user.password !== password) {
+                return reject("Email or password incorrect");
             }
-            if (user.confirmationToken) {
-                return cb({error: "User email has not yet been confirmed"});
-            }
-            pbkdf2(account.password, Buffer.from(user.nonce, "utf8"), 128, 256, "sha512", (err, key) => {
-                if (err) {
-                    return cb({error: err});
-                }
-                key = key.toString("hex");
-                if (user.password === key) {
-                    const session = new Session({
-                        userId: user._id,
-                        sessionToken: randomString(25)
-                    });
-                    session.save((err, session) => {
-                        if (err) {
-                            return cb({error: err});
-                        }
-                        delete user.password;
-                        delete user.nonce;
-                        cb({
-                            body: {
-                                session: session.sessionToken,
-                                user
-                            }
-                        });
-                    });
-                } else {
-                    return cb({error: "User or password incorrect"});
-                }
-            });
+            return new Session({userId: user._id, sessionToken: randomString(25)}).save();
+        })
+        .then(session => {
+            delete user.password;
+            delete user.nonce;
+            resolve({session, user});
+        })
+        .catch(error => {
+            console.error(error);
+            reject("Email or password incorrect");
         });
+    });
 }
 
 module.exports = Login;

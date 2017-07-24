@@ -5,7 +5,7 @@ const findByGame = rootRequire("server/data-access/functions/report/findByGame")
 
 function Ratify(reportId, gameId) {
     return new Promise(function(resolve, reject) {
-        Report.findOneAndUpdate({_id: reportId}, {$set: {ratified: true}})
+        Report.updateOne({_id: reportId}, {$set: {ratified: true}})
         .exec()
         .then(report => {
             return findByGame(gameId, false);

@@ -5,7 +5,7 @@ const getAll = rootRequire("server/data-access/functions/buildingLocations/getAl
 
 function UpdateById(marker) {
     return new Promise(function(resolve, reject) {
-        BuildingLocation.findOneAndUpdate({_id: marker._id}, marker)
+        BuildingLocation.updateOne({_id: marker._id}, marker)
         .exec()
         .then(location => {
             return getAll();

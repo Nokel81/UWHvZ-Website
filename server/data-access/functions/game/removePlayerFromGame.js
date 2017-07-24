@@ -11,7 +11,7 @@ function AddPlayerToGame(oldPlayer) {
         }
         let updateQuery = {$pull: {}};
         updateQuery.$pull[oldPlayer.team] = oldPlayer.playerId;
-        Game.findOneAndUpdate({_id: oldPlayer.gameId}, updateQuery)
+        Game.updateOne({_id: oldPlayer.gameId}, updateQuery)
         .then(game => {
             return findAll();
         })

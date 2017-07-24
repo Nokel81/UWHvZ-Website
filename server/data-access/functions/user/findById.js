@@ -1,17 +1,19 @@
+const Promise = require('bluebird');
+
 const User = rootRequire("server/schemas/user");
 
-function GetUserById(id, cb) {
-    User.findOne({_id: id})
+function FindById(_id) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({_id})
         .select("-password -nonce")
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
-            }
-            if (!user) {
-                return cb({error: "User not found"});
-            }
-            cb({body: user});
+        .exec()
+        .then(user => {
+            resolve(user);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
-module.exports = GetUserById;
+module.exports = FindById;

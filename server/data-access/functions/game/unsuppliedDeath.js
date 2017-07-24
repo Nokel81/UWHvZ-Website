@@ -38,7 +38,7 @@ function UnsuppliedDeath(gameId) {
             });
         })
         .then(noerror => {
-            return Game.findOneAndUpdate({_id: gameId}, {
+            return Game.updateOne({_id: gameId}, {
                 $push: {
                     zombies: {
                         $each: starvingHumans

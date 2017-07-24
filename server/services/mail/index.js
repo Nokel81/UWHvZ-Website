@@ -17,18 +17,18 @@ const transporter = new send.createTransport({
 
 const SERVICE = {};
 
-SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
+SERVICE.sendConfirmationEmail = function (user, cb) {
     let sent = false;
     const resolveData = {
-        name: userObj.playerName,
-        link: confirmationLink,
-        code: userObj.playerCode
+        name: user.playerName,
+        link: "https://uwhvz.uwaterloo.ca/user?token=" + user.confirmationToken,
+        code: user.playerCode
     };
     const html = relativeResolve("./emails/confirmation.html", resolveData);
     const mailOptions = {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address,
         replyTo: 'uwhumansvszombies@gmail.com',
-        to: userObj.email,
+        to: user.email,
         subject: "Confirm Registration",
         html: html
     };
@@ -45,17 +45,17 @@ SERVICE.sendConfirmationEmail = function (userObj, confirmationLink, cb) {
     });
 };
 
-SERVICE.sendPasswordResetEmail = function (userObj, confirmationLink, cb) {
+SERVICE.sendPasswordResetEmail = function (user, cb) {
     let sent = false;
     const resolveData = {
-        name: userObj.playerName,
-        link: confirmationLink
+        name: user.playerName,
+        link: "https://uwhvz.uwaterloo.ca/passwordReset?code=" + user.passwordResetCode
     };
     const html = relativeResolve("./emails/passwordReset.html", resolveData);
     const mailOptions = {
         from: '"UW Humans vs Zombies" snmalton@csclub.uwaterloo.ca', // sender address
         replyTo: 'uwhumansvszombies@gmail.com',
-        to: userObj.email,
+        to: user.email,
         subject: "Password Reset Link",
         html: html
     };

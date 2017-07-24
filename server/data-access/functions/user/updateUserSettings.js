@@ -1,16 +1,17 @@
+const Promise = require('bluebird');
+
 const Settings = rootRequire("server/schemas/settings");
 
-function UpdateUserSettings(newSettings, cb) {
-    Settings.findOneAndUpdate({
-        _id: newSettings._id,
-        userId: newSettings.userId
-    }, {
-        $set: newSettings
-    }, (err, settings) => {
-        if (err) {
-            return cb({error: err});
-        }
-        cb({body: settings});
+function UpdateUserSettings(settings) {
+    return new Promise(function(resolve, reject) {
+        Settings.findOneAndUpdate({_id: settings._id, userId: settings.userId}, {$set: settings}, {mew; true})
+        .exec()
+        .then(settings => {
+            resolve(settings);
+        })
+        .catch(error => {
+            reject(error);
+        });
     });
 }
 

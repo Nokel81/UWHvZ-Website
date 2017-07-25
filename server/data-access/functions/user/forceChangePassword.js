@@ -12,8 +12,8 @@ function ForcePasswordChange(passwordReset) {
             _id = user._id;
             return hashPassword(passwordReset.newPassword, user.nonce);
         })
-        .then(buffer => {
-            return User.updateOne({_id}, {$set: {password: buffer.toString("hex")}, $unset: {passwordResetCode: 1}}).exec()
+        .then(password => {
+            return User.updateOne({_id}, {$set: {password}, $unset: {passwordResetCode: 1}}).exec()
         })
         .then(user => {
             resolve("Password has been changed");

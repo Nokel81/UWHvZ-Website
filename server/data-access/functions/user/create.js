@@ -16,8 +16,8 @@ function Create(user) {
     let teamPreference = user.teamPreference;
     return new Promise(function(resolve, reject) {
         hashPassword(user.password, user.nonce)
-        .then(buffer => {
-            user.password = buffer.toString("hex");
+        .then(password => {
+            user.password = password;
             user = new User(user);
             return user.validate();
         })

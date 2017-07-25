@@ -17,8 +17,7 @@ function Login(account) {
             }
             return hashPassword(user.password, user.nonce);
         })
-        .then(buffer => {
-            let password = buffer.toString("hex");
+        .then(password => {
             if (user.password !== password) {
                 return reject("Email or password incorrect");
             }

@@ -12,20 +12,20 @@ function AddPlayerToGame(newPlayer) {
             return;
         }
         getUserByPlayerCode(newPlayer.playerCode)
-            .then(player => {
-                let updateQuery = {$push: {}};
-                updateQuery.$push[newPlayer.team] = user._id;
-                return Game.updateOne({_id: newPlayer.gameId}, updateQuery).exec();
-            })
-            then(game => {
-                return findAll();
-            })
-            .then(games => {
-                resolve(games);
-            })
-            .catch(error => {
-                reject(error);
-            });
+        .then(player => {
+            let updateQuery = {$push: {}};
+            updateQuery.$push[newPlayer.team] = user._id;
+            return Game.updateOne({_id: newPlayer.gameId}, updateQuery).exec();
+        })
+        then(game => {
+            return findAll();
+        })
+        .then(games => {
+            resolve(games);
+        })
+        .catch(error => {
+            reject(error);
+        });
     });
 }
 

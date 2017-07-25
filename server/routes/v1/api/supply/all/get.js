@@ -1,14 +1,14 @@
 const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGame");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    findByGame(req.query.gameId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Supply codes not found: " + result.error);
-        } else {
-            res.status(201).send(result.body);
-        }
+    const {gameId} = req.query;
+    findByGame(gameId)
+    .then(codes => {
+        res.status(201).json(codes);
+    })
+    .catch(error => {
+        res.status(404).send("Supply codes not found: " + createErrorMessage(error));
     });
 }
 

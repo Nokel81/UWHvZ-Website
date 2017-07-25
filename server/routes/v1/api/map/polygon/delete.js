@@ -1,15 +1,15 @@
 const deleteById = rootRequire("server/data-access/functions/polygons/deleteById");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function get(req, res, next) {
-    deleteById(req.query.id, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Polygons not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Delete(req, res, next) {
+    const {id} = req.query;
+    deleteById(id)
+    .then(polygons => {
+        res.status(200).json(polygons);
+    })
+    .catch(error => {
+        res.status(404).send("Polygon not removed: " + createErrorMessage(error));
     });
 }
 
-module.exports = get;
+module.exports = Delete;

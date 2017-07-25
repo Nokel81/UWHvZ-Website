@@ -1,14 +1,14 @@
 const getUserSettings = rootRequire("server/data-access/functions/user/findUserSettings");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    getUserSettings(req.query.userId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Settings not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const {userId} = req.query;
+    getUserSettings(userId)
+    .then(settings => {
+        res.status(200).json(settings);
+    })
+    .catch(error => {
+        res.status(404).send("Settings not found: " + createErrorMessage(error));
     });
 }
 

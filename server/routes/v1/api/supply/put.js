@@ -1,19 +1,14 @@
 const useSupplyCode = rootRequire("server/data-access/functions/supplyCode/useSupplyCode");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    useSupplyCode(req.body, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            if (typeof result.error === "string") {
-                res.status(404).send(result.error);
-            } else {
-                const errors = Object.keys(result.error.errors).map(error => result.error.errors[error].message).join(", ");
-                res.status(404).send("SupplyCode not used: " + errors);
-            }
-        } else {
-            res.status(201).send(result.body);
-        }
+    const code = req.body;
+    useSupplyCode(code)
+    .then(message => {
+        res.status(201).json(message);
+    })
+    .catch(error => {
+        res.status(404).send("Supply codes not used: " + createErrorMessage(error));
     });
 }
 

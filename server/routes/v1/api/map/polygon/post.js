@@ -1,15 +1,15 @@
 const create = rootRequire("server/data-access/functions/polygons/create");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function get(req, res, next) {
-    create(req.body, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(400).send("Polygons not created: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Post(req, res, next) {
+    const polygon = req.body;
+    create(req.body)
+    .then(polygons => {
+        res.status(200).json(polygons);
+    })
+    .catch(error => {
+        res.status(404).send("Polygon not created: " + createErrorMessage(error));
     });
 }
 
-module.exports = get;
+module.exports = Post;

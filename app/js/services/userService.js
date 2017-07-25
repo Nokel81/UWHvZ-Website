@@ -11,7 +11,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(null);
         }
-        $http.get(AppSettings.apiUrl + "/user/type?id=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/type?userId=" + SERVICE.userId)
             .then(res => {
                 cb(res.data);
             },
@@ -167,7 +167,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(false);
         }
-        $http.get(AppSettings.apiUrl + "/user/super?id=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/super?userId=" + SERVICE.userId)
             .then(res => {
                 cb(res.data);
             },

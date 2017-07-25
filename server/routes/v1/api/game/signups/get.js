@@ -1,14 +1,14 @@
 const findByGame = rootRequire("server/data-access/functions/gameSignups/findByGame");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    findByGame(req.query.gameId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(400).send("Signups not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const {gameId} = req.query;
+    findByGame(gameId)
+    .then(signups => {
+        res.status(200).json(signups);
+    })
+    .catch(error => {
+        res.status(400).send("Signups not found: " + createErrorMessage(error));
     });
 }
 

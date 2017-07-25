@@ -3,15 +3,15 @@ const Promise = require('bluebird');
 const Game = rootRequire("server/schemas/game");
 const findAll = rootRequire("server/data-access/functions/game/findAll");
 
-function AddPlayerToGame(oldPlayer) {
+function ModifyPlayerListOfGame(gameId, userId, team, method) {
     return new Promise(function(resolve, reject) {
-        oldPlayer.team += "s";
-        if (["spectators", "moderators", "humans", "zombies"].indexOf(oldPlayer.team) < 0) {
+        team += "s";
+        if (["spectators", "moderators", "humans", "zombies"].indexOf(team) < 0) {
             return reject("Invalid team name");
         }
-        let updateQuery = {$pull: {}};
-        updateQuery.$pull[oldPlayer.team] = oldPlayer.playerId;
-        Game.updateOne({_id: oldPlayer.gameId}, updateQuery)
+
+        let updateQuery = {[method]: {[team]: user._id}};
+        Game.updateOne({_id: gameId}, updateQuery)
         .then(game => {
             return findAll();
         })
@@ -24,4 +24,4 @@ function AddPlayerToGame(oldPlayer) {
     });
 }
 
-module.exports = AddPlayerToGame;
+module.exports = ModifyPlayerListOfGame;

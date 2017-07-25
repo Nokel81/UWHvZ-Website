@@ -12,6 +12,10 @@ function Create(report) {
     return new Promise(function(resolve, reject) {
         let taggerType = null;
         let taggerType = null;
+        let tagger = null;
+        let tagged = null;
+        let report = null;
+        let word = null;
         findCurrentOrNext()
         .then(game => {
             if (game.startDate >= new Date().toISOString()) {
@@ -23,7 +27,9 @@ function Create(report) {
             if (report.time > game.endDate) {
                 return reject("You cannot play after the game has ended");
             }
-            Promise.join(findById(report.tagger), findByPlayerCode(report.taggedCode), (tagger, tagged) => {
+            return Promise.join(findById(report.tagger), findByPlayerCode(report.taggedCode), (taggerObj, taggedObj) => {
+                tagger = taggerObj;
+                tagged = taggedObj;
                 taggerType = findUserType(tagger, game);
                 taggedType = findUserType(tagged, game);
 
@@ -35,13 +41,13 @@ function Create(report) {
                         reject("Zombies cannot tag other zombies");
                     } else {
                         return new Promise(function(resolve, reject) {
-                            resolve([tagger, tagged, "Tag"]);
+                            resolve("Tag");
                         });
                     }
                 } else {
                     if (taggedType === "Zombie") {
                         return new Promise(function(resolve, reject) {
-                            resolve([tagger, tagged, "Stun"]);
+                            resolve("Stun");
                         });
                     } else {
                         return new Promise(function(resolve, reject) {
@@ -51,7 +57,7 @@ function Create(report) {
                                 if (count > 0) {
                                     reject("You cannot tag someone who has already been tagged");
                                 } else {
-                                    resolve([tagger, tagged, "Tag"]);
+                                    resolve("Tag");
                                 }
                             })
                             .catch(error => {
@@ -60,79 +66,52 @@ function Create(report) {
                         });
                     }
                 }
-            })
-            .spread((tagger, tagged, type) => {
-                report.tagged = tagged._id;
-                report.gameId = game._id;
-                report.reportType = type;
-                let newReport = new Report(report);
-                return new Promise(function(resolve, reject) {
-                    newReport.validate()
-                    .then(noerror => {
-                        return newReport.save();
-                    })
-                    .then(report => {
-                        resolve([tagger, tagged, report]);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    })
-                });
-            })
-            .spread((tagger, tagged, report) => {
-                let newZombies = [];
-                if (report.reportType === "Tag") {
-                    newZombies.push(tagged._id);
-                    if (taggerType === "Human") {
-                        newZombies.push(tagger._id);
-                    }
-                }
-                return new Promise(function(resolve, reject) {
-                    Game.updateOne({_id: game._id}, {
-                        $push: {
-                            zombies: {
-                                $each: newZombies
-                            }
-                        },
-                        $pullAll: {
-                            humans: newZombies
-                        }
-                    })
-                    .exec()
-                    .then(game => {
-                        resolve([tagger, tagged, report]);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
-                });
-            })
-            .spread((tagger, tagged, report) => {
-                let word = report.reportType.toLowerCase();
-                word += word[word.length - 1];
-                return new Promise(function(resolve, reject) {
-                    mailService.sendTaggedEmail(tagged.email, tagged.playerName, tagger.playerName, report)
-                    .then(noerror => {
-                        if (taggerType === taggedType && taggerType === "Human") {
-                            return mailService.sendTaggerEmail(tagger.email, tagged.playerName, report);
-                        } else {
-                            resolve("You " + word + "ed " + tagged.playerName);
-                        }
-                    })
-                    .then(noerror => {
-                        resolve("You " + word + "ed " + tagged.playerName);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
-                });
-            })
-            .then(message => {
-                resolve(message);
-            })
-            .catch(error => {
-                reject(error);
             });
+        })
+        .then(type => {
+            report.tagged = tagged._id;
+            report.gameId = game._id;
+            report.reportType = type;
+            report = new Report(report);
+            word = report.reportType.toLowerCase();
+            word += word[word.length - 1];
+            return report.validate();
+        })
+        .then(noerror => {
+            return report.save();
+        })
+        .then(noerror => {
+            let newZombies = [];
+            if (report.reportType === "Tag") {
+                newZombies.push(tagged._id);
+                if (taggerType === "Human") {
+                    newZombies.push(tagger._id);
+                }
+            }
+            return Game.updateOne({_id: game._id}, {
+                $push: {
+                    zombies: {
+                        $each: newZombies
+                    }
+                },
+                $pullAll: {
+                    humans: newZombies
+                }
+            })
+            .exec();
+        })
+        .then(noerror => {
+            return mailService.sendTaggedEmail(tagged.email, tagged.playerName, tagger.playerName, report)
+        })
+        .then(noerror => {
+            if (taggerType === taggedType && taggerType === "Human") {
+                return mailService.sendTaggerEmail(tagger.email, tagged.playerName, report);
+            } else {
+                resolve("You " + word + "ed " + tagged.playerName);
+            }
+        })
+        .then(noerror => {
+            resolve("You " + word + "ed " + tagged.playerName);
         })
         .catch(error => {
             reject(error);

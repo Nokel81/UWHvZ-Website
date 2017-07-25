@@ -1,14 +1,14 @@
 const deleteById = rootRequire("server/data-access/functions/buildingLocations/deleteById");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    deleteById(req.query.id, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Polygons not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const {id} = req.query;
+    deleteById(id)
+    .then(locations => {
+        res.status(200).send(locations);
+    })
+    .catch(error => {
+        res.status(404).send("Polygons not found: " + createErrorMessage(error));
     });
 }
 

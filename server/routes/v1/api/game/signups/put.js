@@ -1,14 +1,14 @@
 const updateById = rootRequire("server/data-access/functions/gameSignups/updateById");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Put(req, res, next) {
-    updateById(req.body, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(400).send("Signup not updated: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const signup = req.body;
+    updateById(signup)
+    .then(signups => {
+        res.status(200).json(signups);
+    })
+    .catch(error => {
+        res.status(400).send("Signup not updated: " + createErrorMessage(error));
     });
 }
 

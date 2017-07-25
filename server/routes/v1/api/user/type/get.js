@@ -1,14 +1,14 @@
 const getUserType = rootRequire("server/data-access/functions/user/findUserType");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, res, next) {
-    getUserType(req.query.id, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("User not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const {userId} = req.query;
+    getUserType(userId)
+    .then(type => {
+        res.status(200).json(type);
+    })
+    .catch(error => {
+        res.status(404).send("User not found: " + createErrorMessage(error));
     });
 }
 

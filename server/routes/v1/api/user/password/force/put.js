@@ -1,14 +1,14 @@
 const forceChangePassword = rootRequire("server/data-access/functions/user/forceChangePassword");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Put(req, res, next) {
-    forceChangePassword(req.body, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Password not changed: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    const passwordChange = req.body;
+    forceChangePassword(passwordChange)
+    .then(message => {
+        res.status(200).send(message);
+    })
+    .catch(error => {
+        res.status(404).send("Password not changed: " + createErrorMessage(error));
     });
 }
 

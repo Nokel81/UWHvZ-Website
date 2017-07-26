@@ -53,12 +53,9 @@ bundler
             res.sendFile(path.join(__dirname, "./app/index.html"));
         });
 
-        database.init(config, res => {
-            if (res.error) {
-                console.log(res.error.message);
-                return;
-            }
-            console.log(res.sucess);
+        database.init(config)
+        .then(message => {
+            console.log(message);
 
             if (!initialize) {
                 return;
@@ -67,5 +64,8 @@ bundler
                 console.log("Listening on port: " + listener.address().port);
                 initialize = false;
             });
+        })
+        .catch(error => {
+            console.error(error);
         });
     });

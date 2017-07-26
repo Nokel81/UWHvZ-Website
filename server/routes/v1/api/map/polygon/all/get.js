@@ -11,4 +11,4 @@ function Get(req, resolve, reject) {
     });
 }
 
-module.exports = get;
+module.exports = Get;

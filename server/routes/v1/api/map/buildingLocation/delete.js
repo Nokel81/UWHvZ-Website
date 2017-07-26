@@ -1,14 +1,14 @@
 const deleteById = rootRequire("server/data-access/functions/buildingLocations/deleteById");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {id} = req.query;
     deleteById(id)
     .then(locations => {
-        res.status(200).send(locations);
+        resolve(locations);
     })
     .catch(error => {
-        res.status(404).send("Polygons not found: " + createErrorMessage(error));
+        reject("Polygons not found: " + createErrorMessage(error));
     });
 }
 

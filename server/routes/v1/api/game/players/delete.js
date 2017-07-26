@@ -1,14 +1,14 @@
 const modifyPlayerListOfGame = rootRequire("server/data-access/functions/game/modifyPlayerListOfGame");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Delete(req, res, next) {
+function Delete(req, resolve, reject) {
     const {gameId, userId, team} = req.query;
     modifyPlayerListOfGame(gameId, userId, team, "$pull")
     .then(games => {
-        res.status(201).json(games);
+        resolve(games);
     })
     .catch(error => {
-        res.status(400).send("Player not removed: " + createErrorMessage(error));
+        reject("Player not removed: " + createErrorMessage(error));
     });
 }
 

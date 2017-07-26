@@ -1,14 +1,14 @@
 const sendMessage = rootRequire("server/data-access/functions/message/sendMessage");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const message = req.body;
     sendMessage(message)
     .then(message => {
-        res.status(200).json(message);
+        resolve(message);
     })
     .catch(error => {
-        res.status(404).send("Message not sent: " + createErrorMessage(error));
+        reject("Message not sent: " + createErrorMessage(error));
     });
 }
 

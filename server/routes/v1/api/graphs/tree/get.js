@@ -1,14 +1,14 @@
 const getAll = rootRequire("server/data-access/functions/graphs/getAllTrees");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {userId} = req.query;
     getAll(userId)
     .then(graphs => {
-        res.status(200).json(graphs);
+        resolve(graphs);
     })
     .catch(error => {
-        res.status(404).send("Trees not found: " + createErrorMessage(error));
+        reject("Trees not found: " + createErrorMessage(error));
     });
 }
 

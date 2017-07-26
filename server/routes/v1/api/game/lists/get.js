@@ -1,14 +1,14 @@
 const findGamePlayers = rootRequire("server/data-access/functions/game/findGamePlayers");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {gameId, userId} = req.query;
     findGamePlayers(gameId, userId)
     .then(playerInfo => {
-        res.status(200).json(playerInfo);
+        resolve(playerInfo);
     })
     .catch(error => {
-        res.status(404).send("Game's players not found: " + createErrorMessage(error));
+        reject("Game's players not found: " + createErrorMessage(error));
     });
 }
 

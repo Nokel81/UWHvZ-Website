@@ -1,14 +1,14 @@
 const deleteById = rootRequire("server/data-access/functions/gameSignups/deleteById");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Delete(req, res, next) {
+function Delete(req, resolve, reject) {
     const {id} = req.query;
     deleteById(id)
     .then(signups => {
-        res.status(200).json(signups);
+        resolve(signups);
     })
     .catch(error => {
-        res.status(400).send("Signup not deleted: " + createErrorMessage(error));
+        reject("Signup not deleted: " + createErrorMessage(error));
     });
 }
 

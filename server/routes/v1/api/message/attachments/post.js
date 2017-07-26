@@ -1,13 +1,13 @@
 const saveAttachment = rootRequire("server/data-access/functions/message/saveAttachment");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     saveAttachment(req)
     .then(fileData => {
-        res.status(200).json(fileData);
+        resolve(fileData);
     })
     .catch(error => {
-        res.status(404).send("Attachment not saved: " + createErrorMessage(error));
+        reject("Attachment not saved: " + createErrorMessage(error));
     });
 }
 

@@ -1,14 +1,14 @@
 const getUserBySession = rootRequire("server/data-access/functions/user/findBySession");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {session} = req.query;
     getUserBySession(session)
     .then(session => {
-        res.status(200).json(session);
+        resolve(session);
     })
     .catch(error => {
-        res.status(404).send("Session not found: " + createErrorMessage(error));
+        reject("Session not found: " + createErrorMessage(error));
     });
 }
 

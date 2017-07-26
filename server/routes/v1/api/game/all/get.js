@@ -1,13 +1,13 @@
 const findAll = rootRequire("server/data-access/functions/game/findAll");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     findAll()
     .then(games => {
-        res.status(200).json(games);
+        resolve(games);
     })
     .catch(error => {
-        res.status(404).send("Games not found: " + createErrorMessage(error));
+        reject("Games not found: " + createErrorMessage(error));
     });
 }
 

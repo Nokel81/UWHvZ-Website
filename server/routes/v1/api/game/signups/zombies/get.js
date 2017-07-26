@@ -1,14 +1,14 @@
 const findByGameAndZombies = rootRequire("server/data-access/functions/gameSignups/findByGameAndZombies");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {gameId} = req.query;
     findByGameAndZombies(gameId)
     .then(signups => {
-        res.status(200).json(signups);
+        resolve(signups);
     })
     .catch(error => {
-        res.status(400).send("Signups not found: " + createErrorMessage(error));
+        reject("Signups not found: " + createErrorMessage(error));
     });
 }
 

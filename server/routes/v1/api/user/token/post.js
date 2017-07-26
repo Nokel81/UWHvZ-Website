@@ -1,14 +1,14 @@
 const confirmUser = rootRequire("server/data-access/functions/user/confirmUser");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const {token} = rqe.body;
     confirmUser(token)
     .then(message => {
-        res.status(200).send(message);
+        resolve(message);
     })
     .catch(error => {
-        res.status(400).send("Email not confirmed: " + createErrorMessage(error));
+        reject("Email not confirmed: " + createErrorMessage(error));
     });
 }
 

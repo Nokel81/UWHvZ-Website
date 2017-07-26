@@ -4,6 +4,19 @@ const path = require("path");
 const ignoreFiles = ["middleware", "index.js"];
 const middleRequirements = rootRequire("server/routes/middleware/index.json");
 
+const successCodes = {
+    get: 200,
+    post: 201,
+    put: 202,
+    delete: 200
+};
+const failCodes = {
+    get: 404,
+    post: 400,
+    put: 400,
+    delete: 404
+};
+
 function defineRoutesTop(app, routePath) {
     fs.readdirSync(__dirname)
         .filter(file => ignoreFiles.indexOf(file) < 0)
@@ -30,12 +43,20 @@ function defineRoutes(app, dir, routePath) {
     //         route.all(middleware());
     //     });
     files.forEach(file => {
-        const method = path.basename(file, path.extname(file)).toLowerCase().split("_");
-        const allowed = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"];
-        if (allowed.indexOf(method[0]) < 0) {
+        const method = path.basename(file, path.extname(file)).toLowerCase();
+        const allowed = ["get", "post", "put", "delete"];
+        if (allowed.indexOf(method) < 0) {
             return console.error("Invalid method name:" + method + "; in '" + dir + "'");
         }
-        route[method](require(path.join(dir, file)));
+        route[method](function (req, res) {
+            let resolve = function (item) {
+                res.status(successCodes[method]).json(item);
+            };
+            let reject = function (message) {
+                res.status(failCodes[method]).send(message);
+            };
+            require(path.join(dir, file))(req, resolve, reject);
+        });
     });
 }
 

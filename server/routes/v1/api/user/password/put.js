@@ -1,14 +1,14 @@
 const changePassword = rootRequire("server/data-access/functions/user/changePassword");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Put(req, res, next) {
+function Put(req, resolve, reject) {
     const passwordChange = req.body;
     changePassword(passwordChange)
     .then(message => {
-        res.status(200).send(message);
+        resolve(message);
     })
     .catch(error => {
-        res.status(404).send("Password not changed: " + createErrorMessage(error));
+        reject("Password not changed: " + createErrorMessage(error));
     });
 }
 

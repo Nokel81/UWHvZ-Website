@@ -7,7 +7,7 @@ function HasSession(req, res, next) {
         next();
     })
     .catch(error => {
-        return res.status(401).send("Session Expired");
+        return reject("Session Expired");
     });
 }
 

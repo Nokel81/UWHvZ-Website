@@ -1,14 +1,14 @@
 const create = rootRequire("server/data-access/functions/gameSignups/create");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const signup = req.body;
     create(signup)
     .then(signups => {
-        res.status(200).json(signups);
+        resolve(signups);
     })
     .catch(error => {
-        res.status(400).send("Signup not created: " + createErrorMessage(error));
+        reject("Signup not created: " + createErrorMessage(error));
     });
 }
 

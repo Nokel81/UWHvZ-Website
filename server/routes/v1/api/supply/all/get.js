@@ -1,14 +1,14 @@
 const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGame");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {gameId} = req.query;
     findByGame(gameId)
     .then(codes => {
-        res.status(201).json(codes);
+        resolve(codes);
     })
     .catch(error => {
-        res.status(404).send("Supply codes not found: " + createErrorMessage(error));
+        reject("Supply codes not found: " + createErrorMessage(error));
     });
 }
 

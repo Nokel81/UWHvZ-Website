@@ -1,14 +1,14 @@
 const getUserRecipients = rootRequire("server/data-access/functions/message/getUserRecipients");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {userId} = req.query;
     getUserRecipients(userId)
     .then(recipients => {
-        res.status(200).json(recipients);
+        resolve(recipients);
     })
     .catch(error => {
-        res.status(404).send("Recipients not found: " + createErrorMessage(error));
+        reject("Recipients not found: " + createErrorMessage(error));
     });
 }
 

@@ -1,14 +1,14 @@
 const findById = rootRequire("server/data-access/functions/game/findById");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {id} = req.query;
     findById(id)
     .then(game => {
-        res.status(200).json(game);
+        resolve(game);
     })
     .catch(error => {
-        res.status(400).send("Game not found: " + createErrorMessage(error));
+        reject("Game not found: " + createErrorMessage(error));
     });
 }
 

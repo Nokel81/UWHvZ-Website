@@ -1,13 +1,13 @@
 const getAll = rootRequire("server/data-access/functions/polygons/getAll");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function get(req, res, next) {
+function Get(req, resolve, reject) {
     getAll()
     .then(polygons => {
-        res.status(200).json(polygons);
+        resolve(polygons);
     })
     .catch(error => {
-        res.status(404).send("Polygons not found: " + createErrorMessage(error));
+        reject("Polygons not found: " + createErrorMessage(error));
     });
 }
 

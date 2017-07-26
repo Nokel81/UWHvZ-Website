@@ -1,14 +1,14 @@
 const create = rootRequire("server/data-access/functions/game/create");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const game = req.body;
     create(game)
     .then(game => {
-        res.status(201).json(game);
+        resolve(game);
     })
     .catch(error => {
-        res.status(400).send("Game not created: " + createErrorMessage(error));
+        reject("Game not created: " + createErrorMessage(error));
     });
 }
 

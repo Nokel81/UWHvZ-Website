@@ -1,14 +1,14 @@
 const updateUserSettings = rootRequire("server/data-access/functions/user/updateUserSettings");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const settings = req.body;
     updateUserSettings(settings)
     .then(settings => {
-        res.status(200).json(settings);
+        resolve(settings);
     })
     .catch(error => {
-        res.status(404).send("Settings not updated: " + createErrorMessage(error));
+        reject("Settings not updated: " + createErrorMessage(error));
     });
 }
 

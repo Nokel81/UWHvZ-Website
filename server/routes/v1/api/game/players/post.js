@@ -1,14 +1,14 @@
 const modifyPlayerListOfGame = rootRequire("server/data-access/functions/game/modifyPlayerListOfGame");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const {gameId, playerCode, team} = req.body;
     modifyPlayerListOfGame(gameId, playerCode, team, "$push")
     .then(games => {
-        res.status(201).send(games);
+        resolve(games);
     })
     .catch(error => {
-        res.status(400).send("Game not created: " + createErrorMessage(error));
+        reject("Game not created: " + createErrorMessage(error));
     });
 }
 

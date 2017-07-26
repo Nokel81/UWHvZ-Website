@@ -1,14 +1,14 @@
 const findByGame = rootRequire("server/data-access/functions/report/findByGame");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {gameId} = req.query;
     findByGame(gameId, false)
     .then(reports => {
-        res.status(200).send(reports);
+        resolve(reports);
     })
     .catch(error => {
-        res.status(400).send("Game reports not found: " + createErrorMessage(error));
+        reject("Game reports not found: " + createErrorMessage(error));
     });
 }
 

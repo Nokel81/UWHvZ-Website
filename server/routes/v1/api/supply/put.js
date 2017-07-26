@@ -1,14 +1,14 @@
 const useSupplyCode = rootRequire("server/data-access/functions/supplyCode/useSupplyCode");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const code = req.body;
     useSupplyCode(code)
     .then(message => {
-        res.status(201).json(message);
+        resolve(message);
     })
     .catch(error => {
-        res.status(404).send("Supply codes not used: " + createErrorMessage(error));
+        reject("Supply codes not used: " + createErrorMessage(error));
     });
 }
 

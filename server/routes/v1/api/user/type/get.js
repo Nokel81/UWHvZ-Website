@@ -1,14 +1,14 @@
 const getUserType = rootRequire("server/data-access/functions/user/findUserType");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
+function Get(req, resolve, reject) {
     const {userId} = req.query;
     getUserType(userId)
     .then(type => {
-        res.status(200).json(type);
+        resolve(type);
     })
     .catch(error => {
-        res.status(404).send("User not found: " + createErrorMessage(error));
+        reject("User not found: " + createErrorMessage(error));
     });
 }
 

@@ -17,8 +17,8 @@ function FindById(gameId) {
         .then(users => {
             return Promise.map(clone(users), (user, index) => {
                 return new Promise(function(resolve, reject) {
-                    let signup = signups[index];
-                    if (signup.userEmail !== user.email) {
+                    let signUp = signups[index];
+                    if (signUp.userEmail !== user.email) {
                         return reject("User not found");
                     }
                     resolve({

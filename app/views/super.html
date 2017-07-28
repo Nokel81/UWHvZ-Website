@@ -1,256 +1,166 @@
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Games" role="tab">Games</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Markers" role="tab">Markers</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Polygons" role="tab">Polygons</a></li>
-</ul>
-
-<!-- Tab panes -->
-<div class="tab-content">
-    <div class="tab-pane active" id="Games" role="tabpanel">
-        <div id="gamesAccordion" role="tablist" aria-multiselectable="true">
-            <div class="card" ng-repeat="game in games" ng-init="$rootIndex = $index">
-                <div class="card-header" role="tab" id="heading{{$index}}">
-                    <h5 class="mb-0"><a data-toggle="collapse" data-parent="#gamesAccordion" href="#collapse{{$index}}" aria-expanded="false" aria-controls="collapse{{$index}}" ng-bind="game.name"></a></h5>
+<uib-tabset>
+    <uib-tab index="0" heading="Games">
+        <div class="accordian" ng-repeat="game in games" ng-init="$rootIndex = $index">
+            <input type="checkbox" id="tab_games{{$index}}">
+            <label for="tab_games{{$index}}"><span ng-bind="game.name"></span> - <span ng-bind="getYear(game.startDate)"></span></label>
+            <div class="accordian-content">
+                <div class="games-grid">
+                    <label class="form-label">Game Name:</label>
+                    <input class="form-control" type="text" ng-model="game.name">
+                    <label class="form-label">Game Description:</label>
+                    <input class="form-control" type="text" ng-model="game.description">
+                    <label class="form-label">Game Start Date:</label>
+                    <input class="form-control" type="datetime-local" ng-model="game.startDate">
+                    <label class="form-label">Game End Date:</label>
+                    <input class="form-control" type="datetime-local" ng-model="game.endDate">
+                    <label class="form-label">Game Officer Badge Value:</label>
+                    <input class="form-control" type="number" ng-model="game.officerValue">
+                    <label class="form-label">Game Major Building Pass Value:</label>
+                    <input class="form-control" type="number" ng-model="game.majorPassValue">
+                    <label class="form-label">Game Minor Building Pass Value:</label>
+                    <input class="form-control" type="number" ng-model="game.minorPassValue">
+                    <label class="form-label">Game Rail Pass Value:</label>
+                    <input class="form-control" type="number" ng-model="game.railPassValue">
+                    <label class="form-label">Game Human Supplied Level:</label>
+                    <input class="form-control" type="number" ng-model="game.suppliedValue">
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_locations{{$index}}">
+                        <label for="tab_locations{{$index}}">Game Sign Up Locations</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="location in game.signUpLocations track by $index">
+                                <label class="form-label">Location:</label>
+                                <input class="form-control" type="text" ng-model="game.signUpLocations[$index]">
+                                <button class="btn btn-danger" type="button" ng-click="removeLocation($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addLocation($rootIndex)"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_dates{{$index}}">
+                        <label for="tab_dates{{$index}}">Game Sign Up Dates</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="date in game.signUpDates track by $index">
+                                <label class="form-label">Date:</label>
+                                <input class="form-control" type="date" ng-model="game.signUpDates[$index]">
+                                <button class="btn btn-danger" type="button" ng-click="removeDate($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addDate($rootIndex)"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_moderators{{$index}}">
+                        <label for="tab_moderators{{$index}}">Game Moderators</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="moderator in game.moderatorObjs">
+                                <label class="form-label">Moderator Name:</label>
+                                <input class="form-control" type="text" ng-model="moderator.playerName" disabled>
+                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'moderator')"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'moderator')"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_humans{{$index}}">
+                        <label for="tab_humans{{$index}}">Game Humans</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="human in game.humanObjs">
+                                <label class="form-label">Human Name:</label>
+                                <input class="form-control" type="text" ng-model="human.playerName" disabled>
+                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'human')"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'human')"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_zombies{{$index}}">
+                        <label for="tab_zombies{{$index}}">Game Zombies</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="zombie in game.zombieObjs">
+                                <label class="form-label">Zombie Name:</label>
+                                <input class="form-control" type="text" ng-model="zombie.playerName" disabled>
+                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'zombie')"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'zombie')"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordian">
+                        <input type="checkbox" id="tab_spectators{{$index}}">
+                        <label for="tab_spectators{{$index}}">Game Spectators</label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="spectator in game.spectatorObjs">
+                                <label class="form-label">Spectator Name:</label>
+                                <input class="form-control" type="text" ng-model="spectator.playerName" disabled>
+                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'spectator')"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'spectator')"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="collapse{{$index}}" class="collapse show" role="tabpanel" aria-labelledby="heading{{$index}}">
-                    <div class="card-block">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="name{{$index}}">Game Name:</span>
-                            <input type="text" class="form-control" ng-model="game.name" title="Game Name" aria-describedby="name{{$index}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="description{{$index}}">Game Description:</span>
-                            <input type="text" class="form-control" ng-model="game.description" title="Game Description" aria-describedby="description{{$index}}">
-                        </div>
-                        <input type="datetime-local" class="form-control" ng-model="game.startDate" title="Game Start Date" aria-describedby="startDate{{$index}}">
-                        <input type="datetime-local" class="form-control" ng-model="game.endDate" title="Game End Date" aria-describedby="endDate{{$index}}">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="officer{{$index}}">Game Officer Badge Value:</span>
-                            <input type="number" class="form-control" ng-model="game.officerValue" title="Game Officer Badge Value" aria-describedby="officer{{$index}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="major{{$index}}">Game Major Building Pass Value:</span>
-                            <input type="number" class="form-control" ng-model="game.majorPassValue" title="Game Major Building Pass Value" aria-describedby="major{{$index}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="minor{{$index}}">Game Minor Building Pass Value:</span>
-                            <input type="number" class="form-control" ng-model="game.minorPassValue" title="Game Minor Building Pass  Value" aria-describedby="minor{{$index}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="rail{{$index}}">Game Rail Pass Value:</span>
-                            <input type="number" class="form-control" ng-model="game.railPassValue" title="Game Rail Pass Value" aria-describedby="rail{{$index}}">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="supplied{{$index}}">Game Human Supplied Level:</span>
-                            <input type="number" class="form-control" ng-model="game.suppliedValue" title="Game Human Supplied Level" aria-describedby="supplied{{$index}}">
-                        </div>
-                        <div id="accordion_locations{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingLocation{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_locations{{$index}}" href="#collapseLocations{{$index}}" aria-expanded="true" aria-controls="collapseLocations{{$index}}">Game Sign Up Locations</a></h6>
-                                </div>
-
-                                <div id="collapseLocations{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingLocation{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="location in game.signUpLocations track by $index">
-                                            <input type="text" class="form-control" ng-model="game.signUpLocations[$index]" title="Game Singup Location">
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removeLocation($rootIndex, $index)"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addLocation($rootIndex)"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion_dates{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingDate{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_dates{{$index}}" href="#collapseDates{{$index}}" aria-expanded="true" aria-controls="collapseDates{{$index}}">Game Sign Up Dates</a></h6>
-                                </div>
-
-                                <div id="collapseDates{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingDate{{$index}}">
-                                    <div class="card-block">
-                                        <div ng-repeat="date in game.signUpDates track by $index">
-                                            <button class="right btn btn-danger formish-control" type="button" ng-click="removeDate($rootIndex, $index)"><i class="fa fa-times"></i></button>
-                                            <input type="date" class="form-control" ng-model="game.signUpDates[$index]" title="Game Singup Date">
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addDate($rootIndex)"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion_moderators{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingModerators{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_moderators{{$index}}" href="#collapseModerators{{$index}}" aria-expanded="true" aria-controls="collapseModerators{{$index}}">Game Moderators</a></h6>
-                                </div>
-
-                                <div id="collapseModerators{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingModerators{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="moderator in game.moderatorObjs">
-                                            <input type="text" class="form-control" ng-model="moderator.playerName" title="Game Moderator Name" disabled>
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'moderator')"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addPlayer($rootIndex, 'moderator')"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion_humans{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingHumans{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_humans{{$index}}" href="#collapseHumans{{$index}}" aria-expanded="true" aria-controls="collapseHumans{{$index}}">Game Humans</a></h6>
-                                </div>
-
-                                <div id="collapseHumans{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingHumans{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="human in game.humanObjs">
-                                            <input type="text" class="form-control" ng-model="human.playerName" title="Game Human Name" disabled>
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'human')"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addPlayer($rootIndex, 'human')"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion_zombies{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingZombies{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_zombies{{$index}}" href="#collapseZombies{{$index}}" aria-expanded="true" aria-controls="collapseZombies{{$index}}">Game Zombies</a></h6>
-                                </div>
-
-                                <div id="collapseZombies{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingZombies{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="zombie in game.zombieObjs">
-                                            <input type="text" class="form-control" ng-model="zombie.playerName" title="Game Zombie Name" disabled>
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'zombie')"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addPlayer($rootIndex, 'zombie')"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="accordion_spectators{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingSpectators{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_spectators{{$index}}" href="#collapseSpectators{{$index}}" aria-expanded="true" aria-controls="collapseSpectators{{$index}}">Game Spectators</a></h6>
-                                </div>
-
-                                <div id="collapseSpectators{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingSpectators{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="zombie in game.spectatorObjs">
-                                            <input type="text" class="form-control" ng-model="zombie.playerName" title="Game Zombie Name" disabled>
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removePlayer($rootIndex, $index, 'spectator')"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                        <button class="right btn btn-success formish-control control" type="button" ng-click="addPlayer($rootIndex, 'spectator')"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="right formish-control control">
-                            <button class="btn btn-success" type="button" ng-click="saveGame($index)"><i class="fa fa-save"></i></button>
-                            <button class="btn btn-danger" type="button" ng-click="removeGame($index)"><i class="fa fa-times"></i></button>
-                        </div>
+                <div class="right">
+                    <button class="btn btn-success" type="button" ng-click="saveGame($index)"><i class="fa fa-save"></i></button>
+                    <button class="btn btn-danger" type="button" ng-click="removeGame($index)"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <button class="right btn btn-success" type="button" ng-click="addGame()"><i class="fa fa-plus"></i></button>
+        </div>
+    </uib-tab>
+    <uib-tab index="1" heading="Markers">
+        <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
+        <div class="markers-grid" ng-repeat="marker in markers">
+            <label class="form-label c1">Acryonym:</label>
+            <input class="form-control c2" type="text" ng-model="marker.acronym" ng-disabled="editingMarker != $index">
+            <label class="form-label c4">Latitude:</label>
+            <input class="form-control c5" type="number" ng-model="marker.lat" ng-disabled="editingMarker != $index">
+            <label class="form-label c7">Longitude:</label>
+            <input class="form-control c8" type="number" ng-model="marker.lng" ng-disabled="editingMarker != $index">
+            <label class="form-label c10">Full Name:</label>
+            <input class="form-control c11" type="text" ng-model="marker.title" ng-disabled="editingMarker != $index">
+            <div class="icon-form c13">
+                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="2" heading="Polygons">
+        <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
+        <div class="polygon-grid" ng-repeat="polygon in polygons" ng-init="$rootIndex = $index">
+            <label class="form-label c1">Name and Classification:</label>
+            <input class="form-control c2" type="text" ng-model="polygon.name" ng-disabled="editingPolygon != $index">
+            <label class="form-label c4">Colour Classification:</label>
+            <select class="form-control c5" ng-model="polygon.colour" ng-disabled="editingPolygon != $index">
+                <option value="#000000">Game Area</option>
+                <option value="#ff0000">Major Building</option>
+                <option value="#0000ff">Minor Building</option>
+                <option value="#00ff00">Safe Building</option>
+                <option value="#8b4513">Bridge or Tunnel</option>
+            </select>
+            <label class="form-label c7">Points:</label>
+            <div class="accordian c8">
+                <input type="checkbox" id="tab_verticies{{$index}}" ng-disabled="editingPolygon != $index">
+                <label for="tab_verticies{{$index}}">Polygon Verticies</label>
+                <div class="accordian-content">
+                    <div class="verticies-grid" ng-repeat="point in polygon.points">
+                        <label class="form-label c1">Latitude:</label>
+                        <input class="form-control c2" type="number" ng-model="point.lat">
+                        <label class="form-label c4">Longitude:</label>
+                        <input class="form-control c5" type="number" ng-model="point.lng">
+                        <button class="btn btn-danger form-block" type="button" ng-click="removePoint($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-success" type="button" ng-click="addPointAfter($rootIndex, $index)" title="Add point after"><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
             </div>
-            <button class="right btn btn-success formish-control control" type="button" ng-click="addGame()"><i class="fa fa-plus"></i></button>
-        </div>
-    </div>
-    <div class="tab-pane" id="Markers" role="tabpanel">
-        <div class="container-fluid">
-            <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
-            <div class="row" ng-repeat="marker in markers">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" ng-model="marker.acronym" title="Acronym" placeholder="Acronym" ng-disabled="editingMarker != $index">
-                </div>
-                <div class="col-md-2">
-                    <input type="number" class="form-control" ng-model="marker.lat" title="Latitude" placeholder="Latitude" ng-disabled="editingMarker != $index">
-                </div>
-                <div class="col-md-2">
-                    <input type="number" class="form-control" ng-model="marker.lng" title="Longitude" placeholder="Longitude" ng-disabled="editingMarker != $index">
-                </div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" ng-model="marker.title" title="Title" placeholder="Title" ng-disabled="editingMarker != $index">
-                </div>
-                <div class="col-md-3">
-                    <div class="icon-form">
-                        <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                        <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
-                        <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
-                        <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
+            <div class="icon-form c10">
+                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
             </div>
         </div>
-    </div>
-    <div class="tab-pane" id="Polygons" role="tabpanel">
-        <div class="container-fluid">
-            <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
-            <div ng-repeat="polygon in polygons" ng-init="$rootIndex = $index">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="polygon.name" title="Name and Classification" placeholder="Name and Classification" ng-disabled="editingPolygon != $index">
-                    </div>
-                    <div class="col-md-3">
-                        <select class="formish-control custom-select" ng-model="polygon.colour" ng-disabled="editingPolygon != $index">
-                          <option value="#000000">Game Area</option>
-                          <option value="#ff0000">Major Building</option>
-                          <option value="#0000ff">Minor Building</option>
-                          <option value="#00ff00">Safe Building</option>
-                          <option value="#8b4513">Bridge or Tunnel</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <div id="accordion_points{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                            <div class="card">
-                                <div class="card-header" role="tab" id="headingPoints{{$index}}">
-                                    <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_points{{$index}}" ng-href="{{editingPolygon != $index ? '' : '#collapsePoints' + $index}}" aria-expanded="true" aria-controls="collapsePoints{{$index}}">Polygon Vertecies</a></h6>
-                                </div>
-
-                                <div id="collapsePoints{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingPoints{{$index}}">
-                                    <div class="card-block">
-                                        <div class="input-group" ng-repeat="point in polygon.points">
-                                            <input type="number" class="form-control" ng-model="point.lat" title="Latitude" placeholder="Latitude">
-                                            <input type="number" class="form-control" ng-model="point.lng" title="Longitude" placeholder="Longitude">
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-success" type="button" ng-click="addPointAfter($rootIndex, $index)" title="Add point after"><i class="fa fa-plus"></i></button>
-                                            </span>
-                                            <span class="input-group-btn formish-control">
-                                                <button class="btn btn-danger" type="button" ng-click="removePoint($rootIndex, $index)"><i class="fa fa-times"></i></button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="icon-form">
-                            <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                            <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
-                            <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
-                            <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-        </div>
-    </div>
-</div>
+    </uib-tab>
+</uib-tabset>

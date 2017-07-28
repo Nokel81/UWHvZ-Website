@@ -113,7 +113,7 @@ function FindUserScore(gameId, playerId, forTeamScore) {
         })
         .catch(error => {
             reject(error);
-        })
+        });
     });
 }
 

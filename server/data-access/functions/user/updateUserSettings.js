@@ -4,7 +4,7 @@ const Settings = rootRequire("server/schemas/settings");
 
 function UpdateUserSettings(settings) {
     return new Promise(function(resolve, reject) {
-        Settings.findOneAndUpdate({_id: settings._id, userId: settings.userId}, {$set: settings}, {mew; true})
+        Settings.findOneAndUpdate({_id: settings._id, userId: settings.userId}, {$set: settings}, {new: true})
         .exec()
         .then(settings => {
             resolve(settings);

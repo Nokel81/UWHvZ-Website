@@ -22,6 +22,9 @@ function Create(user) {
             return user.validate();
         })
         .then(noerror => {
+            return new Promise(function(resolve, reject) {
+                resolve()
+            });
             return mailService.sendConfirmationEmail(user);
         })
         .then(noerror => {

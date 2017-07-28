@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 
 const SupplyCode = rootRequire("server/schemas/supplyCode");
 const User = rootRequire("server/schemas/user");
+const clone = rootRequire("server/helpers/clone");
 
 function FindByUser(gameId) {
     return new Promise(function(resolve, reject) {

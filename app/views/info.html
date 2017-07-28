@@ -1,9 +1,9 @@
-<div class="centre" ng-show="game">
+<div class="centre" ng-hide="game">
     <br>
     <h1>Well that's all folks!</h1>
     <p>No next game has been made please come back later</p>
 </div>
-<div ng-hide="game">
+<div ng-show="game">
     <div class="centre">
         <br>
         <h1 style="font-size: 40px" ng-bind="game.name"></h1>

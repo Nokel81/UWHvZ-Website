@@ -38,6 +38,13 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     });
 
+    $scope.getYear = function (date) {
+        if (!date instanceof Date) {
+            return new Date().getFullYear();
+        }
+        return date.getFullYear();
+    };
+
     $scope.removeLocation = function (game, location) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).splice(location, 1);
     };

@@ -39,12 +39,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.time = new Date();
     $scope.time.setMilliseconds(0);
     $scope.time.setSeconds(0);
-    $scope.userInfo = {
-        status: "Please wait, loading..."
-    };
+    $scope.userInfo = null;
+    $scope.hasTimeBeenChanged = false;
     var currentlyTagging = false;
     var currentlySending = false;
-    $scope.hasTimeBeenChanged = false;
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -87,6 +85,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 return $scope.userInfoError = err;
             }
             if (info) {
+                $scope.userInfo = info;
                 $scope.userInfo.teamScore = info.teamScore;
                 $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
                 $scope.userInfo.playerStunScore = info.userScore.stunScore;

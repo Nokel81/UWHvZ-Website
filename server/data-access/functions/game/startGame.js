@@ -5,6 +5,7 @@ const User = rootRequire("server/schemas/user");
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
 const sendStartingEmail = rootRequire("server/data-access/functions/message/sendStartingEmail");
 const findByGame = rootRequire("server/data-access/functions/gameSignups/findByGame");
+const clone = rootRequire("server/helpers/clone");
 
 function StartGame(zombieEmails, gameId, HTMLlore, fileData) {
     return new Promise(function(resolve, reject) {

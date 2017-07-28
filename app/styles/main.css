@@ -1,7 +1,19 @@
+:root {
+    --hvz-green: #37462e;
+    --hvz-green-light: #b4c3ab;
+    --hvz-brown-dark: #291d26;
+    --hvz-brown: #60543c;
+    --hvz-brown-light: #ddd1b9;
+    --hvz-yellow: #fed85c;
+    --hvz-yellow-light: #ffffd9;
+    --hvz-yellow-disabled: #cca67d;
+    --background-color: #d9e2d6;
+}
+
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: "Titillium Web", sans-serif;
     color: #333;
-    background-color: #eee;
+    background-color: var(--background-color);
 }
 
 hr {
@@ -98,6 +110,10 @@ hr {
     }
 }
 
+.card-block {
+    background-color: #f8f8f8;
+}
+
 .colourpicker {
     padding: 0px;
     width: 64px;
@@ -188,11 +204,6 @@ input[type="color"]::-webkit-color-swatch {
 .icon-size {
     max-width: 40px;
     max-height: 40px;
-}
-
-.form-control {
-    margin-bottom: 5px;
-    margin-top: 5px;
 }
 
 .right {

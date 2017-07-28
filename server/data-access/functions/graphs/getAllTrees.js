@@ -4,11 +4,13 @@ const findAll = rootRequire('server/data-access/functions/game/findAll');
 const averageColour = rootRequire('server/helpers/averageColour');
 const Report = rootRequire('server/schemas/report');
 const Settings = rootRequire('server/schemas/settings');
+const clone = rootRequire("server/helpers/clone");
 
 function GetAllTrees(userId) {
     return new Promise(function(resolve, reject) {
         findAll()
         .then(games => {
+            let lastGame = games.slice(-1).pop();
             if ((lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined") && new Date(lastGame.endDate) >= new Date()) {
                 games.pop();
             }
@@ -31,8 +33,8 @@ function GetAllTrees(userId) {
                     Settings.find({userId: {$in: game.zombies}})
                     .exec()
                     .then(settings => {
-                        let treeNodeColour = settings.find(setting => setting.userId.toString() === zombie._id.toString()).treeNodeColour;
                         game.zombieObjs.forEach(zombie => {
+                            let treeNodeColour = settings.find(setting => setting.userId.toString() === zombie._id.toString()).treeNodeColour;
                             nodes.push({
                                 id: zombie._id.toString(),
                                 label: zombie.playerName,

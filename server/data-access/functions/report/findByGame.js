@@ -13,6 +13,7 @@ function daysBetween(d1, d2) {
 
 function FindUnratified(gameId, needToBeRatified) {
     return new Promise(function(resolve, reject) {
+        let gameDays = [];
         let game = null;
         findById(gameId)
         .then(gameObj => {
@@ -21,13 +22,12 @@ function FindUnratified(gameId, needToBeRatified) {
             return QUERY.sort("time").exec();
         })
         .then(reports => {
-            let gameDays = [];
             let firstDay = new Date(game.startDate);
             let days = daysBetween(new Date(game.startDate), new Date(game.endDate));
             for (let i = 0; i < days; i++) {
                 gameDays.push({
                     startTime: firstDay.toISOString(),
-                    title: getDateString(firstDay)
+                    title: getDateString(firstDay, true)
                 });
                 firstDay.setDate(firstDay.getDate() + 1);
             }

@@ -1,0 +1,38 @@
+.nav-tabs {
+    border-bottom: 1px solid var(--hvz-brown);
+    margin-top: 5px;
+}
+
+.uib-tab.nav-item {
+    border: 1px solid var(--hvz-brown);
+    border-radius: 5px 5px 0px 0px;
+    font-weight: bold;
+}
+
+.uib-tab.nav-item[class$="active"]:hover>a {
+    color: white;
+}
+
+.uib-tab.nav-item:not([class$="active"]):hover>a {
+    background-color: var(--hvz-green-light);
+}
+
+.uib-tab.nav-item>a {
+    color: var(--hvz-brown-dark);
+}
+
+.uib-tab.nav-item[class$="active"] {
+    background-color: var(--hvz-green);
+}
+
+.uib-tab.nav-item[class$="active"]>a {
+    color: var(--hvz-green-light);
+}
+
+.uib-tab.nav-item+.uib-tab.nav-item {
+    border-left-width: 0px;
+}
+
+.nav-link {
+    border: 0px!important;
+}

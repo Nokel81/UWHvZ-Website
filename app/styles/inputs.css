@@ -1,0 +1,89 @@
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],
+input[type=date],
+input[type=datetime-local],
+select {
+    background-color: var(--hvz-yellow-light);
+    padding: 6px;
+}
+
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+select:focus {
+    background-color: var(--hvz-yellow);
+}
+
+input[type=text]:disabled,
+input[type=email]:disabled,
+input[type=password]:disabled,
+input[type=number]:disabled,
+input[type=date]:disabled,
+input[type=datetime-local]:disabled,
+select:disabled {
+    background-color: var(--hvz-yellow-disabled);
+}
+
+.btn {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    max-height: 38px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: black;
+    border: 1px solid var(--hvz-brown);
+    border-radius: 5px;
+    margin: 5px 0px 0px 0px;
+    max-height: 38px;
+}
+
+.form-label {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.25;
+    padding: 6px;
+    color: var(--hvz-brown);
+    border: 1px solid var(--hvz-brown);
+    border-radius: 5px 0px 0px 5px;
+    border-right-width: 0px;
+    margin: 5px 0px 0px 0px;
+    font-weight: bold;
+    background-color: var(--hvz-brown-light);
+    max-height: 38px;
+}
+
+.form-label+.form-control {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.form-label+.accordian > label {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.form-control+.btn {
+    border-radius: 0px 5px 5px 0px;
+    margin: 5px 0px 0px 0px;
+}
+
+label:disabled {
+    cursor: not-allowed;
+}
+
+.form-block {
+    border-radius: 5px!important;
+}
+
+.btn {
+    margin: 5px 0px 0px 0px;
+}

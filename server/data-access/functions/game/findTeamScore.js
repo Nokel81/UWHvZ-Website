@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 
 const findById = rootRequire("server/data-access/functions/game/findById");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");
+const clone = rootRequire("server/helpers/clone");
 
 function FindTeamScore(gameId, team) {
     return new Promise(function(resolve, reject) {

@@ -12,10 +12,10 @@ function Login(account) {
         findByEmail(account.username)
         .then(userObj => {
             user = userObj;
-            if (!user.confirmationToken) {
+            if (user.confirmationToken) {
                 return reject("User email has not yet been confirmed");
             }
-            return hashPassword(user.password, user.nonce);
+            return hashPassword(account.password, user.nonce);
         })
         .then(password => {
             if (user.password !== password) {
@@ -29,7 +29,6 @@ function Login(account) {
             resolve({session, user});
         })
         .catch(error => {
-            console.error(error);
             reject("Email or password incorrect");
         });
     });

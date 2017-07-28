@@ -5,6 +5,7 @@ const resolve = require("html_resolve");
 const fs = require('fs');
 
 const getDateString = rootRequire("server/helpers/getDateString");
+const clone = rootRequire("server/helpers/clone");
 const relativeResolve = resolve.relative(__dirname);
 
 const sendMail = new nodemailer.createTransport({

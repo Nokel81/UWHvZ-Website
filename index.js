@@ -16,6 +16,10 @@ const routes = rootRequire("server/routes");
 const database = rootRequire("server/data-access/database");
 const config = rootRequire("server/config.json");
 
+if (process.argv[2] === "dev") {
+    config.dbIP = "mongodb://localhost:27017/test";
+}
+
 let initialize = true;
 
 // Setting up the dist folder

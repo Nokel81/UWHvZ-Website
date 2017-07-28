@@ -6,7 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "xo"
+    "test": "xo",
+    "dev": "node index.js dev",
+    "prod": "node index.js prod"
   },
   "xo": {
     "space": 4,

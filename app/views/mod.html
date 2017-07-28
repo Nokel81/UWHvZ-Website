@@ -1,20 +1,19 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist" id="modtabs">
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#GameSignups" role="tab" id="NL1">Game Signups</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab" id="NL2">Start Game</a></li>
-    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#SupplyCodes" role="tab" id="NL3">Supply Codes</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab" id="NL4">Player Codes</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#PlayerReports" role="tab" id="NL5">Player Reports</a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#OneTime" role="tab" id="NL6">One Time Events</a></li>
-    <li class="nav-item dropdown">
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#GameSignups" role="tab">Game Signups</a></li>
+    <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab">Start Game</a></li>
+    <li class="nav-item hidden-xs-down"><a class="nav-link active" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
+    <li class="nav-item hidden-sm-down"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab">Player Codes</a></li>
+    <li class="nav-item hidden-md-down"><a class="nav-link" data-toggle="tab" href="#PlayerReports" role="tab">Player Reports</a></li>
+    <li class="nav-item hidden-md-down"><a class="nav-link" data-toggle="tab" href="#OneTime" role="tab">One Time Events</a></li>
+    <li class="nav-item dropdown hidden-lg-up">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#GameSignups" data-toggle="tab" role="tab" id="DD1">Game Signups</a>
-            <a class="dropdown-item" href="#StartGame" data-toggle="tab" role="tab" id="DD2">Start Game</a>
-            <a class="dropdown-item" href="#SupplyCodes" data-toggle="tab" role="tab" id="DD3">Supply Codes</a>
-            <a class="dropdown-item" href="#PlayerCodes" data-toggle="tab" role="tab" id="DD4">Player Codes</a>
-            <a class="dropdown-item" href="#PlayerReports" data-toggle="tab" role="tab" id="DD5">Player Reports</a>
-            <a class="dropdown-item" href="#OneTime" data-toggle="tab" role="tab" id="DD6">One Time Events</a>
+            <a class="dropdown-item hidden-sm-up" href="#StartGame" data-toggle="tab" role="tab">Start Game</a>
+            <a class="dropdown-item hidden-sm-up" href="#SupplyCodes" data-toggle="tab" role="tab">Supply Codes</a>
+            <a class="dropdown-item hidden-md-up" href="#PlayerCodes" data-toggle="tab" role="tab">Player Codes</a>
+            <a class="dropdown-item hidden-lg-up" href="#PlayerReports" data-toggle="tab" role="tab">Player Reports</a>
+            <a class="dropdown-item hidden-lg-up" href="#OneTime" data-toggle="tab" role="tab">One Time Events</a>
         </div>
     </li>
 </ul>
@@ -24,11 +23,11 @@
     <div class="tab-pane" id="GameSignups" role="tabpanel">
 
         <div ng-show="gameStarted">
-            <h4 class="centre">No Game to sign up for or game has already started</h4>
+            <h4 class="text-center">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
             <br>
-            <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
+            <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
             <br>
             <b>Players signed up: <span ng-bind="players.length"></span></b>
             <div class="container-fluid">
@@ -60,19 +59,19 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <div class="formish-control right">
-                                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
-                                <button type="button" class="icon-only font-32" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
+                            <div class="formish-control float-right">
+                                <button type="button" class="icon-only h2 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                                <button type="button" class="icon-only h2 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
+                                <button type="button" class="icon-only h2 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
+                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-info right" ng-click="addPlayer()">Register New Player</button>
+            <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
             <br>
             <br id="bottom">
         </div>
@@ -80,7 +79,7 @@
     <div class="tab-pane" id="StartGame" role="tabpanel">
         <div ng-hide="gameStarted">
             <br>
-            <div class="right">
+            <div class="float-right">
                 <button type="button" class="btn btn-success" ng-click="startGame()">Start Game</button>
                 <button type="button" class="btn btn-info" ng-click="randomlyChooseOZs()">Randomize Rest of Original Zombies</button>
             </div>
@@ -120,15 +119,15 @@
             </div>
         </div>
         <div ng-show="gameStarted">
-            <h4 class="centre">No Game to start or game has already started</h4>
+            <h4 class="text-center">No Game to start or game has already started</h4>
         </div>
     </div>
     <div class="tab-pane active" id="SupplyCodes" role="tabpanel">
         <div ng-hide="supplyCodes">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="container-fluid" ng-show="supplyCodes">
-            <button type="button" class="btn btn-success right formish-control" ng-click="addCodes()">Add More Codes</button>
+            <button type="button" class="btn btn-success float-right formish-control" ng-click="addCodes()">Add More Codes</button>
             <br>
             <br>
             <div class="row">
@@ -157,7 +156,7 @@
     </div>
     <div class="tab-pane" id="PlayerCodes" role="tabpanel">
         <div ng-hide="gamePlayers">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="fluid-control" ng-show="gamePlayers">
             <div class="row">
@@ -182,7 +181,7 @@
     </div>
     <div class="tab-pane" id="PlayerReports" role="tabpanel">
         <div ng-hide="reports">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div ng-repeat="day in reports">
             <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">

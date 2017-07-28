@@ -6,15 +6,22 @@
 <div ng-show="game">
     <div class="centre">
         <br>
-        <h1 style="font-size: 40px" ng-bind="game.name"></h1>
+        <h1 ng-bind="game.name"></h1>
         <i ng-bind="game.description"></i>
     </div>
     <div>
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs" role="tablist" id="modtabs">
             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Info" role="tab">Info</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Players" role="tab">Players</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
+            <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Moderators" role="tab">Moderators</a></li>
+            <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Graphs" role="tab">Graphs</a></li>
+            <li class="nav-item dropdown hidden-sm-up">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Moderators" role="tab">Moderators</a>
+                    <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Graphs" role="tab">Graphs</a>
+                </div>
+            </li>
         </ul>
         <br>
         <div class="tab-content">
@@ -52,7 +59,7 @@
             </div>
             <div class="tab-pane" id="Players" role="tabpanel">
                 <div ng-hide="gamePlayers">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div class="fluid-control hidden-xs-down">
                     <div class="row" ng-show="gamePlayers">
@@ -92,7 +99,7 @@
             </div>
             <div class="tab-pane" id="Moderators" role="tabpanel">
                 <div ng-hide="gameMods">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div class="fluid-control hidden-xs-down" ng-show="gameMods">
                     <div class="row">
@@ -125,7 +132,7 @@
             </div>
             <div class="tab-pane" id="Graphs" role="tabpanel">
                 <div ng-hide="gamePlayers && numberOfZombies != undefined">
-                    <i class="fa fa-spinner fa-spin fa-3x fa-fw centre" style="margin-left: calc(50% - 40px)"></i>
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
                 </div>
                 <div ng-show="gamePlayers && numberOfZombies != undefined">
                     <b>Number of Players: </b><span ng-bind="gamePlayers.length"></span>

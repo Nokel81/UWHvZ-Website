@@ -8,14 +8,10 @@ const getDateString = rootRequire("server/helpers/getDateString");
 const clone = rootRequire("server/helpers/clone");
 const relativeResolve = resolve.relative(__dirname);
 
-const sendMail = new nodemailer.createTransport({
-    host: 'mail.csclub.uwaterloo.ca',
-    port: 587,
-    secure: false,
-    auth: {
-         user: 'hvz',
-         pass: '9Y7Fm59y0W3qWx'
-    }
+const sendMail = new send.createTransport({
+    sendmail: true,
+    newline: 'unix',
+    path: '/usr/sbin/sendmail'
 }).sendMailAsync;
 
 const SERVICE = {};

@@ -4,20 +4,19 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
         CKEDITOR.replace('MessageBodyTextArea', {
             toolbarGroups: [{
-                    name: 'document',
-                    groups: ['mode', 'document']
-                }, {
-                    name: 'clipboard',
-                    groups: ['clipboard', 'undo']
-                }, {
-                    name: 'insert'
-                }, {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup']
-                }, {
-                    name: 'links'
-                }
-            ]
+                name: 'document',
+                groups: ['mode', 'document']
+            }, {
+                name: 'clipboard',
+                groups: ['clipboard', 'undo']
+            }, {
+                name: 'insert'
+            }, {
+                name: 'basicstyles',
+                groups: ['basicstyles', 'cleanup']
+            }, {
+                name: 'links'
+            }]
         });
     } else {
         CKEDITOR.replace('MessageBodyTextArea');
@@ -27,7 +26,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         var input = document.createElement("input");
         input.type = "color";
         $scope.supportsColour = input.type === "color";
-    } catch(e) {
+    } catch (e) {
         $scope.supportsColour = false;
     }
 
@@ -51,8 +50,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         const hasUpperCase = /[A-Z]/.test(password);
         const hasLowerCase = /[a-z]/.test(password);
         const hasNumbers = /\d/.test(password);
-        const hasNonalphas = /\W/.test(password);
-        return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
+        return hasUpperCase + hasLowerCase + hasNumbers > 2;
     };
 
     $scope.$watch(() => $location.hash(), () => {
@@ -62,7 +60,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $scope.hasTimeBeenChanged = false;
     });
 
-    $scope.timeHasChanged = function () {
+    $scope.timeHasChanged = function() {
         $scope.hasTimeBeenChanged = true;
     }
 
@@ -223,6 +221,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             });
     };
 
+    $scope.submitAuthenticationForm = function() {
+        if ($scope.buttonState === "logIn") {
+            $scope.logIn();
+        } else if ($scope.buttonState === "signUp") {
+            $scope.signUp();
+        }
+    };
+
     $scope.tagCode = function() {
         if (currentlyTagging) {
             return;
@@ -267,6 +273,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.changePassword = function() {
+        if (!$scope.newPassword) {
+            return;
+        }
         if ($scope.newPassword !== $scope.newPasswordCheck) {
             return AlertService.danger("New passwords don't match");
         }

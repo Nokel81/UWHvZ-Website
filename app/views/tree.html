@@ -1,4 +1,4 @@
-<select ng-model="currentTree" class="formish-control custom-select full-width">
+<select ng-model="currentTree" class="formish-control custom-select w-100">
     <option value="" selected disabled>Select Game</option>
     <option ng-repeat="tree in trees track by $index" value="{{$index}}" ng-bind="tree.name"></option>
 </select>

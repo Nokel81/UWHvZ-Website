@@ -50,7 +50,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         const hasUpperCase = /[A-Z]/.test(password);
         const hasLowerCase = /[a-z]/.test(password);
         const hasNumbers = /\d/.test(password);
-        return hasUpperCase + hasLowerCase + hasNumbers > 2;
+        return hasUpperCase && hasLowerCase && hasNumbers;
     };
 
     $scope.$watch(() => $location.hash(), () => {

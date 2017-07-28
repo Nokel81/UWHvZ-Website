@@ -23,7 +23,7 @@ function FindGamePlayers(gameId, userId) {
             zombieCount = game.zombies.length;
             players = game.humans.concat(game.zombies).concat(game.spectators);
             isModerator = game.moderators.indexOf(userId) >= 0;
-            isHuman = players.indexOf(userId) < 0 && !isModerator;
+            isHuman = game.zombies.concat(game.spectators).indexOf(userId) < 0 && !isModerator;
             return Report.count({gameId, reportType: "Stun"}).exec();
         })
         .then(count => {

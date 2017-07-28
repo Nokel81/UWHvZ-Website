@@ -2,7 +2,7 @@ const getUserById = rootRequire("server/data-access/functions/user/findById");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.query;
+    const {userId} = req.headers;
     getUserById(userId)
     .then(user => {
         resolve(user);

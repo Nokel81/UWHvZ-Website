@@ -50,6 +50,7 @@ bundler
         app.use(bodyParser.urlencoded({extended: true}));
         app.use(bodyParser.json());
         app.use(morgan("dev"));
+        app.use(rootRequire('server/routes/middleware/sessionToUser'));
 
         routes(app);
         app.use(express.static(path.join(__dirname, "./app")));

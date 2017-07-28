@@ -1,101 +1,94 @@
+const Promise = require('bluebird');
+
 const User = rootRequire("server/schemas/user");
-const getUserType = rootRequire("server/data-access/functions/user/getUserType");
 const findAll = rootRequire("server/data-access/functions/game/findAll");
-const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const findUserType = rootRequire("server/data-access/functions/user/findUserType");
+const findUserById = rootRequire("server/data-access/functions/user/findById");
 const recipientCodes = rootRequire("server/constants.json").recipientCodes;
+const webmasterEmail = rootRequire('server/config.json').webmasterEmail;
 
-const webmasterEmail = "webmaster.uwhvz@gmail.com";
+function GetUserRecipients(userId) {
+    return new Promise(function(resolve, reject) {
+        let user = null;
+        let userType = null;
+        let recipients = [{
+            title: "Webmaster",
+            value: recipientCodes.toWebmaster
+        }];
+        findUserById(userId)
+        .then(userObj => {
+            user = userObj;
+            return findUserType(userId);
+        })
+        .then(type => {
+            userType = type;
+            return findAll();
+        })
+        .then(games => {
+            let hasCurrentGame = false;
+            const isSuper = user.email === webmasterEmail;
 
-function GetUserRecipients(userId, cb) {
-    User.findOne({_id: userId})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
+            if (games.length === 0) {
+                return resolve(recipients);
             }
-            if (!user) {
-                return cb({error: "User not found"});
+            if (new Date(games[games.length - 1].endDate) >= new Date()) {
+                hasCurrentGame = true;
+                recipients.push({
+                    title: "Moderators",
+                    value: recipientCodes.toModerators
+                });
             }
-            getUserType(userId, res => {
-                if (res.error) {
-                    return cb(res);
-                }
-                findCurrentOrNext(res => {
-                    if (res.error) {
-                        return cb(res);
-                    }
-                    let hasCurrentGame = res.body !== null;
-                    findAll(res => {
-                        if (res.error) {
-                            return cb(res);
-                        }
-                        let games = res.body;
-                        let recipients = [{
-                            title: "Webmaster",
-                            value: recipientCodes.toWebmaster
-                        }];
-                        if (hasCurrentGame) {
-                            recipients.push({
-                                title: "Moderators",
-                                value: recipientCodes.toModerators
-                            });
-                        }
-                        const type = user.email === webmasterEmail ? "Moderator" : res.body;
-                        const isSuper = user.email === webmasterEmail;
-                        if (type === "NonPlayer" || type === "Spectator") {
-                            return cb({body: recipients});
-                        }
-                        if (isSuper) {
-                            recipients = recipients.concat(games.map(game => {
-                                return {
-                                    title: game.name + " - All Participents",
-                                    value: "#" + game._id
-                                };
-                            }));
-                        }
-                        if (!hasCurrentGame) {
-                            return cb({body: recipients});
-                        }
-                        recipients.push({
-                            title: "All Players",
-                            value: recipientCodes.toAllPlayers
-                        });
-                        if (type === "Human") {
-                            return cb({body: recipients});
-                        }
-                        recipients.push({
-                            title: "Zombies",
-                            value: recipientCodes.toZombies
-                        });
-                        if (type === "Zombie") {
-                            return cb({body: recipients});
-                        }
-                        recipients.push({
-                            title: "Humans",
-                            value: recipientCodes.toHumans
-                        });
-                        recipients.push({
-                            title: "All Users",
-                            value: recipientCodes.toAllUsers
-                        });
-                        User.find({email: {$ne: "webmaster.uwhvz@gmail.com"}})
-                            .select("_id playerName")
-                            .sort("playerName")
-                            .exec((err, users) => {
-                                if (err) {
-                                    return cb({error: err});
-                                }
-                                users.forEach(user => {
-                                    recipients.push({
-                                        title: user.playerName,
-                                        value: user._id
-                                    });
-                                });
-                                return cb({body: recipients});
-                            });
+            if (userType === "NonPlayer" || userType === "Spectator") {
+                return resolve(recipients);
+            }
+            if (isSuper) {
+                games.forEach(game => {
+                    recipients.push({
+                        title: game.name + " - All Participents",
+                        value: "#" + game._id
                     });
-                }, true);
+                });
+            }
+            if (!hasCurrentGame) {
+                return resolve(recipients);
+            }
+            recipients.push({
+                title: "All Players",
+                value: recipientCodes.toAllPlayers
             });
+            if (type === "Human") {
+                return resolve(recipients);
+            }
+            recipients.push({
+                title: "Zombies",
+                value: recipientCodes.toZombies
+            });
+            if (type === "Zombie") {
+                return resolve(recipients);
+            }
+            recipients.push({
+                title: "Humans",
+                value: recipientCodes.toHumans
+            });
+            recipients.push({
+                title: "All Users",
+                value: recipientCodes.toAllUsers
+            });
+            return User.find({email: {$ne: webmasterEmail}}).select("email playerName").sort("playerName").exec();
+        })
+        .then(users => {
+            users.forEach(user => {
+                recipients.push({
+                    title: user.playerName,
+                    value: user.email
+                });
+            });
+            resolve(recipients);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = GetUserRecipients;

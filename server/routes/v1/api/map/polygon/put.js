@@ -1,16 +1,16 @@
 const updatedById = rootRequire("server/data-access/functions/polygons/updatedById");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function get(req, res, next) {
-    updatedById(req.body, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Polygons not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Put(req, resolve, reject) {
+    const polygon = req.body;
+    updatedById(polygon)
+    .then(polygons => {
+        resolve(polygons);
+    })
+    .catch(error => {
+        reject("Polygon not updated: " + createErrorMessage(error));
     });
 }
 
-module.exports = get;
+module.exports = Put;
 // -80.557908;

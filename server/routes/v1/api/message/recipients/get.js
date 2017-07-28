@@ -1,14 +1,14 @@
 const getUserRecipients = rootRequire("server/data-access/functions/message/getUserRecipients");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
-    getUserRecipients(req.query.userId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Recipients not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Get(req, resolve, reject) {
+    const {userId} = req.query;
+    getUserRecipients(userId)
+    .then(recipients => {
+        resolve(recipients);
+    })
+    .catch(error => {
+        reject("Recipients not found: " + createErrorMessage(error));
     });
 }
 

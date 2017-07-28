@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
 const ValidCode = rootRequire("server/schemas/validators/validCode");
 const Schema = mongoose.Schema;
 
@@ -18,5 +19,6 @@ const messageReadSchema = new Schema({
         required: true
     }
 });
+errorNotFound(messageReadSchema)
 
 module.exports = mongoose.model("MessageRead", messageReadSchema);

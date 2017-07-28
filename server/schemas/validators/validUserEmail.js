@@ -9,5 +9,5 @@ module.exports = {
             respond(!err && user);
         });
     },
-    message: "Email must be from an activated account"
+    message: "Email must be from an account"
 };

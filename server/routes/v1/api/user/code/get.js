@@ -1,14 +1,14 @@
-const getUserByPlayerCode = rootRequire("server/data-access/functions/user/getUserByPlayerCode");
+const getUserByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
-    getUserByPlayerCode(req.query.playerCode, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Session not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Get(req, resolve, reject) {
+    const {playerCode} = req.query.playerCode;
+    getUserByPlayerCode(playerCode)
+    .then(user => {
+        resolve(user);
+    })
+    .catch(error => {
+        reject("User not found: " + createErrorMessage(error));
     });
 }
 

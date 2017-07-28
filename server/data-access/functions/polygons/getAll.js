@@ -1,16 +1,17 @@
-const Polygon = rootRequire("server/schemas/polygon");
+const Promise = require('bluebird');
 
-function GetAll(cb) {
-    Polygon.find({})
-        .exec((err, polygons) => {
-            if (err) {
-                return cb({error: err});
-            }
-            let game = "#000000";
-            let minor = "#0000ff";
-            let major = "#ff0000";
-            let rail = "#8b4513";
-            let safe = "#00ff00";
+const Polygon = rootRequire("server/schemas/polygon");
+const game = "#000000";
+const minor = "#0000ff";
+const major = "#ff0000";
+const rail = "#8b4513";
+const safe = "#00ff00";
+
+function GetAll() {
+    return new Promise(function(resolve, reject) {
+        Polygon.find({})
+        .exec()
+        .then(polygons => {
             polygons.sort((a, b) => {
                 if (a.colour === b.colour) {
                     if (a.name < b.name) {
@@ -27,34 +28,17 @@ function GetAll(cb) {
                 if (b.colour === game) {
                     return 1;
                 }
-                if (a.colour === rail) {
+                if ([rail, safe, minor, major].indexOf(a.colour) >= 0) {
                     return 1;
                 }
-                if (b.colour === rail) {
-                    return -1;
-                }
-                if (a.colour === safe) {
-                    return 1;
-                }
-                if (b.colour === safe) {
-                    return -1;
-                }
-                if (a.colour === minor) {
-                    return 1;
-                }
-                if (b.colour === minor) {
-                    return -1;
-                }
-                if (a.colour === major) {
-                    return 1;
-                }
-                if (b.colour === major) {
-                    return -1;
-                }
-                return 0;
-            })
-            cb({body: polygons});
+                return -1;
+            });
+            resolve(polygons);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = GetAll;

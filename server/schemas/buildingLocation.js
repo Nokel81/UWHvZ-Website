@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueness = require("mongoose-unique-validator");
 
+const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
 const Schema = mongoose.Schema;
 
 const buildingLocationSchema = new Schema({
@@ -23,5 +24,6 @@ const buildingLocationSchema = new Schema({
     }
 });
 buildingLocationSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
+errorNotFound(buildingLocationSchema);
 
 module.exports = mongoose.model("BuildingLocation", buildingLocationSchema);

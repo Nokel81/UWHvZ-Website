@@ -1,15 +1,14 @@
 const login = rootRequire("server/data-access/functions/user/login");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const account = req.body;
-    login(account, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(401).send(result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+    login(account)
+    .then(accountInfo => {
+        resolve(accountInfo);
+    })
+    .catch(error => {
+        reject("Login failed: " + createErrorMessage(error));
     });
 }
 

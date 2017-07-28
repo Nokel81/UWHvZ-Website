@@ -38,12 +38,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.time = new Date();
     $scope.time.setMilliseconds(0);
     $scope.time.setSeconds(0);
-    $scope.userInfo = {
-        status: "Please wait, loading..."
-    };
+    $scope.userInfo = null;
+    $scope.hasTimeBeenChanged = false;
     var currentlyTagging = false;
     var currentlySending = false;
-    $scope.hasTimeBeenChanged = false;
 
     const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
@@ -80,21 +78,21 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
         UserService.getUserInfo(user._id, (err, info) => {
+            // TODO: Fix this mess into being consistant with the data from the server
+            if (err) {
+                return $scope.userInfoError = err;
+            }
             if (info) {
-                if (typeof info.score === "string") {
-                    $scope.userInfo.status = info.score;
-                    return;
-                }
-                delete $scope.userInfo.status;
+                $scope.userInfo = info;
                 $scope.userInfo.teamScore = info.teamScore;
-                $scope.userInfo.playerScore = info.score.reportScore.score + info.score.reportScore.tagScore + info.score.supplyCodeScore.score;
-                $scope.userInfo.playerStunScore = info.score.reportScore.score;
-                $scope.userInfo.playerTagScore = info.score.reportScore.tagScore;
-                $scope.userInfo.playerSupplyScore = info.score.supplyCodeScore.score;
-                $scope.userInfo.playerType = info.playerType;
-                $scope.userInfo.stuns = info.score.reportScore.descriptions;
-                $scope.userInfo.tags = info.score.reportScore.tagDescriptions;
-                $scope.userInfo.codes = info.score.supplyCodeScore.descriptions;
+                $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
+                $scope.userInfo.playerStunScore = info.userScore.stunScore;
+                $scope.userInfo.playerTagScore = info.userScore.tagScore;
+                $scope.userInfo.playerSupplyScore = info.userScore.codeScore;
+                $scope.userInfo.userType = info.userType;
+                $scope.userInfo.stuns = info.userScore.stunDescriptions;
+                $scope.userInfo.tags = info.userScore.tagDescriptions;
+                $scope.userInfo.codes = info.userScore.codeDescriptions;
             }
         });
     });

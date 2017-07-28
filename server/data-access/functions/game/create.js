@@ -1,46 +1,21 @@
+const Promise = require('bluebird');
+
 const Game = rootRequire("server/schemas/game");
-const User = rootRequire("server/schemas/user");
+const findById = rootRequire("server/data-access/functions/game/findById");
 
-function Create(game, cb) {
-    game = new Game(game);
-    game.save(err => {
-        if (err) {
-            return cb({error: err});
-        }
-        User.find({
-            _id: {$in: game.moderators}
+function Create(game) {
+    return new Promise(function(resolve, reject) {
+        game = new Game(game);
+        game.save()
+        .then(game => {
+            return findById(game._id);
         })
-            .select("-password -nonce")
-            .exec((err, mods) => {
-                if (err) {
-                    return cb({error: err});
-                }
-                User.find({
-                    _id: {$in: game.humans}
-                })
-                    .select("-password -nonce")
-                    .exec((err, hums) => {
-                        if (err) {
-                            return cb({error: err});
-                        }
-
-                        User.find({
-                            _id: {$in: game.zombies}
-                        })
-                            .select("-password -nonce")
-                            .exec((err, zombs) => {
-                                if (err) {
-                                    return cb({error: err});
-                                }
-                                const res = JSON.parse(JSON.stringify(game));
-                                res.moderatorObjs = mods;
-                                res.humanObjs = hums;
-                                res.zombieObjs = zombs;
-
-                                cb({body: res});
-                            });
-                    });
-            });
+        .then(game => {
+            resolve(game);
+        })
+        .catch(error => {
+            reject(error);
+        });
     });
 }
 

@@ -6,12 +6,12 @@ function GameService($http, AppSettings, $cookies, UserService) {
     SERVICE.getClosestOrCurrent = function (cb) {
         $http.get(AppSettings.apiUrl + "/game/next")
             .then(res => {
-                res = res.data;
-                if (typeof res === "object") {
-                    res.startDate = new Date(res.startDate);
-                    res.endDate = new Date(res.endDate);
-                    res.signUpDates = res.signUpDates.map(date => new Date(date));
-                    cb(res);
+                const game = res.data;
+                if (typeof game === "object") {
+                    game.startDate = new Date(game.startDate);
+                    game.endDate = new Date(game.endDate);
+                    game.signUpDates = game.signUpDates.map(date => new Date(date));
+                    cb(game);
                 } else {
                     cb(null);
                 }
@@ -198,7 +198,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.getAllReports = function (gameId, cb) {
-        $http.get(AppSettings.apiUrl + "/game/reports?gameId=" + gameId)
+        $http.get(AppSettings.apiUrl + "/report?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
             }, err => {

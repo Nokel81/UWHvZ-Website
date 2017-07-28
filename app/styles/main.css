@@ -1,7 +1,19 @@
+:root {
+    --hvz-green: #37462e;
+    --hvz-green-light: #b4c3ab;
+    --hvz-brown-dark: #291d26;
+    --hvz-brown: #60543c;
+    --hvz-brown-light: #ddd1b9;
+    --hvz-yellow: #fed85c;
+    --hvz-yellow-light: #ffffd9;
+    --hvz-yellow-disabled: #cca67d;
+    --background-color: #d9e2d6;
+}
+
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: "Titillium Web", sans-serif;
     color: #333;
-    background-color: #eee;
+    background-color: var(--background-color);
 }
 
 hr {
@@ -17,6 +29,89 @@ hr {
 #zombieTree {
     width: 100%;
     height: calc(100% - 100px);
+}
+
+#modtabs .nav-item.dropdown {
+    display: none;
+}
+
+#modtabs .nav-item.dropdown div > a {
+    display: none;
+}
+
+@media(max-width: 864px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6 {
+        display: inherit;
+    }
+    #modtabs #NL6 {
+        display: none;
+    }
+}
+
+@media(max-width: 795px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5 {
+        display: inherit;
+    }
+    #modtabs #NL6, #modtabs #NL5 {
+        display: none;
+    }
+}
+
+@media(max-width: 656px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5,
+    #modtabs .nav-item.dropdown div #DD4 {
+        display: inherit;
+    }
+    #modtabs #NL6,
+    #modtabs #NL5,
+    #modtabs #NL4 {
+        display: none;
+    }
+}
+
+@media(max-width: 525px) {
+    #modtabs .nav-item.dropdown {
+        display: inherit;
+    }
+    #modtabs .nav-item.dropdown div > a {
+        display: none;
+    }
+    #modtabs .nav-item.dropdown div #DD6,
+    #modtabs .nav-item.dropdown div #DD5,
+    #modtabs .nav-item.dropdown div #DD4,
+    #modtabs .nav-item.dropdown div #DD3 {
+        display: inherit;
+    }
+    #modtabs #NL6,
+    #modtabs #NL5,
+    #modtabs #NL4,
+    #modtabs #NL3 {
+        display: none;
+    }
+}
+
+.card-block {
+    background-color: #f8f8f8;
 }
 
 .colourpicker {
@@ -86,9 +181,8 @@ input[type="color"]::-webkit-color-swatch {
     max-height: 40px;
 }
 
-.form-control {
-    margin-bottom: 5px;
-    margin-top: 5px;
+.right {
+    float: right;
 }
 
 .sub-view {

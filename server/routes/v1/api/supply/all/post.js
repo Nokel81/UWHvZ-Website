@@ -1,17 +1,14 @@
 const create = rootRequire("server/data-access/functions/supplyCode/create");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
-    const supplyCodes = req.body.codes;
-    const gameId = req.body.gameId;
-    create(supplyCodes, gameId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            const errors = Object.keys(result.error.errors).map(error => result.error.errors[error].message).join(", ");
-            res.status(400).send("Supply Code not made: " + errors);
-        } else {
-            res.status(201).send(result.body);
-        }
+function Post(req, resolve, reject) {
+    const {codes, gameId} = req.body;
+    create(codes, gameId)
+    .then(codes => {
+        resolve(codes);
+    })
+    .catch(error => {
+        reject("Supply codes not created: " + createErrorMessage(error));
     });
 }
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
 const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
@@ -90,5 +91,6 @@ gameSchema.pre("validate", function (next) {
     }
     next();
 });
+errorNotFound(gameSchema);
 
 module.exports = mongoose.model("Game", gameSchema);

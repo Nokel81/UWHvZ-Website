@@ -1,14 +1,14 @@
 const findByGameAndZombies = rootRequire("server/data-access/functions/gameSignups/findByGameAndZombies");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
-    findByGameAndZombies(req.query.gameId, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(400).send("Signups not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Get(req, resolve, reject) {
+    const {gameId} = req.query;
+    findByGameAndZombies(gameId)
+    .then(signups => {
+        resolve(signups);
+    })
+    .catch(error => {
+        reject("Signups not found: " + createErrorMessage(error));
     });
 }
 

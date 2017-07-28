@@ -11,7 +11,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(null);
         }
-        $http.get(AppSettings.apiUrl + "/user/type?id=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/type?userId=" + SERVICE.userId)
             .then(res => {
                 cb(res.data);
             },
@@ -56,9 +56,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         };
         $http.post(AppSettings.apiUrl + "/user/login", body)
             .then(res => {
-                SERVICE.session = res.data.session;
+                SERVICE.session = res.data.session.sessionToken;
                 SERVICE.userId = res.data.user._id;
-                $cookies.put("session", res.data.session);
+                $cookies.put("session", SERVICE.session);
                 cb(null, res.data.user);
             },
             err => {
@@ -167,7 +167,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(false);
         }
-        $http.get(AppSettings.apiUrl + "/user/super?id=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/super?userId=" + SERVICE.userId)
             .then(res => {
                 cb(res.data);
             },
@@ -254,24 +254,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     SERVICE.getUserInfo = function (userId, cb) {
         $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=score")
             .then(res => {
-                let score = res.data;
-                $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=teamscore")
-                    .then(res => {
-                        let teamScore = res.data;
-                        $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=type")
-                            .then(res => {
-                                let playerType = res.data;
-                                cb(null, {
-                                    score,
-                                    teamScore,
-                                    playerType
-                                });
-                            }, err => {
-                                cb(err.data);
-                            });
-                    }, err => {
-                        cb(err.data);
-                    });
+                cb(null, res.data);
             }, err => {
                 cb(err.data);
             });

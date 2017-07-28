@@ -1,13 +1,18 @@
+const Promise = require('bluebird');
+
 const Game = rootRequire("server/schemas/game");
 
-function Delete(id, cb) {
-    Game.findByIdAndRemove(id)
-        .exec((err, doc) => {
-            if (err) {
-                return cb({error: err});
-            }
-            cb({body: {}});
+function Delete(id) {
+    return new Promise(function(resolve, reject) {
+        Game.findByIdAndRemove(id)
+        .exec()
+        .then(game => {
+            resolve(null);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = Delete;

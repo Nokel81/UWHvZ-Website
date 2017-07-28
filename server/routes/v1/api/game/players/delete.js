@@ -1,21 +1,15 @@
-const removePlayerFromGame = rootRequire("server/data-access/functions/game/removePlayerFromGame");
+const modifyPlayerListOfGame = rootRequire("server/data-access/functions/game/modifyPlayerListOfGame");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
-    const oldPlayer = req.query;
-    removePlayerFromGame(oldPlayer, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            if (result.error.errors) {
-                const errors = Object.keys(result.error.errors).map(error => result.error.errors[error].message).join(", ");
-                res.status(400).send("Game not created: " + errors);
-            } else {
-                res.status(400).send("Game not created: " + result.error);
-            }
-        } else {
-            res.status(201).send(result.body);
-        }
+function Delete(req, resolve, reject) {
+    const {gameId, userId, team} = req.query;
+    modifyPlayerListOfGame(gameId, userId, team, "$pull")
+    .then(games => {
+        resolve(games);
+    })
+    .catch(error => {
+        reject("Player not removed: " + createErrorMessage(error));
     });
 }
 
-module.exports = Post;
+module.exports = Delete;

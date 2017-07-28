@@ -1,50 +1,54 @@
+const Promise = require('bluebird');
+
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
 const User = rootRequire("server/schemas/user");
+const clone = rootRequire("server/helpers/clone");
 
-function FindById(gameId, cb) {
-    GameSignUp.find({gameId})
-        .exec((err, signUps) => {
-            if (err) {
-                return cb({error: err});
-            }
-            const emails = signUps.map(signUp => signUp.userEmail);
-            User.find({
-                email: {
-                    $in: emails
-                }
-            })
-            .exec((err, users) => {
-                if (err) {
-                    return cb({error: err});
-                }
-                const res = [];
-                signUps.forEach(signUp => {
-                    if (!users.find(user => signUp.userEmail === user.email)) {
-                        console.error(signUp.userEmail);
-                        return;
+function FindById(gameId) {
+    return new Promise(function(resolve, reject) {
+        let signups = [];
+        GameSignUp.find({gameId}).sort("userEmail")
+        .exec()
+        .then(signupList => {
+            signups = signupList;
+            let emails = signups.map(signUp => signUp.userEmail);
+            return User.find({email: {$in: emails}}).sort("email").exec();
+        })
+        .then(users => {
+            return Promise.map(clone(users), (user, index) => {
+                return new Promise(function(resolve, reject) {
+                    let signUp = signups[index];
+                    if (signUp.userEmail !== user.email) {
+                        return reject("User not found");
                     }
-                    res.push({
+                    resolve({
                         userEmail: signUp.userEmail,
                         _id: signUp._id,
                         gameId: signUp.gameId,
                         teamPreference: signUp.teamPreference,
-                        name: users.find(user => signUp.userEmail === user.email).playerName
+                        name: user.playerName
                     });
                 });
-                res.sort((a, b) => {
-                    const A = a.name.toUpperCase();
-                    const B = b.name.toUpperCase();
-                    if (A < B) {
-                        return -1;
-                    }
-                    if (A > B) {
-                        return 1;
-                    }
-                    return 0;
-                })
-                cb({body: res});
             });
+        })
+        .then(signups => {
+            signups.sort((a, b) => {
+                const A = a.name.toUpperCase();
+                const B = b.name.toUpperCase();
+                if (A < B) {
+                    return -1;
+                }
+                if (A > B) {
+                    return 1;
+                }
+                return 0;
+            });
+            resolve(signups);
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = FindById;

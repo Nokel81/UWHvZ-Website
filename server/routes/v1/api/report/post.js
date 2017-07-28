@@ -1,20 +1,14 @@
 const create = rootRequire("server/data-access/functions/report/create");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Post(req, res, next) {
+function Post(req, resolve, reject) {
     const report = req.body;
-    create(report, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            if (result.error.errors) {
-                const errors = Object.keys(result.error.errors).map(error => result.error.errors[error].message).join(", ");
-                res.status(400).send("Report not made: " + errors);
-            } else {
-                res.status(400).send("Report not made: " + result.error);
-            }
-        } else {
-            res.status(201).send(result.body);
-        }
+    create(report)
+    .then(message => {
+        resolve(message);
+    })
+    .catch(error => {
+        reject("Event report not made: " + createErrorMessage(error));
     });
 }
 

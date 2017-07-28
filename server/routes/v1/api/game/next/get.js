@@ -1,14 +1,13 @@
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
-    findCurrentOrNext(result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(400).send("Game not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Get(req, resolve, reject) {
+    findCurrentOrNext()
+    .then(game => {
+        resolve(game);
+    })
+    .catch(error => {
+        reject("Game not found: " + createErrorMessage(error));
     });
 }
 

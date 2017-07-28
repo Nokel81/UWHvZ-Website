@@ -1,14 +1,14 @@
-const getUserBySession = rootRequire("server/data-access/functions/user/getUserBySession");
+const getUserBySession = rootRequire("server/data-access/functions/user/findBySession");
+const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
-function Get(req, res, next) {
-    getUserBySession(req.query.session, result => {
-        if (!result) {
-            res.status(500).send("Internal Server Error");
-        } else if (result.error) {
-            res.status(404).send("Session not found: " + result.error);
-        } else {
-            res.status(200).send(result.body);
-        }
+function Get(req, resolve, reject) {
+    const {session} = req.query;
+    getUserBySession(session)
+    .then(session => {
+        resolve(session);
+    })
+    .catch(error => {
+        reject("Session not found: " + createErrorMessage(error));
     });
 }
 

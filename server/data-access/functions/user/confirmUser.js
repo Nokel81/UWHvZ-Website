@@ -1,23 +1,25 @@
+const Promise = require('bluebird');
+
 const User = rootRequire("server/schemas/user");
 
-function ConfirmUser(confirmationToken, cb) {
-    User.find({confirmationToken})
-        .exec((err, user) => {
-            if (err) {
-                return cb({error: err});
+function ConfirmUser(confirmationToken) {
+    return new Promise(function(resolve, reject) {
+        User.find({confirmationToken})
+        .exec()
+        .then(users => {
+            if (!users[0]) {
+                return resolve("User email confirmed");
             }
-            if (user.length === 0) {
-                return cb({body: "User email confirmed"});
-            }
-            user = user[0];
-            user.confirmationToken = undefined;
-            user.save(err => {
-                if (err) {
-                    return cb({error: err});
-                }
-                cb({body: "User email confirmed"});
-            });
+            let _id = users[0]._id;
+            return User.updateOne({_id}, {$unset: {confirmationToken: 1}}).exec();
+        })
+        .then(user => {
+            resolve("User email confirmed");
+        })
+        .catch(error => {
+            reject(error);
         });
+    });
 }
 
 module.exports = ConfirmUser;

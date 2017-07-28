@@ -1,126 +1,104 @@
+const Promise = require('bluebird');
+
 const findAll = rootRequire('server/data-access/functions/game/findAll');
 const averageColour = rootRequire('server/helpers/averageColour');
 const Report = rootRequire('server/schemas/report');
 const Settings = rootRequire('server/schemas/settings');
+const clone = rootRequire("server/helpers/clone");
 
-function GetAllTrees(userId, cb) {
-    findAll(res => {
-        if (res.error) {
-            return cb(res);
-        }
-        let games = res.body;
-        if (games.length === 0) {
-            return cb({body: []});
-        }
-        let trees = [];
-        let count = 0;
-        let errored = false;
-        let lastGame = games[games.length - 1];
-        let skipLast = lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined";
-        if (new Date(lastGame.endDate) < new Date()) {
-            skipLast = false;
-        }
-
-        games.forEach((game, index) => {
-            if (errored) {
-                return;
+function GetAllTrees(userId) {
+    return new Promise(function(resolve, reject) {
+        findAll()
+        .then(games => {
+            let lastGame = games.slice(-1).pop();
+            if ((lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined") && new Date(lastGame.endDate) >= new Date()) {
+                games.pop();
             }
-            if (game === lastGame && skipLast) {
-                return;
-            }
-            trees.push();
-            let nodes = [{
-                id: "OZ",
-                label: "Necromancer",
-                color: {
-                    border: "#000000",
-                    background: "#aaaaaa"
-                },
-                chosen: {
-                    node: false
-                }
-            }];
-
-            Settings.find({userId: {$in: game.zombies}})
-                .exec((err, settingObjs) => {
-                    if (err) {
-                        if (errored) {
-                            return;
+            return Promise.map(clone(games), game => {
+                return new Promise(function(resolve, reject) {
+                    let nodes = [{
+                        id: "OZ",
+                        label: "Necromancer",
+                        color: {
+                            border: "#000000",
+                            background: "#aaaaaa"
+                        },
+                        chosen: {
+                            node: false
                         }
-                        errored = true;
-                        return cb({error: err});
-                    }
-                    nodes = nodes.concat(game.zombieObjs.map(zombie => {
-                        let treeNodeColour = (settingObjs.find(setting => setting.userId.toString() === zombie._id.toString()) || {treeNodeColour: "#0000ff"}).treeNodeColour;
-                        return {
-                            id: zombie._id,
-                            label: zombie.playerName,
-                            chosen: {
-                                node: false
-                            },
-                            color: {
-                                background: averageColour(treeNodeColour, "#ffffff"),
-                                border: treeNodeColour
-                            },
-                            font: {
-                                color: "#000000"
-                            },
-                            borderWidth: 2
-                        };
-                    }));
+                    }];
+                    let edges = [];
+                    let zombiesToKeep = ["OZ"];
 
-                    Report.find({gameId: game._id, reportType: "Tag"})
-                        .exec((err, reports) => {
-                            if (err) {
-                                if (errored) {
-                                    return;
-                                }
-                                errored = true;
-                                return cb({error: err});
-                            }
-                            let zombiesToKeep = [];
-
-                            let edges = reports.map(report => {
-                                if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
-                                    zombiesToKeep.push(report.tagger.toString())
-                                }
-                                if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
-                                    zombiesToKeep.push(report.tagged.toString())
-                                }
-                                return {
-                                    from: report.tagger,
-                                    to: report.tagged,
-                                    arrows: {
-                                        to: true
-                                    },
-                                    scaling: {
-                                        max: 100
-                                    }
-                                };
+                    Settings.find({userId: {$in: game.zombies}})
+                    .exec()
+                    .then(settings => {
+                        game.zombieObjs.forEach(zombie => {
+                            let treeNodeColour = settings.find(setting => setting.userId.toString() === zombie._id.toString()).treeNodeColour;
+                            nodes.push({
+                                id: zombie._id.toString(),
+                                label: zombie.playerName,
+                                chosen: {
+                                    node: false
+                                },
+                                color: {
+                                    background: averageColour(treeNodeColour, "#ffffff"),
+                                    border: treeNodeColour
+                                },
+                                font: {
+                                    color: "#000000"
+                                },
+                                borderWidth: 2
                             });
-                            game.originalZombies.forEach(zom => {
-                                if (zombiesToKeep.indexOf(zom.toString()) < 0) {
-                                    zombiesToKeep.push(zom.toString())
-                                }
-                                edges.push({
-                                    from: "OZ",
-                                    to: zom,
-                                    arrows: {
-                                        to: true
-                                    }
-                                });
-                            });
-                            let staying = nodes.filter(node => node.id === "OZ" || zombiesToKeep.indexOf(node.id.toString()) >= 0);
-                            let starved = nodes.filter(node => node.id !== "OZ" && zombiesToKeep.indexOf(node.id.toString()) < 0).map(node => node.label);
-                            nodes = staying;
-
-                            trees[index] = {nodes, edges, name: game.name + " - " + new Date(game.startDate).getFullYear(), starved};
-                            count++;
-                            if (count === games.length || (count === games.length - 1 && isHumanKnowledge)) {
-                                cb({body: trees});
-                            }
                         });
+                        return Report.find({gameId: game._id, reportType: "Tag"}).exec();
+                    })
+                    .then(reports => {
+                        reports.map(report => {
+                            if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
+                                zombiesToKeep.push(report.tagger.toString())
+                            }
+                            if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
+                                zombiesToKeep.push(report.tagged.toString())
+                            }
+                            return {
+                                from: report.tagger,
+                                to: report.tagged,
+                                arrows: {
+                                    to: true
+                                },
+                                scaling: {
+                                    max: 100
+                                }
+                            };
+                        });
+                        game.originalZombies.forEach(zom => {
+                            if (zombiesToKeep.indexOf(zom.toString()) < 0) {
+                                zombiesToKeep.push(zom.toString())
+                            }
+                            edges.push({
+                                from: "OZ",
+                                to: zom,
+                                arrows: {
+                                    to: true
+                                }
+                            });
+                        });
+                        nodes = nodes.filter(node => zombiesToKeep.indexOf(node.id) >= 0);
+                        // TODO: Add the surviving humans
+                        resolve({nodes, edges, name: game.name + " - " + new Date(game.startDate).getFullYear()});
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
                 });
+            });
+        })
+        .then(trees => {
+            resolve(trees);
+        })
+        .catch(error => {
+            reject(error);
         });
     });
 }

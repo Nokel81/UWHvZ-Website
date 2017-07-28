@@ -2,8 +2,8 @@ const deleteById = rootRequire("server/data-access/functions/polygons/deleteById
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Delete(req, resolve, reject) {
-    const {id} = req.query;
-    deleteById(id)
+    const {polygonId} = req.query;
+    deleteById(polygonId)
     .then(polygons => {
         resolve(polygons);
     })

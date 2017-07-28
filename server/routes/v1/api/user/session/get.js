@@ -2,7 +2,7 @@ const getUserBySession = rootRequire("server/data-access/functions/user/findBySe
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {session} = req.query;
+    const {session} = req.headers;
     getUserBySession(session)
     .then(session => {
         resolve(session);

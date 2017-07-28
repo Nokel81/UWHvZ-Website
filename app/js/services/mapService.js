@@ -31,7 +31,7 @@ function MapService($http, AppSettings) {
     };
 
     SERVICE.removedMarker = function (id, cb) {
-        $http.delete(AppSettings.apiUrl + "/map/buildingLocation?id=" + id)
+        $http.delete(AppSettings.apiUrl + "/map/buildingLocation?markerId=" + id)
             .then(res => {
                 cb(null, res.data);
             }, err => {
@@ -67,7 +67,7 @@ function MapService($http, AppSettings) {
     };
 
     SERVICE.deletePolygon = function (id, cb) {
-        $http.delete(AppSettings.apiUrl + "/map/polygon?id" + id)
+        $http.delete(AppSettings.apiUrl + "/map/polygon?polygonId=" + id)
             .then(res => {
                 cb(null, res.data);
             }, err => {

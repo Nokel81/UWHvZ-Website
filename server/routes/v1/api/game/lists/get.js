@@ -2,7 +2,8 @@ const findGamePlayers = rootRequire("server/data-access/functions/game/findGameP
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {gameId, userId} = req.query;
+    const {gameId} = req.query;
+    const {userId} = req.headers;
     findGamePlayers(gameId, userId)
     .then(playerInfo => {
         resolve(playerInfo);

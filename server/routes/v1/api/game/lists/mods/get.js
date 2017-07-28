@@ -2,7 +2,8 @@ const findPlayerCodes = rootRequire("server/data-access/functions/game/findPlaye
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {gameId, userId} = req.query;
+    const {gameId} = req.query;
+    const {userId} = req.headers;
     findPlayerCodes(gameId, userId)
     .then(codes => {
         resolve(codes);

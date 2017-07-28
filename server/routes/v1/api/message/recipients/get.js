@@ -2,7 +2,7 @@ const getUserRecipients = rootRequire("server/data-access/functions/message/getU
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.query;
+    const {userId} = req.headers;
     getUserRecipients(userId)
     .then(recipients => {
         resolve(recipients);

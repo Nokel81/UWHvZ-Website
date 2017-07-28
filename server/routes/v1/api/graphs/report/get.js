@@ -2,7 +2,7 @@ const getReports = rootRequire("server/data-access/functions/graphs/getReports")
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.query;
+    const {userId} = req.headers;
     getReports(userId)
     .then(graph => {
         resolve(graph);

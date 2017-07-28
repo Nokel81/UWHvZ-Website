@@ -11,7 +11,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(null);
         }
-        $http.get(AppSettings.apiUrl + "/user/type?userId=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/type")
             .then(res => {
                 cb(res.data);
             },
@@ -34,7 +34,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.session) {
             return cb(null);
         }
-        $http.get(AppSettings.apiUrl + "/user/session?session=" + SERVICE.session)
+        $http.get(AppSettings.apiUrl + "/user/session")
             .then(res => {
                 SERVICE.userId = res.data._id;
                 cb(res.data);
@@ -71,7 +71,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.session) {
             return;
         }
-        $http.post(AppSettings.apiUrl + "/user/logout/" + SERVICE.session)
+        $http.post(AppSettings.apiUrl + "/user/logout")
             .then(res => {
                 SERVICE.userId = null;
                 SERVICE.session = null;
@@ -123,7 +123,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(null);
         }
-        $http.get(AppSettings.apiUrl + "/user/settings?userId=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/settings")
             .then(res => {
                 cb(res.data);
             },
@@ -167,22 +167,12 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         if (!SERVICE.userId) {
             return cb(false);
         }
-        $http.get(AppSettings.apiUrl + "/user/super?userId=" + SERVICE.userId)
+        $http.get(AppSettings.apiUrl + "/user/super")
             .then(res => {
                 cb(res.data);
             },
             err => {
                 cb(false);
-            });
-    };
-
-    SERVICE.getByCode = function (code, cb) {
-        $http.get(AppSettings.apiUrl + "/user/code?playerCode=" + code)
-            .then(res => {
-                cb(null, res.data);
-            },
-            err => {
-                cb(err.data);
             });
     };
 
@@ -224,7 +214,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     };
 
     SERVICE.getValidRecipients = function (userId, cb) {
-        $http.get(AppSettings.apiUrl + "/message/recipients?userId=" + userId)
+        $http.get(AppSettings.apiUrl + "/message/recipients")
             .then(res => {
                 cb(null, res.data);
             }, err => {
@@ -252,7 +242,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     };
 
     SERVICE.getUserInfo = function (userId, cb) {
-        $http.get(AppSettings.apiUrl + "/user/info?id=" + userId + "&infoType=score")
+        $http.get(AppSettings.apiUrl + "/user/info")
             .then(res => {
                 cb(null, res.data);
             }, err => {

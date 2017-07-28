@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 
 const ignoreFiles = ["middleware", "index.js"];
-const middleRequirements = rootRequire("server/routes/middleware/index.json");
 
 const successCodes = {
     get: 200,

@@ -2,8 +2,8 @@ const deleteById = rootRequire("server/data-access/functions/gameSignups/deleteB
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Delete(req, resolve, reject) {
-    const {id} = req.query;
-    deleteById(id)
+    const {userId} = req.query;
+    deleteById(userId)
     .then(signups => {
         resolve(signups);
     })

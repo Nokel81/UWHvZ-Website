@@ -9,6 +9,7 @@ function FindById(id) {
         let moderators = [];
         let humans = [];
         let zombies = [];
+        let originalZombies = [];
         let game = null;
         Game.findById(id).exec()
         .then(gameObj => {
@@ -25,6 +26,10 @@ function FindById(id) {
         })
         .then(zombs => {
             zombies = zombs;
+            return User.find({_id: {$in: game.originalZombies}}).sort("playerName").select("-password -nonce").exec();
+        })
+        .then(orgZombs => {
+            originalZombies = orgZombs;
             return User.find({_id: {$in: game.spectators}}).sort("playerName").select("-password -nonce").exec();
         })
         .then(spectators => {

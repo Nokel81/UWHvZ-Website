@@ -23,7 +23,7 @@
     <div class="tab-pane" id="GameSignups" role="tabpanel">
 
         <div ng-show="gameStarted">
-            <h4 class="text-center">No Game to sign up for or game has already started</h4>
+            <h4 class="text-centre">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
             <br>
@@ -119,12 +119,12 @@
             </div>
         </div>
         <div ng-show="gameStarted">
-            <h4 class="text-center">No Game to start or game has already started</h4>
+            <h4 class="text-centre">No Game to start or game has already started</h4>
         </div>
     </div>
     <div class="tab-pane active" id="SupplyCodes" role="tabpanel">
         <div ng-hide="supplyCodes">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-centre" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="container-fluid" ng-show="supplyCodes">
             <button type="button" class="btn btn-success float-right formish-control" ng-click="addCodes()">Add More Codes</button>
@@ -156,7 +156,7 @@
     </div>
     <div class="tab-pane" id="PlayerCodes" role="tabpanel">
         <div ng-hide="gamePlayers">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-centre" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div class="fluid-control" ng-show="gamePlayers">
             <div class="row">
@@ -181,7 +181,7 @@
     </div>
     <div class="tab-pane" id="PlayerReports" role="tabpanel">
         <div ng-hide="reports">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-centre" style="margin-left: calc(50% - 40px)"></i>
         </div>
         <div ng-repeat="day in reports">
             <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">

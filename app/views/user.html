@@ -60,24 +60,29 @@
                 <h4>Please wait, loading...</h4>
             </div>
             <div ng-show="userInfo">
-                <h3>Your team: <span ng-bind="userInfo.userType || 'NonPlayer'"></span></h3>
-                <br>
-                <h3>Your score: <span ng-bind="userInfo.userScore.stunScore + userInfo.userScore.tagScore + userInfo.userScore.codeScore || '0'"></span></h3>
-                <h5>Stuns: <span ng-bind="userInfo.userScore.stunScore || '0'"></span></h5>
-                <ul>
-                    <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span ng-bind="description"></span></li>
-                </ul>
-                <h5>Tags: <span ng-bind="userInfo.userScore.tagScore || '0'"></span></h5>
-                <ul>
-                    <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span ng-bind="description"></span></li>
-                </ul>
-                <h5>Supply Codes: <span ng-bind=" userInfo.userScore.codeScore || '0'"></span></h5>
-                <ul>
-                    <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span ng-bind="description"></span></li>
-                </ul>
-                <br>
-                <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>
-                <br>
+                <div class="text-centre" ng-show="userInfo === 'nogame'">
+                    <h3>No game currently running</h3>
+                </div>
+                <div ng-hide="userInfo === 'nogame'">
+                    <h3>Your team: <span ng-bind="userInfo.userType || 'NonPlayer'"></span></h3>
+                    <br>
+                    <h3>Your score: <span ng-bind="userInfo.userScore.stunScore + userInfo.userScore.tagScore + userInfo.userScore.codeScore || '0'"></span></h3>
+                    <h5>Stuns: <span ng-bind="userInfo.userScore.stunScore || '0'"></span></h5>
+                    <ul>
+                        <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span ng-bind="description"></span></li>
+                    </ul>
+                    <h5>Tags: <span ng-bind="userInfo.userScore.tagScore || '0'"></span></h5>
+                    <ul>
+                        <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span ng-bind="description"></span></li>
+                    </ul>
+                    <h5>Supply Codes: <span ng-bind=" userInfo.userScore.codeScore || '0'"></span></h5>
+                    <ul>
+                        <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span ng-bind="description"></span></li>
+                    </ul>
+                    <br>
+                    <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>
+                    <br>
+                </div>
             </div>
         </div>
         <div class="tab-pane" id="Messages" role="tabpanel">
@@ -108,10 +113,10 @@
             </div>
         </div>
         <div class="tab-pane active" id="Code" role="tabpanel">
-            <div class="text-center h5">
+            <div class="text-centre h5">
                 <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
             </div>
-            <div class="text-center">
+            <div class="text-centre">
                 <h3>Report a Stun/Tag</h3>
             </div>
             <table>
@@ -153,7 +158,7 @@
             <table>
                 <tr>
                     <td>
-                        <div class="text-center">
+                        <div class="text-centre">
                             <h3>Use a Supply Code</h3>
                             <br>
                             <br>
@@ -177,7 +182,7 @@
                 </div>
                 <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">
                 <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="gEmail"></label>
-                <span class="tgl-label whitespace">    Receive game play information emails</span>
+                <span class="tgl-label whitespace">    Receive game emails</span>
                 <br>
                 <input id="pEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.promotionalEmails">
                 <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="pEmail"></label>

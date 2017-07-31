@@ -33,6 +33,7 @@ select:disabled {
     margin-bottom: 5px;
     margin-top: 5px;
     max-height: 38px;
+    cursor: pointer;
 }
 
 .form-control {

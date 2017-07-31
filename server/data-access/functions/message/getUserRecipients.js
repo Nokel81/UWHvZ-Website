@@ -56,14 +56,14 @@ function GetUserRecipients(userId) {
                 title: "All Players",
                 value: recipientCodes.toAllPlayers
             });
-            if (type === "Human") {
+            if (userType === "Human") {
                 return resolve(recipients);
             }
             recipients.push({
                 title: "Zombies",
                 value: recipientCodes.toZombies
             });
-            if (type === "Zombie") {
+            if (userType === "Zombie") {
                 return resolve(recipients);
             }
             recipients.push({

@@ -11,7 +11,7 @@ function GetAllTrees(userId) {
         findAll()
         .then(games => {
             let lastGame = games.slice(-1).pop();
-            if ((lastGame.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined") && new Date(lastGame.endDate) >= new Date()) {
+            if ((lastGame.humans.indexOf(userId) >= 0 || !userId) && new Date(lastGame.endDate) >= new Date()) {
                 games.pop();
             }
             return Promise.map(clone(games), game => {

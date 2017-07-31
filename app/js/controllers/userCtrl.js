@@ -78,9 +78,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
         UserService.getUserInfo(user._id, (err, info) => {
-            // TODO: Fix this mess into being consistant with the data from the server
             if (err) {
-                return $scope.userInfoError = err;
+                return $scope.userInfo = "nogame";
             }
             if (info) {
                 $scope.userInfo = info;

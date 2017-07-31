@@ -3,6 +3,7 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     const {userId} = req.headers;
+    console.log(userId);
     getUserType(userId)
     .then(type => {
         resolve(type);

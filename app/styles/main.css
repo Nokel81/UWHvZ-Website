@@ -1,3 +1,14 @@
+@import url("accordian.css");
+@import url("alerts.css");
+@import url("animate.css");
+@import url("colourpicker.css");
+@import url("grids.css");
+@import url("images.css");
+@import url("inputs.css");
+@import url("media.css");
+@import url("nav.css");
+@import url("tabs.css");
+
 :root {
     --hvz-green: #37462e;
     --hvz-green-light: #b4c3ab;

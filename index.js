@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const express = require("express");
 const bulkify = require("bulkify");
 const browserify = require("browserify");
-const debowerify = require("debowerify");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const ngAnnotate = require("browserify-ngannotate");
@@ -33,7 +32,6 @@ const bundler = browserify(path.join(__dirname, "./app/js/app.js"));
 
 bundler
     .transform("babelify", {presets: ["es2015"]})
-    .transform(debowerify, {})
     .transform(ngAnnotate, {})
     .transform("brfs", {})
     .transform(bulkify, {})

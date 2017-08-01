@@ -17,9 +17,9 @@
                             </ul>
                         </div>
                         <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
-                        <b>Do you wish to join the next game?</b>
-                        <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"></hvz-toggle>
-                        <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'" ng-show="joinNextGame"></hvz-toggle>
+                        <b style="line-height: 2.5em; vertical-align: text-bottom;">Do you wish to join the next game?</b>
+                        <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"/>
+                        <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'" ng-show="joinNextGame"/>
                     </div>
                     <div class="float-right">
                         <div class="input-group">
@@ -180,21 +180,18 @@
                     <br>
                     <br>
                 </div>
-                <input id="gEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.gameEmails">
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="gEmail"></label>
-                <span class="tgl-label whitespace">    Receive game emails</span>
+                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.gameEmails" colours="'#888888','#86d993'"/>
+                <pre>    Receive game emails</pre>
                 <br>
-                <input id="pEmail" class="tgl tgl-skewed" type="checkbox" ng-model="settings.promotionalEmails">
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="pEmail"></label>
-                <span class="tgl-label whitespace">    Receive promotional emails</span>
+                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.promotionalEmails" colours="'#888888','#86d993'"/>
+                <pre>    Receive promotional emails</pre>
                 <br>
-                <input id="sScore" class="tgl tgl-skewed" type="checkbox" ng-model="settings.showScore">
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="sScore"></label>
-                <span class="tgl-label whitespace">    Show score publicly</span>
+                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"/>
+                <pre>    Show score publicly</pre>
                 <br>
                 <button class="btn btn-secondary" type="button" colorpicker colorpicker-position="right" ng-model="settings.treeNodeColour" style="padding:2px 17px" ng-hide="supportsColour"><img src="images/ColourWheel.png" style="max-height:28px"></button>
                 <input class="colourpicker" type="color" ng-show="supportsColour" ng-model="settings.treeNodeColour">
-                <span class="tgl-label whitespace">    Zombie Tree Node Colour</span>
+                <pre>    Zombie Tree Node Colour</pre>
                 <br>
                 <div class="row">
                     <div class="col-lg-6">

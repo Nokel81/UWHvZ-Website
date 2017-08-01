@@ -20,6 +20,7 @@ function ToggleDirective() {
             let titles = JSON.parse("[" + (scope.titles || "").replace(/([^\\]?)'/g, "$1\"") + "]");
             let tempVal = objectPath.get(scope.$parent, ngModel.$$attr.ngModel);
             let index = values.findIndex((elem) => elem === tempVal);
+            const span = angular.element(element[0].firstChild);
             let active = true;
             if (index === -1) {
                 index = 0;
@@ -32,38 +33,36 @@ function ToggleDirective() {
                 let val = colours[colours.length - 1];
                 colours.push(val);
             }
-            element.text(titles[index]);
+            span.text(titles[index]);
             ngModel.$setViewValue(values[index]);
             element.css({
                 "width": scope.width,
-                "background": colours[index] || "#888"
+                "background": colours[index]
             });
 
-            element.on('mouseover', function () {
-                if (attrs.disabled) {
-                    active = false;
-                    element.css("cursor", "not-allowed");
-                } else {
-                    active = true
-                    element.css("cursor", "pointer");
-                }
+            element.on('mouseover', () => {
+                active = !!!attrs.disabled;
             });
 
-            element.on('click', function() {
+            element.on('click', () => {
                 if (active) {
                     index = (index + 1) % titles.length;
-                    element.text(titles[index]);
+                    span.addClass("animate-right");
+                    span.text(titles[index]);
                     ngModel.$setViewValue(values[index]);
                     element.css("background", colours[index]);
+                    setTimeout(() => {
+                        span.removeClass("animate-right");
+                    }, 200);
                 }
             });
 
-            scope.$watch(() => ngModel.$viewValue, function (newVal) {
+            scope.$watch(() => ngModel.$viewValue, (newVal) => {
                 if (newVal !== values[index]) {
                     let intr = values.findIndex((elem) => elem === ngModel.$viewValue);
                     if (intr >= 0) {
                         index = intr;
-                        element.text(titles[index]);
+                        span.text(titles[index]);
                         element.css("background", colours[index]);
                     }
                 }

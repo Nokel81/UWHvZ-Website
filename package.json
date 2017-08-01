@@ -69,6 +69,7 @@
     "browserify-ngannotate": "^2.0.0",
     "bulk-require": "^1.0.0",
     "bulkify": "^1.4.2",
+    "cookie-parser": "^1.4.3",
     "crypto-random-string": "^1.0.0",
     "debowerify": "^1.5.0",
     "express": "^4.15.3",

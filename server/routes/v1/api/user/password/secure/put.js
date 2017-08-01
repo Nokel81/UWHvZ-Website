@@ -3,7 +3,8 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Put(req, resolve, reject) {
     const passwordChange = req.body;
-    changePassword(passwordChange)
+    const {userId} = req.headers;
+    changePassword(passwordChange, userId)
     .then(message => {
         resolve(message);
     })

@@ -4,15 +4,15 @@ const User = rootRequire("server/schemas/user");
 const findById = rootRequire("server/data-access/functions/user/findById");
 const hashPassword = rootRequire("server/helpers/hashPassword");
 
-function ConfirmUser(passwordChange) {
+function ConfirmUser(passwordChange, userId) {
     return new Promise(function(resolve, reject) {
-        findById(passwordChange.userId)
+        findById(userId)
         .then(user => {
             return Promise.join(hashPassword(passwordChange.oldPassword, user.nonce), hashPassword(passwordChange.newPassword, user.nonce), (oldHash, newHash) => {
                 if (oldHash !== user.password) {
                     return reject("Old password is incorrect");
                 }
-                return User.updateOne({_id: user._id}, {$set: {password: newHash}}).exec();
+                return User.updateOne({_id: userId}, {$set: {password: newHash}}).exec();
             });
         })
         .then(user => {

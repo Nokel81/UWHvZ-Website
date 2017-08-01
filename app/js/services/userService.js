@@ -182,10 +182,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         }
         const body = {
             oldPassword,
-            newPassword,
-            userId: SERVICE.userId
+            newPassword
         };
-        $http.put(AppSettings.apiUrl + "/user/password", body)
+        $http.put(AppSettings.apiUrl + "/user/password/secure", body)
             .then(res => {
                 cb(null, res.data);
             }, err => {

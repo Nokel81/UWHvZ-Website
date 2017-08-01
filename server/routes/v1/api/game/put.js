@@ -3,7 +3,8 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Put(req, resolve, reject) {
     const game = req.body;
-    update(game)
+    const {userId, isSuper} = req.headers;
+    update(game, userId, isSuper)
     .then(game => {
         resolve(game);
     })

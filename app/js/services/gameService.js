@@ -92,7 +92,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.deleteGame = function (id, cb) {
-        $http.delete(AppSettings.apiUrl + "/game?gameId=" + id)
+        $http.delete(AppSettings.apiUrl + "/game/structural?gameId=" + id)
             .then(res => {
                 cb(null);
             }, err => {
@@ -114,7 +114,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.createGame = function (game, cb) {
-        $http.post(AppSettings.apiUrl + "/game", game)
+        $http.post(AppSettings.apiUrl + "/game/structural", game)
             .then(res => {
                 const game = res.data;
                 game.startDate = new Date(game.startDate);

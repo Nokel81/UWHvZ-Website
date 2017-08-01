@@ -7,7 +7,6 @@ hvz-toggle {
     position: relative;
     transform: skewX(-10deg);
     font-weight: bold;
-    font-family: sans-serif;
     text-align: center;
     line-height: 2em;
     color: #ffffff;
@@ -16,6 +15,10 @@ hvz-toggle {
     display: inline-block;
     transition: background 0.2s ease;
     overflow: hidden;
+}
+
+hvz-toggle:disabled {
+    cursor: not-allowed;
 }
 
 .animate-right {

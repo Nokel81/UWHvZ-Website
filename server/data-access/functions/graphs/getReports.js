@@ -10,7 +10,7 @@ function GetReports(userId) {
         let stunCount = 0;
         findCurrentOrNext()
         .then(game => {
-            if (game.humans.indexOf(userId) >= 0 || !userId || userId == "null" || userId == "undefined") {
+            if (game.humans.indexOf(userId) >= 0 || !userId) {
                 zombieCount = game.originalZombies.length;
             }
             graph.push({

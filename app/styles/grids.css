@@ -32,6 +32,22 @@
     grid-template-columns: 100px 1fr 5px 100px 1fr 47px 47px;
 }
 
+.home-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr 1fr 40px;
+    margin: 10px 10% 10px 10%;
+    grid-gap: 5px;
+    grid-template-areas: "desc1"
+                         "desc2"
+                         "next"
+                         "contact";
+}
+
+.home-grid > * {
+    text-align: center;
+}
+
 .c1 {
     grid-column: 1/2;
 }

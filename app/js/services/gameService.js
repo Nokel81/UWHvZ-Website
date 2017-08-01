@@ -69,7 +69,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.removeRegistrantForGame = function (player, cb) {
-        $http.delete(AppSettings.apiUrl + "/game/signups?id=" + player._id)
+        $http.delete(AppSettings.apiUrl + "/game/signups?userId=" + player._id)
             .then(res => {
                 cb(null, res.data);
             }, err => {
@@ -92,7 +92,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.deleteGame = function (id, cb) {
-        $http.delete(AppSettings.apiUrl + "/game?id=" + id, {"set-cookie": $cookies.get("session")})
+        $http.delete(AppSettings.apiUrl + "/game/structural?gameId=" + id)
             .then(res => {
                 cb(null);
             }, err => {
@@ -101,7 +101,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.updateGame = function (game, cb) {
-        $http.put(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
+        $http.put(AppSettings.apiUrl + "/game", game)
             .then(res => {
                 const game = res.data;
                 game.startDate = new Date(game.startDate);
@@ -114,7 +114,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.createGame = function (game, cb) {
-        $http.post(AppSettings.apiUrl + "/game", game, {"set-cookie": $cookies.get("session")})
+        $http.post(AppSettings.apiUrl + "/game/structural", game)
             .then(res => {
                 const game = res.data;
                 game.startDate = new Date(game.startDate);
@@ -127,38 +127,29 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.getGamePlayerInfo = function (gameId, cb) {
-        UserService.getBySession(user => {
-            let id = (user || {})._id;
-            $http.get(AppSettings.apiUrl + "/game/lists?gameId=" + gameId + "&userId=" + id)
-                .then(res => {
-                    cb(null, res.data);
-                }, err => {
-                    cb(err.data);
-                });
+        $http.get(AppSettings.apiUrl + "/game/lists?gameId=" + gameId)
+        .then(res => {
+            cb(null, res.data);
+        }, err => {
+            cb(err.data);
         });
     };
 
     SERVICE.getGamePlayerInfoForMods = function (gameId, cb) {
-        UserService.getBySession(user => {
-            let id = (user || {})._id;
-            $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId + "&userId=" + id)
-                .then(res => {
-                    cb(null, res.data);
-                }, err => {
-                    cb(err.data);
-                });
+        $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId)
+        .then(res => {
+            cb(null, res.data);
+        }, err => {
+            cb(err.data);
         });
     };
 
     SERVICE.getGameReportGraphs = function (cb) {
-        UserService.getBySession(user => {
-            let id = (user || {})._id;
-            $http.get(AppSettings.apiUrl + "/graphs/report?userId=" + id)
-                .then(res => {
-                    cb(null, res.data);
-                }, err => {
-                    cb(err.data);
-                });
+        $http.get(AppSettings.apiUrl + "/graphs/report")
+        .then(res => {
+            cb(null, res.data);
+        }, err => {
+            cb(err.data);
         });
     };
 
@@ -182,8 +173,8 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.removePlayerById = function (gameId, playerId, team, cb) {
-        $http.delete(AppSettings.apiUrl + "/game/players?gameId=" + gameId + "&playerId=" + playerId + "&team=" + team)
+    SERVICE.removePlayerById = function (gameId, userId, team, cb) {
+        $http.delete(AppSettings.apiUrl + "/game/players?gameId=" + gameId + "&userId=" + userId + "&team=" + team)
             .then(res => {
                 let games = res.data;
                 games.forEach(game => {
@@ -226,7 +217,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
     };
 
     SERVICE.getTrees = function (userId, cb) {
-        $http.get(AppSettings.apiUrl + "/graphs/tree?userId=" + userId)
+        $http.get(AppSettings.apiUrl + "/graphs/tree")
             .then(res => {
                 cb(null, res.data);
             }, err => {

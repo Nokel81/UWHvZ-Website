@@ -2,7 +2,7 @@ const logout = rootRequire("server/data-access/functions/user/logout");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Post(req, resolve, reject) {
-    const session = req.body;
+    const {session} = req.headers;
     logout(session)
     .then(message => {
         resolve(message);

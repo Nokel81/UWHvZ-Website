@@ -1,6 +1,6 @@
 function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     "ngInject";
-    $scope.game = {};
+    $scope.game = null;
     const days = AppSettings.days;
     const months = AppSettings.months;
     $scope.locationUrls = {};

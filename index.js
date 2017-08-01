@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
-const express = require("express");
 const morgan = require("morgan");
+const express = require("express");
 const bulkify = require("bulkify");
 const browserify = require("browserify");
-const debowerify = require("debowerify");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const ngAnnotate = require("browserify-ngannotate");
 
 global.rootRequire = function (name) {
@@ -32,7 +32,6 @@ const bundler = browserify(path.join(__dirname, "./app/js/app.js"));
 
 bundler
     .transform("babelify", {presets: ["es2015"]})
-    .transform(debowerify, {})
     .transform(ngAnnotate, {})
     .transform("brfs", {})
     .transform(bulkify, {})
@@ -49,7 +48,9 @@ bundler
 
         app.use(bodyParser.urlencoded({extended: true}));
         app.use(bodyParser.json());
+        app.use(cookieParser());
         app.use(morgan("dev"));
+        app.use(rootRequire('server/routes/middleware/addUserInfo'));
 
         routes(app);
         app.use(express.static(path.join(__dirname, "./app")));

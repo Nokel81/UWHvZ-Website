@@ -2,8 +2,8 @@ const deleteById = rootRequire("server/data-access/functions/buildingLocations/d
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {id} = req.query;
-    deleteById(id)
+    const {markerId} = req.query;
+    deleteById(markerId)
     .then(locations => {
         resolve(locations);
     })

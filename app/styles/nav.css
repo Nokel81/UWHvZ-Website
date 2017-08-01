@@ -1,0 +1,52 @@
+nav {
+    background-color: var(--hvz-green-header);
+    font-weight: bold;
+    display: block;
+    flex-direction: row;
+    display: flex;
+    max-height: 60px;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}
+
+nav>a:first-child {
+    font-size: 20px;
+}
+
+nav>.navbar {
+    display: flex;
+    flex-direction: row;
+}
+
+nav img {
+    padding: 5px;
+    height: 50px;
+}
+
+nav>.navbar a {
+    margin: 5px 10px;
+    vertical-align: middle;
+}
+
+nav a {
+    color: var(--hvz-brown-light);
+}
+
+nav a:hover, nav a:focus {
+    color: white;
+    text-decoration: none;
+}
+
+nav>select {
+    right: 10;
+    top: 8;
+    position: absolute;
+    background-color: var(--hvz-brown-light)!important;
+    border: 1px solid!important;
+    cursor: pointer;
+    width: calc(100% - 325px)!important;
+    min-width: 85px;
+    max-width: 200px;
+    border-radius: 5px;
+}

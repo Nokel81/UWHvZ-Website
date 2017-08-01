@@ -1,0 +1,10 @@
+div[class*="logo"] {
+    margin-top: 10px;
+    text-align: center;
+    max-height: 300px;
+}
+
+div[class*="logo"]>img {
+    max-width: 80%;
+    max-height: 300px
+}

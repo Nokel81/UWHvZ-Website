@@ -38,6 +38,11 @@ hr {
     border-top: 1px solid #000;
 }
 
+h1 {
+    color: var(--hvz-brown);
+    font-weight: bolder;
+}
+
 #map {
     height: calc(100% - 100px);
 }
@@ -142,13 +147,6 @@ hr {
     border: 2px solid black;
     background-color: #eee;
     cursor: pointer;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
-}
-input[type="color"]::-webkit-color-swatch {
-	border: none;
 }
 
 .input-group-no-top {

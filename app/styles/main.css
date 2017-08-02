@@ -2,12 +2,12 @@
 @import "alerts.css";
 @import "animate.css";
 @import "colourpicker.css";
-@import "grids.css";
 @import "images.css";
 @import "inputs.css";
 @import "media.css";
 @import "nav.css";
 @import "tabs.css";
+@import "grids.css";
 
 :root {
     --hvz-green: #37462e;
@@ -166,13 +166,6 @@ input[type="color"]::-webkit-color-swatch {
 
 .control {
     margin-bottom: 5px;
-}
-
-.icon-only {
-    padding: 0;
-    border: none;
-    background: inherit;
-    cursor: pointer;
 }
 
 .close-alerts {

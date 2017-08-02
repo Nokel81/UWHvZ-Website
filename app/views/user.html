@@ -36,7 +36,40 @@
         </div>
     </div>
 </div>
+<uib-tabset ng-hide="session == null" active="2">
+    <uib-tab index="0" heading="Score">
+    </uib-tab>
+    <uib-tab index="1" heading="Messages">
+    </uib-tab>
+    <uib-tab index="2" heading="Reporting">
+        <br>
+        <h5 class="text-centre">Your Code: <b ng-bind="user.playerCode"></b></h5>
+        <br>
+        <h3 class="text-centre">Report a Stun/Tag</h3>
+        <div class="stun-grid">
+            <label class="form-label labelR1">Report Desciption:</label>
+            <textarea class="form-control inputR1" rows="1" cols="80" ng-model="taggedDescription"></textarea>
+            <label class="form-label labelR2">Location:</label>
+            <input class="form-control inputR2" type="text" ng-model="location">
+            <label class="form-label labelR3">Time:</label>
+            <input class="form-control inputR3" type="datetime-local" ng-model="time" step="0" ng-change="timeHasChanged()">
+            <label class="form-label labelR4">Other Player's Code:</label>
+            <input class="form-control inputR4" type="text" ng-model="taggedCode">
+            <button class="btn btn-success submitR4" type="button" ng-click="tagCode()">Tag!</button>
+        </div>
+        <br>
+        <h3 class="text-centre">Use a Supply Code</h3>
+        <div class="supply-grid">
+            <label class="form-label">Supply Code:</label>
+            <input class="form-control" type="text" ng-model="supplyCode">
+            <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
+        </div>
+    </uib-tab>
+    <uib-tab index="3" heading="Settings">
+    </uib-tab>
+</uib-tabset>
 <div ng-hide="session == null">
+
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist" id="modtabs">
         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Score" role="tab">Score</a></li>

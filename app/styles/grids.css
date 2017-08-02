@@ -1,20 +1,17 @@
 .games-grid {
     display: grid;
-    grid-template-columns: 270px auto;
+    grid-template-columns: 280px auto;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto auto auto auto auto auto auto;
 }
 
-.games-grid .accordian, .games-grid .right {
+.games-grid .accordian,
+.games-grid .right {
     grid-column: 1/3;
 }
 
 .accordian-grid {
     display: grid;
     grid-template-columns: 200px auto 47px;
-}
-
-.accordian-grid>.form-control {
-    border-radius: 0px;
 }
 
 .markers-grid {
@@ -24,7 +21,7 @@
 
 .polygon-grid {
     display: grid;
-    grid-template-columns: 210px 1fr 5px 180px 180px 5px 100px 2fr 5px 100px;
+    grid-template-columns: 210px 1fr 5px 100px 200px 5px 100px 2fr 5px 100px;
 }
 
 .verticies-grid {
@@ -38,14 +35,74 @@
     grid-template-rows: 1fr 1fr 1fr 40px;
     margin: 10px 10% 10px 10%;
     grid-gap: 5px;
-    grid-template-areas: "desc1"
-                         "desc2"
-                         "next"
-                         "contact";
 }
 
-.home-grid > * {
+.home-grid>* {
     text-align: center;
+}
+
+.stun-grid {
+    display: grid;
+    grid-row-gap: 5px;
+    grid-template-columns: 200px auto 65px;
+    grid-template-rows: auto auto auto auto;
+    padding: 5px;
+    border: 1px solid;
+    grid-template-areas: "labelR1 inputR1 inputR1"
+                         "labelR2 inputR2 inputR2"
+                         "labelR3 inputR3 inputR3"
+                         "labelR4 inputR4 submitR4";
+}
+
+.stun-grid .labelR1 {
+    grid-area: labelR1;
+}
+
+.stun-grid .labelR2 {
+    grid-area: labelR2;
+}
+
+.stun-grid .labelR3 {
+    grid-area: labelR3;
+}
+
+.stun-grid .labelR4 {
+    grid-area: labelR4;
+}
+
+.stun-grid .inputR1 {
+    grid-area: inputR1;
+}
+
+.stun-grid .inputR2 {
+    grid-area: inputR2;
+}
+
+.stun-grid .inputR3 {
+    grid-area: inputR3;
+}
+
+.stun-grid .inputR4 {
+    grid-area: inputR4;
+}
+
+.stun-grid .submitR4 {
+    grid-area: submitR4;
+}
+
+.stun-grid input:last-of-type,
+.supply-grid input:last-of-type,
+.verticies-grid input:last-of-type,
+.verticies-grid button:first-of-type,
+.accordian-grid .form-control {
+    border-radius: 0;
+}
+
+.supply-grid {
+    display: grid;
+    grid-template-columns: 200px auto 125px;
+    padding: 5px;
+    border: 1px solid;
 }
 
 .c1 {

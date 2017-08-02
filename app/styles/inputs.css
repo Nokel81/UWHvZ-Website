@@ -4,7 +4,8 @@ input[type=password],
 input[type=number],
 input[type=date],
 input[type=datetime-local],
-select {
+select,
+textarea {
     background-color: var(--hvz-yellow-light);
     padding: 6px;
 }
@@ -15,7 +16,8 @@ input[type=password]:focus,
 input[type=number]:focus,
 input[type=date]:focus,
 input[type=datetime-local]:focus,
-select:focus {
+select:focus,
+textarea:focus {
     background-color: var(--hvz-yellow);
 }
 
@@ -25,7 +27,8 @@ input[type=password]:disabled,
 input[type=number]:disabled,
 input[type=date]:disabled,
 input[type=datetime-local]:disabled,
-select:disabled {
+select:disabled,
+textarea:disabled {
     background-color: var(--hvz-yellow-disabled);
 }
 
@@ -45,7 +48,11 @@ select:disabled {
     border: 1px solid var(--hvz-brown);
     border-radius: 5px;
     margin: 5px 0px 0px 0px;
-    max-height: 38px;
+    height: 38px;
+}
+
+textarea.form-control {
+    height: none;
 }
 
 .form-label {
@@ -53,7 +60,7 @@ select:disabled {
     width: 100%;
     font-size: 1rem;
     line-height: 1.25;
-    padding: 6px;
+    padding: 8px;
     color: var(--hvz-brown);
     border: 1px solid var(--hvz-brown);
     border-radius: 5px 0px 0px 5px;
@@ -82,7 +89,7 @@ label:disabled {
 }
 
 .form-block {
-    border-radius: 5px!important;
+    border-radius: 5px;
 }
 
 .btn {

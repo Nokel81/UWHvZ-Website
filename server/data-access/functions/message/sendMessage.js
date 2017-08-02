@@ -1,18 +1,16 @@
 const Promise = require('bluebird');
 
-const recipientCodes = rootRequire("server/constants.json").recipientCodes;
-const webmasterEmail = rootRequire('server/config.json').webmasterEmail;
-const mailService = rootRequire('server/services/mail');
 const User = rootRequire('server/schemas/user');
 const Settings = rootRequire('server/schemas/settings');
-const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const mailService = rootRequire('server/services/mail');
+const webmasterEmail = rootRequire('server/config.json').webmasterEmail;
+const recipientCodes = rootRequire("server/constants.json").recipientCodes;
 const findById = rootRequire("server/data-access/functions/game/findById");
+const resolveFileData = rootRequire("server/data-access/functions/message/resolveFileData");
+const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 
 function SendMessage(message) {
     return new Promise(function(resolve, reject) {
-        if (!Array.isArray(message.fileData)) {
-            message.fileData = [];
-        }
         if (!message.to) {
             return reject("Missing the 'to' field");
         }
@@ -38,7 +36,7 @@ function SendMessage(message) {
                     reject(error);
                 })
             });
-        } else if (validRecipientCodes.indexOf(message.to) < 0) {
+        } else if (Object.values(recipientCodes).indexOf(message.to) < 0) {
             promise = new Promise(function(resolve, reject) {
                 resolve(message.to);
             });
@@ -82,6 +80,10 @@ function SendMessage(message) {
         promise
         .then(recipients => {
             message.to = recipients;
+            return resolveFileData(message.fileData);
+        })
+        .then(fileData => {
+            message.fileData = fileData;
             return mailService.sendMessage(message);
         })
         .then(response => {

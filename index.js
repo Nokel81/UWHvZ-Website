@@ -12,6 +12,10 @@ global.rootRequire = function (name) {
     return require(path.join(__dirname, name));
 };
 
+Object.values = function (obj) {
+    return Object.keys(obj).map(key => obj[key]);
+};
+
 const routes = rootRequire("server/routes");
 const database = rootRequire("server/data-access/database");
 const config = rootRequire("server/config.json");

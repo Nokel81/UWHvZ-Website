@@ -17,6 +17,11 @@
 }
 
 @media(max-width: 400px) {
+     :root {
+        zoom: .75;
+        -moz-transform: scale(.75);
+        -moz-transform-origin: 0 0;
+    }
     .show-400-above {
         display: none !important;
     }

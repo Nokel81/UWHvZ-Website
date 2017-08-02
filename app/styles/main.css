@@ -1,13 +1,13 @@
-@import url("accordian.css");
-@import url("alerts.css");
-@import url("animate.css");
-@import url("colourpicker.css");
-@import url("grids.css");
-@import url("images.css");
-@import url("inputs.css");
-@import url("media.css");
-@import url("nav.css");
-@import url("tabs.css");
+@import "accordian.css";
+@import "alerts.css";
+@import "animate.css";
+@import "colourpicker.css";
+@import "grids.css";
+@import "images.css";
+@import "inputs.css";
+@import "media.css";
+@import "nav.css";
+@import "tabs.css";
 
 :root {
     --hvz-green: #37462e;
@@ -182,18 +182,6 @@ input[type="color"]::-webkit-color-swatch {
 
 .red_text {
     color: red
-}
-
-.alerting {
-    z-index: 10;
-    position: fixed;
-    width: auto;
-}
-
-.alerting>.alert {
-    margin: 20px;
-    min-width: inherit;
-    max-width: 450px;
 }
 
 .icon-size {

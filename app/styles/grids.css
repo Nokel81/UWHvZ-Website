@@ -1,12 +1,6 @@
 .games-grid {
     display: grid;
     grid-template-columns: 280px auto;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr auto auto auto auto auto auto auto;
-}
-
-.games-grid .accordian,
-.games-grid .right {
-    grid-column: 1/3;
 }
 
 .accordian-grid {
@@ -33,63 +27,98 @@
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 1fr 1fr 1fr 40px;
-    margin: 10px 10% 10px 10%;
+    margin: 10px 10%;
     grid-gap: 5px;
-}
-
-.home-grid>* {
-    text-align: center;
 }
 
 .stun-grid {
     display: grid;
     grid-row-gap: 5px;
     grid-template-columns: 200px auto 65px;
-    grid-template-rows: auto auto auto auto;
-    padding: 5px;
+    padding: 0px 5px 5px 5px;
     border: 1px solid;
     grid-template-areas: "labelR1 inputR1 inputR1"
                          "labelR2 inputR2 inputR2"
                          "labelR3 inputR3 inputR3"
-                         "labelR4 inputR4 submitR4";
+                         "labelR4 inputR4 submit";
 }
 
-.stun-grid .labelR1 {
-    grid-area: labelR1;
+.supply-grid {
+    display: grid;
+    grid-template-columns: 200px auto 125px;
+    padding: 0px 5px 5px 5px;
+    border: 1px solid;
 }
 
-.stun-grid .labelR2 {
-    grid-area: labelR2;
+.settings-grid {
+    display: grid;
+    grid-template-columns: 250px 5px auto 80px;
+    grid-template-areas: "labelR1 blank2 inputR1 blank1"
+                         "labelR2 blank2 inputR2 blank1"
+                         "labelR3 blank2 inputR3 blank1"
+                         "labelR4 blank2 inputR4 blank1"
+                         "title title title title"
+                         "submit submit submit submit";
 }
 
-.stun-grid .labelR3 {
-    grid-area: labelR3;
+.resetpassword-grid {
+    display: grid;
+    grid-template-columns: 200px auto 170px;
+    padding: 0px 5px 5px 5px;
+    border: 1px solid black;
+    margin-top: 5px;
+    grid-template-areas: "labelR1 inputR1 inputR1"
+                         "labelR2 inputR2 inputR2"
+                         "labelR3 inputR3 submit";
 }
 
-.stun-grid .labelR4 {
-    grid-area: labelR4;
+.messages-grid {
+    display: grid;
+    grid-template-columns: 150px auto;
 }
 
-.stun-grid .inputR1 {
-    grid-area: inputR1;
+.messages-buttons-grid {
+    display: grid;
+    grid-template-columns: 300px auto 150px;
 }
 
-.stun-grid .inputR2 {
-    grid-area: inputR2;
+.game-players-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-column-gap: 5px;
+    margin: 5px;
+    border-bottom: 1px solid var(--hvz-border-dark);
 }
 
-.stun-grid .inputR3 {
-    grid-area: inputR3;
+.game-moderator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+    margin: 5px;
+    border-bottom: 1px solid var(--hvz-border-dark);
 }
 
-.stun-grid .inputR4 {
-    grid-area: inputR4;
+.game-signups-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr 5px 150px 1fr 5px 175px 1fr 5px 90px;
+    margin: 5px;
 }
 
-.stun-grid .submitR4 {
-    grid-area: submitR4;
+.game-start-grid {
+    display: grid;
+    grid-template-columns: 175px 1fr 5px 200px 1fr 5px 175px 100px;
 }
 
+.games-grid .accordian,
+.games-grid .right {
+    grid-column: 1/3;
+}
+
+.home-grid>* {
+    text-align: center;
+}
+
+.resetpassword-grid>input:nth-of-type(3),
 .stun-grid input:last-of-type,
 .supply-grid input:last-of-type,
 .verticies-grid input:last-of-type,
@@ -98,61 +127,210 @@
     border-radius: 0;
 }
 
-.supply-grid {
-    display: grid;
-    grid-template-columns: 200px auto 125px;
-    padding: 5px;
-    border: 1px solid;
+.settings-grid>label {
+    border-radius: 5px;
+    border-right-width: 1px;
 }
 
-.c1 {
+.resetpassword-grid>label:nth-of-type(1),
+.settings-grid>label:nth-of-type(1),
+.stun-grid>label:nth-of-type(1) {
+    grid-area: labelR1;
+}
+
+.resetpassword-grid>label:nth-of-type(2),
+.settings-grid>label:nth-of-type(2),
+.stun-grid>label:nth-of-type(2) {
+    grid-area: labelR2;
+}
+
+.resetpassword-grid>label:nth-of-type(3),
+.settings-grid>label:nth-of-type(3),
+.stun-grid>label:nth-of-type(3) {
+    grid-area: labelR3;
+}
+
+.settings-grid>label:nth-of-type(4),
+.stun-grid>label:nth-of-type(4) {
+    grid-area: labelR4;
+}
+
+.resetpassword-grid>input:nth-of-type(1),
+.settings-grid>hvz-toggle:nth-of-type(1),
+.stun-grid>textarea {
+    grid-area: inputR1;
+}
+
+.resetpassword-grid>input:nth-of-type(2),
+.settings-grid>hvz-toggle:nth-of-type(2),
+.stun-grid>input:nth-of-type(1) {
+    grid-area: inputR2;
+}
+
+.resetpassword-grid>input:nth-of-type(3),
+.settings-grid>hvz-toggle:nth-of-type(3),
+.stun-grid>input:nth-of-type(2) {
+    grid-area: inputR3;
+}
+
+.settings-grid>input:nth-of-type(1),
+.settings-grid>button:nth-of-type(1),
+.stun-grid>input:nth-of-type(3) {
+    grid-area: inputR4;
+}
+
+.settings-grid>h3 {
+    grid-area: title;
+}
+
+.stun-grid>button,
+.settings-grid>.resetpassword-grid,
+.resetpassword-grid>button {
+    grid-area: submit;
+}
+
+.messages-grid>b {
+    grid-column: 1/3;
+}
+
+.messages-grid>div {
+    grid-column: 1/3;
+}
+
+.messages-buttons-grid>button:first-child {
     grid-column: 1/2;
 }
 
-.c2 {
-    grid-column: 2/3;
-}
-
-.c3 {
+.messages-buttons-grid>button:last-child {
     grid-column: 3/4;
 }
 
-.c4 {
+.game-signups-grid>label:nth-of-type(3),
+.game-start-grid>label:nth-of-type(3) {
+    border-right: 1px solid var(--hvz-border);
+}
+
+.game-signups-grid>hvz-toggle,
+.game-start-grid>hvz-toggle {
+    margin-left: 10px;
+}
+
+.game-codes-grid {
+    display: grid;
+    grid-template-columns: 175px 1fr 5px 200px 1fr 5px 175px 1fr;
+}
+
+.game-player-codes-grid {
+    display: grid;
+    grid-template-columns: 175px 1fr 5px 175px 1fr;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: 80px 2fr 5px 80px 2fr 5px 60px 2fr 5px 100px 1fr 5px 110px 3fr 5px 60px 50px 5px 100px;
+}
+
+.one-time-grid {
+    display: grid;
+    grid-template-columns: 200px 100px;
+}
+
+.markers-grid>*:nth-child(1),
+.polygon-grid>*:nth-child(1),
+.verticies-grid>*:nth-child(1),
+.game-signups-grid>*:nth-child(1),
+.game-start-grid>*:nth-child(1),
+.game-player-codes-grid>*:nth-child(1),
+.report-grid>*:nth-child(1),
+.game-codes-grid>*:nth-child(1) {
+    grid-column: 1/2;
+}
+
+.markers-grid>*:nth-child(2),
+.polygon-grid>*:nth-child(2),
+.verticies-grid>*:nth-child(2),
+.game-signups-grid>*:nth-child(2),
+.game-start-grid>*:nth-child(2),
+.game-player-codes-grid>*:nth-child(2),
+.report-grid>*:nth-child(2),
+.game-codes-grid>*:nth-child(2) {
+    grid-column: 2/3;
+}
+
+.markers-grid>*:nth-child(3),
+.polygon-grid>*:nth-child(3),
+.verticies-grid>*:nth-child(3),
+.game-signups-grid>*:nth-child(3),
+.game-start-grid>*:nth-child(3),
+.game-player-codes-grid>*:nth-child(3),
+.report-grid>*:nth-child(3),
+.game-codes-grid>*:nth-child(3) {
     grid-column: 4/5;
 }
 
-.c5 {
+.markers-grid>*:nth-child(4),
+.polygon-grid>*:nth-child(4),
+.verticies-grid>*:nth-child(4),
+.game-signups-grid>*:nth-child(4),
+.game-start-grid>*:nth-child(4),
+.game-player-codes-grid>*:nth-child(4),
+.report-grid>*:nth-child(4),
+.game-codes-grid>*:nth-child(4) {
     grid-column: 5/6;
 }
 
-.c6 {
-    grid-column: 6/7;
-}
-
-.c7 {
+.markers-grid>*:nth-child(5),
+.polygon-grid>*:nth-child(5),
+.game-signups-grid>*:nth-child(5),
+.game-start-grid>*:nth-child(5),
+.report-grid>*:nth-child(5),
+.game-codes-grid>*:nth-child(5) {
     grid-column: 7/8;
 }
 
-.c8 {
+.markers-grid>*:nth-child(6),
+.polygon-grid>*:nth-child(6),
+.game-signups-grid>*:nth-child(6),
+.game-start-grid>*:nth-child(6),
+.report-grid>*:nth-child(6),
+.game-codes-grid>*:nth-child(6) {
     grid-column: 8/9;
 }
 
-.c9 {
-    grid-column: 9/10;
-}
-
-.c10 {
+.markers-grid>*:nth-child(7),
+.polygon-grid>*:nth-child(7),
+.game-signups-grid>*:nth-child(7),
+.report-grid>*:nth-child(7),
+.game-start-grid>*:nth-child(7) {
     grid-column: 10/11;
 }
 
-.c11 {
+.report-grid>*:nth-child(8),
+.markers-grid>*:nth-child(8) {
     grid-column: 11/12;
 }
 
-.c12 {
-    grid-column: 12/13;
+.report-grid>*:nth-child(9),
+.markers-grid>*:nth-child(9) {
+    grid-column: 13/14;
 }
 
-.c13 {
-    grid-column: 13/14;
+.report-grid>*:nth-child(10) {
+    grid-column: 14/15;
+}
+
+.report-grid>*:nth-child(11) {
+    grid-column: 16/17;
+}
+
+.report-grid>*:nth-child(12) {
+    grid-column: 17/18;
+}
+
+.report-grid>*:nth-child(13) {
+    grid-column: 19/20;
+}
+
+.report-grid>*:nth-child(14) {
+    grid-column: 20/21;
 }

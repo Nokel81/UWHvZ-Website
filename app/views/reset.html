@@ -1,11 +1,9 @@
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-4" style="margin-top: 50px;">
-            <form>
-                <input type="password" class="form-control" ng-model="newPassword" placeholder="New Password">
-                <input type="password" class="form-control" ng-model="newPasswordCheck" placeholder="New Password Again">
-                <button type="submit" class="btn btn-success float-right" ng-click="resetPassword()">Reset Password</button>
-            </form>
-        </div>
-    </div>
+<div class="login-form">
+    <div></div>
+    <form>
+        <input class="form-control" type="password" ng-model="newPassword" placeholder="New Password">
+        <input class="form-control" type="password" ng-model="newPasswordCheck" placeholder="New Password Again">
+        <button class="btn btn-success float-right" type="submit" ng-click="resetPassword()">Reset Password</button>
+    </form>
+    <div></div>
 </div>

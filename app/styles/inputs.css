@@ -1,35 +1,22 @@
-input[type=text],
-input[type=email],
-input[type=password],
-input[type=number],
-input[type=date],
-input[type=datetime-local],
+.form-control,
 select,
 textarea {
     background-color: var(--hvz-yellow-light);
     padding: 6px;
 }
 
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=password]:focus,
-input[type=number]:focus,
-input[type=date]:focus,
-input[type=datetime-local]:focus,
+.form-control:focus,
+.form-control.focus,
 select:focus,
 textarea:focus {
     background-color: var(--hvz-yellow);
 }
 
-input[type=text]:disabled,
-input[type=email]:disabled,
-input[type=password]:disabled,
-input[type=number]:disabled,
-input[type=date]:disabled,
-input[type=datetime-local]:disabled,
+.form-control:disabled,
+.form-control.disabled,
 select:disabled,
 textarea:disabled {
-    background-color: var(--hvz-yellow-disabled);
+    background-color: var(--hvz-disabled);
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
@@ -37,6 +24,10 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 input[type="color"]::-webkit-color-swatch {
 	border: none;
+}
+
+button[type="submit"] {
+    display: none;
 }
 
 button {
@@ -48,6 +39,59 @@ button {
     margin-top: 5px;
     max-height: 38px;
     cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid var(--hvz-border-dark);
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 8px 16px;
+}
+
+.btn-warning {
+    background-color: var(--hvz-yellow-dark);
+    color: var(--hvz-yellow-light);
+}
+.btn-warning:hover {
+    background-color: var(--hvz-yellow);
+}
+.btn-warning:active {
+    background-color: var(--hvz-yellow-darker);
+}
+
+.btn-danger {
+    background-color: var(--hvz-red-dark);
+    color: var(--hvz-red-light);
+}
+.btn-danger:hover {
+    background-color: var(--hvz-red);
+}
+.btn-danger:active {
+    background-color: var(--hvz-red-darker);
+}
+
+.btn-info {
+    background-color: var(--hvz-blue-dark);
+    color: var(--hvz-blue-light);
+}
+.btn-info:hover {
+    background-color: var(--hvz-blue);
+}
+.btn-info:active {
+    background-color: var(--hvz-blue-darker);
+}
+
+.btn-success {
+    background-color: var(--hvz-green-dark);
+    color: var(--hvz-green-light);
+}
+.btn-success:hover {
+    background-color: var(--hvz-green);
+}
+.btn-success:active {
+    background-color: var(--hvz-green-darker);
 }
 
 .btn-scroll {
@@ -55,8 +99,8 @@ button {
     z-index: 10;
     right: 10;
     bottom: 0;
-    background-color: var(--hvz-brown-light);
-    border: 1px solid var(--hvz-brown-dark);
+    background-color: var(--hvz-text-light);
+    border: 1px solid var(--hvz-border-dark);
     border-radius: 10px;
     padding: 8px 10.28px;
     font-size: 32px;
@@ -75,34 +119,44 @@ button {
 
 .form-control {
     display: block;
-    width: 100%;
+    width: -webkit-fill-available;
     font-size: 1rem;
     line-height: 1.25;
     color: black;
-    border: 1px solid var(--hvz-brown);
+    border: 1px solid var(--hvz-border);
     border-radius: 5px;
     margin: 5px 0px 0px 0px;
-    height: 38px;
+    max-height: 38px;
 }
 
 textarea.form-control {
     height: none;
 }
 
+label.form-control {
+    max-height: none;
+    display: table;
+    padding: 8px;
+}
+
+label.form-control:empty {
+    display: block;
+}
+
 .form-label {
     display: block;
-    width: 100%;
     font-size: 1rem;
+    width: -webkit-fill-available;
     line-height: 1.25;
     padding: 8px;
-    color: var(--hvz-brown);
-    border: 1px solid var(--hvz-brown);
+    color: var(--hvz-border);
+    border: 1px solid var(--hvz-border);
     border-radius: 5px 0px 0px 5px;
     border-right-width: 0px;
     margin: 5px 0px 0px 0px;
     font-weight: bold;
-    background-color: var(--hvz-brown-light);
-    max-height: 38px;
+    background-color: var(--hvz-text-light);
+    height: fit-content;
 }
 
 .form-label+.form-control {
@@ -113,7 +167,8 @@ textarea.form-control {
     border-radius: 0px 5px 5px 0px;
 }
 
-.form-control+.btn {
+.form-control+.btn,
+.form-label+.btn {
     border-radius: 0px 5px 5px 0px;
     margin: 5px 0px 0px 0px;
 }
@@ -128,4 +183,24 @@ label:disabled {
 
 .btn {
     margin: 5px 0px 0px 0px;
+}
+
+.icon-form {
+    margin-top: 8px;
+}
+
+.login-form {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-form button {
+    margin-left: 5px;
+}
+
+.login-form>form {
+    width: 600px;
 }

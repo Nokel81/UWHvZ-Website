@@ -1,12 +1,20 @@
+.nav {
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
 .nav-tabs {
-    border-bottom: 1px solid var(--hvz-brown);
+    border-bottom: 1px solid var(--hvz-border);
     margin-top: 5px;
 }
 
 .uib-tab.nav-item {
-    border: 1px solid var(--hvz-brown);
+    border: 1px solid var(--hvz-border);
     border-radius: 5px 5px 0px 0px;
     font-weight: bold;
+    border-bottom-width: 0px;
 }
 
 .uib-tab.nav-item[class$="active"]:hover>a {
@@ -14,19 +22,19 @@
 }
 
 .uib-tab.nav-item:not([class$="active"]):hover>a {
-    background-color: var(--hvz-green-light);
+    background-color: var(--hvz-secondary);
 }
 
 .uib-tab.nav-item>a {
-    color: var(--hvz-brown-dark);
+    color: var(--hvz-border-dark);
 }
 
 .uib-tab.nav-item[class$="active"] {
-    background-color: var(--hvz-green);
+    background-color: var(--hvz-primary);
 }
 
 .uib-tab.nav-item[class$="active"]>a {
-    color: var(--hvz-green-light);
+    color: var(--hvz-secondary);
 }
 
 .uib-tab.nav-item+.uib-tab.nav-item {
@@ -35,4 +43,23 @@
 
 .nav-link {
     border: 0px!important;
+    display: block;
+    padding: 8px 16px;
+}
+
+.nav-tabs .nav-link {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+a.nav-link {
+    text-decoration: none;
+}
+
+.tab-content>.tab-pane {
+    display: none;
+}
+
+.tab-content>.active {
+    display: block;
 }

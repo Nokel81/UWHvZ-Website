@@ -18,8 +18,7 @@ function ToggleDirective() {
             let values = JSON.parse("[" + scope.values.replace(/([^\\]?)'/g, "$1\"") + "]");
             let colours = JSON.parse("[" + scope.colours.replace(/([^\\]?)'/g, "$1\"") + "]");
             let titles = JSON.parse("[" + (scope.titles || "").replace(/([^\\]?)'/g, "$1\"") + "]");
-            let tempVal = objectPath.get(scope.$parent, ngModel.$$attr.ngModel);
-            let index = values.findIndex((elem) => elem === tempVal);
+            let index = values.findIndex((elem) => elem === ngModel.$viewValue);
             const span = angular.element(element[0].firstChild);
             let active = true;
             if (index === -1) {
@@ -57,7 +56,7 @@ function ToggleDirective() {
                 }
             });
 
-            scope.$watch(() => ngModel.$viewValue, (newVal) => {
+            scope.$watch(() => ngModel.$viewValue, newVal => {
                 if (newVal !== values[index]) {
                     let intr = values.findIndex((elem) => elem === ngModel.$viewValue);
                     if (intr >= 0) {

@@ -1,9 +1,10 @@
 <nav>
-    <a href="/"><img src="images/logo.png"> Humans vs Zombies</a>
-    <div class="navbar show-1000-above">
+    <img src="images/logo.png">
+    <a href="/">Humans vs Zombies</a>
+    <div class="navbar">
         <a href="{{route.route}}" ng-repeat="route in routes" ng-bind="route.text" ng-if="route.show"></a>
     </div>
-    <select class="show-1000-below" ng-model="newRoute">
+    <select ng-model="newRoute">
         <option value="" disabled><b>Menu:</b></option>
         <option value="{{route.route}}" ng-repeat="route in routes" ng-bind="route.text" ng-if="route.show"></option>
     </select>

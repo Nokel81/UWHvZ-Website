@@ -26,7 +26,7 @@ function GetUserType(id, game) {
             }
         })
         .catch(error => {
-            reject(error);
+            resolve("NonPlayer");
         });
     });
 }

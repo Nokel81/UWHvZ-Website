@@ -1,0 +1,9 @@
+Infrared: non-living
+Red: non-human
+Orange: non-user
+Yellow: non-player
+Green: human
+Blue: zombie
+Indigo: spectator
+Violet: moderator
+Ultraviolet: super user

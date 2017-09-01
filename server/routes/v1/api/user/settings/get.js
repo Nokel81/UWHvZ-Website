@@ -1,9 +1,9 @@
-const getUserSettings = rootRequire("server/data-access/functions/user/findUserSettings");
+const findUserSettings = rootRequire("server/data-access/functions/user/findUserSettings");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.query;
-    getUserSettings(userId)
+    const {userId} = req.headers;
+    findUserSettings(userId)
     .then(settings => {
         resolve(settings);
     })

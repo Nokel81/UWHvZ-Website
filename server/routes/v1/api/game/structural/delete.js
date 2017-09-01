@@ -2,8 +2,8 @@ const deleteById = rootRequire("server/data-access/functions/game/deleteById");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Delete(req, resolve, reject) {
-    const {id} = req.query;
-    deleteById(id)
+    const {gameId} = req.query;
+    deleteById(gameId)
     .then(noerror => {
         resolve("Game deleted");
     })

@@ -1,6 +1,9 @@
 function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll) {
     "ngInject";
-    CKEDITOR.replace('GameLoreTextArea');
+    angular.element(document).ready(() => {
+        CKEDITOR.replace('GameLoreTextArea');
+    });
+
 
     $scope.players = [];
     $scope.editing = null;
@@ -59,7 +62,8 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             return {
                 name: player.name,
                 startingTeam: "Human",
-                email: player.userEmail
+                email: player.userEmail,
+                random: 'False'
             };
         });
     });

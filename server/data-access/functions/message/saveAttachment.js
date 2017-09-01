@@ -1,7 +1,7 @@
-const path = require("path");
 const fs = require("fs");
-const multiparty = require('multiparty');
+const path = require("path");
 const Promise = require('bluebird');
+const multiparty = require('multiparty');
 
 const attachmentStoreDirectory = path.resolve(__dirname, "../../../attachmentStore/");
 
@@ -14,7 +14,7 @@ function SaveAttachments(request) {
             res.push({
                 fieldName: file.fieldName,
                 filename: file.originalFilename,
-                path: file.path
+                path: path.basename(file.path)
             });
         });
 

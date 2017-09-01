@@ -18,7 +18,7 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 server/attachmentStore/
-!server/attachmentStore/emptyDocToKeepFolder.txt
+!server/attachmentStore/.gitkeep
 
 # Dependency directories
 node_modules

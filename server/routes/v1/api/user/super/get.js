@@ -2,7 +2,7 @@ const isSuper = rootRequire("server/data-access/functions/user/isSuper");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.query;
+    const {userId} = req.headers;
     isSuper(userId)
     .then(isSuper => {
         resolve(isSuper);

@@ -14,6 +14,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "HomeCtrl",
                     templateUrl: "../views/home.html",
                     title: "Home"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -24,6 +28,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "RulesCtrl as rules",
                     templateUrl: "../views/rules.html",
                     title: "Rules"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -34,6 +42,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "InfoCtrl as info",
                     templateUrl: "../views/info.html",
                     title: "Game Info"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -44,6 +56,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "MapCtrl as map",
                     templateUrl: "../views/map.html",
                     title: "Maps"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -54,6 +70,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "UserCtrl as user",
                     templateUrl: "../views/user.html",
                     title: "User"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -64,6 +84,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "ModCtrl as mod",
                     templateUrl: "../views/mod.html",
                     title: "Moderators"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -74,6 +98,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "ResetCtrl as reset",
                     templateUrl: "../views/reset.html",
                     title: "Password Reset"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -84,6 +112,24 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "TreeCtrl as tree",
                     templateUrl: "../views/tree.html",
                     title: "Zombie Family Trees"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
+                }
+            }
+        })
+        .state("Invitational", {
+            url: "/invitational",
+            views: {
+                main: {
+                    controller: "InvitCtrl as invit",
+                    templateUrl: "../views/invitational.html",
+                    title: "Invitational Information"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         })
@@ -94,6 +140,10 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                     controller: "SuperCtrl as super",
                     templateUrl: "../views/super.html",
                     title: "Super User Panel"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
                 }
             }
         });

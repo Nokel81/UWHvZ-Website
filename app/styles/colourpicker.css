@@ -1,0 +1,11 @@
+.colourpicker {
+    padding: 0px;
+    width: 64px;
+    height: 38px;
+    transform: skew(-10deg);
+    border: 2px solid black;
+    background-color: var(--hvz-yellow-light);
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 20px;
+}

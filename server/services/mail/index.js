@@ -1,5 +1,4 @@
 const Promise = require('bluebird');
-Promise.promisifyAll(require("nodemailer"));
 const nodemailer = require("nodemailer");
 const resolve = require("html_resolve");
 const fs = require('fs');
@@ -8,11 +7,11 @@ const getDateString = rootRequire("server/helpers/getDateString");
 const clone = rootRequire("server/helpers/clone");
 const relativeResolve = resolve.relative(__dirname);
 
-const sendMail = new send.createTransport({
+const sendMail = Promise.promisify(new nodemailer.createTransport({
     sendmail: true,
     newline: 'unix',
     path: '/usr/sbin/sendmail'
-}).sendMailAsync;
+}).sendMail);
 
 const SERVICE = {};
 
@@ -85,7 +84,7 @@ SERVICE.sendMessage = function (message) {
         recipients = recipients.map(recipient => {
             let option = clone(mailOptions);
             option.to = recipient;
-            return sendMessage(option);
+            return sendMail(option);
         });
 
         Promise.all(recipients)

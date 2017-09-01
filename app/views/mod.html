@@ -1,259 +1,115 @@
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist" id="modtabs">
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#GameSignups" role="tab">Game Signups</a></li>
-    <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#StartGame" role="tab">Start Game</a></li>
-    <li class="nav-item hidden-xs-down"><a class="nav-link active" data-toggle="tab" href="#SupplyCodes" role="tab">Supply Codes</a></li>
-    <li class="nav-item hidden-sm-down"><a class="nav-link" data-toggle="tab" href="#PlayerCodes" role="tab">Player Codes</a></li>
-    <li class="nav-item hidden-md-down"><a class="nav-link" data-toggle="tab" href="#PlayerReports" role="tab">Player Reports</a></li>
-    <li class="nav-item hidden-md-down"><a class="nav-link" data-toggle="tab" href="#OneTime" role="tab">One Time Events</a></li>
-    <li class="nav-item dropdown hidden-lg-up">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
-        <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item hidden-sm-up" href="#StartGame" data-toggle="tab" role="tab">Start Game</a>
-            <a class="dropdown-item hidden-sm-up" href="#SupplyCodes" data-toggle="tab" role="tab">Supply Codes</a>
-            <a class="dropdown-item hidden-md-up" href="#PlayerCodes" data-toggle="tab" role="tab">Player Codes</a>
-            <a class="dropdown-item hidden-lg-up" href="#PlayerReports" data-toggle="tab" role="tab">Player Reports</a>
-            <a class="dropdown-item hidden-lg-up" href="#OneTime" data-toggle="tab" role="tab">One Time Events</a>
-        </div>
-    </li>
-</ul>
-<!-- Tab panes -->
-<br>
-<div class="tab-content">
-    <div class="tab-pane" id="GameSignups" role="tabpanel">
-
+<uib-tabset active="2">
+    <uib-tab index="0" heading="Game Signups">
         <div ng-show="gameStarted">
-            <h4 class="text-center">No Game to sign up for or game has already started</h4>
+            <h4 class="text-centre">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
-            <br>
             <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
             <br>
             <b>Players signed up: <span ng-bind="players.length"></span></b>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
-                        <b>Player Email</b>
-                    </div>
-                    <div class="col-md-4">
-                        <b>Player Name</b>
-                    </div>
-                    <div class="col-md-2">
-                        <b>Player Team Preference</b>
-                    </div>
-                </div>
-            </div>
-
-            <div ng-repeat="player in players">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" ng-model="player.userEmail" placeholder="Account email..." ng-disabled="editing != $index">
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" ng-model="player.name" placeholder="Account name..." disabled>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="formish-control" ng-show="editing === $index">
-                                <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-disabled="editing != $index"></hvz-toggle>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="formish-control float-right">
-                                <button type="button" class="icon-only h2 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                                <button type="button" class="icon-only h2 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only h2" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
-                                <button type="button" class="icon-only h2 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
-                                <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="game-signups-grid" ng-repeat="player in players">
+                <label class="form-label">Player Email:</label>
+                <input class="form-control" type="text" ng-model="player.userEmail" ng-disabled="editing != $index">
+                <label class="form-label">Player Name:</label>
+                <input type="text" class="form-control" ng-model="player.name" disabled>
+                <label class="form-label">Team Preference:</label>
+                <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-show="editing == $index"></hvz-toggle>
+                <div>
+                    <button type="button" class="icon-only h2 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
+                    <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                    <button type="button" class="icon-only h2 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="icon-only h2" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="icon-only h2 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
+                    <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
                 </div>
             </div>
             <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
-            <br>
-            <br id="bottom">
         </div>
-    </div>
-    <div class="tab-pane" id="StartGame" role="tabpanel">
+    </uib-tab>
+    <uib-tab index="1" heading="Start Game">
+        <div ng-show="gameStarted">
+            <h4 class="text-centre">No Game to sign up for or game has already started</h4>
+        </div>
         <div ng-hide="gameStarted">
-            <br>
             <div class="float-right">
                 <button type="button" class="btn btn-success" ng-click="startGame()">Start Game</button>
                 <button type="button" class="btn btn-info" ng-click="randomlyChooseOZs()">Randomize Rest of Original Zombies</button>
             </div>
             <br>
             <br>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-5">
-                        <b>Player Name:</b>
-                    </div>
-                    <div class="col-md-5">
-                        <b>Team Assignment (from OZ pool):</b>
-                    </div>
-                    <div class="col-md-2">
-                        <b>Randomly Choosen:</b>
-                    </div>
-                </div>
-                <div class="row" ng-repeat="player in OZplayers">
-                    <div class="col-md-5">
-                        <span ng-bind="player.name"></span>
-                    </div>
-                    <div class="col-md-5">
-                        <hvz-toggle values="'Human','Zombie'" titles="'Human','Original Zombie'" width="9em" ng-model="player.startingTeam" colours="'#4286f4','#f4c741'"></hvz-toggle>
-                    </div>
-                    <div class="col-md-2">
-                        <b ng-bind="player.random"></b>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <textarea id="GameLoreTextArea"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <input type="file" multiple file-input="files" class="btn btn-info">
-                </div>
+            <div class="game-start-grid" ng-repeat="player in OZplayers">
+                <label class="form-label">Player Name:</label>
+                <label class="form-control disabled" ng-bind="player.name"></label>
+                <label class="form-label">OZ Pool Assignment:</label>
+                <hvz-toggle values="'Human','Zombie'" titles="'Human','Original Zombie'" width="9em" ng-model="player.startingTeam" colours="'#4286f4','#f4c741'"></hvz-toggle>
+                <label class="form-label">Randomly Choosen:</label>
+                <label class="form-control disabled" ng-bind="player.random"></label>
             </div>
-        </div>
-        <div ng-show="gameStarted">
-            <h4 class="text-center">No Game to start or game has already started</h4>
-        </div>
-    </div>
-    <div class="tab-pane active" id="SupplyCodes" role="tabpanel">
-        <div ng-hide="supplyCodes">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
-        </div>
-        <div class="container-fluid" ng-show="supplyCodes">
-            <button type="button" class="btn btn-success float-right formish-control" ng-click="addCodes()">Add More Codes</button>
             <br>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <b>Supply Code</b>
-                </div>
-                <div class="col-md-4">
-                    <b>Value</b>
-                </div>
-                <div class="col-md-4">
-                    <b>Used By</b>
-                </div>
-            </div>
-            <div class="row" ng-repeat="code in supplyCodes">
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.code">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.value">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" disabled ng-model="code.usedByName">
-                </div>
-            </div>
+            <textarea id="GameLoreTextArea"></textarea>
+            <input type="file" multiple file-input="files" class="btn btn-info">
         </div>
-    </div>
-    <div class="tab-pane" id="PlayerCodes" role="tabpanel">
-        <div ng-hide="gamePlayers">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
+    </uib-tab>
+    <uib-tab index="2" heading="Supply Codes">
+        <div class="text-centre" ng-hide="supplyCodes">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         </div>
-        <div class="fluid-control" ng-show="gamePlayers">
-            <div class="row">
-                <div class="col-sm-6">
-                    <b>Player Name</b>
-                </div>
-                <div class="col-sm-6">
-                    <b>Player Code</b>
-                </div>
-                <hr>
-            </div>
-            <div class="row" ng-repeat="player in gamePlayers">
-                <div class="col-sm-6">
-                    <span ng-bind="player.playerName"></span>
-                </div>
-                <div class="col-sm-6">
-                    <span ng-bind="player.playerCode"></span>
-                </div>
-                <hr>
-            </div>
+        <button class="btn btn-success float-right" type="button" ng-click="addCodes()" ng-show="supplyCodes">Add More Codes</button>
+        <br>
+        <br>
+        <div class="game-codes-grid" ng-repeat="code in supplyCodes">
+            <label class="form-label">Supply Code:</label>
+            <label class="form-control disabled" ng-bind="code.code"></label>
+            <label class="form-label">Value:</label>
+            <label class="form-control disabled" ng-bind="code.value"></label>
+            <label class="form-label">Used By:</label>
+            <label class="form-control disabled" ng-bind="code.usedByName"></label>
         </div>
-    </div>
-    <div class="tab-pane" id="PlayerReports" role="tabpanel">
-        <div ng-hide="reports">
-            <i class="fa fa-spinner fa-spin fa-3x fa-fw text-center" style="margin-left: calc(50% - 40px)"></i>
+    </uib-tab>
+    <uib-tab index="3" heading="Player Codes">
+        <div class="text-centre" ng-hide="gamePlayers">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         </div>
-        <div ng-repeat="day in reports">
-            <div id="accordion_days{{$index}}" role="tablist" aria-multiselectable="true" class="formish-control">
-                <div class="card">
-                    <div class="card-header" role="tab" id="headingDays{{$index}}">
-                        <h6 class="mb-0"><a data-toggle="collapse" data-parent="#accordion_days{{$index}}" href="#collapseDays{{$index}}" aria-expanded="true" aria-controls="collapseDays{{$index}}" ng-bind="day.name"></a></h6>
-                    </div>
-
-                    <div id="collapseDays{{$index}}" class="collapse" role="tabpanel" aria-labelledby="headingDays{{$index}}">
-                        <div class="card-block">
-                            <div class="fluid-control">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <b>Tagger</b>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <b>Tagged</b>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <b>Time</b>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <b>Location</b>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <b>Description</b>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <b>Type</b>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row" ng-repeat="report in day.reports">
-                                    <div class="col-sm-2">
-                                        <span ng-bind="report.taggerName"></span>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <span ng-bind="report.taggedName"></span>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <span ng-bind="report.time"></span>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span ng-bind="report.location"></span>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <span ng-bind="report.description"></span>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span ng-bind="report.reportType"></span>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-warning" ng-click="ratifyReport(report._id)" ng-show="!report.ratified">Ratify</button>
-                                        <button type="button" class="btn btn-danger" ng-click="deleteReport(report._id)">Delete</button>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
+        <div class="game-player-codes-grid" ng-repeat="player in gamePlayers">
+            <label class="form-label">Player Name:</label>
+            <label class="form-control disabled" ng-bind="player.playerName"></label>
+            <label class="form-label">Player Code:</label>
+            <label class="form-control disabled" ng-bind="player.playerCode"></label>
+        </div>
+    </uib-tab>
+    <uib-tab index="4" heading="Player Reports">
+        <div class="text-centre" ng-hide="reports">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        </div>
+        <div class="accordian" ng-repeat="day in reports">
+            <input type="checkbox" id="tab_gameReports{{$index}}">
+            <label for="tab_gameReports{{$index}}" ng-bind="day.name"></label>
+            <div class="accordian-content">
+                <div class="report-grid" ng-repeat="report in day.reports">
+                    <label class="form-label">Tagger:</label>
+                    <label class="form-control disabled" ng-bind="report.taggerName"></label>
+                    <label class="form-label">Tagged:</label>
+                    <label class="form-control disabled" ng-bind="report.taggedName"></label>
+                    <label class="form-label">Time:</label>
+                    <label class="form-control disabled" ng-bind="report.timeString"></label>
+                    <label class="form-label">Location:</label>
+                    <label class="form-control disabled" ng-bind="report.location"></label>
+                    <label class="form-label">Description:</label>
+                    <label class="form-control disabled" ng-bind="report.description"></label>
+                    <label class="form-label">Type:</label>
+                    <label class="form-control disabled" ng-bind="report.reportType"></label>
+                    <div>
+                        <button type="button" class="btn btn-danger" ng-click="deleteReport(report._id)"><i class="fa fa-trash-o"></i></button>
+                        <button type="button" class="btn btn-warning" ng-click="ratifyReport(report._id)" ng-show="!report.ratified"><i class="fa fa-thumbs-o-up"></i></button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="tab-pane" id="OneTime" role="tabpanel">
-        <div class="fluid-control">
-            <div class="row">
-                <div class="col-sm-12">
-                    <b class="formish-control">Unsupplied Death:</b>
-                    <button type="button" class="btn btn-danger" ng-click="unsuppliedDeath()">Commit</button>
-                </div>
-            </div>
+    </uib-tab>
+    <uib-tab index="5" heading="One Time Events">
+        <div class="one-time-grid">
+            <label class="form-label">Unsupplied Death:</label>
+            <button class="btn btn-danger" type="button" ng-click="unsuppliedDeath()">Commit</button>
         </div>
-    </div>
-</div>
+    </uib-tab>
+</uib-tabset>

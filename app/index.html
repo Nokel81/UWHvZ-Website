@@ -6,72 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="images/logo.png">
     <title ng-bind="pageTitle"></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.css" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/894370d156.js"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyABQ2uLgmGnuIedZRTw6yC_39kDd13hLZk"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.7.1/full-all/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.js"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyABQ2uLgmGnuIedZRTw6yC_39kDd13hLZk"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/accordian.css">
-    <link rel="stylesheet" href="styles/inputs.css">
-    <link rel="stylesheet" href="styles/grids.css">
-    <link rel="stylesheet" href="styles/tabs.css">
-    <link rel="stylesheet" href="styles/animate.css">
-    <link rel="stylesheet" href="styles/colorpicker.css">
 </head>
 
 <body id="top" ng-cloak>
     <div class="alerting">
-        <div ng-class="alert.class" ng-repeat="alert in alerts">
+        <div ng-class="alert.class" ng-repeat="alert in alerts track by $index">
             <span ng-bind="alert.text"></span>
-            <button type="button" class="close close-alerts fa fa-times" aria-label="Close" ng-click="alerts.splice(alerts.indexOf(alert), 1)"></button>
+            <button type="button" class="close-alerts fa fa-times" ng-click="alerts.splice($index, 1)"></button>
         </div>
     </div>
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-fixed-top" ng-controller="NavCtrl" style="position: static">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="/"><img src="images/logo.png" style="max-height:3ex; vertical-align: middle;"> Humans vs Zombies</a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/rules">Rules</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/map">Map</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/game">Game Information</a>
-                </li>
-                <li class="nav-item" ng-show="isModerator || isSuper">
-                    <a class="nav-link" href="/moderators">Moderator Controls</a>
-                </li>
-                <li class="nav-item" ng-show="isSuper">
-                    <a class="nav-link" href="/super">Super User Panel</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user">User</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/trees">Zombie Trees</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12" ui-view="main"></div>
-        </div>
-    </div>
-
+    <div ui-view="navigation"></div>
+    <div ui-view="main"></div>
 
     <script src="dist/app.js"></script>
 </body>

@@ -105,61 +105,61 @@
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Markers">
-        <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
+        <button type="button" class="icon-only text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
         <div class="markers-grid" ng-repeat="marker in markers">
-            <label class="form-label c1">Acryonym:</label>
-            <input class="form-control c2" type="text" ng-model="marker.acronym" ng-disabled="editingMarker != $index">
-            <label class="form-label c4">Latitude:</label>
-            <input class="form-control c5" type="number" ng-model="marker.lat" ng-disabled="editingMarker != $index">
-            <label class="form-label c7">Longitude:</label>
-            <input class="form-control c8" type="number" ng-model="marker.lng" ng-disabled="editingMarker != $index">
-            <label class="form-label c10">Full Name:</label>
-            <input class="form-control c11" type="text" ng-model="marker.title" ng-disabled="editingMarker != $index">
-            <div class="icon-form c13">
-                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
+            <label class="form-label">Acryonym:</label>
+            <input class="form-control" type="text" ng-model="marker.acronym" ng-disabled="editingMarker != $index">
+            <label class="form-label">Latitude:</label>
+            <input class="form-control" type="number" ng-model="marker.lat" ng-disabled="editingMarker != $index">
+            <label class="form-label">Longitude:</label>
+            <input class="form-control" type="number" ng-model="marker.lng" ng-disabled="editingMarker != $index">
+            <label class="form-label">Full Name:</label>
+            <input class="form-control" type="text" ng-model="marker.title" ng-disabled="editingMarker != $index">
+            <div class="icon-form">
+                <button type="button" class="icon-only text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
             </div>
         </div>
     </uib-tab>
     <uib-tab index="2" heading="Polygons">
-        <button type="button" class="icon-only font-32 text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
+        <button type="button" class="icon-only text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
         <div class="polygon-grid" ng-repeat="polygon in polygons" ng-init="$rootIndex = $index">
-            <label class="form-label c1">Name and Classification:</label>
-            <input class="form-control c2" type="text" ng-model="polygon.name" ng-disabled="editingPolygon != $index">
-            <label class="form-label c4">Colour Classification:</label>
-            <select class="form-control c5" ng-model="polygon.colour" ng-disabled="editingPolygon != $index">
+            <label class="form-label">Name and Classification:</label>
+            <input class="form-control" type="text" ng-model="polygon.name" ng-disabled="editingPolygon != $index">
+            <label class="form-label">Colour:</label>
+            <select class="form-control" ng-model="polygon.colour" ng-disabled="editingPolygon != $index">
                 <option value="#000000">Game Area</option>
                 <option value="#ff0000">Major Building</option>
                 <option value="#0000ff">Minor Building</option>
                 <option value="#00ff00">Safe Building</option>
                 <option value="#8b4513">Bridge or Tunnel</option>
             </select>
-            <label class="form-label c7">Points:</label>
-            <div class="accordian c8">
+            <label class="form-label">Points:</label>
+            <div class="accordian">
                 <input type="checkbox" id="tab_verticies{{$index}}" ng-disabled="editingPolygon != $index">
                 <label for="tab_verticies{{$index}}">Polygon Verticies</label>
                 <div class="accordian-content">
                     <div class="verticies-grid" ng-repeat="point in polygon.points">
-                        <label class="form-label c1">Latitude:</label>
-                        <input class="form-control c2" type="number" ng-model="point.lat">
-                        <label class="form-label c4">Longitude:</label>
-                        <input class="form-control c5" type="number" ng-model="point.lng">
+                        <label class="form-label">Latitude:</label>
+                        <input class="form-control" type="number" ng-model="point.lat">
+                        <label class="form-label">Longitude:</label>
+                        <input class="form-control" type="number" ng-model="point.lng">
                         <button class="btn btn-danger form-block" type="button" ng-click="removePoint($rootIndex, $index)"><i class="fa fa-times"></i></button>
                         <button class="btn btn-success" type="button" ng-click="addPointAfter($rootIndex, $index)" title="Add point after"><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
             </div>
-            <div class="icon-form c10">
-                <button type="button" class="icon-only font-32 text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only font-32 text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only font-32 text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
-                <button type="button" class="icon-only font-32" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
+            <div class="icon-form">
+                <button type="button" class="icon-only text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
             </div>
         </div>
     </uib-tab>

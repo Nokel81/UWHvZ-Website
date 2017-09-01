@@ -1,34 +1,28 @@
 function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $window) {
     "ngInject";
     $scope.supportsColour = true;
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-        CKEDITOR.replace('MessageBodyTextArea', {
-            toolbarGroups: [{
-                name: 'document',
-                groups: ['mode', 'document']
-            }, {
-                name: 'clipboard',
-                groups: ['clipboard', 'undo']
-            }, {
-                name: 'insert'
-            }, {
-                name: 'basicstyles',
-                groups: ['basicstyles', 'cleanup']
-            }, {
-                name: 'links'
-            }]
-        });
-    } else {
-        CKEDITOR.replace('MessageBodyTextArea');
-    }
-
-    try {
-        var input = document.createElement("input");
-        input.type = "color";
-        $scope.supportsColour = input.type === "color";
-    } catch (e) {
-        $scope.supportsColour = false;
-    }
+    angular.element(document).ready(() => {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+            CKEDITOR.replace('MessageBodyTextArea', {
+                toolbarGroups: [{
+                    name: 'document',
+                    groups: ['mode', 'document']
+                }, {
+                    name: 'clipboard',
+                    groups: ['clipboard', 'undo']
+                }, {
+                    name: 'insert'
+                }, {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup']
+                }, {
+                    name: 'links'
+                }]
+            });
+        } else {
+            CKEDITOR.replace('MessageBodyTextArea');
+        }
+    });
 
     $scope.buttonState = "logIn";
     $scope.email = UserService.email;
@@ -78,9 +72,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
         });
         UserService.getUserInfo(user._id, (err, info) => {
-            // TODO: Fix this mess into being consistant with the data from the server
             if (err) {
-                return $scope.userInfoError = err;
+                return $scope.userInfo = "nogame";
             }
             if (info) {
                 $scope.userInfo = info;

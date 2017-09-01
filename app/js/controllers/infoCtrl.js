@@ -1,6 +1,6 @@
 function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     "ngInject";
-    $scope.game = {};
+    $scope.game = null;
     const days = AppSettings.days;
     const months = AppSettings.months;
     $scope.locationUrls = {};
@@ -76,7 +76,9 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                 var dataset = new vis.DataSet(graphs);
                 $scope.numberOfZombies = (graphs.filter(node => node.group === "Zombies").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
                 $scope.numberOfStuns = (graphs.filter(node => node.group === "Stuns").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
-                new vis.Graph2d(container, dataset, groups, options);
+                angular.element(document).ready(() => {
+                    new vis.Graph2d(container, dataset, groups, options);
+                });
             });
         }
     });

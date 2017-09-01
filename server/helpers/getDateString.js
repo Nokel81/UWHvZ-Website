@@ -8,6 +8,9 @@ function getGetOrdinal(n) {
 }
 
 function getDateString(date, short) {
+    if (!(date instanceof Date)) {
+        date = new Date(date);
+    }
     let hours = date.getHours();
     let noonHalf = "AM"
     if (hours >= 12) {

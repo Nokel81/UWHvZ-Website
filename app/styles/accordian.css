@@ -1,7 +1,7 @@
 .accordian {
     position: relative;
     width: 100%;
-    color: var(--hvz-brown);
+    color: var(--hvz-border);
     overflow: hidden;
 }
 
@@ -15,19 +15,19 @@
     position: relative;
     display: block;
     padding: 6px;
-    background: var(--hvz-green-light);
+    background: var(--hvz-secondary);
     font-weight: bold;
     cursor: pointer;
     margin: 5px 0px 0px 0px;
     border-radius: 5px;
-    border: 1px solid var(--hvz-brown);
+    border: 1px solid var(--hvz-border);
     user-select: none;
 }
 
 .accordian-content {
     max-height: 0px;
     overflow: hidden;
-    background: var(--hvz-green-light);
+    background: var(--hvz-secondary);
     -webkit-transition: max-height .35s;
     -o-transition: max-height .35s;
     transition: max-height .35s;
@@ -38,7 +38,7 @@
 
 input:checked~.accordian-content {
     max-height: inherit;
-    border: 1px solid var(--hvz-brown);
+    border: 1px solid var(--hvz-border);
     border-top: none;
     padding-bottom: 5px;
 }

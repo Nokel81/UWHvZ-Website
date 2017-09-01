@@ -41,6 +41,11 @@ function FindUnratified(gameId, needToBeRatified) {
                         report.taggerName = user.playerName;
                         report.day = gameDays.findIndex(day => day.startTime > report.time);
                         report.day = report.day < 0 ? daysBet + report.day : report.day - 1;
+                        return User.findOne({_id: report.tagged}).select("playerName").exec();
+                    })
+                    .then(user => {
+                        report.taggedName = user.playerName;
+                        report.timeString = getDateString(report.time);
                         resolve(report);
                     })
                     .catch(error => {

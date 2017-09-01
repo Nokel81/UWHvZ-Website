@@ -5,7 +5,7 @@ const User = rootRequire("server/schemas/user");
 const SupplyCode = rootRequire("server/schemas/supplyCode");
 const getDateString = rootRequire("server/helpers/getDateString");
 
-function scoreFromReports(reports, userMap) {
+function scoreFromReports(reports, userMap, player) {
     let stunScore = 0;
     let tagScore = 0;
     let stunDescriptions = [];
@@ -91,7 +91,7 @@ function FindUserScore(gameId, playerId, forTeamScore) {
             finalScore += codeScore;
 
             if (forTeamScore) {
-                let scoreObj = scoreFromReports(reports, null);
+                let scoreObj = scoreFromReports(reports, null, playerId);
                 finalScore += scoreObj.stunScore + scoreObj.tagScore;
                 resolve(finalScore);
             } else {
@@ -101,7 +101,7 @@ function FindUserScore(gameId, playerId, forTeamScore) {
                 .then(users => {
                     let userMap = {}; //This is the store for player names for the descriptions
                     users.forEach(user => userMap[user._id] = user.playerName);
-                    let info = scoreFromReports(reports, userMap);
+                    let info = scoreFromReports(reports, userMap, playerId);
                     info.codeScore = codeScore;
                     info.codeDescriptions = codeDescriptions;
                     resolve(info);

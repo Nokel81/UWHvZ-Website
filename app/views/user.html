@@ -1,207 +1,127 @@
-<div ng-show="session == null">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-4" style="margin-top: 50px;">
-                <form>
-                    <input class="form-control" type="email" ng-model="email" placeholder="Email">
-                    <input class="form-control" type="password" ng-model="password" placeholder="Password">
-                    <div ng-show="buttonState === 'signUp'">
-                        <input class="form-control" type="password" ng-model="passwordCheck" placeholder="Password again">
-                        <div class="red_text">
-                            Passwords must have the following:
-                            <ul>
-                                <li>An Uppercase letter</li>
-                                <li>A Lowercase letter</li>
-                                <li>A Number</li>
-                                <li>At least 8 characters in length</li>
-                            </ul>
-                        </div>
-                        <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
-                        <b style="line-height: 2.5em; vertical-align: text-bottom;">Do you wish to join the next game?</b>
-                        <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"/>
-                        <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'" ng-show="joinNextGame"/>
-                    </div>
-                    <div class="float-right">
-                        <div class="input-group">
-                            <button class="btn btn-warning" type="button" ng-click="forgotPassword()">Forgot Password</button>
-                            <hr style="margin: 2.5px">
-                            <button class="btn btn-secondary" type="button" ng-click="signUp()">Sign Up</button>
-                            <hr style="margin: 2.5px">
-                            <button class="btn btn-success" type="button" ng-click="logIn()">Log In</button>
-                            <button type="submit" style="display:none" ng-click="submitAuthenticationForm()"></button>
-                        </div>
-                    </div>
-                </form>
+<div class="login-form" ng-show="session == null">
+    <div></div>
+    <form>
+        <input class="form-control" type="email" ng-model="email" placeholder="Email">
+        <input class="form-control" type="password" ng-model="password" placeholder="Password">
+        <div ng-show="buttonState === 'signUp'">
+            <input class="form-control" type="password" ng-model="passwordCheck" placeholder="Password again">
+            <div class="red">
+                Passwords must have the following:
+                <ul>
+                    <li>An Uppercase letter</li>
+                    <li>A Lowercase letter</li>
+                    <li>A Number</li>
+                    <li>At least 8 characters in length</li>
+                </ul>
             </div>
+            <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
+            <!-- <b style="line-height: 2.5em; vertical-align: text-bottom;">Do you wish to join the next game?</b>
+            <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"/>
+            <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'" ng-show="joinNextGame"/> -->
         </div>
-    </div>
+        <div class="float-right">
+            <button class="btn btn-warning" type="button" ng-click="forgotPassword()">Forgot Password</button>
+            <button class="btn btn-info" type="button" ng-click="signUp()">Sign Up</button>
+            <button class="btn btn-success" type="button" ng-click="logIn()">Log In</button>
+            <button type="submit" ng-click="submitAuthenticationForm()"></button>
+        </div>
+    </form>
+    <div></div>
 </div>
-<div ng-hide="session == null">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist" id="modtabs">
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Score" role="tab">Score</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Messages" role="tab">Messages</a></li>
-        <li class="nav-item hidden-xs-down"><a class="nav-link active" data-toggle="tab" href="#Code" role="tab">Code</a></li>
-        <li class="nav-item hidden-xs-down"><a class="nav-link" data-toggle="tab" href="#Settings" role="tab">Settings</a></li>
-        <li class="nav-item dropdown hidden-sm-up">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Menu</a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Code" role="tab">Code</a>
-                <a class="dropdown-item hidden-sm-up" data-toggle="tab" href="#Settings" role="tab">Settings</a>
-            </div>
-        </li>
-    </ul>
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div class="tab-pane" id="Score" role="tabpanel">
+<uib-tabset ng-hide="session == null" active="2">
+    <uib-tab index="0" heading="Score">
+        <br>
+        <div class="centre" ng-hide="userInfo">
+            <h4>Please wait, loading...</h4>
+        </div>
+        <div class="text-centre" ng-show="userInfo === 'nogame'">
+            <h3>No game currently running</h3>
+        </div>
+        <div ng-hide="userInfo === 'nogame' || !userInfo">
+            <h3>Your team: <span ng-bind="userInfo.userType || 'NonPlayer'"></span></h3>
             <br>
-            <div class="centre" ng-hide="userInfo">
-                <h4>Please wait, loading...</h4>
-            </div>
-            <div ng-show="userInfo">
-                <div class="text-centre" ng-show="userInfo === 'nogame'">
-                    <h3>No game currently running</h3>
-                </div>
-                <div ng-hide="userInfo === 'nogame'">
-                    <h3>Your team: <span ng-bind="userInfo.userType || 'NonPlayer'"></span></h3>
-                    <br>
-                    <h3>Your score: <span ng-bind="userInfo.userScore.stunScore + userInfo.userScore.tagScore + userInfo.userScore.codeScore || '0'"></span></h3>
-                    <h5>Stuns: <span ng-bind="userInfo.userScore.stunScore || '0'"></span></h5>
-                    <ul>
-                        <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span ng-bind="description"></span></li>
-                    </ul>
-                    <h5>Tags: <span ng-bind="userInfo.userScore.tagScore || '0'"></span></h5>
-                    <ul>
-                        <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span ng-bind="description"></span></li>
-                    </ul>
-                    <h5>Supply Codes: <span ng-bind=" userInfo.userScore.codeScore || '0'"></span></h5>
-                    <ul>
-                        <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span ng-bind="description"></span></li>
-                    </ul>
-                    <br>
-                    <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>
-                    <br>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="Messages" role="tabpanel">
-            <div class="container-fluid">
-                <select class="formish-control w-100" ng-model="messageTo">
-                    <option value="" selected disabled>Message To:</option>
-                    <option value="{{validRecipient.value}}" ng-repeat="validRecipient in validRecipients">{{validRecipient.title}}</option>
-                </select>
-                <div class="input-group">
-                    <span class="input-group-addon" id="messageSubject">Subject</span>
-                    <input type="text" class="form-control" ng-model="messageSubject" aria-describedby="messageSubject">
-                </div>
-                <b>Your Name will be appended to your message!</b>
-                <textarea rows="6" ng-model="messageBody" placeholder="Message Body" id="MessageBodyTextArea"></textarea>
-                <br>
-                <div class="hidden-sm-up">
-                    <input type="file" multiple file-input="files" class="btn btn-info w-100">
-                    <br>
-                    <br>
-                    <button type="button" class="btn btn-success float-right w-100" ng-click="sendMessage()">Send Message</button>
-                    <br>
-                </div>
-                <div class="hidden-xs-down">
-                    <input type="file" multiple file-input="files" class="btn btn-info">
-                    <button type="button" class="btn btn-success float-right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
-                </div>
-                <br>
-            </div>
-        </div>
-        <div class="tab-pane active" id="Code" role="tabpanel">
-            <div class="text-centre h5">
-                <br> Your Code: <b ng-bind="user.playerCode"></b> <br> <br>
-            </div>
-            <div class="text-centre">
-                <h3>Report a Stun/Tag</h3>
-            </div>
-            <table>
-                <tr>
-                    <td>
-                        <div class="fluid-control" style="padding: 15px;">
-                            <div class="row">
-                                <textarea rows="4" cols="80" class="form-control" ng-model="taggedDescription" placeholder="Tagging Desciption"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-1 padding-less">
-                                    <label class="btn btn-secondary formish-controlw-100">Location:</label>
-                                </div>
-                                <div class="col-sm-11 padding-less">
-                                    <input type="text" class="form-control" ng-model="location" step="0">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-1 padding-less">
-                                    <label class="btn btn-secondary formish-control w-100" style="height: 42px;" style="">Time:</label>
-                                </div>
-                                <div class="col-sm-11 padding-less">
-                                    <input type="datetime-local" class="form-control" ng-model="time" step="0" ng-change="timeHasChanged()">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-group">
-                                    <input type="text" class="form-control input-group-no-top" ng-model="taggedCode" placeholder="Tagged Player's Code...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <h3>Your score: <span ng-bind="userInfo.userScore.stunScore + userInfo.userScore.tagScore + userInfo.userScore.codeScore || '0'"></span></h3>
+            <h5>Stuns: <span ng-bind="userInfo.userScore.stunScore || '0'"></span></h5>
+            <ul>
+                <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span ng-bind="description"></span></li>
+            </ul>
+            <h5>Tags: <span ng-bind="userInfo.userScore.tagScore || '0'"></span></h5>
+            <ul>
+                <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span ng-bind="description"></span></li>
+            </ul>
+            <h5>Supply Codes: <span ng-bind=" userInfo.userScore.codeScore || '0'"></span></h5>
+            <ul>
+                <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span ng-bind="description"></span></li>
+            </ul>
             <br>
-            <table>
-                <tr>
-                    <td>
-                        <div class="text-centre">
-                            <h3>Use a Supply Code</h3>
-                            <br>
-                            <br>
-                            <div class="input-group">
-                                <input type="text" class="form-control input-group-no-top" ng-model="supplyCode" placeholder="Supply Code...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>
+            <br>
         </div>
-        <div class="tab-pane" id="Settings" role="tabpanel">
-            <div class="container-fluid" style="padding: 10px;">
-                <button type="button" class="float-right btn btn-info" ng-click="logOut()">logout</button>
-                <div class="hidden-sm-up">
-                    <br>
-                    <br>
-                </div>
-                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.gameEmails" colours="'#888888','#86d993'"/>
-                <pre>    Receive game emails</pre>
-                <br>
-                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.promotionalEmails" colours="'#888888','#86d993'"/>
-                <pre>    Receive promotional emails</pre>
-                <br>
-                <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"/>
-                <pre>    Show score publicly</pre>
-                <br>
-                <button class="btn btn-secondary" type="button" colorpicker colorpicker-position="right" ng-model="settings.treeNodeColour" style="padding:2px 17px" ng-hide="supportsColour"><img src="images/ColourWheel.png" style="max-height:28px"></button>
-                <input class="colourpicker" type="color" ng-show="supportsColour" ng-model="settings.treeNodeColour">
-                <pre>    Zombie Tree Node Colour</pre>
-                <br>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <input type="password" class="form-control" ng-model="oldPassword" placeholder="Old Password">
-                        <input type="password" class="form-control" ng-model="newPassword" placeholder="New Password">
-                        <input type="password" class="form-control" ng-model="newPasswordCheck" placeholder="New Password Check">
-                        <button type="button" class="btn btn-success" ng-click="changePassword()">Change Password</button>
-                    </div>
-                </div>
+    </uib-tab>
+    <uib-tab index="1" heading="Messages">
+        <div class="messages-grid">
+            <label class="form-label">Recipient(s):</label>
+            <select class="form-control" ng-model="messageTo">
+                <option value="{{validRecipient.value}}" ng-repeat="validRecipient in validRecipients">{{validRecipient.title}}</option>
+            </select>
+            <label class="form-label">Subject:</label>
+            <input type="text" class="form-control" ng-model="messageSubject">
+            <b>Your Name will be appended to your message!</b>
+            <textarea rows="6" ng-model="messageBody" id="MessageBodyTextArea"></textarea>
+            <div class="messages-buttons-grid">
+                <input type="file" multiple file-input="files" class="btn btn-info">
+                <button type="button" class="btn btn-success float-right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
             </div>
         </div>
-    </div>
-</div>
+    </uib-tab>
+    <uib-tab index="2" heading="Reporting">
+        <br>
+        <h3 class="text-centre">Your Code: <b ng-bind="user.playerCode"></b></h3>
+        <br>
+        <h4 class="text-centre">Report a Stun/Tag</h4>
+        <div class="stun-grid">
+            <label class="form-label">Report Desciption:</label>
+            <textarea class="form-control" rows="1" cols="80" ng-model="taggedDescription"></textarea>
+            <label class="form-label">Location:</label>
+            <input class="form-control" type="text" ng-model="location">
+            <label class="form-label">Time:</label>
+            <input class="form-control" type="datetime-local" ng-model="time" step="0" ng-change="timeHasChanged()">
+            <label class="form-label">Other Player's Code:</label>
+            <input class="form-control" type="text" ng-model="taggedCode">
+            <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
+        </div>
+        <br>
+        <h4 class="text-centre">Use a Supply Code</h4>
+        <div class="supply-grid">
+            <label class="form-label">Supply Code:</label>
+            <input class="form-control" type="text" ng-model="supplyCode">
+            <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
+        </div>
+    </uib-tab>
+    <uib-tab index="3" heading="Settings">
+        <button class="btn btn-info float-right" type="button" ng-click="logOut()">logout</button>
+        <br>
+        <br>
+        <div class="settings-grid">
+            <label class="form-label">Receive game emails:</label>
+            <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.gameEmails" colours="'#888888','#86d993'"></hvz-toggle>
+            <label class="form-label">Receive promotional emails:</label>
+            <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.promotionalEmails" colours="'#888888','#86d993'"></hvz-toggle>
+            <label class="form-label">Show score publicly:</label>
+            <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"></hvz-toggle>
+            <label class="form-label">Zombie Tree Colour:</label>
+            <input class="colourpicker" type="color" ng-show="supportsColour" ng-model="settings.treeNodeColour">
+            <h3 class="text-centre">Reset Password</h3>
+            <div class="resetpassword-grid">
+                <label class="form-label">Old Password</label>
+                <input class="form-control" type="password" ng-model="oldPassword">
+                <label class="form-label">New Password</label>
+                <input class="form-control" type="password" ng-model="newPassword">
+                <label class="form-label">New Password Check</label>
+                <input class="form-control" type="password" ng-model="newPasswordCheck">
+                <button class="btn btn-success" type="button" ng-click="changePassword()">Change Password</button>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+<hvz-toggle class="ng-hide" titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"/>

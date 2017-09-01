@@ -119,6 +119,20 @@ function OnConfig($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state("Invitational", {
+            url: "/invitational",
+            views: {
+                main: {
+                    controller: "InvitCtrl as invit",
+                    templateUrl: "../views/invitational.html",
+                    title: "Invitational Information"
+                },
+                navigation: {
+                    controller: "NavCtrl",
+                    templateUrl: "../views/nav.html"
+                }
+            }
+        })
         .state("Super", {
             url: "/super",
             views: {

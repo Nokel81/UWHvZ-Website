@@ -24,6 +24,9 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
         }, {
             route: "/trees",
             text: "Zombie Trees"
+        },{
+            route: "/invitational",
+            text: "Invitational"
         }].map(x => {
             x.show = true;
             return x;

@@ -5,3 +5,7 @@
 .surviving-humans ul {
     list-style: none;
 }
+
+select.tree-selector {
+    font-size: 1rem;
+}

@@ -26,9 +26,7 @@
 .home-grid {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 1fr 1fr 40px;
-    margin: 10px 10%;
-    grid-gap: 5px;
+    grid-gap: 20px;
 }
 
 .stun-grid {

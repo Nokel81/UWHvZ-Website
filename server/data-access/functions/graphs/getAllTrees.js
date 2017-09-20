@@ -50,7 +50,7 @@ function GetAllTrees(userId) {
                                 }
                             });
                         });
-                        return Report.find({gameId: game._id, reportType: "Tag"}).exec();
+                        return Report.find({gameId: game._id, reportType: "Tag", ratified: true}).select("tagger tagged").exec();
                     })
                     .then(reports => {
                         reports.map(report => {

@@ -53,14 +53,14 @@ function GetAllTrees(userId) {
                         return Report.find({gameId: game._id, reportType: "Tag", ratified: true}).select("tagger tagged").exec();
                     })
                     .then(reports => {
-                        reports.map(report => {
+                        reports.forEach(report => {
                             if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
                                 zombiesToKeep.push(report.tagger.toString())
                             }
                             if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
                                 zombiesToKeep.push(report.tagged.toString())
                             }
-                            return {
+                            edges.push({
                                 from: report.tagger,
                                 to: report.tagged,
                                 arrows: {
@@ -69,7 +69,7 @@ function GetAllTrees(userId) {
                                 scaling: {
                                     max: 100
                                 }
-                            };
+                            });
                         });
                         game.originalZombies.forEach(zom => {
                             if (zombiesToKeep.indexOf(zom.toString()) < 0) {

@@ -22,7 +22,7 @@ function TreeCtrl($scope, GameService, $cookies, UserService, AlertService) {
         let options = {
             height: "100%",
             nodes: {
-                borderWidth: "2px"
+                borderWidth: 2
             }
         };
         new vis.Network(container, data, options);

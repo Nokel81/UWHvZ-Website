@@ -47,8 +47,7 @@ function GetAllTrees(userId) {
                                 },
                                 font: {
                                     color: "#000000"
-                                },
-                                borderWidth: 2
+                                }
                             });
                         });
                         return Report.find({gameId: game._id, reportType: "Tag"}).exec();

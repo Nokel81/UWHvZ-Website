@@ -20,11 +20,10 @@ function TreeCtrl($scope, GameService, $cookies, UserService, AlertService) {
         let container = document.getElementById('zombieTree');
         let data = $scope.trees[index];
         let options = {
-            "height": "100%",
-            "background-color": "lightgrey",
-            "border-color": "black",
-            "border-width": "2px",
-            "border-style": "solid"
+            height: "100%",
+            nodes: {
+                borderWidth: "2px"
+            }
         };
         new vis.Network(container, data, options);
         $scope.starved = $scope.trees[index].starved;

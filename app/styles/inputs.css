@@ -1,3 +1,7 @@
+a.btn {
+    text-decoration-line: none;
+}
+
 .form-control,
 select,
 textarea {
@@ -43,11 +47,10 @@ button {
 }
 
 .btn {
-    margin-bottom: 5px;
-    margin-top: 5px;
-    max-height: 38px;
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0.25rem;
     border: 1px solid var(--hvz-border-dark);
     display: inline-block;
     font-weight: bold;
@@ -55,7 +58,7 @@ button {
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
 }
 
 .btn-warning {
@@ -188,10 +191,6 @@ label:disabled {
 
 .form-block {
     border-radius: 5px;
-}
-
-.btn {
-    margin: 5px 0px 0px 0px;
 }
 
 .icon-form {

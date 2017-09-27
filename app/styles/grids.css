@@ -3,6 +3,12 @@
     grid-template-columns: 280px auto;
 }
 
+.map-grid {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-gap: 0.25rem;
+}
+
 .accordian-grid {
     display: grid;
     grid-template-columns: 200px auto 47px;

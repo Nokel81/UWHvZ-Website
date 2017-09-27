@@ -18,7 +18,7 @@
     <div class="alerting">
         <div ng-class="alert.class" ng-repeat="alert in alerts track by $index">
             <span ng-bind="alert.text"></span>
-            <button type="button" class="close-alerts fa fa-times" ng-click="alerts.splice($index, 1)"></button>
+            <button type="button" class="fa fa-times" ng-click="alerts.splice($index, 1)"></button>
         </div>
     </div>
     <div ui-view="navigation"></div>

@@ -117,6 +117,7 @@ button {
     transform-origin: bottom;
     visibility: hidden;
     transition: all 0.25s ease;
+    display: none;
 }
 
 .btn-scroll.scroll-visible {
@@ -224,5 +225,8 @@ label:disabled {
 
     .login-form {
         max-width: 800px;
+    }
+    .btn-scroll {
+        display: inherit;
     }
 }

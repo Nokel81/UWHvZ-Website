@@ -44,6 +44,10 @@ SERVICE.sendConfirmationEmail = function (user) {
 
 SERVICE.sendPasswordResetEmail = function (user) {
     return new Promise(function(resolve, reject) {
+        if (!user) {
+            console.error("user email is not a valid email");
+            return resolve("Password reset email has been sent");
+        }
         const resolveData = {
             name: user.playerName,
             link: "https://uwhvz.uwaterloo.ca/passwordReset?code=" + user.passwordResetCode
@@ -63,7 +67,7 @@ SERVICE.sendPasswordResetEmail = function (user) {
         })
         .catch(error => {
             console.error(error);
-            reject("Email not sent");
+            reject("Error sending message");
         });
     });
 };

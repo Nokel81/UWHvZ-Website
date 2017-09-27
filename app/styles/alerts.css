@@ -11,6 +11,17 @@
     max-width: 450px;
     border: 1px solid transparent;
     border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 2rem;
+}
+
+.alert>button {
+    color: black;
+    font-size: 1rem;
+    border: none;
+    background: none;
+    padding: 0;
+    padding-left: 1rem;
 }
 
 .alert-success {
@@ -35,10 +46,4 @@
     background-color: var(--hvz-red-light);
     border-color: var(--hvz-red-dark);
     color: var(--hvz-red);
-}
-
-.close-alerts {
-    color: black;
-    padding: 15px;
-    font-size: 32px;
 }

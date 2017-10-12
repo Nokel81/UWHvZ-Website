@@ -15,8 +15,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 }, {
                     name: 'links'
                 }],
-                width = "auto",
-                height = "auto"
+                widt: "auto",
+                height: "auto"
             });
         } else {
             CKEDITOR.replace('MessageBodyTextArea');

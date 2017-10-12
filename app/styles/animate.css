@@ -3,12 +3,13 @@ hvz-toggle {
     cursor: pointer;
     box-sizing: border-box;
     outline: 0px;
-    height: 38px;
+    height: 2rem;
     position: relative;
     transform: skewX(-10deg);
     font-weight: bold;
     text-align: center;
-    line-height: 38px;
+    line-height: 2rem;
+    border: 0.1rem solid black;
     color: var(--hvz-text-light);
     text-shadow: -1px -1px 0 var(--hvz-border-dark),
                   1px -1px 0 var(--hvz-border-dark),

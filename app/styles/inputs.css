@@ -59,6 +59,7 @@ button {
     white-space: nowrap;
     vertical-align: middle;
     padding: 0.5rem 1rem;
+    width: fit-content;
 }
 
 .btn-warning {
@@ -131,14 +132,13 @@ button {
 
 .form-control {
     display: block;
-    width: -webkit-fill-available;
+    width: auto;
     font-size: 1rem;
     line-height: 1.25;
     color: black;
     border: 1px solid var(--hvz-border);
     border-radius: 5px;
     margin: 5px 0px 0px 0px;
-    max-height: 38px;
 }
 
 textarea.form-control {

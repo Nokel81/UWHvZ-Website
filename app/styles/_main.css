@@ -155,7 +155,7 @@ pre {
 
 body>div[ui-view="main"] {
     padding: 1rem;
-    height: calc(100vh - 5.5rem);
+    height: calc(100vh - 5.6rem);
 }
 
 @media  only screen and (-webkit-min-device-pixel-ratio: 1.3),

@@ -5,9 +5,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
             CKEDITOR.replace('MessageBodyTextArea', {
                 toolbarGroups: [{
-                    name: 'document',
-                    groups: ['mode', 'document']
-                }, {
                     name: 'clipboard',
                     groups: ['clipboard', 'undo']
                 }, {
@@ -17,7 +14,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                     groups: ['basicstyles', 'cleanup']
                 }, {
                     name: 'links'
-                }]
+                }],
+                width = "auto",
+                height = "auto"
             });
         } else {
             CKEDITOR.replace('MessageBodyTextArea');

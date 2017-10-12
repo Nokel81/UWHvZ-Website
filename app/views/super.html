@@ -105,7 +105,7 @@
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Markers">
-        <button type="button" class="icon-only text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
+        <button type="button" class="icon-only text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus red"></i></button>
         <div class="markers-grid" ng-repeat="marker in markers">
             <label class="form-label">Acryonym:</label>
             <input class="form-control" type="text" ng-model="marker.acronym" ng-disabled="editingMarker != $index">

@@ -7,11 +7,11 @@ const getDateString = rootRequire("server/helpers/getDateString");
 const clone = rootRequire("server/helpers/clone");
 const relativeResolve = resolve.relative(__dirname);
 
-const sendMail = Promise.promisify(new nodemailer.createTransport({
+const sendMail = Promise.promisifyAll(new nodemailer.createTransport({
     sendmail: true,
     newline: 'unix',
     path: '/usr/sbin/sendmail'
-}).sendMail);
+})).sendMail;
 
 const SERVICE = {};
 

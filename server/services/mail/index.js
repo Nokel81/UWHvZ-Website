@@ -7,11 +7,11 @@ const getDateString = rootRequire("server/helpers/getDateString");
 const clone = rootRequire("server/helpers/clone");
 const relativeResolve = resolve.relative(__dirname);
 
-const sendMail = Promise.promisify(new nodemailer.createTransport({
+const sendMail = Promise.promisifyAll(new nodemailer.createTransport({
     sendmail: true,
     newline: 'unix',
     path: '/usr/sbin/sendmail'
-}).sendMail);
+}));
 
 const SERVICE = {};
 
@@ -31,7 +31,7 @@ SERVICE.sendConfirmationEmail = function (user) {
             html: html
         };
 
-        sendMail(mailOptions)
+        sendMail.sendMail(mailOptions)
         .then(info => {
             resolve("Confirmation email has been sent");
         })
@@ -61,7 +61,7 @@ SERVICE.sendPasswordResetEmail = function (user) {
             html: html
         };
 
-        sendMail(mailOptions)
+        sendMail.sendMail(mailOptions)
         .then(info => {
             resolve("Password reset email has been sent");
         })
@@ -88,7 +88,7 @@ SERVICE.sendMessage = function (message) {
         recipients = recipients.map(recipient => {
             let option = clone(mailOptions);
             option.to = recipient;
-            return sendMail(option);
+            return sendMail.sendMail(option);
         });
 
         Promise.all(recipients)
@@ -130,7 +130,7 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report) {
             html: html
         };
 
-        sendMail(mailOptions)
+        sendMail.sendMail(mailOptions)
         .then(info => {
             resolve("Email sent");
         })

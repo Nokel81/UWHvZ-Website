@@ -127,6 +127,10 @@
     .messages-buttons-grid {
         grid-template-columns: 1fr;
     }
+
+    .messages-buttons-grid>button:last-child {
+        grid-column: 1/2;
+    }
 }
 
 .games-grid .accordian,
@@ -215,6 +219,7 @@
 
 .messages-grid>div {
     grid-column: 1/3;
+    width: 95vw;
 }
 
 .messages-buttons-grid>button:first-child {

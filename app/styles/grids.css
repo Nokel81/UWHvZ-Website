@@ -49,7 +49,7 @@
 
 .supply-grid {
     display: grid;
-    grid-template-columns: 200px auto 8rem;
+    grid-template-columns: 200px auto 7.1rem;
     padding: 0px 5px 5px 5px;
     border: 1px solid;
 }

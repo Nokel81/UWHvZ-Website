@@ -113,26 +113,6 @@
     grid-template-columns: 175px 1fr 5px 200px 1fr 5px 175px 100px;
 }
 
-@media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
-        only screen and (-o-min-device-pixel-ratio: 13/10),
-        only screen and (min-resolution: 120dpi),
-    {
-    .resetpassword-grid {
-        grid-template-areas: "labelR1 inputR1 inputR1"
-                             "labelR2 inputR2 inputR2"
-                             "labelR3 inputR3 inputR3"
-                             "submit  submit  submit";
-    }
-
-    .messages-buttons-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .messages-buttons-grid>button:last-child {
-        grid-column: 1/2;
-    }
-}
-
 .games-grid .accordian,
 .games-grid .right {
     grid-column: 1/3;
@@ -358,4 +338,24 @@
 
 .report-grid>*:nth-child(14) {
     grid-column: 20/21;
+}
+
+@media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
+        only screen and (-o-min-device-pixel-ratio: 13/10),
+        only screen and (min-resolution: 120dpi),
+    {
+    .resetpassword-grid {
+        grid-template-areas: "labelR1 inputR1 inputR1"
+                             "labelR2 inputR2 inputR2"
+                             "labelR3 inputR3 inputR3"
+                             "submit  submit  submit";
+    }
+
+    .messages-buttons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .messages-buttons-grid>button:last-child {
+        grid-column: 1/2;
+    }
 }

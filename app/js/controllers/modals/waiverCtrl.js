@@ -1,11 +1,11 @@
 function WaiverCtrl($scope, $uibModalInstance) {
     "ngInject";
 
-    $scope.accept = function () {
+    $scope.accept = function() {
         $uibModalInstance.close();
     };
 
-    $scope.decline = function () {
+    $scope.decline = function() {
         $uibModalInstance.dismiss();
     };
 }

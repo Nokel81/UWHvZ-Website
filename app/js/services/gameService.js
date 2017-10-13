@@ -1,9 +1,9 @@
-function GameService($http, AppSettings, $cookies, UserService) {
+function GameService($http, AppSettings) {
     "ngInject";
 
     const SERVICE = {};
 
-    SERVICE.getClosestOrCurrent = function (cb) {
+    SERVICE.getClosestOrCurrent = function(cb) {
         $http.get(AppSettings.apiUrl + "/game/next")
             .then(res => {
                 const game = res.data;
@@ -15,14 +15,13 @@ function GameService($http, AppSettings, $cookies, UserService) {
                 } else {
                     cb(null);
                 }
-            },
-            err => {
+            }, err => {
                 console.error(err);
                 cb(null);
             });
     };
 
-    SERVICE.isDateBeforeToday = function (date) {
+    SERVICE.isDateBeforeToday = function(date) {
         if (!(date instanceof Date)) {
             return false;
         }
@@ -41,7 +40,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
         return false;
     };
 
-    SERVICE.registerPlayerForGame = function (player, cb) {
+    SERVICE.registerPlayerForGame = function(player, cb) {
         $http.post(AppSettings.apiUrl + "/game/signups", player)
             .then(res => {
                 cb(null, res.data);
@@ -50,7 +49,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.updatePlayerForGame = function (player, cb) {
+    SERVICE.updatePlayerForGame = function(player, cb) {
         $http.put(AppSettings.apiUrl + "/game/signups", player)
             .then(res => {
                 cb(null, res.data);
@@ -59,7 +58,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getRegistrantsForGame = function (gameId, cb) {
+    SERVICE.getRegistrantsForGame = function(gameId, cb) {
         $http.get(AppSettings.apiUrl + "/game/signups?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
@@ -68,7 +67,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.removeRegistrantForGame = function (player, cb) {
+    SERVICE.removeRegistrantForGame = function(player, cb) {
         $http.delete(AppSettings.apiUrl + "/game/signups?userId=" + player._id)
             .then(res => {
                 cb(null, res.data);
@@ -77,7 +76,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getAll = function (cb) {
+    SERVICE.getAll = function(cb) {
         $http.get(AppSettings.apiUrl + "/game/all")
             .then(res => {
                 res.data.forEach(game => {
@@ -91,16 +90,16 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.deleteGame = function (id, cb) {
+    SERVICE.deleteGame = function(id, cb) {
         $http.delete(AppSettings.apiUrl + "/game/structural?gameId=" + id)
-            .then(res => {
+            .then(() => {
                 cb(null);
             }, err => {
                 cb(err.data || {});
             });
     };
 
-    SERVICE.updateGame = function (game, cb) {
+    SERVICE.updateGame = function(game, cb) {
         $http.put(AppSettings.apiUrl + "/game", game)
             .then(res => {
                 const game = res.data;
@@ -113,7 +112,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.createGame = function (game, cb) {
+    SERVICE.createGame = function(game, cb) {
         $http.post(AppSettings.apiUrl + "/game/structural", game)
             .then(res => {
                 const game = res.data;
@@ -126,34 +125,34 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getGamePlayerInfo = function (gameId, cb) {
+    SERVICE.getGamePlayerInfo = function(gameId, cb) {
         $http.get(AppSettings.apiUrl + "/game/lists?gameId=" + gameId)
-        .then(res => {
-            cb(null, res.data);
-        }, err => {
-            cb(err.data);
-        });
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
     };
 
-    SERVICE.getGamePlayerInfoForMods = function (gameId, cb) {
+    SERVICE.getGamePlayerInfoForMods = function(gameId, cb) {
         $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId)
-        .then(res => {
-            cb(null, res.data);
-        }, err => {
-            cb(err.data);
-        });
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
     };
 
-    SERVICE.getGameReportGraphs = function (cb) {
+    SERVICE.getGameReportGraphs = function(cb) {
         $http.get(AppSettings.apiUrl + "/graphs/report")
-        .then(res => {
-            cb(null, res.data);
-        }, err => {
-            cb(err.data);
-        });
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
     };
 
-    SERVICE.addPlayerByCode = function (gameId, playerCode, team, cb) {
+    SERVICE.addPlayerByCode = function(gameId, playerCode, team, cb) {
         let body = {
             gameId,
             playerCode,
@@ -173,7 +172,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.removePlayerById = function (gameId, userId, team, cb) {
+    SERVICE.removePlayerById = function(gameId, userId, team, cb) {
         $http.delete(AppSettings.apiUrl + "/game/players?gameId=" + gameId + "&userId=" + userId + "&team=" + team)
             .then(res => {
                 let games = res.data;
@@ -188,7 +187,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getAllReports = function (gameId, cb) {
+    SERVICE.getAllReports = function(gameId, cb) {
         $http.get(AppSettings.apiUrl + "/report?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
@@ -197,8 +196,11 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.ratifyReport = function (reportId, gameId, cb) {
-        let body = {reportId, gameId};
+    SERVICE.ratifyReport = function(reportId, gameId, cb) {
+        let body = {
+            reportId,
+            gameId
+        };
         $http.put(AppSettings.apiUrl + "/report", body)
             .then(res => {
                 cb(null, res.data);
@@ -207,7 +209,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.deleteReport = function (reportId, gameId, cb) {
+    SERVICE.deleteReport = function(reportId, gameId, cb) {
         $http.delete(AppSettings.apiUrl + "/report?reportId=" + reportId + "&gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);
@@ -216,7 +218,7 @@ function GameService($http, AppSettings, $cookies, UserService) {
             });
     };
 
-    SERVICE.getTrees = function (userId, cb) {
+    SERVICE.getTrees = function(userId, cb) {
         $http.get(AppSettings.apiUrl + "/graphs/tree")
             .then(res => {
                 cb(null, res.data);

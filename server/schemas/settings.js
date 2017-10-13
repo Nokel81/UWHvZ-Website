@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueness = require("mongoose-unique-validator");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const settingsSchema = new Schema({
@@ -31,15 +31,13 @@ const settingsSchema = new Schema({
                 if (value.length !== 4 || value.length !== 7) {
                     return false;
                 }
-                if (c1[0] != '#' || c2[0] != '#') {
+                if (value[0] != "#") {
                     return false;
                 }
-                c1 = c1.substring(1).toLowerCase();
-                c2 = c2.substring(1).toLowerCase();
-                c1 = c1.length < 6 ? c1[0] + c1[0] + c1[1] + c1[1] + c1[2] + c1[2] : c1.substr(0, 6);
-                c2 = c2.length < 6 ? c2[0] + c2[0] + c2[1] + c2[1] + c2[2] + c2[2] : c2.substr(0, 6);
+                value = value.substring(1).toLowerCase();
+                value = value.length < 6 ? value[0] + value[0] + value[1] + value[1] + value[2] + value[2] : value.substr(0, 6);
 
-                if (!c1.match(/[0-9a-f]+/g) || !c2.match(/[0-9a-f]+/g)) {
+                if (!value.match(/[0-9a-f]+/g)) {
                     return false;
                 }
                 return true;
@@ -48,7 +46,9 @@ const settingsSchema = new Schema({
         }
     }
 });
-settingsSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
+settingsSchema.plugin(uniqueness, {
+    message: "{PATH} needs to be unique"
+});
 errorNotFound(settingsSchema);
 
 module.exports = mongoose.model("Settings", settingsSchema);

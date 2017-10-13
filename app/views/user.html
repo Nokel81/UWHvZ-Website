@@ -57,18 +57,18 @@
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Messages">
-        <div class="messages-grid">
+        <div class="messages-grid" ng-controller="UserCtrl">
             <label class="form-label">Recipient(s):</label>
-            <select class="form-control" ng-model="messageTo">
+            <select class="form-control" ng-model="message.messageTo">
                 <option value="{{validRecipient.value}}" ng-repeat="validRecipient in validRecipients">{{validRecipient.title}}</option>
             </select>
             <label class="form-label">Subject:</label>
-            <input type="text" class="form-control" ng-model="messageSubject">
+            <input type="text" class="form-control" ng-model="message.messageSubject">
             <b>Your Name will be appended to your message!</b>
-            <textarea rows="6" ng-model="messageBody" id="MessageBodyTextArea"></textarea>
+            <textarea id="MessageBodyTextArea"></textarea>
             <div class="messages-buttons-grid">
                 <input type="file" multiple file-input="files" class="btn btn-info">
-                <button type="button" class="btn btn-success float-right" ng-click="sendMessage()" style="height: 44px">Send Message</button>
+                <button type="button" class="btn btn-success float-right" ng-click="sendMessage()">Send Message</button>
             </div>
         </div>
     </uib-tab>
@@ -79,20 +79,20 @@
         <h4 class="text-centre">Report a Stun/Tag</h4>
         <div class="stun-grid">
             <label class="form-label">Report Desciption:</label>
-            <textarea class="form-control" rows="1" cols="80" ng-model="taggedDescription"></textarea>
+            <textarea class="form-control" rows="1" cols="80" ng-model="taggingCode.taggedDescription"></textarea>
             <label class="form-label">Location:</label>
-            <input class="form-control" type="text" ng-model="location">
+            <input class="form-control" type="text" ng-model="taggingCode.location">
             <label class="form-label">Time:</label>
-            <input class="form-control" type="datetime-local" ng-model="time" step="0" ng-change="timeHasChanged()">
+            <input class="form-control" type="datetime-local" ng-model="taggingCode.time" step="0" ng-change="timeHasChanged()">
             <label class="form-label">Other Player's Code:</label>
-            <input class="form-control" type="text" ng-model="taggedCode">
+            <input class="form-control" type="text" ng-model="taggingCode.taggedCode">
             <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
         </div>
         <br>
         <h4 class="text-centre">Use a Supply Code</h4>
         <div class="supply-grid">
             <label class="form-label">Supply Code:</label>
-            <input class="form-control" type="text" ng-model="supplyCode">
+            <input class="form-control" type="text" ng-model="supplyCodeReporting.supplyCode">
             <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
         </div>
     </uib-tab>

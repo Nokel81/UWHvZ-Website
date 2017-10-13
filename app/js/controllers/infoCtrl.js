@@ -5,17 +5,17 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
     const months = AppSettings.months;
     $scope.locationUrls = {};
 
-    const addZero = function (i) {
+    const addZero = function(i) {
         return (i < 10 ? "0" : "") + i;
     };
 
-    const getGetOrdinal = function (n) {
+    const getGetOrdinal = function(n) {
         const s = ["th", "st", "nd", "rd"];
         const v = n % 100;
         return n + (s[(v - 20) % 10] || s[v] || s[0]);
     };
 
-    const getLatLngs = function (names, cb) {
+    const getLatLngs = function(names, cb) {
         MapService.getAllMarkers((err, markers) => {
             if (err) {
                 AlertService.danger(err);
@@ -49,7 +49,7 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                 if (err) {
                     return AlertService.danger(err);
                 }
-                let container = document.getElementById('reportGraphs');
+                let container = document.getElementById("reportGraphs");
                 let groups = new vis.DataSet();
                 groups.add({
                     id: "Stuns",
@@ -66,7 +66,7 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                     }
                 });
                 let options = {
-                    width:  '100%',
+                    width: "100%",
                     legend: true,
                     sort: false,
                     start: gameObj.startDate.toISOString(),
@@ -74,8 +74,12 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
                     interpolation: false
                 };
                 var dataset = new vis.DataSet(graphs);
-                $scope.numberOfZombies = (graphs.filter(node => node.group === "Zombies").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
-                $scope.numberOfStuns = (graphs.filter(node => node.group === "Stuns").find((e, i, a) => i === a.length - 1) || {y: 0}).y;
+                $scope.numberOfZombies = (graphs.filter(node => node.group === "Zombies").find((e, i, a) => i === a.length - 1) || {
+                    y: 0
+                }).y;
+                $scope.numberOfStuns = (graphs.filter(node => node.group === "Stuns").find((e, i, a) => i === a.length - 1) || {
+                    y: 0
+                }).y;
                 angular.element(document).ready(() => {
                     new vis.Graph2d(container, dataset, groups, options);
                 });
@@ -83,21 +87,21 @@ function InfoCtrl($scope, GameService, AppSettings, MapService, AlertService) {
         }
     });
 
-    $scope.getDateString = function (date) {
+    $scope.getDateString = function(date) {
         if (!(date instanceof Date)) {
             return "";
         }
         return days[date.getDay()] + " " + months[date.getMonth()] + " " + getGetOrdinal(date.getDate()) + " " + date.getFullYear();
     };
 
-    $scope.getTimeString = function (date) {
+    $scope.getTimeString = function(date) {
         if (!(date instanceof Date)) {
             return "";
         }
         return addZero(date.getHours()) + ":" + addZero(date.getMinutes());
     };
 
-    $scope.strikeThrough = function (date) {
+    $scope.strikeThrough = function(date) {
         return GameService.isDateBeforeToday(date);
     };
 }

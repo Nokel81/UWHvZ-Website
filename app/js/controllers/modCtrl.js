@@ -1,7 +1,7 @@
 function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll) {
     "ngInject";
     angular.element(document).ready(() => {
-        CKEDITOR.replace('GameLoreTextArea');
+        CKEDITOR.replace("GameLoreTextArea");
     });
 
 
@@ -9,7 +9,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
     $scope.editing = null;
     $scope.game = null;
 
-    UserService.getBySession(user => {
+    UserService.getBySession(() => {
         UserService.getUserType(type => {
             UserService.isSuper(isSuper => {
                 if (type !== "Moderator" && !isSuper) {
@@ -63,7 +63,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 name: player.name,
                 startingTeam: "Human",
                 email: player.userEmail,
-                random: 'False'
+                random: "False"
             };
         });
     });
@@ -154,7 +154,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             });
     };
 
-    $scope.randomlyChooseOZs = function () {
+    $scope.randomlyChooseOZs = function() {
         let number = Number($window.prompt("New Zombie Player Code", ""));
         if (isNaN(number)) {
             return AlertService.danger("Type a number");
@@ -186,7 +186,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     }, true);
 
-    $scope.startGame = function () {
+    $scope.startGame = function() {
         if (!$window.confirm("Are you sure you want to start the game?")) {
             return;
         }
@@ -194,8 +194,8 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             return AlertService.danger("Please type the game lore");
         }
         var fd = new FormData();
-        angular.forEach($scope.files, function (file) {
-            fd.append('file', file);
+        angular.forEach($scope.files, function(file) {
+            fd.append("file", file);
         });
         const startingZombies = $scope.OZplayers.filter(player => player.startingTeam === "Zombie").map(player => player.email);
         ModService.startGame(startingZombies, $scope.game._id, CKEDITOR.instances.GameLoreTextArea.getData(), fd, (err, res) => {
@@ -208,7 +208,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.ratifyReport = function (reportId) {
+    $scope.ratifyReport = function(reportId) {
         if (!$window.confirm("Are you sure that you want to ratify this stun report?")) {
             return;
         }
@@ -221,7 +221,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.deleteReport = function (reportId) {
+    $scope.deleteReport = function(reportId) {
         if (!$window.confirm("Are you sure that you want to delete that stun report?")) {
             return;
         }
@@ -234,7 +234,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
-    $scope.unsuppliedDeath = function () {
+    $scope.unsuppliedDeath = function() {
         if (!$window.confirm("Are you sure you want to kill all unsupplied humans?")) {
             return;
         }
@@ -248,7 +248,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 AlertService.info(res);
             }
         });
-    }
+    };
 }
 
 module.exports = {

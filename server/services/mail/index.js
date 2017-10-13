@@ -1,7 +1,7 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 const nodemailer = require("nodemailer");
 const resolve = require("html_resolve");
-const fs = require('fs');
+const fs = require("fs");
 
 const getDateString = rootRequire("server/helpers/getDateString");
 const clone = rootRequire("server/helpers/clone");
@@ -9,13 +9,13 @@ const relativeResolve = resolve.relative(__dirname);
 
 const sendMail = Promise.promisifyAll(new nodemailer.createTransport({
     sendmail: true,
-    newline: 'unix',
-    path: '/usr/sbin/sendmail'
+    newline: "unix",
+    path: "/usr/sbin/sendmail"
 }));
 
 const SERVICE = {};
 
-SERVICE.sendConfirmationEmail = function (user) {
+SERVICE.sendConfirmationEmail = function(user) {
     return new Promise(function(resolve, reject) {
         const resolveData = {
             name: user.playerName,
@@ -24,25 +24,25 @@ SERVICE.sendConfirmationEmail = function (user) {
         };
         const html = relativeResolve("./emails/confirmation.html", resolveData);
         const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address,
-            replyTo: 'uwhumansvszombies@gmail.com',
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address,
+            replyTo: "uwhumansvszombies@gmail.com",
             to: user.email,
             subject: "Confirm Registration",
             html: html
         };
 
         sendMail.sendMail(mailOptions)
-        .then(info => {
-            resolve("Confirmation email has been sent");
-        })
-        .catch(error => {
-            console.error(error);
-            reject("Email not sent");
-        });
+            .then(() => {
+                resolve("Confirmation email has been sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
     });
 };
 
-SERVICE.sendPasswordResetEmail = function (user) {
+SERVICE.sendPasswordResetEmail = function(user) {
     return new Promise(function(resolve, reject) {
         if (!user) {
             console.error("user email is not a valid email");
@@ -54,29 +54,29 @@ SERVICE.sendPasswordResetEmail = function (user) {
         };
         const html = relativeResolve("./emails/passwordReset.html", resolveData);
         const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
-            replyTo: 'uwhumansvszombies@gmail.com',
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
             to: user.email,
             subject: "Password Reset Link",
             html: html
         };
 
         sendMail.sendMail(mailOptions)
-        .then(info => {
-            resolve("Password reset email has been sent");
-        })
-        .catch(error => {
-            console.error(error);
-            reject("Error sending message");
-        });
+            .then(() => {
+                resolve("Password reset email has been sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Error sending message");
+            });
     });
 };
 
-SERVICE.sendMessage = function (message) {
+SERVICE.sendMessage = function(message) {
     return new Promise(function(resolve, reject) {
         const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
-            replyTo: 'uwhumansvszombies@gmail.com',
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
             subject: message.subject,
             html: message.body,
             attachments: message.fileData
@@ -92,23 +92,23 @@ SERVICE.sendMessage = function (message) {
         });
 
         Promise.all(recipients)
-        .then(noerror => {
-            message.fileData.forEach(fileData => {
-                fs.unlink(fileData.path);
+            .then(() => {
+                message.fileData.forEach(fileData => {
+                    fs.unlink(fileData.path);
+                });
+                resolve("Email sent");
+            })
+            .catch(error => {
+                message.fileData.forEach(fileData => {
+                    fs.unlink(fileData.path);
+                });
+                console.error(error);
+                reject("Email not sent");
             });
-            resolve("Email sent");
-        })
-        .catch(error => {
-            message.fileData.forEach(fileData => {
-                fs.unlink(fileData.path);
-            });
-            console.error(error);
-            reject("Email not sent");
-        });
     });
 };
 
-SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report) {
+SERVICE.sendTaggedEmail = function(toEmail, toName, fromName, report) {
     return new Promise(function(resolve, reject) {
         let reportWord = report.reportType.toLowerCase();
         reportWord += reportWord[reportWord.length - 1];
@@ -123,33 +123,33 @@ SERVICE.sendTaggedEmail = function (toEmail, toName, fromName, report) {
         };
         const html = relativeResolve("./emails/tagged.html", resolveData);
         const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
-            replyTo: 'uwhumansvszombies@gmail.com',
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
             subject: "You have been " + reportWord + "ed",
             to: toEmail,
             html: html
         };
 
         sendMail.sendMail(mailOptions)
-        .then(info => {
-            resolve("Email sent");
-        })
-        .catch(error => {
-            console.error(error);
-            reject("Email not sent");
-        });
+            .then(() => {
+                resolve("Email sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
     });
 };
 
-SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, attachments, names = []) {
+SERVICE.sendStartingEmail = function(toList, game, HTMLlore, team, attachments, names = []) {
     return new Promise(function(resolve, reject) {
         const resolveData = clone(game);
         resolveData.HTMLlore = HTMLlore;
         resolveData.startingZombieNames = names.map(name => "<li>" + name + "</li>");
         const html = relativeResolve("./emails/" + team + "Start.html", resolveData);
         const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
-            replyTo: 'uwhumansvszombies@gmail.com',
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
             subject: "Welcome to the game",
             html,
             attachments
@@ -157,47 +157,46 @@ SERVICE.sendStartingEmail = function (toList, game, HTMLlore, team, attachments,
         toList = toList.map(recipient => {
             let option = clone(mailOptions);
             option.to = recipient;
-            return sendMessage(option);
+            return sendMail.sendMail(option);
         });
 
         Promise.all(toList)
-        .then(noerror => {
-            resolve("Email sent");
-        })
-        .catch(error => {
-            console.error(error);
-            reject("Email not sent");
-        });
+            .then(() => {
+                resolve("Email sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
     });
 };
 
 SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue) {
     return new Promise(function(resolve, reject) {
-        const resolveData = {
-            suppliedValue,
-            toName: names[index]
-        };
-        const html = relativeResolve("./emails/unsupplied.html", resolveData);
-        const mailOptions = {
-            from: '"UW Humans vs Zombies" hvz@csclub.uwaterloo.ca', // sender address
-            replyTo: 'uwhumansvszombies@gmail.com',
-            subject: "Unsupplied Zombification",
-            html
-        };
-        toList = toList.map(recipient => {
-            let option = clone(mailOptions);
-            option.to = recipient;
-            return sendMessage(option);
+        toList = toList.map((recipient, index) => {
+            const resolveData = {
+                suppliedValue,
+                toName: names[index]
+            };
+            const html = relativeResolve("./emails/unsupplied.html", resolveData);
+            const mailOptions = {
+                from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+                replyTo: "uwhumansvszombies@gmail.com",
+                to: recipient,
+                subject: "Unsupplied Zombification",
+                html
+            };
+            return sendMail.sendMail(mailOptions);
         });
 
         Promise.all(toList)
-        .then(noerror => {
-            resolve("Email sent");
-        })
-        .catch(error => {
-            console.error(error);
-            reject("Email not sent");
-        });
+            .then(() => {
+                resolve("Email sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
     });
 };
 

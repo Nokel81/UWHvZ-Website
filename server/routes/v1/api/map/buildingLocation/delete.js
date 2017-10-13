@@ -2,14 +2,16 @@ const deleteById = rootRequire("server/data-access/functions/buildingLocations/d
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {markerId} = req.query;
+    const {
+        markerId
+    } = req.query;
     deleteById(markerId)
-    .then(locations => {
-        resolve(locations);
-    })
-    .catch(error => {
-        reject("Polygons not found: " + createErrorMessage(error));
-    });
+        .then(locations => {
+            resolve(locations);
+        })
+        .catch(error => {
+            reject("Polygons not found: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Get;

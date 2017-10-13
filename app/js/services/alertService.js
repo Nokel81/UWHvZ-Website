@@ -5,28 +5,28 @@ function AlertService($rootScope) {
 
     const SERVICE = {};
 
-    SERVICE.warn = function (text) {
+    SERVICE.warn = function(text) {
         $rootScope.alerts.push({
             text,
             class: "alert alert-dismissible fade in show alert-warning"
         });
     };
 
-    SERVICE.success = function (text) {
+    SERVICE.success = function(text) {
         $rootScope.alerts.push({
             text,
             class: "alert alert-dismissible fade in show alert-success"
         });
     };
 
-    SERVICE.danger = function (text) {
+    SERVICE.danger = function(text) {
         $rootScope.alerts.push({
             text,
             class: "alert alert-dismissible fade in show alert-danger"
         });
     };
 
-    SERVICE.info = function (text) {
+    SERVICE.info = function(text) {
         $rootScope.alerts.push({
             text,
             class: "alert alert-dismissible fade in show alert-info"

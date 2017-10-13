@@ -5,7 +5,7 @@ function ResetCtrl($scope, $location, AlertService, UserService) {
         $location.url("/user");
     }
 
-    const checkPasswords = function (password, passwordCheck) {
+    const checkPasswords = function(password, passwordCheck) {
         if (password.length < 8 || password !== passwordCheck) {
             return false;
         }
@@ -16,7 +16,7 @@ function ResetCtrl($scope, $location, AlertService, UserService) {
         return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
     };
 
-    $scope.resetPassword = function () {
+    $scope.resetPassword = function() {
         if (!$scope.newPassword || !$scope.newPasswordCheck) {
             return AlertService.danger("Passwords have to be entered");
         }

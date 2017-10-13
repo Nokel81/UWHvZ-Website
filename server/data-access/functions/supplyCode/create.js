@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
 const SupplyCode = rootRequire("server/schemas/supplyCode");
 const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGame");
@@ -6,16 +6,16 @@ const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGa
 function Create(supplyCodes, gameId) {
     return new Promise(function(resolve, reject) {
         SupplyCode.insertMany(supplyCodes)
-        .exec()
-        .then(codes => {
-            return findByGame(gameId);
-        })
-        .then(codes => {
-            resolve(codes);
-        })
-        .catch(error => {
-            reject(error);
-        })
+            .exec()
+            .then(() => {
+                return findByGame(gameId);
+            })
+            .then(codes => {
+                resolve(codes);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

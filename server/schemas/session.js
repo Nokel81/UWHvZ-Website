@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({

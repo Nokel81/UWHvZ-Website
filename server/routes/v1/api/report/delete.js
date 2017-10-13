@@ -2,14 +2,17 @@ const deleteReport = rootRequire("server/data-access/functions/report/deleteRepo
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Delete(req, resolve, reject) {
-    const {reportId, gameId} = req.query;
+    const {
+        reportId,
+        gameId
+    } = req.query;
     deleteReport(reportId, gameId)
-    .then(reports => {
-        resolve(reports);
-    })
-    .catch(error => {
-        reject("Game report not deleted: " + createErrorMessage(error));
-    });
+        .then(reports => {
+            resolve(reports);
+        })
+        .catch(error => {
+            reject("Game report not deleted: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Delete;

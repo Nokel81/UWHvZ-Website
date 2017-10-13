@@ -3,7 +3,7 @@ function MapService($http, AppSettings) {
 
     const SERVICE = {};
 
-    SERVICE.getAllMarkers = function (cb) {
+    SERVICE.getAllMarkers = function(cb) {
         $http.get(AppSettings.apiUrl + "/map/buildingLocation/all")
             .then(res => {
                 cb(null, res.data);
@@ -12,7 +12,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.createMarker = function (marker, cb) {
+    SERVICE.createMarker = function(marker, cb) {
         $http.post(AppSettings.apiUrl + "/map/buildingLocation", marker)
             .then(res => {
                 cb(null, res.data);
@@ -21,7 +21,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.updatedMarker = function (marker, cb) {
+    SERVICE.updatedMarker = function(marker, cb) {
         $http.put(AppSettings.apiUrl + "/map/buildingLocation", marker)
             .then(res => {
                 cb(null, res.data);
@@ -30,7 +30,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.removedMarker = function (id, cb) {
+    SERVICE.removedMarker = function(id, cb) {
         $http.delete(AppSettings.apiUrl + "/map/buildingLocation?markerId=" + id)
             .then(res => {
                 cb(null, res.data);
@@ -39,7 +39,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.getAllPolygons = function (cb) {
+    SERVICE.getAllPolygons = function(cb) {
         $http.get(AppSettings.apiUrl + "/map/polygon/all")
             .then(res => {
                 cb(null, res.data);
@@ -48,7 +48,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.updatePolygon = function (polygon, cb) {
+    SERVICE.updatePolygon = function(polygon, cb) {
         $http.put(AppSettings.apiUrl + "/map/polygon", polygon)
             .then(res => {
                 cb(null, res.data);
@@ -57,7 +57,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.createPolygon = function (polygon, cb) {
+    SERVICE.createPolygon = function(polygon, cb) {
         $http.post(AppSettings.apiUrl + "/map/polygon", polygon)
             .then(res => {
                 cb(null, res.data);
@@ -66,7 +66,7 @@ function MapService($http, AppSettings) {
             });
     };
 
-    SERVICE.deletePolygon = function (id, cb) {
+    SERVICE.deletePolygon = function(id, cb) {
         $http.delete(AppSettings.apiUrl + "/map/polygon?polygonId=" + id)
             .then(res => {
                 cb(null, res.data);

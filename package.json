@@ -9,48 +9,7 @@
     "test": "xo",
     "dev": "node index.js dev",
     "prod": "node index.js prod"
-  },
-  "xo": {
-    "space": 4,
-    "rules": {
-      "linebreak-style": [
-        "error",
-        "windows"
-      ],
-      "quotes": [
-        "error",
-        "double"
-      ],
-      "no-unused-vars": [
-        "error",
-        {
-          "args": "none"
-        }
-      ],
-      "unicorn/filename-case": "off",
-      "no-use-extend-native/no-use-extend-native": "off",
-      "import/no-unassigned-import": "off",
-      "capitalized-comments": "off",
-      "no-throw-literal": "off",
-      "max-params": "off",
-      "max-nested-callbacks": "off"
-    },
-    "globals": [
-      "shouldCreateSourcemap",
-      "fs",
-      "path",
-      "rootRequire",
-      "window",
-      "document",
-      "google",
-      "it",
-      "describe",
-      "beforeEach",
-      "spyOn",
-      "angular",
-      "expect"
-    ]
-  },
+},
   "dependencies": {
     "@uirouter/angularjs": "^1.0.3",
     "angular": "^1.6.4",

@@ -5,10 +5,10 @@
  * @return {String}    The average of c1 and c2 in css format
  */
 var averageColour = function(c1, c2) {
-    if (typeof c1 !== 'string' || typeof c2 !== 'string') {
+    if (typeof c1 !== "string" || typeof c2 !== "string") {
         return null;
     }
-    if (c1[0] != '#' || c2[0] != '#') {
+    if (c1[0] != "#" || c2[0] != "#") {
         return null;
     }
     c1 = c1.substring(1).toLowerCase();

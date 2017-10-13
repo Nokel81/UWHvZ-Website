@@ -1,4 +1,4 @@
-module.exports = function (req, res, next) {
+module.exports = function(req, res, next) {
     if (req.headers.isSuper) {
         next();
     } else {

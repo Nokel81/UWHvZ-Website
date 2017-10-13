@@ -6,7 +6,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
     $scope.editingMarker = null;
     $scope.editingPolygon = null;
 
-    UserService.getBySession(user => {
+    UserService.getBySession(() => {
         UserService.isSuper(isSuper => {
             if (!isSuper) {
                 $location.url("/");
@@ -38,37 +38,37 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     });
 
-    $scope.getYear = function (date) {
-        if (!date instanceof Date) {
+    $scope.getYear = function(date) {
+        if (!(date instanceof Date)) {
             return new Date().getFullYear();
         }
         return date.getFullYear();
     };
 
-    $scope.removeLocation = function (game, location) {
+    $scope.removeLocation = function(game, location) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).splice(location, 1);
     };
 
-    $scope.addLocation = function (game) {
+    $scope.addLocation = function(game) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).push("");
     };
 
-    $scope.removeDate = function (game, date) {
+    $scope.removeDate = function(game, date) {
         ((($scope.games || [])[game] || {}).signUpDates || []).splice(date, 1);
     };
 
-    $scope.addDate = function (game) {
+    $scope.addDate = function(game) {
         ((($scope.games || [])[game] || {}).signUpDates || []).push(new Date());
     };
 
-    $scope.removeModerator = function (game, mod) {
+    $scope.removeModerator = function(game, mod) {
         if ($scope.games[game]) {
             const _id = ($scope.games[game].moderatorObjs.splice(mod, 1)[0] || {})._id;
             $scope.games[game].moderators = ($scope.games[game].moderators || []).filter(id => id !== _id);
         }
     };
 
-    $scope.addPlayer = function (game, team) {
+    $scope.addPlayer = function(game, team) {
         if (!$scope.games[game]) {
             return;
         }
@@ -85,12 +85,12 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         });
     };
 
-    $scope.removePlayer = function (game, index, team) {
+    $scope.removePlayer = function(game, index, team) {
         if (!$scope.games[game] || !$scope.games[game][team + "s"] || !$scope.games[game][team + "s"][index]) {
             return;
         }
         let userId = $scope.games[game][team + "Objs"][index]._id;
-        let gameId = $scope.games[game]._id
+        let gameId = $scope.games[game]._id;
         GameService.removePlayerById(gameId, userId, team, (err, games) => {
             if (err) {
                 return AlertService.danger(err);
@@ -98,9 +98,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             AlertService.info("Player Removed");
             $scope.games = games;
         });
-    }
+    };
 
-    $scope.addGame = function () {
+    $scope.addGame = function() {
         $scope.games.push({
             humans: [],
             moderators: [],
@@ -115,7 +115,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         });
     };
 
-    $scope.saveGame = function (game) {
+    $scope.saveGame = function(game) {
         if (!$scope.games[game]) {
             return;
         }
@@ -138,7 +138,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.removeGame = function (game) {
+    $scope.removeGame = function(game) {
         if (!$scope.games[game]) {
             return;
         }
@@ -157,14 +157,14 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.editMarker = function (index) {
+    $scope.editMarker = function(index) {
         if ($scope.editingMarker !== null || !$scope.markers[index]) {
             return;
         }
         $scope.editingMarker = index;
     };
 
-    $scope.saveMarker = function (index) {
+    $scope.saveMarker = function(index) {
         if ($scope.editingMarker !== index) {
             return;
         }
@@ -187,7 +187,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.removeMarker = function (index) {
+    $scope.removeMarker = function(index) {
         if ($scope.editingMarker !== index) {
             return;
         }
@@ -205,7 +205,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.addMarker = function () {
+    $scope.addMarker = function() {
         if ($scope.editingMarker !== null) {
             return;
         }
@@ -213,14 +213,14 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         $scope.markers.push({});
     };
 
-    $scope.editPolygon = function (index) {
+    $scope.editPolygon = function(index) {
         if ($scope.editingPolygon !== null || !$scope.polygons[index]) {
             return;
         }
         $scope.editingPolygon = index;
     };
 
-    $scope.savePolygon = function (index) {
+    $scope.savePolygon = function(index) {
         if ($scope.editingPolygon !== index) {
             return;
         }
@@ -246,7 +246,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.removePolygon = function (index) {
+    $scope.removePolygon = function(index) {
         if ($scope.editingPolygon !== index) {
             return;
         }
@@ -265,26 +265,28 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         }
     };
 
-    $scope.addPointAfter = function (rootIndex, index) {
+    $scope.addPointAfter = function(rootIndex, index) {
         if ($scope.editingPolygon !== rootIndex || index > $scope.polygons[rootIndex].points.length) {
             return;
         }
         $scope.polygons[rootIndex].points.splice(index + 1, 0, {});
     };
 
-    $scope.removePoint = function (rootIndex, index) {
+    $scope.removePoint = function(rootIndex, index) {
         if ($scope.editingPolygon !== rootIndex || !$scope.polygons[rootIndex].points[index]) {
             return;
         }
         $scope.polygons[rootIndex].points.splice(index, 1);
     };
 
-    $scope.addPolygon = function () {
+    $scope.addPolygon = function() {
         if ($scope.editingPolygon !== null) {
             return;
         }
         $scope.editingPolygon = $scope.polygons.length;
-        $scope.polygons.push({points: [{}]});
+        $scope.polygons.push({
+            points: [{}]
+        });
     };
 }
 

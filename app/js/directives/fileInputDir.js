@@ -2,9 +2,9 @@ function FileDirective($parse) {
     "ngInject";
 
     return {
-        restrict: 'A',
+        restrict: "A",
         link: (scope, element, attrs) => {
-            element.on('change', function () {
+            element.on("change", function() {
                 $parse(attrs.fileInput)
                     .assign(scope, element[0].files);
             });
@@ -13,6 +13,6 @@ function FileDirective($parse) {
 }
 
 module.exports = {
-    name: 'fileInput',
+    name: "fileInput",
     fn: FileDirective
 };

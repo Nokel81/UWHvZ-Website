@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
 const findById = rootRequire("server/data-access/functions/game/findById");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");
@@ -13,19 +13,19 @@ function FindTeamScore(gameId, team) {
             return resolve(0);
         }
         findById(gameId)
-        .then(gameObj => {
-            game = gameObj;
-            let userIds = team === "Human" ? game.humans : game.zombies;
-            return Promise.reduce(clone(userIds), userId => {
-                return findUserScore(gameId, userId, true);
-            }, 0);
-        })
-        .then(teamScore => {
-            resolve(teamScore);
-        })
-        .catch(error => {
-            reject(error);
-        });
+            .then(gameObj => {
+                game = gameObj;
+                let userIds = team === "Human" ? game.humans : game.zombies;
+                return Promise.reduce(clone(userIds), userId => {
+                    return findUserScore(gameId, userId, true);
+                }, 0);
+            })
+            .then(teamScore => {
+                resolve(teamScore);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

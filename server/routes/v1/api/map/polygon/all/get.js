@@ -3,12 +3,12 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     getAll()
-    .then(polygons => {
-        resolve(polygons);
-    })
-    .catch(error => {
-        reject("Polygons not found: " + createErrorMessage(error));
-    });
+        .then(polygons => {
+            resolve(polygons);
+        })
+        .catch(error => {
+            reject("Polygons not found: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Get;

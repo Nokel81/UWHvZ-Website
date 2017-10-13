@@ -2,14 +2,16 @@ const getAll = rootRequire("server/data-access/functions/graphs/getAllTrees");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.headers;
+    const {
+        userId
+    } = req.headers;
     getAll(userId)
-    .then(graphs => {
-        resolve(graphs);
-    })
-    .catch(error => {
-        reject("Trees not found: " + createErrorMessage(error));
-    });
+        .then(graphs => {
+            resolve(graphs);
+        })
+        .catch(error => {
+            reject("Trees not found: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Get;

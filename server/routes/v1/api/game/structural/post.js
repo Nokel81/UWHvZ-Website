@@ -4,12 +4,12 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 function Post(req, resolve, reject) {
     const game = req.body;
     create(game)
-    .then(game => {
-        resolve(game);
-    })
-    .catch(error => {
-        reject("Game not created: " + createErrorMessage(error));
-    });
+        .then(game => {
+            resolve(game);
+        })
+        .catch(error => {
+            reject("Game not created: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Post;

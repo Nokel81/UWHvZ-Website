@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const uniqueness = require("mongoose-unique-validator");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -38,7 +38,9 @@ const userSchema = new Schema({
         type: String
     }
 });
-userSchema.plugin(uniqueness, {message: "{PATH} needs to be unique"});
+userSchema.plugin(uniqueness, {
+    message: "{PATH} needs to be unique"
+});
 errorNotFound(userSchema);
 
 module.exports = mongoose.model("User", userSchema);

@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
 const Game = rootRequire("server/schemas/game");
 const getUserByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
@@ -12,20 +12,24 @@ function AddPlayerToGame(newPlayer) {
             return;
         }
         getUserByPlayerCode(newPlayer.playerCode)
-        .then(player => {
-            let updateQuery = {$push: {}};
-            updateQuery.$push[newPlayer.team] = user._id;
-            return Game.updateOne({_id: newPlayer.gameId}, updateQuery).exec();
-        })
-        then(game => {
-            return findAll();
-        })
-        .then(games => {
-            resolve(games);
-        })
-        .catch(error => {
-            reject(error);
-        });
+            .then(user => {
+                let updateQuery = {
+                    $push: {}
+                };
+                updateQuery.$push[newPlayer.team] = user._id;
+                return Game.updateOne({
+                    _id: newPlayer.gameId
+                }, updateQuery).exec();
+            })
+            .then(() => {
+                return findAll();
+            })
+            .then(games => {
+                resolve(games);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

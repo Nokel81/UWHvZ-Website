@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
 const Report = rootRequire("server/schemas/report");
 const User = rootRequire("server/schemas/user");
@@ -11,7 +11,7 @@ function scoreFromReports(reports, userMap, player) {
     let stunDescriptions = [];
     let tagDescriptions = [];
     let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
-    reports.forEach((report, index) => {
+    reports.forEach(report => {
         report.time = new Date(report.time); //Multiplied by 1000 so that it is in miniseconds and not seconds
         let tagger = report.tagger.toString();
         let tagged = report.tagged.toString();
@@ -38,7 +38,7 @@ function scoreFromReports(reports, userMap, player) {
                 if (!userMap) {
                     return;
                 }
-                let pointWord = "point"
+                let pointWord = "point";
                 if (scoreRegenerated !== 1) {
                     pointWord += "s";
                 }
@@ -58,62 +58,77 @@ function scoreFromReports(reports, userMap, player) {
             }
         }
     });
-    return {stunScore, tagScore, stunDescriptions, tagDescriptions};
+    return {
+        stunScore,
+        tagScore,
+        stunDescriptions,
+        tagDescriptions
+    };
 }
 
 function FindUserScore(gameId, playerId, forTeamScore) {
     return new Promise(function(resolve, reject) {
-        Promise.join(SupplyCode.find({forGame: gameId, usedBy: playerId}).exec(),
-                     Report.find({gameId, ratified: true}).sort("time").exec(), (codes, reports) => {
-            let finalScore = 0;
-            let codeScore = 0;
-            let codeCount = {};
-            codes.forEach(code => {
-                codeScore += code.value;
-                if (forTeamScore) {
-                    return;
-                }
-                if (code.value.toString() in codeCount) {
-                    codeCount[code.value.toString()]++;
-                } else {
-                    codeCount[code.value.toString()] = 1;
-                }
-            });
-            let codeDescriptions = Object.keys(codeCount)
-                .sort((a,b) => Number(a) < Number(b) ? -1 : Number(a) === Number(b) ? 0 : 1)
-                .map(codeValue => {
-                    if (codeCount[codeValue] === 1) {
-                        return "1 supply code worth " + codeValue + " points";
-                    } else {
-                        return codeCount[codeValue] + " supply codes worth " + codeValue + " points";
-                    }
-                });
-            finalScore += codeScore;
+        Promise.join(SupplyCode.find({
+            forGame: gameId,
+            usedBy: playerId
+        }).exec(),
+                Report.find({
+                    gameId,
+                    ratified: true
+                }).sort("time").exec(), (codes, reports) => {
+                    let finalScore = 0;
+                    let codeScore = 0;
+                    let codeCount = {};
+                    codes.forEach(code => {
+                        codeScore += code.value;
+                        if (forTeamScore) {
+                            return;
+                        }
+                        if (code.value.toString() in codeCount) {
+                            codeCount[code.value.toString()]++;
+                        } else {
+                            codeCount[code.value.toString()] = 1;
+                        }
+                    });
+                    let codeDescriptions = Object.keys(codeCount)
+                        .sort((a, b) => Number(a) < Number(b) ? -1 : Number(a) === Number(b) ? 0 : 1)
+                        .map(codeValue => {
+                            if (codeCount[codeValue] === 1) {
+                                return "1 supply code worth " + codeValue + " points";
+                            } else {
+                                return codeCount[codeValue] + " supply codes worth " + codeValue + " points";
+                            }
+                        });
+                    finalScore += codeScore;
 
-            if (forTeamScore) {
-                let scoreObj = scoreFromReports(reports, null, playerId);
-                finalScore += scoreObj.stunScore + scoreObj.tagScore;
-                resolve(finalScore);
-            } else {
-                User.find({_id: {$in: reports.map(report => report.tagged)}})
-                .select("_id playerName")
-                .exec()
-                .then(users => {
-                    let userMap = {}; //This is the store for player names for the descriptions
-                    users.forEach(user => userMap[user._id] = user.playerName);
-                    let info = scoreFromReports(reports, userMap, playerId);
-                    info.codeScore = codeScore;
-                    info.codeDescriptions = codeDescriptions;
-                    resolve(info);
+                    if (forTeamScore) {
+                        let scoreObj = scoreFromReports(reports, null, playerId);
+                        finalScore += scoreObj.stunScore + scoreObj.tagScore;
+                        resolve(finalScore);
+                    } else {
+                        User.find({
+                            _id: {
+                                $in: reports.map(report => report.tagged)
+                            }
+                        })
+                            .select("_id playerName")
+                            .exec()
+                            .then(users => {
+                                let userMap = {}; //This is the store for player names for the descriptions
+                                users.forEach(user => userMap[user._id] = user.playerName);
+                                let info = scoreFromReports(reports, userMap, playerId);
+                                info.codeScore = codeScore;
+                                info.codeDescriptions = codeDescriptions;
+                                resolve(info);
+                            })
+                            .catch(error => {
+                                reject(error);
+                            });
+                    }
                 })
-                .catch(error => {
-                    reject(error);
-                })
-            }
-        })
-        .catch(error => {
-            reject(error);
-        });
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

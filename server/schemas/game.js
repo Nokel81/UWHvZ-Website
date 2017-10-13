@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
@@ -79,7 +79,7 @@ const gameSchema = new Schema({
     }
 });
 
-gameSchema.pre("validate", function (next) {
+gameSchema.pre("validate", function(next) {
     if (this.startDate >= this.endDate) {
         return this.invalidate("startDate", "Must be before game's end time");
     }

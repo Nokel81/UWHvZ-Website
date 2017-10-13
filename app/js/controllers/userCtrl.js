@@ -3,21 +3,21 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.supportsColour = true;
     angular.element(document).ready(() => {
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-            CKEDITOR.replace('MessageBodyTextArea', {
+            CKEDITOR.replace("MessageBodyTextArea", {
                 toolbarGroups: [{
-                    name: 'clipboard',
-                    groups: ['clipboard', 'undo']
+                    name: "clipboard",
+                    groups: ["clipboard", "undo"]
                 }, {
-                    name: 'insert'
+                    name: "insert"
                 }, {
-                    name: 'basicstyles',
-                    groups: ['basicstyles', 'cleanup']
+                    name: "basicstyles",
+                    groups: ["basicstyles", "cleanup"]
                 }, {
-                    name: 'links'
+                    name: "links"
                 }]
             });
         } else {
-            CKEDITOR.replace('MessageBodyTextArea');
+            CKEDITOR.replace("MessageBodyTextArea");
         }
     });
 
@@ -53,7 +53,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     $scope.timeHasChanged = function() {
         $scope.hasTimeBeenChanged = true;
-    }
+    };
 
     UserService.getBySession(user => {
         $scope.user = user;
@@ -198,7 +198,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         ModalService.openWaiverModal()
             .result
-            .then(res => {
+            .then(() => {
                 UserService.signUp($scope.email, $scope.password, $scope.name, $scope.teamPreference, (err, res) => {
                     if (err) {
                         AlertService.danger(err);
@@ -206,7 +206,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                         AlertService.info(res);
                     }
                 });
-            }, err => {
+            }, () => {
                 AlertService.danger("The waiver must be accepted");
             });
     };
@@ -219,60 +219,63 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
     };
 
+    $scope.taggingCode = {};
     $scope.tagCode = function() {
         if (currentlyTagging) {
             return;
         }
-        if (!$scope.taggedCode || !$scope.taggedDescription || !$scope.time) {
+        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time) {
             return AlertService.danger("Need more information");
         }
-        if (!$scope.hasTimeBeenChanged && !$window.confirm("You have not changed the time that the event happened, are you sure it just happened?")) {
+        if (!$scope.taggingCode.hasTimeBeenChanged && !$window.confirm("You have not changed the time that the event happened, are you sure it just happened?")) {
             return;
         }
         currentlyTagging = true;
         AlertService.info("Sending report");
-        UserService.reportTag($scope.taggedCode, $scope.user._id, $scope.taggedDescription, $scope.location, $scope.time, (err, res) => {
+        UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, $scope.taggingCode.time, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
-                delete $scope.taggedCode;
-                delete $scope.taggedDescription;
-                delete $scope.location;
-                $scope.time = new Date();
-                $scope.time.setMilliseconds(0);
-                $scope.time.setSeconds(0);
+                delete $scope.taggingCode.taggedCode;
+                delete $scope.taggingCode.taggedDescription;
+                delete $scope.taggingCode.location;
+                $scope.taggingCode.time = new Date();
+                $scope.taggingCode.time.setMilliseconds(0);
+                $scope.taggingCode.time.setSeconds(0);
                 AlertService.info(res);
-                $scope.hasTimeBeenChanged = false;
+                $scope.taggingCode.hasTimeBeenChanged = false;
             }
             currentlyTagging = false;
         });
     };
 
+    $scope.supplyCodeReporting = {};
     $scope.supplyCodeReport = function() {
-        if (!$scope.supplyCode) {
+        if (!$scope.supplyCodeReporting.supplyCode) {
             return;
         }
-        UserService.reportSupplyCode($scope.supplyCode, $scope.user._id, (err, res) => {
+        UserService.reportSupplyCode($scope.supplyCodeReporting.supplyCode, $scope.user._id, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
-                delete $scope.supplyCode;
+                delete $scope.supplyCodeReporting.supplyCode;
                 AlertService.info(res);
             }
         });
     };
 
+    $scope.changingPassword = {};
     $scope.changePassword = function() {
-        if (!$scope.newPassword) {
+        if (!$scope.changingPassword.newPassword) {
             return;
         }
-        if ($scope.newPassword !== $scope.newPasswordCheck) {
+        if ($scope.changingPassword.newPassword !== $scope.changingPassword.newPasswordCheck) {
             return AlertService.danger("New passwords don't match");
         }
-        if (!checkPasswords($scope.newPassword, $scope.newPasswordCheck)) {
+        if (!checkPasswords($scope.changingPassword.newPassword, $scope.changingPassword.newPasswordCheck)) {
             return AlertService.danger("New password is not complex enough");
         }
-        UserService.changePassword($scope.oldPassword, $scope.newPassword, (err, res) => {
+        UserService.changePassword($scope.changingPassword.oldPassword, $scope.changingPassword.newPassword, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -280,29 +283,30 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $scope.buttonState = "logIn";
                 $scope.email = "";
                 $scope.password = "";
-                $scope.newPassword = "";
-                $scope.newPasswordCheck = "";
-                $scope.oldPassword = "";
+                $scope.changingPassword.newPassword = "";
+                $scope.changingPassword.newPasswordCheck = "";
+                $scope.changingPassword.oldPassword = "";
             }
         });
     };
 
+    $scope.message = {};
     $scope.sendMessage = function() {
         if (currentlySending) {
             return;
         }
-        if (!$scope.messageTo) {
+        if (!$scope.message.messageTo) {
             return AlertService.danger("Please select a recipient");
         }
-        if (!$scope.messageSubject) {
+        if (!$scope.message.messageSubject) {
             return AlertService.danger("Please type a subject");
         }
         if (!CKEDITOR.instances.MessageBodyTextArea.getData()) {
             return AlertService.danger("Please type a message body");
         }
         var fd = new FormData();
-        angular.forEach($scope.files, function(file) {
-            fd.append('file', file);
+        angular.forEach($scope.message.files, function(file) {
+            fd.append("file", file);
         });
         let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
         if (["AllPlayers", "Moderators", "Zombies", "AllUsers", "Humans"].indexOf($scope.messageTo) >= 0) {
@@ -310,13 +314,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         currentlySending = true;
         AlertService.info("Sending message");
-        UserService.sendMessage($scope.messageTo, $scope.messageSubject, messageBody, fd, (err, res) => {
+        UserService.sendMessage($scope.message.messageTo, $scope.message.messageSubject, messageBody, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 AlertService.info(res);
-                $scope.messageTo = "";
-                $scope.messageSubject = "";
+                $scope.message.messageTo = "";
+                $scope.message.messageSubject = "";
                 CKEDITOR.instances.MessageBodyTextArea.setData("");
             }
             currentlySending = false;

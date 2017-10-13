@@ -12,7 +12,7 @@ function getDateString(date, short) {
         date = new Date(date);
     }
     let hours = date.getHours();
-    let noonHalf = "AM"
+    let noonHalf = "AM";
     if (hours >= 12) {
         noonHalf = "PM";
     }

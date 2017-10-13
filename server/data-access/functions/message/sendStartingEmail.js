@@ -1,6 +1,6 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
-const mailService = rootRequire('server/services/mail');
+const mailService = rootRequire("server/services/mail");
 const resolveFileData = rootRequire("server/data-access/functions/message/resolveFileData");
 
 function SendStartingEmail(toList, teamName, game, HTMLlore, fileData) {
@@ -12,15 +12,15 @@ function SendStartingEmail(toList, teamName, game, HTMLlore, fileData) {
             return resolve();
         }
         resolveFileData(fileData)
-        .then(fileData => {
-            return mailService.sendStartingEmail(toList, game, HTMLlore, teamName.toLowerCase(), fileData)
-        })
-        .then(res => {
-            resolve(res);
-        })
-        .catch(error => {
-            reject(error);
-        });
+            .then(fileData => {
+                return mailService.sendStartingEmail(toList, game, HTMLlore, teamName.toLowerCase(), fileData);
+            })
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

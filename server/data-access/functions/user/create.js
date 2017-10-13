@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 const randomString = require("crypto-random-string");
 
 const User = rootRequire("server/schemas/user");
@@ -16,41 +16,44 @@ function Create(user) {
     let teamPreference = user.teamPreference;
     return new Promise(function(resolve, reject) {
         hashPassword(user.password, user.nonce)
-        .then(password => {
-            user.password = password;
-            user = new User(user);
-            return user.validate();
-        })
-        .then(noerror => {
-            return new Promise(function(resolve, reject) {
-                resolve()
+            .then(password => {
+                user.password = password;
+                user = new User(user);
+                return user.validate();
+            })
+            .then(() => {
+                return mailService.sendConfirmationEmail(user);
+            })
+            .then(() => {
+                return user.save();
+            })
+            .then(user => {
+                return new Settings({
+                    userId: user._id
+                }).save();
+            })
+            .then(() => {
+                if (!teamPreference) {
+                    return resolve("Email confirmation has been sent");
+                }
+                return findCurrentOrNext(true);
+            })
+            .then(game => {
+                if (!game) {
+                    return resolve("Email confirmation has been sent. There is no game to sign up for");
+                }
+                return signUp({
+                    userEmail: user.email,
+                    teamPreference: teamPreference,
+                    gameId: game._id
+                }, true);
+            })
+            .then(message => {
+                resolve(message);
+            })
+            .catch(error => {
+                reject(error);
             });
-            return mailService.sendConfirmationEmail(user);
-        })
-        .then(noerror => {
-            return user.save();
-        })
-        .then(user => {
-            return new Settings({userId: user._id}).save();
-        })
-        .then(setttings => {
-            if (!teamPreference) {
-                return resolve("Email confirmation has been sent");
-            }
-            return findCurrentOrNext(true);
-        })
-        .then(game => {
-            if (!game) {
-                return resolve("Email confirmation has been sent. There is no game to sign up for");
-            }
-            return signUp({userEmail: user.email, teamPreference: teamPreference, gameId: game._id}, true);
-        })
-        .then(message => {
-            resolve(message);
-        })
-        .catch(error => {
-            reject(error);
-        });
     });
 }
 

@@ -1,6 +1,6 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
-const mailService = rootRequire('server/services/mail');
+const mailService = rootRequire("server/services/mail");
 
 function SendUnsuppliedEmail(recipients, requiredValue) {
     return new Promise(function(resolve, reject) {
@@ -10,12 +10,12 @@ function SendUnsuppliedEmail(recipients, requiredValue) {
             return resolve();
         }
         mailService.sendUnsuppliedEmail(toList, names, requiredValue)
-        .then(res => {
-            resolve(res);
-        })
-        .catch(error => {
-            reject(error);
-        });
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

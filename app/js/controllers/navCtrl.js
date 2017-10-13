@@ -2,35 +2,35 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     "ngInject";
 
     $scope.routes = [{
-            route: "/rules",
-            text: "Rules"
-        }, {
-            route: "/map",
-            text: "Map"
-        }, {
-            route: "/game",
-            text: "Game Information"
-        }, {
-            route: "/moderators",
-            text: "Moderator Controls",
-            showName: "isModerator"
-        }, {
-            route: "/super",
-            text: "Super User Panel",
-            showName: "isSuper"
-        }, {
-            route: "/user",
-            text: "User"
-        }, {
-            route: "/trees",
-            text: "Zombie Trees"
-        },{
-            route: "/invitational",
-            text: "Invitational"
-        }].map(x => {
-            x.show = true;
-            return x;
-        });
+        route: "/rules",
+        text: "Rules"
+    }, {
+        route: "/map",
+        text: "Map"
+    }, {
+        route: "/game",
+        text: "Game Information"
+    }, {
+        route: "/moderators",
+        text: "Moderator Controls",
+        showName: "isModerator"
+    }, {
+        route: "/super",
+        text: "Super User Panel",
+        showName: "isSuper"
+    }, {
+        route: "/user",
+        text: "User"
+    }, {
+        route: "/trees",
+        text: "Zombie Trees"
+    }, {
+        route: "/invitational",
+        text: "Invitational"
+    }].map(x => {
+        x.show = true;
+        return x;
+    });
 
     function setShowing(name, value) {
         let route = $scope.routes.find(x => x.showName === name);
@@ -56,7 +56,7 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
         return $location.path();
     }, newVal => {
         if (newVal) {
-            UserService.getBySession(user => {
+            UserService.getBySession(() => {
                 UserService.getUserType(type => {
                     $rootScope.isModerator = type === "Moderator";
                 });
@@ -75,13 +75,13 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     });
 
     $scope.$watch(() => {
-        return $rootScope.isModerator
+        return $rootScope.isModerator;
     }, newVal => {
         setShowing("isModerator", newVal);
     });
 
     $scope.$watch(() => {
-        return $rootScope.isSuper
+        return $rootScope.isSuper;
     }, newVal => {
         setShowing("isSuper", newVal);
     });

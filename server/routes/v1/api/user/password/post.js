@@ -2,14 +2,16 @@ const sendPasswordResetEmail = rootRequire("server/data-access/functions/user/se
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Post(req, resolve, reject) {
-    const {email} = req.body;
+    const {
+        email
+    } = req.body;
     sendPasswordResetEmail(email)
-    .then(message => {
-        resolve(message);
-    })
-    .catch(error => {
-        reject("Email not sent: " + createErrorMessage(error));
-    });
+        .then(message => {
+            resolve(message);
+        })
+        .catch(error => {
+            reject("Email not sent: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Post;

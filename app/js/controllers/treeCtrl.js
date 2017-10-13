@@ -17,7 +17,7 @@ function TreeCtrl($scope, GameService, $cookies, UserService, AlertService) {
         if (isNaN(index) || !$scope.trees) {
             return;
         }
-        let container = document.getElementById('zombieTree');
+        let container = document.getElementById("zombieTree");
         let data = $scope.trees[index];
         let options = {
             height: "100%",

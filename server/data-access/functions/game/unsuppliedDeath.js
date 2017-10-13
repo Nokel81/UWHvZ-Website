@@ -1,4 +1,4 @@
-const Promise = require('bluebird');
+const Promise = require("bluebird");
 
 const Game = rootRequire("server/schemas/game");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");
@@ -10,51 +10,53 @@ function UnsuppliedDeath(gameId) {
     return new Promise(function(resolve, reject) {
         let starvingHumans = [];
         findGameById(gameId)
-        .then(game => {
-            if (!game.started) {
-                return reject("Game has to be started");
-            }
-            starvingHumans = game.humans;
-            return Promise.each(game.humans, humanId => {
-                return new Promise(function(resolve, reject) {
-                    findUserScore(gameId, humanId, true)
-                    .then(score => {
-                        if (score >= game.suppliedValue) {
-                            resolve();
-                        } else {
-                            return findUserById(humanId);
-                        }
-                    })
-                    .then(user => {
-                        sendUnsuppliedEmail(users, game.suppliedValue);
-                    })
-                    .then(noerror => {
-                        resolve();
-                    })
-                    .catch(error => {
-                        reject(error);
+            .then(game => {
+                if (!game.started) {
+                    return reject("Game has to be started");
+                }
+                starvingHumans = game.humans;
+                return Promise.each(game.humans, humanId => {
+                    return new Promise(function(resolve, reject) {
+                        findUserScore(gameId, humanId, true)
+                            .then(score => {
+                                if (score >= game.suppliedValue) {
+                                    resolve();
+                                } else {
+                                    return findUserById(humanId);
+                                }
+                            })
+                            .then(users => {
+                                sendUnsuppliedEmail(users, game.suppliedValue);
+                            })
+                            .then(() => {
+                                resolve();
+                            })
+                            .catch(error => {
+                                reject(error);
+                            });
                     });
                 });
-            });
-        })
-        .then(noerror => {
-            return Game.updateOne({_id: gameId}, {
-                $push: {
-                    zombies: {
-                        $each: starvingHumans
+            })
+            .then(() => {
+                return Game.updateOne({
+                    _id: gameId
+                }, {
+                    $push: {
+                        zombies: {
+                            $each: starvingHumans
+                        }
+                    },
+                    $pullAll: {
+                        humans: starvingHumans
                     }
-                },
-                $pullAll: {
-                    humans: starvingHumans
-                }
+                });
+            })
+            .then(() => {
+                resolve("There are no unsupplied humans left");
+            })
+            .catch(error => {
+                reject(error);
             });
-        })
-        .then(noerror => {
-            resolve("There are no unsupplied humans left");
-        })
-        .catch(error => {
-            reject(error);
-        })
     });
 }
 

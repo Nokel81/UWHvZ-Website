@@ -2,14 +2,16 @@ const getUserRecipients = rootRequire("server/data-access/functions/message/getU
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const {userId} = req.headers;
+    const {
+        userId
+    } = req.headers;
     getUserRecipients(userId)
-    .then(recipients => {
-        resolve(recipients);
-    })
-    .catch(error => {
-        reject("Recipients not found: " + createErrorMessage(error));
-    });
+        .then(recipients => {
+            resolve(recipients);
+        })
+        .catch(error => {
+            reject("Recipients not found: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Get;

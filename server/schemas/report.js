@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const reportSchema = new Schema({
@@ -40,7 +40,7 @@ const reportSchema = new Schema({
     }
 });
 
-reportSchema.pre("validate", function (next) {
+reportSchema.pre("validate", function(next) {
     if (this.tagger.toString() === this.tagged.toString()) {
         this.invalidate("taggedCode", "Cannot tag yourself");
     }

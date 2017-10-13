@@ -1,16 +1,18 @@
 const fs = require("fs");
 const path = require("path");
-const Promise = require('bluebird');
-const multiparty = require('multiparty');
+const Promise = require("bluebird");
+const multiparty = require("multiparty");
 
 const attachmentStoreDirectory = path.resolve(__dirname, "../../../attachmentStore/");
 
 function SaveAttachments(request) {
     return new Promise(function(resolve, reject) {
-        var form = new multiparty.Form({uploadDir: attachmentStoreDirectory});
+        var form = new multiparty.Form({
+            uploadDir: attachmentStoreDirectory
+        });
         let res = [];
 
-        form.on('file', (name, file) => {
+        form.on("file", (name, file) => {
             res.push({
                 fieldName: file.fieldName,
                 filename: file.originalFilename,
@@ -18,11 +20,11 @@ function SaveAttachments(request) {
             });
         });
 
-        form.on('error', error => {
+        form.on("error", error => {
             reject(error);
         });
 
-        form.on('close', () => resolve(res));
+        form.on("close", () => resolve(res));
 
         form.parse(request);
     });

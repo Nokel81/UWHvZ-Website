@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const errorNotFound = rootRequire('server/schemas/plugins/errorNotFound');
+const errorNotFound = rootRequire("server/schemas/plugins/errorNotFound");
 const Schema = mongoose.Schema;
 
 const polygonSchema = new Schema({
@@ -27,6 +27,6 @@ const polygonSchema = new Schema({
         enum: ["#000000", "#ff0000", "#0000ff", "#00ff00", "#8b4513"]
     }
 });
-errorNotFound(polygonSchema)
+errorNotFound(polygonSchema);
 
 module.exports = mongoose.model("Polygon", polygonSchema);

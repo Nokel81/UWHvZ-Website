@@ -4,12 +4,12 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 function Post(req, resolve, reject) {
     const user = req.body;
     create(user)
-    .then(user => {
-        resolve(user);
-    })
-    .catch(error => {
-        reject("Account not created: " + createErrorMessage(error));
-    });
+        .then(user => {
+            resolve(user);
+        })
+        .catch(error => {
+            reject("Account not created: " + createErrorMessage(error));
+        });
 }
 
 module.exports = Post;

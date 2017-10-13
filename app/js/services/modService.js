@@ -3,8 +3,11 @@ function ModService($http, AppSettings) {
 
     const SERVICE = {};
 
-    SERVICE.saveSupplyCodes = function (codes, gameId, cb) {
-        let body = {codes, gameId};
+    SERVICE.saveSupplyCodes = function(codes, gameId, cb) {
+        let body = {
+            codes,
+            gameId
+        };
         $http.post(AppSettings.apiUrl + "/supply/all", body)
             .then(res => {
                 cb(null, res.data);
@@ -13,7 +16,7 @@ function ModService($http, AppSettings) {
             });
     };
 
-    SERVICE.getSupplyCodes = function (gameId, cb) {
+    SERVICE.getSupplyCodes = function(gameId, cb) {
         if (!gameId) {
             return cb("No next game");
         }
@@ -25,26 +28,33 @@ function ModService($http, AppSettings) {
             });
     };
 
-    SERVICE.startGame = function (OZemails, gameId, HTMLlore, files, cb) {
+    SERVICE.startGame = function(OZemails, gameId, HTMLlore, files, cb) {
         $http.post(AppSettings.apiUrl + "/message/attachments", files, {
             transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
+            headers: {
+                "Content-Type": undefined
+            }
         })
-        .then(res => {
-            let fileData = res.data;
-            let body = {OZemails, gameId, HTMLlore, fileData};
-            $http.post(AppSettings.apiUrl + "/game/start", body)
-                .then(res => {
-                    cb(null, res.data);
-                }, err => {
-                    cb(err.data);
-                });
-        }, err => {
-            cb("File upload failed");
-        });
+            .then(res => {
+                let fileData = res.data;
+                let body = {
+                    OZemails,
+                    gameId,
+                    HTMLlore,
+                    fileData
+                };
+                $http.post(AppSettings.apiUrl + "/game/start", body)
+                    .then(res => {
+                        cb(null, res.data);
+                    }, err => {
+                        cb(err.data);
+                    });
+            }, () => {
+                cb("File upload failed");
+            });
     };
 
-    SERVICE.unsuppliedDeath = function (gameId, cb) {
+    SERVICE.unsuppliedDeath = function(gameId, cb) {
         $http.delete(AppSettings.apiUrl + "/game/unsupplied?gameId=" + gameId)
             .then(res => {
                 cb(null, res.data);

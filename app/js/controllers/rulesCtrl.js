@@ -1,6 +1,6 @@
 function RulesCtrl($scope, $location, $anchorScroll, $window) {
     "ngInject";
-    const scrollButton = angular.element(document.getElementById('scrollToTop'));
+    const scrollButton = angular.element(document.getElementById("scrollToTop"));
 
     $scope.$watch(() => {
         return $location.hash();
@@ -20,7 +20,7 @@ function RulesCtrl($scope, $location, $anchorScroll, $window) {
         }
     });
 
-    $scope.gotoTop = function (location) {
+    $scope.gotoTop = function(location) {
         $anchorScroll(location);
     };
 }

@@ -1,18 +1,16 @@
-const objectPath = require("object-path");
-
 function ToggleDirective() {
     "ngInject";
 
     return {
-        restrict: 'E',
-        templateUrl: '../views/directives/toggle.html',
+        restrict: "E",
+        templateUrl: "../views/directives/toggle.html",
         transclude: true,
-        require: 'ngModel',
+        require: "ngModel",
         scope: {
-            values: '@',
-            titles: '@',
-            colours: '@',
-            width: '@'
+            values: "@",
+            titles: "@",
+            colours: "@",
+            width: "@"
         },
         link: (scope, element, attrs, ngModel) => {
             let values = JSON.parse("[" + scope.values.replace(/([^\\]?)'/g, "$1\"") + "]");
@@ -39,11 +37,11 @@ function ToggleDirective() {
                 "background": colours[index]
             });
 
-            element.on('mouseover', () => {
-                active = !!!attrs.disabled;
+            element.on("mouseover", () => {
+                active = !attrs.disabled;
             });
 
-            element.on('click', () => {
+            element.on("click", () => {
                 if (active) {
                     index = (index + 1) % titles.length;
                     span.addClass("animate-right");
@@ -71,6 +69,6 @@ function ToggleDirective() {
 }
 
 module.exports = {
-    name: 'hvzToggle',
+    name: "hvzToggle",
     fn: ToggleDirective
 };

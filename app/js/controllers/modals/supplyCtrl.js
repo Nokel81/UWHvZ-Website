@@ -14,7 +14,7 @@ function SupplyCtrl($scope, $uibModalInstance, GameId, DefaultValue, AlertServic
         return res;
     }
 
-    $scope.generate = function () {
+    $scope.generate = function() {
         if ($scope.numberOfCodes <= 0) {
             return AlertService.danger("You need to generate at least some codes");
         }
@@ -33,13 +33,13 @@ function SupplyCtrl($scope, $uibModalInstance, GameId, DefaultValue, AlertServic
         }
     };
 
-    $scope.save = function () {
+    $scope.save = function() {
         $uibModalInstance.close($scope.codes);
-    }
+    };
 
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         $uibModalInstance.dismiss($scope.codes.length ? "Those supply codes were not saved and are invalid" : "");
-    }
+    };
 }
 
 module.exports = {

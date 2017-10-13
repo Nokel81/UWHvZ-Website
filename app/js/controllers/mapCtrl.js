@@ -29,7 +29,7 @@ function MapCtrl($scope, $location, MapService, AlertService) {
     });
 
     function showName(text) {
-        return function (event) {
+        return function(event) {
             infoWindow.setContent(text);
             infoWindow.setPosition(event.latLng);
             infoWindow.open(map);

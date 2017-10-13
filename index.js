@@ -8,11 +8,11 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const ngAnnotate = require("browserify-ngannotate");
 
-global.rootRequire = function (name) {
+global.rootRequire = function(name) {
     return require(path.join(__dirname, name));
 };
 
-Object.values = function (obj) {
+Object.values = function(obj) {
     return Object.keys(obj).map(key => obj[key]);
 };
 
@@ -35,7 +35,9 @@ console.log("browserifying...");
 const bundler = browserify(path.join(__dirname, "./app/js/app.js"));
 
 bundler
-    .transform("babelify", {presets: ["es2015"]})
+    .transform("babelify", {
+        presets: ["es2015"]
+    })
     .transform(ngAnnotate, {})
     .transform("brfs", {})
     .transform(bulkify, {})
@@ -50,11 +52,13 @@ bundler
 
         const app = express();
 
-        app.use(bodyParser.urlencoded({extended: true}));
+        app.use(bodyParser.urlencoded({
+            extended: true
+        }));
         app.use(bodyParser.json());
         app.use(cookieParser());
         app.use(morgan("dev"));
-        app.use(rootRequire('server/routes/middleware/addUserInfo'));
+        app.use(rootRequire("server/routes/middleware/addUserInfo"));
 
         routes(app);
         app.use(express.static(path.join(__dirname, "./app")));
@@ -63,18 +67,18 @@ bundler
         });
 
         database.init(config)
-        .then(message => {
-            console.log(message);
+            .then(message => {
+                console.log(message);
 
-            if (!initialize) {
-                return;
-            }
-            const listener = app.listen(config, () => {
-                console.log("Listening on port: " + listener.address().port);
-                initialize = false;
+                if (!initialize) {
+                    return;
+                }
+                const listener = app.listen(config, () => {
+                    console.log("Listening on port: " + listener.address().port);
+                    initialize = false;
+                });
+            })
+            .catch(error => {
+                console.error(error);
             });
-        })
-        .catch(error => {
-            console.error(error);
-        });
     });

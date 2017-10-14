@@ -200,4 +200,29 @@ SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue) {
     });
 };
 
+SERVICE.sendRegeneratedCodeEmail = function (user) {
+    return new Promise(function(resolve, reject) {
+        const resolveData = {
+            name: user.playerName,
+            code: user.playerCode
+        };
+        const html = relativeResolve("./emails/regenerateCode.html", resolveData);
+        const mailOptions = {
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address,
+            replyTo: "uwhumansvszombies@gmail.com",
+            to: user.email,
+            subject: "Your HvZ Player Code has been regenerated",
+            html: html
+        };
+        sendMail.sendMail(mailOptions)
+            .then(() => {
+                resolve("Code email has been sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
+    });
+};
+
 module.exports = SERVICE;

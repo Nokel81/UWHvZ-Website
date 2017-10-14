@@ -196,6 +196,15 @@ function GameService($http, AppSettings) {
             });
     };
 
+    SERVICE.regenerateCodes = function (cb) {
+        $http.post(AppSettings.apiUrl + "/super/codes")
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.ratifyReport = function(reportId, gameId, cb) {
         let body = {
             reportId,

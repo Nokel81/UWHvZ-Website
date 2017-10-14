@@ -5,13 +5,13 @@
     overflow: hidden;
 }
 
-.accordian > input {
+.accordian>input {
     position: absolute;
     opacity: 0;
     z-index: -1;
 }
 
-.accordian > label {
+.accordian>label {
     position: relative;
     display: block;
     padding: 6px;
@@ -22,6 +22,7 @@
     border-radius: 5px;
     border: 1px solid var(--hvz-border);
     user-select: none;
+    min-height: 24px;
 }
 
 .accordian-content {
@@ -43,7 +44,7 @@ input:checked~.accordian-content {
     padding-bottom: 5px;
 }
 
-.accordian > label::after {
+.accordian>label::after {
     position: absolute;
     right: 0;
     top: 0;

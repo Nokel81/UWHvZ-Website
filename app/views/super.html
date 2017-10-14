@@ -1,5 +1,6 @@
 <uib-tabset>
     <uib-tab index="0" heading="Games">
+        <button type="button" class="icon-only green" title="Add New Game" ng-click="addGame()"><i class="fa fa-plus"></i></button>
         <div class="accordian" ng-repeat="game in games" ng-init="$rootIndex = $index">
             <input type="checkbox" id="tab_games{{$index}}">
             <label for="tab_games{{$index}}"><span ng-bind="game.name"></span> - <span ng-bind="getYear(game.startDate)"></span></label>
@@ -101,11 +102,10 @@
                     <button class="btn btn-danger" type="button" ng-click="removeGame($index)"><i class="fa fa-times"></i></button>
                 </div>
             </div>
-            <button class="right btn btn-success" type="button" ng-click="addGame()"><i class="fa fa-plus"></i></button>
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Markers">
-        <button type="button" class="icon-only text-success" title="Add" ng-click="addMarker()"><i class="fa fa-plus red"></i></button>
+        <button type="button" class="icon-only green" title="Add New Marker" ng-click="addMarker()"><i class="fa fa-plus"></i></button>
         <div class="markers-grid" ng-repeat="marker in markers">
             <label class="form-label">Acryonym:</label>
             <input class="form-control" type="text" ng-model="marker.acronym" ng-disabled="editingMarker != $index">
@@ -116,17 +116,17 @@
             <label class="form-label">Full Name:</label>
             <input class="form-control" type="text" ng-model="marker.title" ng-disabled="editingMarker != $index">
             <div class="icon-form">
-                <button type="button" class="icon-only text-success" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only green" title="Save" ng-click="saveMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-floppy-o"></i></button>
                 <button type="button" class="icon-only" ng-show="editingMarker != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only text-primary" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only blue" title="Edit" ng-click="editMarker($index)" ng-show="editingMarker != $index"><i class="fa fa-pencil"></i></button>
                 <button type="button" class="icon-only" ng-show="editingMarker == $index" disabled><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only text-danger" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only red" title="Remove" ng-click="removeMarker($index)" ng-show="editingMarker == $index"><i class="fa fa-times"></i></button>
                 <button type="button" class="icon-only" ng-show="editingMarker != $index" disabled><i class="fa fa-times"></i></button>
             </div>
         </div>
     </uib-tab>
     <uib-tab index="2" heading="Polygons">
-        <button type="button" class="icon-only text-success" title="Add" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
+        <button type="button" class="icon-only green" title="Add New Polygon" ng-click="addPolygon()"><i class="fa fa-plus"></i></button>
         <div class="polygon-grid" ng-repeat="polygon in polygons" ng-init="$rootIndex = $index">
             <label class="form-label">Name and Classification:</label>
             <input class="form-control" type="text" ng-model="polygon.name" ng-disabled="editingPolygon != $index">
@@ -154,13 +154,19 @@
                 </div>
             </div>
             <div class="icon-form">
-                <button type="button" class="icon-only text-success" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
+                <button type="button" class="icon-only green" title="Save" ng-click="savePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-floppy-o"></i></button>
                 <button type="button" class="icon-only" ng-show="editingPolygon != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                <button type="button" class="icon-only text-primary" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
+                <button type="button" class="icon-only blue" title="Edit" ng-click="editPolygon($index)" ng-show="editingPolygon != $index"><i class="fa fa-pencil"></i></button>
                 <button type="button" class="icon-only" ng-show="editingPolygon == $index" disabled><i class="fa fa-pencil"></i></button>
-                <button type="button" class="icon-only text-danger" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
+                <button type="button" class="icon-only red" title="Remove" ng-click="removePolygon($index)" ng-show="editingPolygon == $index"><i class="fa fa-times"></i></button>
                 <button type="button" class="icon-only" ng-show="editingPolygon != $index" disabled><i class="fa fa-times"></i></button>
             </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="3" heading="Players">
+        <div class="super-player-grid">
+            <label class="form-label">Player Codes:</label>
+            <button class="btn btn-success" type="button" ng-click="regenerateCodes()">Regenerate All</button>
         </div>
     </uib-tab>
 </uib-tabset>

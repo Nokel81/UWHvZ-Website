@@ -116,6 +116,14 @@ h6 {
     color: var(--hvz-red);
 }
 
+.green {
+    color: var(--hvz-green);
+}
+
+.blue {
+    color: var(--hvz-blue);
+}
+
 .icon-size {
     max-width: 2.5rem;
     max-height: 2.5rem;

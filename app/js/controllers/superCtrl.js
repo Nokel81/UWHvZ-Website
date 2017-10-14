@@ -48,6 +48,16 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         });
     };
 
+    $scope.deleteUnusedSupplyCodes = function () {
+        GameService.deleteUnusedSupplyCodes((err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                AlertService.info(res);
+            }
+        });
+    };
+
     $scope.getYear = function(date) {
         if (!(date instanceof Date)) {
             return new Date().getFullYear();

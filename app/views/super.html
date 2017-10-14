@@ -163,10 +163,12 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="3" heading="Players">
+    <uib-tab index="3" heading="Game Commands">
         <div class="super-player-grid">
             <label class="form-label">Player Codes:</label>
             <button class="btn btn-success" type="button" ng-click="regenerateCodes()">Regenerate All</button>
+                <label class="form-label">Old Supply Codes:</label>
+                <button class="btn btn-danger" type="button" ng-click="deleteUnusedSupplyCodes()">Delete Unused</button>
         </div>
     </uib-tab>
 </uib-tabset>

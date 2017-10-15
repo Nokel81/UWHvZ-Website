@@ -14,15 +14,12 @@
                 </ul>
             </div>
             <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
-            <!-- <b style="line-height: 2.5em; vertical-align: text-bottom;">Do you wish to join the next game?</b>
-            <hvz-toggle values="false, true" titles="'No','Yes'" width="4em" ng-model="joinNextGame" colours="'#4286f4','#f4c741'"/>
-            <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'" ng-show="joinNextGame"/> -->
         </div>
         <div class="float-right">
             <button class="btn btn-warning" type="button" ng-click="forgotPassword()">Forgot Password</button>
             <button class="btn btn-info" type="button" ng-click="signUp()">Sign Up</button>
             <button class="btn btn-success" type="button" ng-click="logIn()">Log In</button>
-            <button type="submit" ng-click="submitAuthenticationForm()"></button>
+            <button class="hidden" type="submit" ng-click="submitAuthenticationForm()"></button>
         </div>
     </form>
 </div>
@@ -122,4 +119,4 @@
         </div>
     </uib-tab>
 </uib-tabset>
-<hvz-toggle class="ng-hide" titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"/>
+<hvz-toggle class="ng-hide" titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"></hvz-toggle>

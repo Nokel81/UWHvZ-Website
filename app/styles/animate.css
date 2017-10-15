@@ -8,7 +8,7 @@ hvz-toggle {
     transform: skewX(-10deg);
     font-weight: bold;
     text-align: center;
-    line-height: 2rem;
+    line-height: 1.5rem;
     border: 0.1rem solid black;
     color: var(--hvz-text-light);
     text-shadow: -1px -1px 0 var(--hvz-border-dark),

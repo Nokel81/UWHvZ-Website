@@ -27,6 +27,14 @@ function ModalService($uibModal) {
         });
     };
 
+    SERVICE.openRegisterPlayer = function () {
+        return $uibModal.open({
+            controller: "RegisterCtrl",
+            templateUrl: "views/modals/registerPlayer.html",
+            size: "lg"
+        });
+    };
+
     return SERVICE;
 }
 

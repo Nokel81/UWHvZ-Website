@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <b>Register New Player</b>
+</div>
+<div class="modal-body">
+    <form>
+        <input class="form-control" type="email" ng-model="email" placeholder="Email">
+        <input class="form-control" type="password" ng-model="password" placeholder="Password">
+        <input class="form-control" type="password" ng-model="passwordCheck" placeholder="Password again">
+        <div class="red">
+            Passwords must have the following:
+            <ul>
+                <li>An Uppercase letter</li>
+                <li>A Lowercase letter</li>
+                <li>A Number</li>
+                <li>At least 8 characters in length</li>
+            </ul>
+        </div>
+        <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
+        <b>Team Preference:</b>
+        <br>
+        <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="teamPreference" colours="'#888888','#86d993','#966100'"></hvz-toggle>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="float-right">
+        <button type="button" class="btn btn-success" ng-click="accept()">Register</button>
+        <button type="button" class="btn btn-danger" ng-click="decline()">Cancel</button>
+    </div>
+</div>

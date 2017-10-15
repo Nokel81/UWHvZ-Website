@@ -50,6 +50,7 @@
 .nav-tabs .nav-link {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
+    font-weight: 600;
 }
 
 a.nav-link {
@@ -62,4 +63,47 @@ a.nav-link {
 
 .tab-content>.active {
     display: block;
+}
+
+input[type="checkbox"]:not(:checked)+.btn-tab+div>ul {
+    display: none;
+}
+
+@media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
+        only screen and (-o-min-device-pixel-ratio: 13/10),
+        only screen and (min-resolution: 120dpi),
+        only screen and (max-width: 942px)
+    {
+    .nav {
+        display: inline;
+    }
+
+    .uib-tab.nav-item {
+        border-radius: 0px;
+    }
+
+    .uib-tab.nav-item+.uib-tab.nav-item {
+        border-left-width: 1px;
+    }
+
+    .nav.nav-tabs>*:last-child {
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .nav.nav-tabs>*:first-child {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}
+
+@media only screen and (min-width: 943px) {
+    .nav-tabs {
+        display: flex;
+    }
+
+    input[type="checkbox"]:not(:checked)+.btn-tab+div>ul {
+        display: flex;
+    }
 }

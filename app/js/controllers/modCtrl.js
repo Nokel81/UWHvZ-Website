@@ -1,9 +1,8 @@
-function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll) {
+function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll, MapService) {
     "ngInject";
     angular.element(document).ready(() => {
         CKEDITOR.replace("GameLoreTextArea");
     });
-
 
     $scope.players = [];
     $scope.editing = null;
@@ -19,40 +18,51 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     });
 
-    GameService.getClosestOrCurrent(game => {
-        if (!game) {
-            return;
-        }
-        $scope.game = game;
-        GameService.getRegistrantsForGame(game._id, (err, signups) => {
-            if (err) {
-                AlertService.danger(err);
-            } else {
-                $scope.players = signups;
-                $scope.gameStarted = !game || game.startDate < new Date();
+    function reset() {
+        GameService.getClosestOrCurrent(game => {
+            if (!game) {
+                return;
             }
+            $scope.game = game;
+            GameService.getRegistrantsForGame(game._id, (err, signups) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.players = signups;
+                    $scope.gameStarted = !game || game.startDate < new Date();
+                }
+            });
+            GameService.getGamePlayerInfoForMods(game._id, (err, gamePlayers) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.gamePlayers = gamePlayers;
+                }
+            });
+            GameService.getAllReports(game._id, (err, reports) => {
+                if (err) {
+                    return AlertService.danger(err);
+                }
+                $scope.reports = reports;
+            });
+            ModService.getSupplyCodes(game._id, (err, codes) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.supplyCodes = codes;
+                }
+            });
+
+            MapService.getAllMarkers((err, markers) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.markers = markers || [];
+                }
+            });
         });
-        GameService.getGamePlayerInfoForMods(game._id, (err, gamePlayers) => {
-            if (err) {
-                AlertService.danger(err);
-            } else {
-                $scope.gamePlayers = gamePlayers;
-            }
-        });
-        GameService.getAllReports(game._id, (err, reports) => {
-            if (err) {
-                return AlertService.danger(err);
-            }
-            $scope.reports = reports;
-        });
-        ModService.getSupplyCodes(game._id, (err, codes) => {
-            if (err) {
-                AlertService.danger(err);
-            } else {
-                $scope.supplyCodes = codes;
-            }
-        });
-    });
+    }
+    reset();
 
     $scope.$watch("players", (newval) => {
         if (!newval) {
@@ -67,6 +77,31 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             };
         });
     });
+
+    $scope.registerPlayer = function () {
+        if ($scope.editing !== null || !$scope.game) {
+            return;
+        }
+        ModalService.openRegisterPlayer()
+            .result
+            .then(user => {
+                ModalService.openWaiverModal()
+                    .result
+                    .then(() => {
+                        UserService.signUp(user.email, user.password, user.name, user.teamPreference, (err, res) => {
+                            if (err) {
+                                AlertService.danger(err);
+                            } else {
+                                reset();
+                                AlertService.info(res);
+                                $anchorScroll("bottom");
+                            }
+                        });
+                    }, () => {
+                        AlertService.danger("The waiver must be accepted");
+                    });
+            });
+    };
 
     $scope.addPlayer = function() {
         if ($scope.editing !== null || !$scope.game) {
@@ -248,6 +283,91 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 AlertService.info(res);
             }
         });
+    };
+
+    $scope.getYear = function(date) {
+        if (!(date instanceof Date)) {
+            return new Date().getFullYear();
+        }
+        return date.getFullYear();
+    };
+
+    $scope.removeLocation = function(location) {
+        ($scope.game.signUpLocations || []).splice(location, 1);
+    };
+
+    $scope.addLocation = function() {
+        ($scope.game.signUpLocations || []).push("");
+    };
+
+    $scope.removeDate = function(date) {
+        ($scope.game.signUpDates || []).splice(date, 1);
+    };
+
+    $scope.addDate = function() {
+        ($scope.game.signUpDates || []).push(new Date());
+    };
+
+    $scope.removeModerator = function(mod) {
+        if ($scope.game) {
+            const _id = ($scope.game.moderatorObjs.splice(mod, 1)[0] || {})._id;
+            $scope.game.moderators = ($scope.game.moderators || []).filter(id => id !== _id);
+        }
+    };
+
+    $scope.addPlayer = function(team) {
+        if (!$scope.game) {
+            return;
+        }
+        const code = $window.prompt("New " + team + " player Code", "");
+        if (!code) {
+            return;
+        }
+        GameService.addPlayerByCode($scope.game._id, code, team, (err, games) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            AlertService.info("Player Added");
+            $scope.games = games;
+        });
+    };
+
+    $scope.removePlayer = function(index, team) {
+        if (!$scope.game || !$scope.game[team + "s"] || !$scope.game[team + "s"][index]) {
+            return;
+        }
+        let userId = $scope.game[team + "Objs"][index]._id;
+        let gameId = $scope.game._id;
+        GameService.removePlayerById(gameId, userId, team, (err, games) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            AlertService.info("Player Removed");
+            $scope.games = games;
+        });
+    };
+
+    $scope.saveGame = function() {
+        if (!$scope.game) {
+            return;
+        }
+        if ($scope.game._id) {
+            GameService.updateGame($scope.game, (err, updatedGame) => {
+                if (err) {
+                    return AlertService.danger(err);
+                }
+                $scope.game = updatedGame;
+                AlertService.info("Game updated");
+            });
+        } else {
+            GameService.createGame($scope.game, (err, newGame) => {
+                if (err) {
+                    return AlertService.danger(err);
+                }
+                $scope.game = newGame;
+                AlertService.info("Game created");
+            });
+        }
     };
 }
 

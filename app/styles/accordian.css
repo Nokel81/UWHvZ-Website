@@ -34,7 +34,7 @@
     transition: max-height .35s;
     border-radius: 0px 0px 5px 5px;
     padding: 0px 10px;
-    margin: 0px 5px 5px 5px;
+    margin: 0px 5px;
 }
 
 input:checked~.accordian-content {

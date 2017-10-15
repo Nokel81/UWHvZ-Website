@@ -1,10 +1,16 @@
+<input type="checkbox" hidden ng-model="tabsOpen" id="tabsOpen_Mods"></input>
+<label class="btn btn-tab btn-info" for="tabsOpen_Mods">Tabs <i class="fa fa-caret-up" ng-show="tabsOpen"></i><i class="fa fa-caret-down" ng-hide="tabsOpen"></i></label>
 <uib-tabset active="2">
     <uib-tab index="0" heading="Game Signups">
         <div ng-show="gameStarted">
             <h4 class="text-centre">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
-            <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
+            <div class="float-right">
+                <button type="button" class="btn btn-info" ng-click="addPlayer()">Register Returning Player</button>
+                <button type="button" class="btn btn-success" ng-click="registerPlayer()">Register New Player</button>
+            </div>
+            <br>
             <br>
             <b>Players signed up: <span ng-bind="players.length"></span></b>
             <div class="game-signups-grid" ng-repeat="player in players">
@@ -15,15 +21,18 @@
                 <label class="form-label">Team Preference:</label>
                 <hvz-toggle values="'Zombie','Human','Spectator'" width="5.5em" ng-model="player.teamPreference" colours="'#888','#86d993','#966100'" ng-show="editing == $index"></hvz-toggle>
                 <div>
-                    <button type="button" class="icon-only h2 text-success" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
+                    <button type="button" class="icon-only h2 green" title="Save" ng-click="savePlayer($index)" ng-show="editing == $index"><i class="fa fa-floppy-o"></i></button>
                     <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-floppy-o"></i></button>
-                    <button type="button" class="icon-only h2 text-primary" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="icon-only h2 blue" title="Edit" ng-click="editPlayer($index)" ng-show="editing != $index"><i class="fa fa-pencil"></i></button>
                     <button type="button" class="icon-only h2" ng-show="editing == $index" disabled><i class="fa fa-pencil"></i></button>
-                    <button type="button" class="icon-only h2 text-danger" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
+                    <button type="button" class="icon-only h2 red" title="Remove" ng-click="removePlayer($index)" ng-show="editing == $index"><i class="fa fa-times"></i></button>
                     <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
                 </div>
             </div>
-            <button type="button" class="btn btn-info float-right" ng-click="addPlayer()">Register New Player</button>
+            <div class="float-right" ng-show="players.length > 12">
+                <button type="button" class="btn btn-info" ng-click="addPlayer()">Register Returning Player</button>
+                <button type="button" class="btn btn-success" ng-click="registerPlayer()">Register New Player</button>
+            </div>
         </div>
     </uib-tab>
     <uib-tab index="1" heading="Start Game">
@@ -110,6 +119,105 @@
         <div class="one-time-grid">
             <label class="form-label">Unsupplied Death:</label>
             <button class="btn btn-danger" type="button" ng-click="unsuppliedDeath()">Commit</button>
+        </div>
+    </uib-tab>
+    <uib-tab index=6 heading="Edit Game">
+        <div class="games-grid">
+            <label class="form-label">Game Name:</label>
+            <input class="form-control" type="text" ng-model="game.name">
+            <label class="form-label">Game Description:</label>
+            <input class="form-control" type="text" ng-model="game.description">
+            <label class="form-label">Game Start Date:</label>
+            <input class="form-control" type="datetime-local" ng-model="game.startDate">
+            <label class="form-label">Game End Date:</label>
+            <input class="form-control" type="datetime-local" ng-model="game.endDate">
+            <label class="form-label">Game Officer Badge Value:</label>
+            <input class="form-control" type="number" ng-model="game.officerValue">
+            <label class="form-label">Game Major Building Pass Value:</label>
+            <input class="form-control" type="number" ng-model="game.majorPassValue">
+            <label class="form-label">Game Minor Building Pass Value:</label>
+            <input class="form-control" type="number" ng-model="game.minorPassValue">
+            <label class="form-label">Game Rail Pass Value:</label>
+            <input class="form-control" type="number" ng-model="game.railPassValue">
+            <label class="form-label">Game Human Supplied Level:</label>
+            <input class="form-control" type="number" ng-model="game.suppliedValue">
+            <div class="accordian">
+                <input type="checkbox" id="tab_locations{{$index}}">
+                <label for="tab_locations{{$index}}">Game Sign Up Locations</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="location in game.signUpLocations track by $index">
+                        <label class="form-label">Location:</label>
+                        <select class="form-control" ng-model="game.signUpLocations[$index]">
+                            <option ng-repeat="mark in markers" value="{{mark.acronym}}">{{mark.title}}</option>
+                        </select>
+                        <button class="btn btn-danger" type="button" ng-click="removeLocation($index)"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addLocation()"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="accordian">
+                <input type="checkbox" id="tab_dates{{$index}}">
+                <label for="tab_dates{{$index}}">Game Sign Up Dates</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="date in game.signUpDates track by $index">
+                        <label class="form-label">Date:</label>
+                        <input class="form-control" type="date" ng-model="game.signUpDates[$index]">
+                        <button class="btn btn-danger" type="button" ng-click="removeDate($index)"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addDate()"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="accordian">
+                <input type="checkbox" id="tab_moderators{{$index}}">
+                <label for="tab_moderators{{$index}}">Game Moderators</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="moderator in game.moderatorObjs">
+                        <label class="form-label">Moderator Name:</label>
+                        <input class="form-control" type="text" ng-model="moderator.playerName" disabled>
+                        <button class="btn btn-danger" type="button" ng-click="removePlayer($index, 'moderator')"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addPlayer('moderator')"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="accordian">
+                <input type="checkbox" id="tab_humans{{$index}}">
+                <label for="tab_humans{{$index}}">Game Humans</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="human in game.humanObjs">
+                        <label class="form-label">Human Name:</label>
+                        <input class="form-control" type="text" ng-model="human.playerName" disabled>
+                        <button class="btn btn-danger" type="button" ng-click="removePlayer($index, 'human')"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addPlayer('human')"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="accordian">
+                <input type="checkbox" id="tab_zombies{{$index}}">
+                <label for="tab_zombies{{$index}}">Game Zombies</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="zombie in game.zombieObjs">
+                        <label class="form-label">Zombie Name:</label>
+                        <input class="form-control" type="text" ng-model="zombie.playerName" disabled>
+                        <button class="btn btn-danger" type="button" ng-click="removePlayer($index, 'zombie')"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addPlayer('zombie')"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="accordian">
+                <input type="checkbox" id="tab_spectators{{$index}}">
+                <label for="tab_spectators{{$index}}">Game Spectators</label>
+                <div class="accordian-content">
+                    <div class="accordian-grid" ng-repeat="spectator in game.spectatorObjs">
+                        <label class="form-label">Spectator Name:</label>
+                        <input class="form-control" type="text" ng-model="spectator.playerName" disabled>
+                        <button class="btn btn-danger" type="button" ng-click="removePlayer($index, 'spectator')"><i class="fa fa-times"></i></button>
+                    </div>
+                    <button class="right btn btn-success" type="button" ng-click="addPlayer('spectator')"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <button class="btn btn-success" type="button" ng-click="saveGame()"><i class="fa fa-save"></i></button>
         </div>
     </uib-tab>
 </uib-tabset>

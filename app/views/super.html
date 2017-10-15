@@ -30,7 +30,9 @@
                         <div class="accordian-content">
                             <div class="accordian-grid" ng-repeat="location in game.signUpLocations track by $index">
                                 <label class="form-label">Location:</label>
-                                <input class="form-control" type="text" ng-model="game.signUpLocations[$index]">
+                                <select class="form-control" ng-model="game.signUpLocations[$index]">
+                                    <option ng-repeat="mark in markers" value="{{mark.acronym}}">{{mark.title}}</option>
+                                </select>
                                 <button class="btn btn-danger" type="button" ng-click="removeLocation($rootIndex, $index)"><i class="fa fa-times"></i></button>
                             </div>
                             <button class="right btn btn-success" type="button" ng-click="addLocation($rootIndex)"><i class="fa fa-plus"></i></button>

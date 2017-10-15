@@ -254,6 +254,15 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.getAllPlayerInfo = function (cb) {
+        $http.get(AppSettings.apiUrl + "/user/all")
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     return SERVICE;
 }
 

@@ -173,4 +173,12 @@
                 <button class="btn btn-danger" type="button" ng-click="deleteUnusedSupplyCodes()">Delete Unused</button>
         </div>
     </uib-tab>
+    <uib-tab index="4" heading="Players">
+        <div class="game-player-codes-grid" ng-repeat="player in players">
+            <label class="form-label">Player Name:</label>
+            <label class="form-control disabled" ng-bind="player.playerName"></label>
+            <label class="form-label">Player Code:</label>
+            <label class="form-control disabled" ng-bind="player.playerCode"></label>
+        </div>
+    </uib-tab>
 </uib-tabset>

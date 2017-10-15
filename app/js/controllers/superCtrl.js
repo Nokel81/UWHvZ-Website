@@ -11,31 +11,39 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
             if (!isSuper) {
                 $location.url("/");
             }
+
+            UserService.getAllPlayerInfo((err, players) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.players = players;
+                }
+            });
+
+            GameService.getAll((err, games) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.games = games || [];
+                }
+            });
+
+            MapService.getAllMarkers((err, markers) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.markers = markers || [];
+                }
+            });
+
+            MapService.getAllPolygons((err, polygons) => {
+                if (err) {
+                    AlertService.danger(err);
+                } else {
+                    $scope.polygons = polygons || [];
+                }
+            });
         });
-    });
-
-    GameService.getAll((err, games) => {
-        if (err) {
-            AlertService.danger(err);
-        } else {
-            $scope.games = games || [];
-        }
-    });
-
-    MapService.getAllMarkers((err, markers) => {
-        if (err) {
-            AlertService.danger(err);
-        } else {
-            $scope.markers = markers || [];
-        }
-    });
-
-    MapService.getAllPolygons((err, polygons) => {
-        if (err) {
-            AlertService.danger(err);
-        } else {
-            $scope.polygons = polygons || [];
-        }
     });
 
     $scope.regenerateCodes = function () {

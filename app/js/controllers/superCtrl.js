@@ -100,6 +100,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (!$scope.games[game]) {
             return;
         }
+        if (!$scope.games[game]._id) {
+            return AlertService.warn("Please save the game before adding");
+        }
         const code = $window.prompt("New " + team + " player Code", "");
         if (!code) {
             return;

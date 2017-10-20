@@ -136,6 +136,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             $scope.user = null;
             $scope.settings = null;
             $rootScope.isModerator = false;
+            $rootScope.loggedIn = false;
             $scope.userInfo = {
                 status: "Please wait, loading..."
             };
@@ -157,6 +158,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 delete $scope.taggedDescription;
                 delete $scope.location;
                 delete $scope.time;
+                $rootScope.loggedIn = true;
                 UserService.getUserSettings(settings => {
                     $scope.settings = settings || {};
                 });

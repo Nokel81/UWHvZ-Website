@@ -150,9 +150,11 @@ button {
 }
 
 textarea.form-control {
-    min-height: 24px;
+    min-height: -moz-min-content;
+    min-height: min-content;
     resize: vertical;
-    max-width: calc(100% - 0.875rem);
+    max-width: -moz-available;
+    max-width: -webkit-fill-available;
 }
 
 label.form-control {
@@ -168,6 +170,7 @@ label.form-control:empty {
 
 form>.form-control {
     width: -webkit-fill-available;
+    width: -moz-available;
 }
 
 .form-label {

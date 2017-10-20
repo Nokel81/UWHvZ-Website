@@ -42,8 +42,10 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
 
     UserService.getBySession(user => {
         if (!user) {
+            $rootScope.loggedIn = false;
             return;
         }
+        $rootScope.loggedIn = true;
         UserService.getUserType(type => {
             $rootScope.isModerator = type === "Moderator";
         });

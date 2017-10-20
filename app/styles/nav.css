@@ -2,7 +2,7 @@ nav {
     background-color: var(--hvz-header);
     font-weight: bold;
     display: grid;
-    grid-template-columns: 3.5em 13em auto 1fr;
+    grid-template-columns: 3.5em 13em 1fr 4rem auto;
     align-items: center;
 }
 

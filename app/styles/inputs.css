@@ -139,7 +139,8 @@ button {
 
 .form-control {
     display: block;
-    width: auto;
+    width: -webkit-fill-available;
+    width: -moz-available;
     font-size: 1rem;
     line-height: 1.25;
     color: black;
@@ -159,7 +160,6 @@ textarea.form-control {
 
 label.form-control {
     max-height: fit-content;
-    width: -webkit-fill-available;
     display: table;
     padding: 8px;
 }
@@ -168,15 +168,11 @@ label.form-control:empty {
     display: block;
 }
 
-form>.form-control {
-    width: -webkit-fill-available;
-    width: -moz-available;
-}
-
 .form-label {
     display: block;
     font-size: 1rem;
     width: -webkit-fill-available;
+    width: -moz-available;
     line-height: 1.25;
     padding: 8px;
     color: var(--hvz-border);

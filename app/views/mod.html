@@ -6,7 +6,7 @@
             <h4 class="text-centre">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
-            <div class="float-right">
+            <div class="text-right">
                 <button type="button" class="btn btn-info" ng-click="addPlayer()">Register Returning Player</button>
                 <button type="button" class="btn btn-success" ng-click="registerPlayer()">Register New Player</button>
             </div>
@@ -29,7 +29,7 @@
                     <button type="button" class="icon-only h2" ng-show="editing != $index" disabled><i class="fa fa-times"></i></button>
                 </div>
             </div>
-            <div class="float-right" ng-show="players.length > 12">
+            <div class="text-right" ng-show="players.length > 12">
                 <button type="button" class="btn btn-info" ng-click="addPlayer()">Register Returning Player</button>
                 <button type="button" class="btn btn-success" ng-click="registerPlayer()">Register New Player</button>
             </div>
@@ -40,7 +40,7 @@
             <h4 class="text-centre">No Game to sign up for or game has already started</h4>
         </div>
         <div ng-hide="gameStarted">
-            <div class="float-right">
+            <div class="text-right">
                 <button type="button" class="btn btn-success" ng-click="startGame()">Start Game</button>
                 <button type="button" class="btn btn-info" ng-click="randomlyChooseOZs()">Randomize Rest of Original Zombies</button>
             </div>
@@ -63,7 +63,7 @@
         <div class="text-centre" ng-hide="supplyCodes">
             <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         </div>
-        <button class="btn btn-success float-right" type="button" ng-click="addCodes()" ng-show="supplyCodes">Add More Codes</button>
+        <button class="btn btn-success text-right" type="button" ng-click="addCodes()" ng-show="supplyCodes">Add More Codes</button>
         <br>
         <br>
         <div class="game-codes-grid" ng-repeat="code in supplyCodes">

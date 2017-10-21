@@ -130,10 +130,6 @@ h6 {
     max-height: 2.5rem;
 }
 
-.float-right {
-    float: right!important;
-}
-
 table {
     border-collapse: collapse;
     width: 100%;

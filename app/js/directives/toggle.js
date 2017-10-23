@@ -21,6 +21,9 @@ function ToggleDirective() {
 
             scope.$watch(() => ngModel.$viewValue, newVal => {
                 console.log(newVal);
+                if (!newVal) {
+                    index = 0;
+                }
                 if (newVal !== values[index]) {
                     let intr = values.findIndex((elem) => elem === newVal);
                     if (intr < 0) {

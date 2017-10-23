@@ -19,7 +19,8 @@ function RegisterCtrl($scope, $uibModalInstance, AlertService) {
         if (!$scope.name) {
             return AlertService.danger("Please type in your name");
         }
-        const {email, password, name, teamPreference} = $scope;
+        const {email, password, name, team} = $scope;
+        const {teamPreference} = team;
         const user = {email, password, name, teamPreference};
         $uibModalInstance.close(user);
     };

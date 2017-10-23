@@ -2,7 +2,6 @@ const Promise = require("bluebird");
 
 const GameSignUp = rootRequire("server/schemas/gameSignUp");
 const User = rootRequire("server/schemas/user");
-const clone = rootRequire("server/helpers/clone");
 
 function FindById(gameId) {
     return new Promise(function(resolve, reject) {
@@ -22,29 +21,24 @@ function FindById(gameId) {
                 }).exec();
             })
             .then(users => {
-                try {
-                    users = users.map(user => {
-                        const signUp = signups.find(signup => {
-                            return signup.userEmail === user.email;
-                        });
-
-                        if (!signUp) {
-                            console.error("User email not found: " + user.email);
-                            throw "Not Found";
-                        }
-
-                        return {
-                            userEmail: signUp.userEmail,
-                            _id: signUp._id,
-                            gameId: signUp.gameId,
-                            teamPreference: signUp.teamPreference,
-                            name: user.playerName
-                        };
+                users = users.map(user => {
+                    const signUp = signups.find(signup => {
+                        return signup.userEmail === user.email;
                     });
-                    return users;
-                } catch (e) {
-                    reject("User Not found");
-                }
+
+                    if (!signUp) {
+                        return null;
+                    }
+
+                    return {
+                        userEmail: signUp.userEmail,
+                        _id: signUp._id,
+                        gameId: signUp.gameId,
+                        teamPreference: signUp.teamPreference,
+                        name: user.playerName
+                    };
+                });
+                return users.filter(user => user);
             })
             .then(signups => {
                 signups.sort((a, b) => {

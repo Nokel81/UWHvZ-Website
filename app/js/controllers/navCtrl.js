@@ -13,7 +13,7 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     }, {
         route: "/moderators",
         text: "Moderator Controls",
-        showName: "isModerator"
+        showNames: ["isModerator", "isSuper"]
     }, {
         route: "/super",
         text: "Super User Panel",
@@ -35,7 +35,13 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     function setShowing(name, value) {
         let route = $scope.routes.find(x => x.showName === name);
         if (!route) {
-            return;
+            if (!$scope.showNames) {
+                return;
+            }
+            route = $scope.showNames.indexOf(name);
+            if (route < 0) {
+                return;
+            }
         }
         route.show = value;
     }

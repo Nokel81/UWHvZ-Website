@@ -3,10 +3,19 @@ const Promise = require("bluebird");
 const Game = rootRequire("server/schemas/game");
 const findAll = rootRequire("server/data-access/functions/game/findAll");
 const findByCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
+const findById = rootRequire("server/data-access/functions/user/findById");
 
-function ModifyPlayerListOfGame(gameId, userCode, team, method) {
+function ModifyPlayerListOfGame(gameId, userCode, team, method, userId) {
     return new Promise(function(resolve, reject) {
-        findByCode(userCode)
+        let promise;
+        if (userCode) {
+            promise = findByCode(userCode);
+        } else if (userId) {
+            promise = findById(userId);
+        } else {
+            return reject("Invalid Call");
+        }
+        promise
             .then(user => {
                 team += "s";
                 if (["spectators", "moderators", "humans", "zombies"].indexOf(team) < 0) {

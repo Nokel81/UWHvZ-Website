@@ -11,6 +11,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
     UserService.getBySession(() => {
         UserService.getUserType(type => {
             UserService.isSuper(isSuper => {
+                console.log(isSuper);
                 if (type !== "Moderator" && !isSuper) {
                     $location.url("/");
                 }

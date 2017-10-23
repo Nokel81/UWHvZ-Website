@@ -7,7 +7,7 @@ function Delete(req, resolve, reject) {
         userId,
         team
     } = req.query;
-    modifyPlayerListOfGame(gameId, userId, team, "$pull")
+    modifyPlayerListOfGame(gameId, null, team, "$pull", userId)
         .then(games => {
             resolve(games);
         })

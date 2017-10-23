@@ -89,13 +89,6 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         ((($scope.games || [])[game] || {}).signUpDates || []).push(new Date());
     };
 
-    $scope.removeModerator = function(game, mod) {
-        if ($scope.games[game]) {
-            const _id = ($scope.games[game].moderatorObjs.splice(mod, 1)[0] || {})._id;
-            $scope.games[game].moderators = ($scope.games[game].moderators || []).filter(id => id !== _id);
-        }
-    };
-
     $scope.addPlayer = function(game, team) {
         if (!$scope.games[game]) {
             return;

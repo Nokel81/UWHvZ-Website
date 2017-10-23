@@ -19,24 +19,32 @@ function FindById(gameId) {
                     email: {
                         $in: emails
                     }
-                }).sort("email").exec();
+                }).exec();
             })
             .then(users => {
-                return Promise.map(clone(users), (user, index) => {
-                    return new Promise(function(resolve, reject) {
-                        let signUp = signups[index];
-                        if (signUp.userEmail !== user.email) {
-                            return reject("User not found");
+                try {
+                    users = users.map(user => {
+                        const signUp = signups.find(signup => {
+                            return signup.userEmail === user.email;
+                        });
+
+                        if (!signUp) {
+                            console.error("User email not found: " + user.email);
+                            throw "Not Found";
                         }
-                        resolve({
+
+                        return {
                             userEmail: signUp.userEmail,
                             _id: signUp._id,
                             gameId: signUp.gameId,
                             teamPreference: signUp.teamPreference,
                             name: user.playerName
-                        });
+                        };
                     });
-                });
+                    return users;
+                } catch (e) {
+                    reject("User Not found");
+                }
             })
             .then(signups => {
                 signups.sort((a, b) => {

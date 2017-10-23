@@ -103,7 +103,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             });
     };
 
-    $scope.addPlayer = function() {
+    $scope.addNewSignUp = function() {
         if ($scope.editing !== null || !$scope.game) {
             return;
         }
@@ -116,7 +116,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         $anchorScroll("bottom");
     };
 
-    $scope.savePlayer = function(index) {
+    $scope.saveSignUp = function(index) {
         if ($scope.editing !== index || !$scope.players[index] || !$scope.game) {
             return;
         }
@@ -142,14 +142,14 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         }
     };
 
-    $scope.editPlayer = function(index) {
+    $scope.editSignUp = function(index) {
         if ($scope.editing !== null || !$scope.players[index] || !$scope.game) {
             return;
         }
         $scope.editing = index;
     };
 
-    $scope.removePlayer = function(index) {
+    $scope.removeSignUp = function(index) {
         if ($scope.editing !== index || !$scope.players[index] || !$scope.game) {
             return;
         }

@@ -6,14 +6,7 @@ function ResetCtrl($scope, $location, AlertService, UserService) {
     }
 
     const checkPasswords = function(password, passwordCheck) {
-        if (password.length < 8 || password !== passwordCheck) {
-            return false;
-        }
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasLowerCase = /[a-z]/.test(password);
-        const hasNumbers = /\d/.test(password);
-        const hasNonalphas = /\W/.test(password);
-        return hasUpperCase + hasLowerCase + hasNumbers + hasNonalphas >= 3;
+        return password.length >= 8 && password == passwordCheck;
     };
 
     $scope.resetPassword = function() {

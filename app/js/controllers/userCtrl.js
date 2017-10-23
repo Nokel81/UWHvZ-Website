@@ -35,13 +35,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     var currentlySending = false;
 
     const checkPasswords = function(password, passwordCheck) {
-        if (password.length < 8 || password !== passwordCheck) {
-            return false;
-        }
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasLowerCase = /[a-z]/.test(password);
-        const hasNumbers = /\d/.test(password);
-        return hasUpperCase && hasLowerCase && hasNumbers;
+        return password.length >= 8 && password == passwordCheck;
     };
 
     $scope.$watch(() => $location.hash(), () => {

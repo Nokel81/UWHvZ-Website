@@ -2,13 +2,7 @@ function RegisterCtrl($scope, $uibModalInstance, AlertService) {
     "ngInject";
 
     const checkPasswords = function(password) {
-        if (password.length < 8) {
-            return false;
-        }
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasLowerCase = /[a-z]/.test(password);
-        const hasNumbers = /\d/.test(password);
-        return hasUpperCase && hasLowerCase && hasNumbers;
+        return password.length >= 8;
     };
 
     $scope.accept = function() {

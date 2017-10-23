@@ -16,12 +16,24 @@ function ToggleDirective() {
             let values = JSON.parse("[" + scope.values.replace(/([^\\]?)'/g, "$1\"") + "]");
             let colours = JSON.parse("[" + scope.colours.replace(/([^\\]?)'/g, "$1\"") + "]");
             let titles = JSON.parse("[" + (scope.titles || "").replace(/([^\\]?)'/g, "$1\"") + "]");
-            let index = values.findIndex((elem) => elem === ngModel.$viewValue);
             const span = angular.element(element[0].firstChild);
+            let index;
+
+            scope.$watch(() => ngModel.$viewValue, newVal => {
+                console.log(newVal);
+                if (newVal !== values[index]) {
+                    let intr = values.findIndex((elem) => elem === newVal);
+                    if (intr < 0) {
+                        intr = 0;
+                    }
+                    index = intr;
+                    span.text(titles[index]);
+                    element.css("background", colours[index]);
+                    ngModel.$setViewValue(values[index]);
+                }
+            });
+
             let active = true;
-            if (index === -1) {
-                index = 0;
-            }
             while (titles.length < values.length) {
                 let val = values[titles.length].toString();
                 titles.push(val);
@@ -30,11 +42,8 @@ function ToggleDirective() {
                 let val = colours[colours.length - 1];
                 colours.push(val);
             }
-            span.text(titles[index]);
-            ngModel.$setViewValue(values[index]);
             element.css({
-                "width": scope.width,
-                "background": colours[index]
+                "width": scope.width
             });
 
             element.on("mouseover", () => {
@@ -51,17 +60,6 @@ function ToggleDirective() {
                     setTimeout(() => {
                         span.removeClass("animate-right");
                     }, 200);
-                }
-            });
-
-            scope.$watch(() => ngModel.$viewValue, newVal => {
-                if (newVal !== values[index]) {
-                    let intr = values.findIndex((elem) => elem === ngModel.$viewValue);
-                    if (intr >= 0) {
-                        index = intr;
-                        span.text(titles[index]);
-                        element.css("background", colours[index]);
-                    }
                 }
             });
         }

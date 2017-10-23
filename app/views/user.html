@@ -5,13 +5,7 @@
         <div ng-show="buttonState === 'signUp'">
             <input class="form-control" type="password" ng-model="passwordCheck" placeholder="Password again">
             <div class="red">
-                Passwords must have the following:
-                <ul>
-                    <li>An Uppercase letter</li>
-                    <li>A Lowercase letter</li>
-                    <li>A Number</li>
-                    <li>At least 8 characters in length</li>
-                </ul>
+                Passwords must be at least 8 characters in length
             </div>
             <input class="form-control" type="text" ng-model="name" placeholder="Full Name (not changable)">
         </div>
@@ -119,4 +113,3 @@
         </div>
     </uib-tab>
 </uib-tabset>
-<hvz-toggle class="ng-hide" titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"></hvz-toggle>

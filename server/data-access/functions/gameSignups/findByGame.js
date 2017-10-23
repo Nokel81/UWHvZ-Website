@@ -9,7 +9,8 @@ function FindById(gameId) {
         let signups = [];
         GameSignUp.find({
             gameId
-        }).sort("userEmail")
+        })
+            .sort("userEmail")
             .exec()
             .then(signupList => {
                 signups = signupList;

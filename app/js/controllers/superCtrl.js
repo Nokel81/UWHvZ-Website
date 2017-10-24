@@ -46,6 +46,19 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         });
     });
 
+    $scope.deleteUser = function (index) {
+        if (!$scope.players[index]) {
+            return;
+        }
+        UserService.deleteUser($scope.players[index], (err, res) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            AlertService.success("User has been removed");
+            $scope.players = res;
+        });
+    };
+
     $scope.regenerateCodes = function () {
         GameService.regenerateCodes((err, res) => {
             if (err) {

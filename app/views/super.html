@@ -174,11 +174,16 @@
         </div>
     </uib-tab>
     <uib-tab index="4" heading="Players">
-        <div class="game-player-codes-grid" ng-repeat="player in players">
+        <div class="super-player-grid" ng-repeat="player in players">
             <label class="form-label">Player Name:</label>
             <label class="form-control disabled" ng-bind="player.playerName"></label>
             <label class="form-label">Player Code:</label>
             <label class="form-control disabled" ng-bind="player.playerCode"></label>
+            <label class="form-label">Player Email:</label>
+            <label class="form-control disabled" ng-bind="player.email"></label>
+            <label class="form-label">Email Confirmed:</label>
+            <label class="form-control disabled" ng-bind="!player.confirmationToken ? 'True' : 'False'"></label>
+            <button class="btn btn-danger" type="button" ng-click="deleteUser($index)"><i class="fa fa-times"></i></button>
         </div>
     </uib-tab>
 </uib-tabset>

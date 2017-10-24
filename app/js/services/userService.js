@@ -44,6 +44,15 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.deleteUser = function (user, cb) {
+        $http.delete(AppSettings.apiUrl + "/user/remove?userId=" + user._id)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.login = function(email, password, cb) {
         if (typeof email !== "string" || typeof password !== "string") {
             return cb("email or password is incorrect");

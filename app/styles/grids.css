@@ -99,6 +99,11 @@
     border-bottom: 1px solid var(--hvz-border-dark);
 }
 
+.super-player-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr 5px 150px 1fr 5px 150px 1fr 5px 150px 150px 5px auto;
+}
+
 .game-moderator-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -245,7 +250,13 @@
     grid-template-columns: 200px 100px;
 }
 
+.super-player-grid>*:last-child {
+    border-radius: 0.25rem;
+    border: 1px solid var(--hvz-border-dark);
+}
+
 .markers-grid>*:nth-child(1),
+.super-player-grid>*:nth-child(1),
 .polygon-grid>*:nth-child(1),
 .verticies-grid>*:nth-child(1),
 .game-signups-grid>*:nth-child(1),
@@ -257,6 +268,7 @@
 }
 
 .markers-grid>*:nth-child(2),
+.super-player-grid>*:nth-child(2),
 .polygon-grid>*:nth-child(2),
 .verticies-grid>*:nth-child(2),
 .game-signups-grid>*:nth-child(2),
@@ -268,6 +280,7 @@
 }
 
 .markers-grid>*:nth-child(3),
+.super-player-grid>*:nth-child(3),
 .polygon-grid>*:nth-child(3),
 .verticies-grid>*:nth-child(3),
 .game-signups-grid>*:nth-child(3),
@@ -279,6 +292,7 @@
 }
 
 .markers-grid>*:nth-child(4),
+.super-player-grid>*:nth-child(4),
 .polygon-grid>*:nth-child(4),
 .verticies-grid>*:nth-child(4),
 .game-signups-grid>*:nth-child(4),
@@ -290,6 +304,7 @@
 }
 
 .markers-grid>*:nth-child(5),
+.super-player-grid>*:nth-child(5),
 .polygon-grid>*:nth-child(5),
 .game-signups-grid>*:nth-child(5),
 .game-start-grid>*:nth-child(5),
@@ -299,6 +314,7 @@
 }
 
 .markers-grid>*:nth-child(6),
+.super-player-grid>*:nth-child(6),
 .polygon-grid>*:nth-child(6),
 .game-signups-grid>*:nth-child(6),
 .game-start-grid>*:nth-child(6),
@@ -308,6 +324,7 @@
 }
 
 .markers-grid>*:nth-child(7),
+.super-player-grid>*:nth-child(7),
 .polygon-grid>*:nth-child(7),
 .game-signups-grid>*:nth-child(7),
 .report-grid>*:nth-child(7),
@@ -316,11 +333,13 @@
 }
 
 .report-grid>*:nth-child(8),
+.super-player-grid>*:nth-child(8),
 .markers-grid>*:nth-child(8) {
     grid-column: 11/12;
 }
 
 .report-grid>*:nth-child(9),
+.super-player-grid>*:nth-child(9),
 .markers-grid>*:nth-child(9) {
     grid-column: 13/14;
 }

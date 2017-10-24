@@ -92,8 +92,8 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                             if (err) {
                                 AlertService.danger(err);
                             } else {
-                                reset();
-                                AlertService.info(res);
+                                $scope.players = res;
+                                AlertService.info("New Player Registed");
                             }
                         });
                     }, () => {

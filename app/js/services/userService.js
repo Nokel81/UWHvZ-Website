@@ -106,10 +106,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         $http.post(AppSettings.apiUrl + "/user", body)
             .then(res => {
                 cb(null, res.data);
-            },
-                err => {
-                    cb(err.data);
-                });
+            }, err => {
+                cb(err.data);
+            });
     };
 
     SERVICE.confirmEmail = function(token, cb) {
@@ -119,10 +118,9 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
         $http.post(AppSettings.apiUrl + "/user/token", body)
             .then(res => {
                 cb(null, res.data);
-            },
-                err => {
-                    cb(err.data);
-                });
+            }, err => {
+                cb(err.data);
+            });
     };
 
     SERVICE.getUserSettings = function(cb) {

@@ -48,7 +48,7 @@ SERVICE.sendSignUpEmail = function (gameSignUp, game) {
             game_name: game.name,
             game_start: getDateString(game.startDate, true)
         };
-        const html = relativeResolve("./emails/confirmation.html", resolveData);
+        const html = relativeResolve("./emails/signup.html", resolveData);
         const mailOptions = {
             from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address,
             replyTo: "uwhumansvszombies@gmail.com",

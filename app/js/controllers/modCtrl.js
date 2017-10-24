@@ -114,7 +114,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
         setTimeout(() => {
             document.body.scrollTop = document.body.scrollHeight;
-        }, 10);
+        }, 50);
     };
 
     $scope.saveSignUp = function(index) {

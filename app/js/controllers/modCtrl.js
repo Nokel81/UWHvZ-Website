@@ -1,4 +1,4 @@
-function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, $anchorScroll, MapService) {
+function ModCtrl($scope, $location, UserService, GameService, AlertService, $window, ModalService, ModService, MapService) {
     "ngInject";
     angular.element(document).ready(() => {
         CKEDITOR.replace("GameLoreTextArea");
@@ -94,7 +94,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                             } else {
                                 reset();
                                 AlertService.info(res);
-                                $anchorScroll("bottom");
+                                document.body.scrollTop = document.body.scrollHeight;
                             }
                         });
                     }, () => {
@@ -113,7 +113,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             teamPreference: "Human",
             gameId: $scope.game._id
         });
-        $anchorScroll("bottom");
+        document.body.scrollTop = document.body.scrollHeight;
     };
 
     $scope.saveSignUp = function(index) {

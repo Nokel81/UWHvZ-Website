@@ -50,6 +50,9 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         if (!$scope.players[index]) {
             return;
         }
+        if (!window.confirm("Are you sure you want to attempt to remove '" + $scope.players[index].playerName + "'")) {
+            return;
+        }
         UserService.deleteUser($scope.players[index], (err, res) => {
             if (err) {
                 return AlertService.danger(err);

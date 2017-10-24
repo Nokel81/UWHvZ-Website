@@ -6,6 +6,7 @@ function findUsersInfo() {
     return new Promise(function(resolve, reject) {
         User.find({})
             .select("-password -nonce")
+            .sort("playerName")
             .exec()
             .then(users => {
                 resolve(users);

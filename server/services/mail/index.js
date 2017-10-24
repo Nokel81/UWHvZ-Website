@@ -28,12 +28,38 @@ SERVICE.sendConfirmationEmail = function(user) {
             replyTo: "uwhumansvszombies@gmail.com",
             to: user.email,
             subject: "Confirm Registration",
-            html: html
+            html
         };
 
         sendMail.sendMail(mailOptions)
             .then(() => {
                 resolve("Confirmation email has been sent");
+            })
+            .catch(error => {
+                console.error(error);
+                reject("Email not sent");
+            });
+    });
+};
+
+SERVICE.sendSignUpEmail = function (gameSignUp, game) {
+    return new Promise(function(resolve, reject) {
+        const resolveData = {
+            game_name: game.name,
+            game_start: getDateString(game.startDate, true)
+        };
+        const html = relativeResolve("./emails/confirmation.html", resolveData);
+        const mailOptions = {
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address,
+            replyTo: "uwhumansvszombies@gmail.com",
+            to: gameSignUp.userEmail,
+            subject: "Game Signup Confirmation",
+            html
+        };
+
+        sendMail.sendMail(mailOptions)
+            .then(() => {
+                resolve("Game signup confirmation email has been sent");
             })
             .catch(error => {
                 console.error(error);
@@ -58,7 +84,7 @@ SERVICE.sendPasswordResetEmail = function(user) {
             replyTo: "uwhumansvszombies@gmail.com",
             to: user.email,
             subject: "Password Reset Link",
-            html: html
+            html
         };
 
         sendMail.sendMail(mailOptions)
@@ -127,7 +153,7 @@ SERVICE.sendTaggedEmail = function(toEmail, toName, fromName, report) {
             replyTo: "uwhumansvszombies@gmail.com",
             subject: "You have been " + reportWord + "ed",
             to: toEmail,
-            html: html
+            html
         };
 
         sendMail.sendMail(mailOptions)
@@ -212,7 +238,7 @@ SERVICE.sendRegeneratedCodeEmail = function (user) {
             replyTo: "uwhumansvszombies@gmail.com",
             to: user.email,
             subject: "Your HvZ Player Code has been regenerated",
-            html: html
+            html
         };
         sendMail.sendMail(mailOptions)
             .then(() => {

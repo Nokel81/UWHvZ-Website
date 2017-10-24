@@ -94,7 +94,6 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                             } else {
                                 reset();
                                 AlertService.info(res);
-                                document.body.scrollTop = document.body.scrollHeight;
                             }
                         });
                     }, () => {
@@ -113,7 +112,9 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             teamPreference: "Human",
             gameId: $scope.game._id
         });
-        document.body.scrollTop = document.body.scrollHeight;
+        setTimeout(() => {
+            document.body.scrollTop = document.body.scrollHeight;
+        }, 10);
     };
 
     $scope.saveSignUp = function(index) {

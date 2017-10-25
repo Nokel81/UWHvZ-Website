@@ -38,8 +38,8 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
             if (!$scope.showNames) {
                 return;
             }
-            route = $scope.showNames.indexOf(name);
-            if (route < 0) {
+            route = $scope.routes.find(x => x.showNames.indexOf(name) >= 0);
+            if (!route) {
                 return;
             }
         }

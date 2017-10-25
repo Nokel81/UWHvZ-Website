@@ -20,7 +20,6 @@ function ToggleDirective() {
             let index;
 
             scope.$watch(() => ngModel.$viewValue, newVal => {
-                console.log(newVal);
                 if (!newVal) {
                     index = 0;
                 }

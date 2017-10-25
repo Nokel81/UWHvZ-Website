@@ -35,10 +35,7 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     function setShowing(name, value) {
         let route = $scope.routes.find(x => x.showName === name);
         if (!route) {
-            if (!$scope.showNames) {
-                return;
-            }
-            route = $scope.routes.find(x => x.showNames.indexOf(name) >= 0);
+            route = $scope.routes.find(x => (x.showNames || []).indexOf(name) >= 0);
             if (!route) {
                 return;
             }

@@ -95,7 +95,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     grid-column-gap: 5px;
-    margin: 5px;
+    margin: 0px 5px;
     border-bottom: 1px solid var(--hvz-border-dark);
 }
 
@@ -108,14 +108,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 5px;
-    margin: 5px;
+    margin: 0px 5px;
     border-bottom: 1px solid var(--hvz-border-dark);
 }
 
 .game-signups-grid {
     display: grid;
     grid-template-columns: 150px 1fr 5px 150px 1fr 5px 175px 1fr 5px 90px;
-    margin: 5px;
+    margin: 0px 5px;
 }
 
 .game-start-grid {
@@ -253,6 +253,10 @@
 .super-player-grid>*:last-child {
     border-radius: 0.25rem;
     border: 1px solid var(--hvz-border-dark);
+}
+
+.game-player-codes-grid:last-of-type {
+    margin-bottom: 5px;
 }
 
 .markers-grid>*:nth-child(1),

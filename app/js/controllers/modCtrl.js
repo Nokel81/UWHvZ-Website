@@ -295,6 +295,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
 
     $scope.removeLocation = function(location) {
         ($scope.game.signUpLocations || []).splice(location, 1);
+        ($scope.game.signUpLocationDates || []).splice(location, 1);
     };
 
     $scope.removeLocationDate = function (game, location, date) {
@@ -303,6 +304,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
 
     $scope.addLocation = function() {
         ($scope.game.signUpLocations || []).push("");
+        ($scope.game.signUpLocationDates || []).push([]);
     };
 
     $scope.removeDate = function(date) {

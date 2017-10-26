@@ -11,7 +11,8 @@ function FindById(id) {
         let zombies = [];
         let originalZombies = [];
         let game = null;
-        Game.findById(id).exec()
+        Game.findById(id)
+            .exec()
             .then(gameObj => {
                 game = gameObj;
                 return User.find({
@@ -59,6 +60,10 @@ function FindById(id) {
                 gameRes.zombieObjs = zombies;
                 gameRes.spectatorObjs = spectators;
                 gameRes.originalZombieObjs = originalZombies;
+
+                while (game.signUpLocationDates.length < game.signUpLocations.length) {
+                    game.signUpLocationDates.push([]);
+                }
 
                 resolve(gameRes);
             })

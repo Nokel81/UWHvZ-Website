@@ -39,6 +39,9 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
             if (!route) {
                 return;
             }
+            route.showing[name] = value;
+            route.show = Object.keys(route.showing).reduce((sum, val) => sum || val);
+            return;
         }
         route.show = value;
     }

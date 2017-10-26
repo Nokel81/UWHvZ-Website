@@ -91,6 +91,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     $scope.removeLocation = function(game, location) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).splice(location, 1);
+        ((($scope.games || [])[game] || {}).signUpLocationDates || []).splice(location, 1);
     };
 
     $scope.removeLocationDate = function (game, location, date) {
@@ -99,6 +100,7 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     $scope.addLocation = function(game) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).push("");
+        ((($scope.games || [])[game] || {}).signUpLocationDates || []).push([]);
     };
 
     $scope.removeDate = function(game, date) {

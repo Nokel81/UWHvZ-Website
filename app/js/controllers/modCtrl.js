@@ -133,13 +133,19 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                 $scope.editing = null;
             });
         } else {
-            GameService.registerPlayerForGame($scope.players[index], (err, players) => {
-                if (err) {
-                    return AlertService.danger(err);
-                }
-                $scope.players = players;
-                $scope.editing = null;
-            });
+            ModalService.openWaiverModal()
+                .result
+                .then(() => {
+                    GameService.registerPlayerForGame($scope.players[index], (err, players) => {
+                        if (err) {
+                            return AlertService.danger(err);
+                        }
+                        $scope.players = players;
+                        $scope.editing = null;
+                    });
+                }, () => {
+                    AlertService.danger("The waiver must be accepted");
+                });
         }
     };
 

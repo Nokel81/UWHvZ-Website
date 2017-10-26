@@ -61,10 +61,6 @@ function FindById(id) {
                 gameRes.spectatorObjs = spectators;
                 gameRes.originalZombieObjs = originalZombies;
 
-                while (game.signUpLocationDates.length < game.signUpLocations.length) {
-                    game.signUpLocationDates.push([]);
-                }
-
                 resolve(gameRes);
             })
             .catch(error => {

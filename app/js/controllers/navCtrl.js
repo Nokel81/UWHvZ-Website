@@ -29,6 +29,9 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
         text: "Invitational"
     }].map(x => {
         x.show = true;
+        if (x.showNames) {
+            x.showing = {};
+        }
         return x;
     });
 
@@ -40,7 +43,7 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
                 return;
             }
             route.showing[name] = value;
-            route.show = Object.keys(route.showing).reduce((sum, val) => sum || val);
+            route.show = Object.keys(route.showing).reduce((sum, val) => sum || route.showing[val], false);
             return;
         }
         route.show = value;

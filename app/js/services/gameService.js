@@ -11,6 +11,7 @@ function GameService($http, AppSettings) {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
                     game.signUpDates = game.signUpDates.map(date => new Date(date));
+                    game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                     cb(game);
                 } else {
                     cb(null);
@@ -83,6 +84,7 @@ function GameService($http, AppSettings) {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
                     game.signUpDates = game.signUpDates.map(date => new Date(date));
+                    game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                 });
                 cb(null, res.data);
             }, err => {
@@ -106,6 +108,7 @@ function GameService($http, AppSettings) {
                 game.startDate = new Date(game.startDate);
                 game.endDate = new Date(game.endDate);
                 game.signUpDates = game.signUpDates.map(date => new Date(date));
+                game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                 cb(null, game);
             }, err => {
                 cb(err.data || {});
@@ -119,6 +122,7 @@ function GameService($http, AppSettings) {
                 game.startDate = new Date(game.startDate);
                 game.endDate = new Date(game.endDate);
                 game.signUpDates = game.signUpDates.map(date => new Date(date));
+                game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                 cb(null, game);
             }, err => {
                 cb(err.data || {});
@@ -165,6 +169,7 @@ function GameService($http, AppSettings) {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
                     game.signUpDates = game.signUpDates.map(date => new Date(date));
+                    game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                 });
                 cb(null, games);
             }, err => {
@@ -180,6 +185,7 @@ function GameService($http, AppSettings) {
                     game.startDate = new Date(game.startDate);
                     game.endDate = new Date(game.endDate);
                     game.signUpDates = game.signUpDates.map(date => new Date(date));
+                    game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
                 });
                 cb(null, games);
             }, err => {

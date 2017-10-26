@@ -13,6 +13,7 @@ function Update(game) {
                 newGame.description = game.description;
                 newGame.signUpDates = game.signUpDates;
                 newGame.signUpLocations = game.signUpLocations;
+                newGame.signUpLocationDates = game.signUpLocationDates;
                 newGame.startDate = game.startDate;
                 newGame.endDate = game.endDate;
                 newGame.suppliedValue = game.suppliedValue;

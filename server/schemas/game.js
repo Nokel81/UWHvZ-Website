@@ -20,6 +20,10 @@ const gameSchema = new Schema({
         type: [String],
         required: true
     },
+    signUpLocationDates: {
+        type: [[Date]],
+        required: true
+    },
     startDate: {
         type: Date,
         required: true
@@ -82,6 +86,16 @@ const gameSchema = new Schema({
 gameSchema.pre("validate", function(next) {
     if (this.startDate >= this.endDate) {
         return this.invalidate("startDate", "Must be before game's end time");
+    }
+
+    if (this.signUpLocations.length !== this.signUpLocationDates.length) {
+        return this.invalidate("There must a set of dates for each location");
+    }
+
+    for (let i = 0; i < this.signUpLocationDates.length; i++) {
+        if (this.signUpLocationDates[i].length === 0) {
+            return this.invalidate("Every location must have at least one date");
+        }
     }
 
     for (let i = 0; i < this.signUpDates.length; i++) {

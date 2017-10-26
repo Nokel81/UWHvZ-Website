@@ -29,6 +29,16 @@
             <ul>
                 <li ng-repeat="location in game.signUpLocations">
                     <a ng-href="/map{{locationUrls[location]}}" ng-bind="location"></a>
+                    <ul>
+                        <li ng-repeat="date in game.signUpLocationDates[$index]">
+                            <div ng-show="strikeThrough(date)">
+                                <s ng-bind="getDateString(date)"></s>
+                            </div>
+                            <div ng-hide="strikeThrough(date)">
+                                <span ng-bind="getDateString(date)"></span>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             Human Point Requirments:

@@ -156,6 +156,24 @@
                 </div>
             </div>
             <div class="accordian">
+                <input type="checkbox" id="tab_location_dates{{$index}}">
+                <label for="tab_location_dates{{$index}}">Game Sign Up Location Dates</label>
+                <div class="accordian-content">
+                    <div class="accordian" ng-repeat="set in game.signUpLocationDates track by $index" ng-init="$dateIndex = $index">
+                        <input type="checkbox" id="tab_location_dates{{$rootIndex}}-{{$index}}">
+                        <label for="tab_location_dates{{$rootIndex}}-{{$index}}" ng-bind="game.signUpLocations[$index]"></label>
+                        <div class="accordian-content">
+                            <div class="accordian-grid" ng-repeat="date in set track by $index">
+                                <label class="form-label">Date:</label>
+                                <input class="form-control" type="date" ng-model="game.signUpLocationDates[$dateIndex][$index]">
+                                <button class="btn btn-danger" type="button" ng-click="removeLocationDate($rootIndex, $dateIndex, $index)"><i class="fa fa-times"></i></button>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addLocationDate($rootIndex, $dateIndex)"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordian">
                 <input type="checkbox" id="tab_dates{{$index}}">
                 <label for="tab_dates{{$index}}">Game Sign Up Dates</label>
                 <div class="accordian-content">

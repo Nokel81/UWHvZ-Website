@@ -297,6 +297,10 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         ($scope.game.signUpLocations || []).splice(location, 1);
     };
 
+    $scope.removeLocationDate = function (game, location, date) {
+        (($scope.game.signUpLocationDates || [])[location] || []).splice(date, 1);
+    };
+
     $scope.addLocation = function() {
         ($scope.game.signUpLocations || []).push("");
     };
@@ -307,6 +311,10 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
 
     $scope.addDate = function() {
         ($scope.game.signUpDates || []).push(new Date());
+    };
+
+    $scope.addLocationDate = function (game, location) {
+        (($scope.game.signUpLocationDates || [])[location] || []).push(new Date());
     };
 
     $scope.removeModerator = function(mod) {

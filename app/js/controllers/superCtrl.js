@@ -93,6 +93,10 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         ((($scope.games || [])[game] || {}).signUpLocations || []).splice(location, 1);
     };
 
+    $scope.removeLocationDate = function (game, location, date) {
+        (((($scope.games || [])[game] || {}).signUpLocationDates || [])[location] || []).splice(date, 1);
+    };
+
     $scope.addLocation = function(game) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).push("");
     };
@@ -103,6 +107,10 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     $scope.addDate = function(game) {
         ((($scope.games || [])[game] || {}).signUpDates || []).push(new Date());
+    };
+
+    $scope.addLocationDate = function (game, location) {
+        (((($scope.games || [])[game] || {}).signUpLocationDates || [])[location] || []).push(new Date());
     };
 
     $scope.addPlayer = function(game, team) {

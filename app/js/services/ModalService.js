@@ -35,6 +35,19 @@ function ModalService($uibModal) {
         });
     };
 
+    SERVICE.openEditPlayer = function (player) {
+        return $uibModal.open({
+            controller: "EditCtrl",
+            templateUrl: "views/modals/editPlayer.html",
+            size: "lg",
+            resolve: {
+                Player: function () {
+                    return JSON.parse(JSON.stringify(player));
+                }
+            }
+        });
+    };
+
     return SERVICE;
 }
 

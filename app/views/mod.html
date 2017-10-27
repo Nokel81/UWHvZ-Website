@@ -75,7 +75,7 @@
             <label class="form-control disabled" ng-bind="code.usedByName"></label>
         </div>
     </uib-tab>
-    <uib-tab index="3" heading="Player Codes">
+    <uib-tab index="3" heading="Players">
         <div class="text-centre" ng-hide="gamePlayers">
             <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         </div>
@@ -84,6 +84,9 @@
             <label class="form-control disabled" ng-bind="player.playerName"></label>
             <label class="form-label">Player Code:</label>
             <label class="form-control disabled" ng-bind="player.playerCode"></label>
+            <label class="form-label">Player Email:</label>
+            <label class="form-control disabled"><b ng-show="player.confirmationToken" ng-bind="player.email"></b><span ng-hide="player.confirmationToken" ng-bind="player.email"></span></label>
+            <button class="btn btn-warning" ng-click="fix($index)" type="button">Fix</button>
         </div>
     </uib-tab>
     <uib-tab index="4" heading="Player Reports">
@@ -121,7 +124,7 @@
             <button class="btn btn-danger" type="button" ng-click="unsuppliedDeath()">Commit</button>
         </div>
     </uib-tab>
-    <uib-tab index=6 heading="Edit Game">
+    <uib-tab index="6" heading="Edit Game">
         <div class="games-grid">
             <label class="form-label">Game Name:</label>
             <input class="form-control" type="text" ng-model="game.name">

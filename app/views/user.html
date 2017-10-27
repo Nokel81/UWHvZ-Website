@@ -88,9 +88,6 @@
         </div>
     </uib-tab>
     <uib-tab index="3" heading="Settings">
-        <button class="btn btn-info text-right" type="button" ng-click="logOut()">logout</button>
-        <br>
-        <br>
         <div class="settings-grid">
             <label class="form-label">Receive game emails:</label>
             <hvz-toggle titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.gameEmails" colours="'#888888','#86d993'"></hvz-toggle>
@@ -113,3 +110,4 @@
         </div>
     </uib-tab>
 </uib-tabset>
+<hvz-toggle class="hidden" titles="'OFF','ON'" values="false, true" width="4em" ng-model="settings.showScore" colours="'#888888','#86d993'"></hvz-toggle>

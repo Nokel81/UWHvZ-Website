@@ -52,7 +52,6 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                     $scope.supplyCodes = codes;
                 }
             });
-
             MapService.getAllMarkers((err, markers) => {
                 if (err) {
                     AlertService.danger(err);
@@ -77,6 +76,23 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
             };
         });
     });
+
+    $scope.fix = function (player) {
+        if (!$scope.gamePlayers[player]) {
+            return;
+        }
+        ModalService.openEditPlayer($scope.gamePlayers[player])
+            .result
+            .then(res => {
+                UserService.updateUser(res, (err, res) => {
+                    if (err) {
+                        return AlertService.danger(err);
+                    }
+                    $scope.gamePlayers = res;
+                    AlertService.success("User Updated");
+                });
+            });
+    };
 
     $scope.registerPlayer = function () {
         if ($scope.editing !== null || !$scope.game) {

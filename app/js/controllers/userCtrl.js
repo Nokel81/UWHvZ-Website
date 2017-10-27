@@ -124,19 +124,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.logOut = function() {
-        UserService.logout(() => {
-            $scope.session = null;
-            $scope.user = null;
-            $scope.settings = null;
-            $rootScope.isModerator = false;
-            $rootScope.loggedIn = false;
-            $scope.userInfo = {
-                status: "Please wait, loading..."
-            };
-        });
-    };
-
     $scope.logIn = function() {
         if ($scope.buttonState !== "logIn") {
             $scope.buttonState = "logIn";

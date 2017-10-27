@@ -1,4 +1,4 @@
-function NavCtrl($scope, $rootScope, $location, UserService) {
+function NavCtrl($scope, $rootScope, $location, UserService, $window) {
     "ngInject";
 
     $scope.routes = [{
@@ -36,17 +36,15 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     });
 
     function setShowing(name, value) {
-        let route = $scope.routes.find(x => x.showName === name);
-        if (!route) {
-            route = $scope.routes.find(x => (x.showNames || []).indexOf(name) >= 0);
-            if (!route) {
-                return;
+        for (let i in $scope.routes) {
+            let route = $scope.routes[i];
+            if (route.showName === name) {
+                route.show = value;
+            } else if ((route.showNames || []).indexOf(name) >= 0) {
+                route.showing[name] = value;
+                route.show = Object.keys(route.showing).reduce((sum, val) => sum || route.showing[val], false);
             }
-            route.showing[name] = value;
-            route.show = Object.keys(route.showing).reduce((sum, val) => sum || route.showing[val], false);
-            return;
         }
-        route.show = value;
     }
 
     UserService.getBySession(user => {
@@ -96,6 +94,17 @@ function NavCtrl($scope, $rootScope, $location, UserService) {
     }, newVal => {
         setShowing("isSuper", newVal);
     });
+
+    $scope.logout = function () {
+        if (!$window.confirm("Are you sure you want to log out?")) {
+            return;
+        }
+        UserService.logout(() => {
+            $rootScope.isModerator = false;
+            $rootScope.loggedIn = false;
+            $location.path("/");
+        });
+    };
 }
 
 module.exports = {

@@ -11,6 +11,7 @@ function GetUserRecipients(userId) {
     return new Promise(function(resolve, reject) {
         let user = null;
         let userType = null;
+        let userObjs = null;
         let recipients = [{
             title: "Webmaster",
             value: recipientCodes.toWebmaster
@@ -18,6 +19,14 @@ function GetUserRecipients(userId) {
         findUserById(userId)
             .then(userObj => {
                 user = userObj;
+                return User.find({
+                    email: {
+                        $ne: webmasterEmail
+                    }
+                }).select("email playerName").sort("playerName").exec();
+            })
+            .then(users => {
+                userObjs = users;
                 return findUserType(userId);
             })
             .then(type => {
@@ -38,16 +47,31 @@ function GetUserRecipients(userId) {
                         value: recipientCodes.toModerators
                     });
                 }
-                if (userType === "NonPlayer" || userType === "Spectator") {
+                if ((userType === "NonPlayer" || userType === "Spectator") && !isSuper) {
                     return resolve(recipients);
                 }
                 if (isSuper) {
-                    games.forEach(game => {
-                        recipients.push({
-                            title: game.name + " - All Participents",
-                            value: "#" + game._id
+                    for (;;) {
+                        games.forEach(game => {
+                            recipients.push({
+                                title: game.name + " - All Participents",
+                                value: "#" + game._id
+                            });
                         });
-                    });
+                        if (hasCurrentGame) {
+                            break;
+                        }
+                        userObjs.forEach(user => {
+                            if (user.confirmationToken) {
+                                return;
+                            }
+                            recipients.push({
+                                title: user.playerName,
+                                value: user.email
+                            });
+                        });
+                        return resolve(recipients);
+                    }
                 }
                 if (!hasCurrentGame) {
                     return resolve(recipients);
@@ -74,14 +98,10 @@ function GetUserRecipients(userId) {
                     title: "All Users",
                     value: recipientCodes.toAllUsers
                 });
-                return User.find({
-                    email: {
-                        $ne: webmasterEmail
+                userObjs.forEach(user => {
+                    if (user.confirmationToken) {
+                        return;
                     }
-                }).select("email playerName").sort("playerName").exec();
-            })
-            .then(users => {
-                users.forEach(user => {
                     recipients.push({
                         title: user.playerName,
                         value: user.email

@@ -1,7 +1,7 @@
 .accordian {
     position: relative;
     width: 100%;
-    color: var(--hvz-border);
+    color: 1px solid var(--hvz-border);
     overflow: hidden;
 }
 

@@ -1,15 +1,13 @@
-const findPlayerCodes = rootRequire("server/data-access/functions/game/findPlayerCodes");
+const findBasicUserInfo = rootRequire("server/data-access/functions/game/findBasicUserInfo");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
-    const { gameId } = req.query;
-    const { userId } = req.headers;
-    findPlayerCodes(gameId, userId)
-        .then(codes => {
-            resolve(codes);
+    findBasicUserInfo()
+        .then(info => {
+            resolve(info);
         })
         .catch(error => {
-            reject("Player codes not found: " + createErrorMessage(error));
+            reject("Player info not found: " + createErrorMessage(error));
         });
 }
 

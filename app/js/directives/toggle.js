@@ -10,16 +10,17 @@ function ToggleDirective() {
             values: "@",
             titles: "@",
             colours: "@",
-            width: "@"
+            width: "@",
+            model: "=ngModel"
         },
-        link: (scope, element, attrs, ngModel) => {
+        link: (scope, element, attrs) => {
             let values = JSON.parse("[" + scope.values.replace(/([^\\]?)'/g, "$1\"") + "]");
             let colours = JSON.parse("[" + scope.colours.replace(/([^\\]?)'/g, "$1\"") + "]");
             let titles = JSON.parse("[" + (scope.titles || "").replace(/([^\\]?)'/g, "$1\"") + "]");
             const span = angular.element(element[0].firstChild);
             let index;
 
-            scope.$watch(() => ngModel.$viewValue, newVal => {
+            scope.$watch("model", newVal => {
                 if (!newVal) {
                     index = 0;
                 }
@@ -31,7 +32,7 @@ function ToggleDirective() {
                     index = intr;
                     span.text(titles[index]);
                     element.css("background", colours[index]);
-                    ngModel.$setViewValue(values[index]);
+                    scope.model = values[index];
                 }
             });
 
@@ -57,7 +58,7 @@ function ToggleDirective() {
                     index = (index + 1) % titles.length;
                     span.addClass("animate-right");
                     span.text(titles[index]);
-                    ngModel.$setViewValue(values[index]);
+                    scope.model = values[index];
                     element.css("background", colours[index]);
                     setTimeout(() => {
                         span.removeClass("animate-right");

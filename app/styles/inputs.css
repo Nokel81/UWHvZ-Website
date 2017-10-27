@@ -23,6 +23,10 @@ select {
     height: auto;
 }
 
+.button {
+    cursor: pointer;
+}
+
 input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
 }
@@ -153,9 +157,11 @@ button {
 textarea.form-control {
     min-height: -moz-min-content;
     min-height: min-content;
+    min-height: 24px;
     resize: vertical;
     max-width: -moz-available;
     max-width: -webkit-fill-available;
+    overflow-x: hidden;
 }
 
 label.form-control {
@@ -175,7 +181,7 @@ label.form-control:empty {
     width: -moz-available;
     line-height: 1.25;
     padding: 8px;
-    color: var(--hvz-border);
+    color: 1px solid var(--hvz-border);
     border: 1px solid var(--hvz-border);
     border-radius: 5px 0px 0px 5px;
     border-right-width: 0px;

@@ -29,6 +29,15 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.updateUser = function (user, cb) {
+        $http.put(AppSettings.apiUrl + "/user/update", user)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.getBySession = function(cb) {
         if (!SERVICE.session) {
             return cb(null);

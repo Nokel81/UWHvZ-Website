@@ -42,6 +42,7 @@
     --hvz-green-light: #d9ffd9;
 
     font-size: 16px;
+
 }
 
 *, ::after, ::before {
@@ -67,7 +68,7 @@ hr {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color: var(--hvz-border);
+    color: 1px solid 1px solid var(--hvz-border);
     font-weight: bolder;
     margin: 0px;
 }

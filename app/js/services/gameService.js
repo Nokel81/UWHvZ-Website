@@ -139,7 +139,7 @@ function GameService($http, AppSettings) {
     };
 
     SERVICE.getGamePlayerInfoForMods = function(gameId, cb) {
-        $http.get(AppSettings.apiUrl + "/game/lists/mods?gameId=" + gameId)
+        $http.get(AppSettings.apiUrl + "/game/lists/mods")
             .then(res => {
                 cb(null, res.data);
             }, err => {

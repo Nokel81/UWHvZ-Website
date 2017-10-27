@@ -104,6 +104,11 @@
     grid-template-columns: 150px 1fr 5px 150px 1fr 5px 150px 1fr 5px 150px 150px 5px auto;
 }
 
+.edit-player-grid {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+}
+
 .game-moderator-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -222,12 +227,17 @@
 
 .game-signups-grid>label:nth-of-type(3),
 .game-start-grid>label:nth-of-type(3) {
-    border-right: 1px solid var(--hvz-border);
+    border-right: 1px solid 1px solid var(--hvz-border);
 }
 
 .game-signups-grid>hvz-toggle,
 .game-start-grid>hvz-toggle {
     margin-left: 10px;
+}
+
+.game-player-codes-grid>label:last-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .game-codes-grid {
@@ -237,7 +247,7 @@
 
 .game-player-codes-grid {
     display: grid;
-    grid-template-columns: 175px 1fr 5px 175px 1fr;
+    grid-template-columns: 125px 1fr 5px 125px 1fr 5px 125px 1fr 60px;
 }
 
 .report-grid {
@@ -312,6 +322,7 @@
 .polygon-grid>*:nth-child(5),
 .game-signups-grid>*:nth-child(5),
 .game-start-grid>*:nth-child(5),
+.game-player-codes-grid>*:nth-child(5),
 .report-grid>*:nth-child(5),
 .game-codes-grid>*:nth-child(5) {
     grid-column: 7/8;
@@ -322,6 +333,7 @@
 .polygon-grid>*:nth-child(6),
 .game-signups-grid>*:nth-child(6),
 .game-start-grid>*:nth-child(6),
+.game-player-codes-grid>*:nth-child(6),
 .report-grid>*:nth-child(6),
 .game-codes-grid>*:nth-child(6) {
     grid-column: 8/9;
@@ -456,6 +468,42 @@
     .markers-grid>*:nth-child(-n+6):nth-last-child(-n+9) {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+    }
+
+    /* This is for the players view on the moderators page*/
+
+    .game-player-codes-grid {
+        grid-template-columns: 125px 1fr;
+    }
+
+    .game-player-codes-grid>*:nth-child(n+3) {
+        margin-top: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .game-player-codes-grid>*:nth-child(n):nth-child(-n+4) {
+        border-bottom: none;
+    }
+
+    .game-player-codes-grid>*:nth-child(odd) {
+        border-bottom-left-radius: 0;
+        grid-column: 1/2;
+    }
+
+    .game-player-codes-grid>*:nth-child(even) {
+        border-bottom-right-radius: 0;
+        grid-column: 2/3;
+    }
+
+    .game-player-codes-grid>label:last-of-type {
+        border-bottom-right-radius: 5px;
+    }
+
+    .game-player-codes-grid>button {
+        border-bottom-left-radius: 5px!important;
+        border: 1px solid var(--hvz-border)!important;
+        border-top: none!important;
     }
 }
 

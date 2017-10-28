@@ -45,11 +45,16 @@ function defineRoutes(app, dir, routePath) {
             return console.error("Invalid method name:" + method + "; in '" + dir + "'");
         }
         middleware.forEach(name => {
-            app.use(routePath, rootRequire('server/routes/middleware/' + name));
+            app.use(routePath, rootRequire("server/routes/middleware/" + name));
         });
         route[method](function (req, res) {
-            let resolve = function (item) {
-                res.status(successCodes[method]).json(item);
+            let resolve = function (item, contentType) {
+                if (item instanceof Buffer) {
+                    res.set("Content-Type", contentType);
+                    res.status(successCodes[method]).send(item);
+                } else {
+                    res.status(successCodes[method]).json(item);
+                }
             };
             let reject = function (message) {
                 res.status(failCodes[method]).send(message);

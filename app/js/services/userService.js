@@ -38,6 +38,18 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
+    SERVICE.getPlayerCodePage = function (cb) {
+        const config = {
+            responseType: "blob"
+        };
+        $http.get(AppSettings.apiUrl + "/user/pdf", config)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.getBySession = function(cb) {
         if (!SERVICE.session) {
             return cb(null);

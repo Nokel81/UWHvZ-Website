@@ -1,12 +1,13 @@
 const Promise = require("bluebird");
 const NeverBounce = require("neverbounce/src/NeverBounce");
 
-const User = rootRequire("server/schemas/user");
 const findByPlayerCode = rootRequire("server/data-access/functions/user/findByPlayerCode");
 const findBasicUserInfo = rootRequire("server/data-access/functions/game/findBasicUserInfo");
 const mailService = rootRequire("server/services/mail");
 
-const client = new NeverBounce({apiKey:"secret_9d17e380fd9e37180d449757eb31d8a5"});
+const client = new NeverBounce({
+    apiKey: "secret_9d17e380fd9e37180d449757eb31d8a5"
+});
 
 function Create(newUser) {
     return new Promise(function(resolve, reject) {

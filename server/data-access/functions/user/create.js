@@ -10,7 +10,9 @@ const playerCode = rootRequire("server/helpers/playerCode");
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 const mailService = rootRequire("server/services/mail");
 
-const client = new NeverBounce({apiKey:"secret_9d17e380fd9e37180d449757eb31d8a5"});
+const client = new NeverBounce({
+    apiKey: "secret_9d17e380fd9e37180d449757eb31d8a5"
+});
 
 function Create(user) {
     user.nonce = randomString(25);

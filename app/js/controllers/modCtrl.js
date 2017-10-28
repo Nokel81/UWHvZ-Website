@@ -90,6 +90,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
                     }
                     $scope.gamePlayers = res;
                     AlertService.success("User Updated");
+                    AlertService.warn("If the email was changed then the user should sign up for the game again");
                 });
             });
     };

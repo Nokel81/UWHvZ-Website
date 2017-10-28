@@ -158,6 +158,21 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
+    $scope.playerCodePage = function () {
+        AlertService.info("Generating PDF");
+        UserService.getPlayerCodePage((err, blob) => {
+            if (err) {
+                return AlertService.danger(err);
+            }
+            AlertService.success("Finished");
+            var link = document.createElement("a");
+            link.target = "_blank";
+            link.download = "playerCodeSheet.pdf";
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        });
+    };
+
     $scope.signUp = function() {
         if ($scope.buttonState !== "signUp") {
             $scope.buttonState = "signUp";

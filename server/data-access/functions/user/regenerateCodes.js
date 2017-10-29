@@ -8,15 +8,22 @@ function regenerateCodes() {
     return new Promise(function(resolve, reject) {
         User.find({})
             .exec()
-            .all(user => {
-                user.playerCode = playerCode();
-                return user.save();
+            .then(users => {
+                const saving = [];
+                users.forEach(user => {
+                    user.playerCode = playerCode();
+                    saving.push(user.save());
+                });
+                return Promise.all(saving);
             })
-            .all(user => {
-                return mailService.sendRegeneratedCodeEmail(user);
+            .then(saved => {
+                const sending = [];
+                saved.forEach(user => {
+                    sending.push(mailService.sendRegeneratedCodeEmail(user));
+                });
+                return Promise.all(sending);
             })
             .then(() => {
-                console.log("Hello");
                 resolve("All Player Codes Regenerated");
             })
             .catch(error => {

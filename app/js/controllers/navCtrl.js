@@ -35,6 +35,11 @@ function NavCtrl($scope, $rootScope, $location, UserService, $window) {
         return x;
     });
 
+    const now = new Date();
+    if (now.getMonth() < 7 || now.getMonth() > 8) {
+        $scope.routes.find(x => x.route === "/invitational").show = false;
+    }
+
     function setShowing(name, value) {
         for (let i in $scope.routes) {
             let route = $scope.routes[i];

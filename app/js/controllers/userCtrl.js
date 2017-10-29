@@ -166,9 +166,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             }
             AlertService.success("Finished");
             var link = document.createElement("a");
-            link.target = "_blank";
+            link.setAttribute("type", "hidden");
             link.download = "playerCodeSheet.pdf";
             link.href = URL.createObjectURL(blob);
+            document.body.appendChild(link);
             link.click();
         });
     };
@@ -261,6 +262,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     $scope.changingPassword = {};
     $scope.changePassword = function() {
+        console.log($scope.changingPassword);
         if (!$scope.changingPassword.newPassword) {
             return;
         }

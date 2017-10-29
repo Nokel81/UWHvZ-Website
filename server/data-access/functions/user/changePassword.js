@@ -6,8 +6,9 @@ const hashPassword = rootRequire("server/helpers/hashPassword");
 
 function ConfirmUser(passwordChange, userId) {
     return new Promise(function(resolve, reject) {
-        findById(userId)
+        findById(userId, true)
             .then(user => {
+                console.log(user);
                 return Promise.join(hashPassword(passwordChange.oldPassword, user.nonce), hashPassword(passwordChange.newPassword, user.nonce), (oldHash, newHash) => {
                     if (oldHash !== user.password) {
                         return reject("Old password is incorrect");

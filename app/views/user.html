@@ -68,7 +68,7 @@
         <h3 class="text-centre">Your Code: <b ng-bind="user.playerCode"></b></h3>
         <br>
         <h4 class="text-centre">Report a Stun/Tag</h4>
-        <div class="stun-grid">
+        <form class="stun-grid">
             <label class="form-label">Report Desciption:</label>
             <textarea class="form-control" rows="1" cols="80" ng-model="taggingCode.taggedDescription"></textarea>
             <label class="form-label">Location:</label>
@@ -77,15 +77,15 @@
             <input class="form-control" type="datetime-local" ng-model="taggingCode.time" step="0" ng-change="timeHasChanged()">
             <label class="form-label">Other Player's Code:</label>
             <input class="form-control" type="text" ng-model="taggingCode.taggedCode">
-            <button class="btn btn-success" type="button" ng-click="tagCode()">Tag!</button>
-        </div>
+            <button class="btn btn-success" type="submit" ng-click="tagCode()">Tag!</button>
+        </form>
         <br>
         <h4 class="text-centre">Use a Supply Code</h4>
-        <div class="supply-grid">
+        <form class="supply-grid">
             <label class="form-label">Supply Code:</label>
             <input class="form-control" type="text" ng-model="supplyCodeReporting.supplyCode">
-            <button class="btn btn-success" type="button" ng-click="supplyCodeReport()">Open Drop!</button>
-        </div>
+            <button class="btn btn-success" type="submit" ng-click="supplyCodeReport()">Open Drop!</button>
+        </form>
         <br>
         <button class="btn btn-success" type="button" ng-click="playerCodePage()">Download Sheet of Player Code Cards</button>
     </uib-tab>
@@ -100,15 +100,15 @@
             <label class="form-label">Zombie Tree Colour:</label>
             <input class="colourpicker" type="color" ng-show="supportsColour" ng-model="settings.treeNodeColour">
             <h3 class="text-centre">Reset Password</h3>
-            <div class="resetpassword-grid">
+            <form class="resetpassword-grid">
                 <label class="form-label">Old Password</label>
-                <input class="form-control" type="password" ng-model="oldPassword">
+                <input class="form-control" type="password" ng-model="changingPassword.oldPassword">
                 <label class="form-label">New Password</label>
-                <input class="form-control" type="password" ng-model="newPassword">
+                <input class="form-control" type="password" ng-model="changingPassword.newPassword">
                 <label class="form-label">New Password Check</label>
-                <input class="form-control" type="password" ng-model="newPasswordCheck">
-                <button class="btn btn-success" type="button" ng-click="changePassword()">Change Password</button>
-            </div>
+                <input class="form-control" type="password" ng-model="changingPassword.newPasswordCheck">
+                <button class="btn btn-success" type="submit" ng-click="changePassword()">Change Password</button>
+            </form>
         </div>
     </uib-tab>
 </uib-tabset>

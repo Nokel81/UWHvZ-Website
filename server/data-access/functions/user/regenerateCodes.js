@@ -8,11 +8,11 @@ function regenerateCodes() {
     return new Promise(function(resolve, reject) {
         User.find({})
             .exec()
-            .each(user => {
+            .all(user => {
                 user.playerCode = playerCode();
                 return user.save();
             })
-            .each(user => {
+            .all(user => {
                 return mailService.sendRegeneratedCodeEmail(user);
             })
             .then(() => {

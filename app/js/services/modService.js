@@ -29,12 +29,13 @@ function ModService($http, AppSettings) {
     };
 
     SERVICE.startGame = function(OZemails, gameId, HTMLlore, files, cb) {
-        $http.post(AppSettings.apiUrl + "/message/attachments", files, {
+        const options = {
             transformRequest: angular.identity,
             headers: {
                 "Content-Type": undefined
             }
-        })
+        };
+        $http.post(AppSettings.apiUrl + "/message/attachments", files, options)
             .then(res => {
                 let fileData = res.data;
                 let body = {
@@ -43,7 +44,10 @@ function ModService($http, AppSettings) {
                     HTMLlore,
                     fileData
                 };
-                $http.post(AppSettings.apiUrl + "/game/start", body)
+                const options = {
+                    timeout: 600000
+                };
+                $http.post(AppSettings.apiUrl + "/game/start", body, options)
                     .then(res => {
                         cb(null, res.data);
                     }, err => {

@@ -263,7 +263,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
                     fileData
                 };
                 let config = {
-                    timeout: 120000 //This is in miliseconds
+                    timeout: 600000 //This is in miliseconds (10 minutes)
                 };
                 $http.post(AppSettings.apiUrl + "/message", req, config)
                     .then(res => {

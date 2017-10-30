@@ -19,6 +19,11 @@
     grid-template-columns: 100px 1fr 5px 100px 2fr 5px 100px 2fr 5px 100px 10fr 5px 100px;
 }
 
+.supply-codes-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
 .polygon-grid {
     display: grid;
     grid-template-columns: 210px 1fr 5px 100px 200px 5px 100px 2fr 5px 100px;

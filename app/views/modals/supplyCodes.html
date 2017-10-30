@@ -2,14 +2,13 @@
     Add new supply codes
 </div>
 <div class="modal-body">
-    <div class="input-group">
-        <span class="input-group-addon" id="numberOfCodesID">Number Of Codes:</span>
-        <input type="number" class="form-control" ng-model="numberOfCodes" aria-describedby="numberOfCodesID">
-        <span class="input-group-addon" id="codeValueID">Code Valye:</span>
-        <input type="number" class="form-control" placeholder="Code Value" ng-model="codeValue" aria-describedby="codeValueID">
-        <button type="button" class="btn btn-success formish-control" ng-click="generate()">Generate</button>
+    <div class="supply-codes-grid">
+        <label class="form-label">Number Of Codes:</label>
+        <input type="number" class="form-control" ng-model="numberOfCodes">
+        <label class="form-label">Code Value:</label>
+        <input type="number" class="form-control" placeholder="Code Value" ng-model="codeValue">
+        <button class="btn btn-success" type="button" ng-click="generate()">Generate</button>
     </div>
-    <br>
     <br>
     <table ng-show="codes.length">
         <tr>

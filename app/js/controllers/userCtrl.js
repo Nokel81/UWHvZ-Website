@@ -1,4 +1,4 @@
-function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService, $window) {
+function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootScope, ModalService) {
     "ngInject";
     $scope.supportsColour = true;
     angular.element(document).ready(() => {
@@ -26,27 +26,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.password = UserService.password;
     $scope.session = UserService.session;
     $scope.validRecipients = [];
-    $scope.time = new Date();
-    $scope.time.setMilliseconds(0);
-    $scope.time.setSeconds(0);
+    $scope.taggingCode = {};
     $scope.userInfo = null;
-    $scope.hasTimeBeenChanged = false;
     var currentlyTagging = false;
     var currentlySending = false;
 
     const checkPasswords = function(password, passwordCheck) {
         return password.length >= 8 && password == passwordCheck;
-    };
-
-    $scope.$watch(() => $location.hash(), () => {
-        $scope.time = new Date();
-        $scope.time.setMilliseconds(0);
-        $scope.time.setSeconds(0);
-        $scope.hasTimeBeenChanged = false;
-    });
-
-    $scope.timeHasChanged = function() {
-        $scope.hasTimeBeenChanged = true;
     };
 
     UserService.getBySession(user => {
@@ -223,9 +209,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time) {
             return AlertService.danger("Need more information");
         }
-        if (!$scope.taggingCode.hasTimeBeenChanged && !$window.confirm("You have not changed the time that the event happened, are you sure it just happened?")) {
-            return;
-        }
         currentlyTagging = true;
         AlertService.info("Sending report");
         UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, $scope.taggingCode.time, (err, res) => {
@@ -262,7 +245,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
 
     $scope.changingPassword = {};
     $scope.changePassword = function() {
-        console.log($scope.changingPassword);
         if (!$scope.changingPassword.newPassword) {
             return;
         }

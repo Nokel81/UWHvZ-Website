@@ -2,7 +2,6 @@ function EditCtrl($scope, $uibModalInstance, AlertService, Player) {
     "ngInject";
 
     $scope.player = Player;
-    console.log($scope.player);
 
     $scope.accept = function() {
         if (!$scope.player.email || !$scope.player.email.includes("@")) {

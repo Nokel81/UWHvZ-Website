@@ -164,7 +164,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             location,
             time
         };
-        $http.post(AppSettings.apiUrl + "/report", body)
+        $http.post(AppSettings.apiUrl + "/report/submit", body)
             .then(res => {
                 cb(null, res.data);
             }, err => {

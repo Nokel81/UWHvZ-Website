@@ -11,14 +11,14 @@ function GetUserType(id, game) {
         }
 
         promise.then(game => {
-            if (game.moderators.indexOf(id) >= 0) {
+            if (game.moderators.findIndex(x => x.toString() === id.toString()) >= 0) {
                 resolve("Moderator");
-            } else if (game.zombies.indexOf(id) >= 0) {
-                resolve("Zombie");
-            } else if (game.humans.indexOf(id) >= 0) {
-                resolve("Human");
-            } else if (game.spectators.indexOf(id) >= 0) {
+            } else if (game.spectators.findIndex(x => x.toString() === id.toString()) >= 0) {
                 resolve("Spectator");
+            } else if (game.humans.findIndex(x => x.toString() === id.toString()) >= 0) {
+                resolve("Human");
+            } else if (game.zombies.findIndex(x => x.toString() === id.toString()) >= 0) {
+                resolve("Zombie");
             } else {
                 resolve("NonPlayer");
             }

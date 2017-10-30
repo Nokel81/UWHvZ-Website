@@ -29,7 +29,6 @@ function defineRoutes(app, dir, routePath) {
     const content = fs.readdirSync(dir);
     const directories = content.filter(file => fs.statSync(path.join(dir, file)).isDirectory());
     const files = content.filter(file => fs.statSync(path.join(dir, file)).isFile());
-    const route = app.route(routePath);
     let middleware = [];
     if (files.includes(middlewareFile)) {
         middleware = require(path.join(dir, middlewareFile));
@@ -47,7 +46,7 @@ function defineRoutes(app, dir, routePath) {
         middleware.forEach(name => {
             app.use(routePath, rootRequire("server/routes/middleware/" + name));
         });
-        route[method](function (req, res) {
+        app[method](routePath, function (req, res) {
             let resolve = function (item, contentType) {
                 if (item instanceof Buffer) {
                     res.set("Content-Type", contentType);

@@ -1,11 +1,11 @@
-const getUserInfo = rootRequire("server/data-access/functions/user/findUserInfo");
+const findUserInfo = rootRequire("server/data-access/functions/user/findUserInfo");
 const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     const {
         userId
     } = req.headers;
-    getUserInfo(userId)
+    findUserInfo(userId)
         .then(info => {
             resolve(info);
         })

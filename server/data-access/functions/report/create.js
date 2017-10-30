@@ -31,41 +31,42 @@ function Create(report) {
                 return Promise.join(findById(report.tagger), findByPlayerCode(report.taggedCode), (taggerObj, taggedObj) => {
                     tagger = taggerObj;
                     tagged = taggedObj;
-                    taggerType = findUserType(tagger, game);
-                    taggedType = findUserType(tagged, game);
+                    return Promise.join(findUserType(tagger._id, game), findUserType(tagged._id, game))
+                        .then(([taggerType, taggedType]) => {
 
-                    if (taggedType !== "Human" && taggedType !== "Zombie") {
-                        return reject("You have to tag either a Human or a Zombie");
-                    }
-                    if (taggerType === "Zombie") {
-                        if (taggedType === "Zombie") {
-                            reject("Zombies cannot tag other zombies");
-                        } else {
-                            return Promise.resolve("Tag");
-                        }
-                    } else {
-                        if (taggedType === "Zombie") {
-                            return Promise.resolve("Stun");
-                        } else {
-                            return new Promise(function(resolve, reject) {
-                                Report.count({
-                                    tagged: tagged._id,
-                                    reportType: "Tag"
-                                })
-                                    .exec()
-                                    .then(count => {
-                                        if (count > 0) {
-                                            reject("You cannot tag someone who has already been tagged");
-                                        } else {
-                                            resolve("Tag");
-                                        }
-                                    })
-                                    .catch(error => {
-                                        reject(error);
+                            if (taggedType !== "Human" && taggedType !== "Zombie") {
+                                return reject("You have to tag either a Human or a Zombie");
+                            }
+                            if (taggerType === "Zombie") {
+                                if (taggedType === "Zombie") {
+                                    reject("Zombies cannot tag other zombies");
+                                } else {
+                                    return Promise.resolve("Tag");
+                                }
+                            } else {
+                                if (taggedType === "Zombie") {
+                                    return Promise.resolve("Stun");
+                                } else {
+                                    return new Promise(function(resolve, reject) {
+                                        Report.count({
+                                            tagged: tagged._id,
+                                            reportType: "Tag"
+                                        })
+                                        .exec()
+                                        .then(count => {
+                                            if (count > 0) {
+                                                reject("You cannot tag someone who has already been tagged");
+                                            } else {
+                                                resolve("Tag");
+                                            }
+                                        })
+                                        .catch(error => {
+                                            reject(error);
+                                        });
                                     });
-                            });
-                        }
-                    }
+                                }
+                            }
+                        });
                 });
             })
             .then(type => {

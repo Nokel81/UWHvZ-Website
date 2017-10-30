@@ -214,7 +214,7 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
     };
 
     $scope.randomlyChooseOZs = function() {
-        let number = Number($window.prompt("New Zombie Player Code", ""));
+        let number = Number($window.prompt("Number of additonal zombies:", ""));
         if (isNaN(number)) {
             return AlertService.danger("Type a number");
         }

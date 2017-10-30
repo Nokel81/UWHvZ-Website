@@ -8,10 +8,12 @@ const clone = rootRequire("server/helpers/clone");
 
 function GetAllTrees(userId) {
     return new Promise(function(resolve, reject) {
+        // return resolve([]);
         findAll()
             .then(games => {
-                let lastGame = games.slice(-1).pop();
-                if ((lastGame.humans.indexOf(userId) >= 0 || !userId) && new Date(lastGame.endDate) >= new Date()) {
+                let lastGame = games[games.length - 1];
+                let isInGame = !userId || lastGame.humans.findIndex(x => x.toString() === userId.toString()) >= 0;
+                if (isInGame && new Date(lastGame.endDate) >= new Date()) {
                     games.pop();
                 }
                 return Promise.map(clone(games), game => {

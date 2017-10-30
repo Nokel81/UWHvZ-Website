@@ -4,6 +4,7 @@ const User = rootRequire("server/schemas/user");
 
 function FindByPlayerCode(playerCode) {
     return new Promise(function(resolve, reject) {
+        playerCode = playerCode.toLowerCase();
         User.findOne({
             playerCode
         })
@@ -12,8 +13,8 @@ function FindByPlayerCode(playerCode) {
             .then(user => {
                 resolve(user);
             })
-            .catch(error => {
-                reject(error);
+            .catch(() => {
+                reject("Invalid Player Code");
             });
     });
 }

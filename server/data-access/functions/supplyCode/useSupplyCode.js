@@ -11,7 +11,7 @@ function UseSupplyCode(info) {
                 }
 
                 return SupplyCode.updateOne({
-                    code: info.code,
+                    code: info.code.toLowerCase(),
                     usedBy: {
                         $exists: false
                     },

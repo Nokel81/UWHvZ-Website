@@ -201,12 +201,11 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
     };
 
-    $scope.taggingCode = {};
     $scope.tagCode = function() {
         if (currentlyTagging) {
             return;
         }
-        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time) {
+        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time || !$scope.taggingCode.location) {
             return AlertService.danger("Need more information");
         }
         currentlyTagging = true;
@@ -218,11 +217,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 delete $scope.taggingCode.taggedCode;
                 delete $scope.taggingCode.taggedDescription;
                 delete $scope.taggingCode.location;
-                $scope.taggingCode.time = new Date();
-                $scope.taggingCode.time.setMilliseconds(0);
-                $scope.taggingCode.time.setSeconds(0);
+                delete $scope.taggineCode.time;
                 AlertService.info(res);
-                $scope.taggingCode.hasTimeBeenChanged = false;
             }
             currentlyTagging = false;
         });

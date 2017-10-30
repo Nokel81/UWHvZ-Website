@@ -65,7 +65,7 @@ function SendMessage(message) {
                                 $in: userIds
                             };
                         }
-                        return User.find({}).select("email _id").exec();
+                        return User.find(query).select("email _id").exec();
                     })
                     .then(userObjs => {
                         users = userObjs;
@@ -76,7 +76,7 @@ function SendMessage(message) {
                         }).exec();
                     })
                     .then(settings => {
-                        resolve(users.filter(user => settings.find(group => group.userId.toString() === user._id.toString()).promotionalEmails).map(user => user.email));
+                        resolve(users.filter(user => settings.find(group => group.userId.toString() === user._id.toString())[message.to !== recipientCodes.toAllUsers ? "gameEmails" : "promotionalEmails"]).map(user => user.email));
                     })
                     .catch(error => {
                         reject(error);

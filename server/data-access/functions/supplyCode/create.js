@@ -5,8 +5,11 @@ const findByGame = rootRequire("server/data-access/functions/supplyCode/findByGa
 
 function Create(supplyCodes, gameId) {
     return new Promise(function(resolve, reject) {
-        SupplyCode.insertMany(supplyCodes)
-            .exec()
+        supplyCodes = supplyCodes.map(supplyCode => {
+            let x = new SupplyCode(supplyCode);
+            return x.save();
+        });
+        Promise.all(supplyCodes)
             .then(() => {
                 return findByGame(gameId);
             })

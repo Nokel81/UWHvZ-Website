@@ -294,8 +294,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 AlertService.danger(err);
             } else {
                 AlertService.info(res);
-                $scope.message.messageTo = "";
-                $scope.message.messageSubject = "";
+                delete $scope.message.messageTo;
+                delete $scope.message.messageSubject;
+                delete $scope.message.files;
                 CKEDITOR.instances.MessageBodyTextArea.setData("");
             }
             currentlySending = false;

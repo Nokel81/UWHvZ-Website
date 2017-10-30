@@ -10,7 +10,10 @@ function GetReports(userId) {
         let stunCount = 0;
         findCurrentOrNext()
             .then(game => {
-                if (game.humans.indexOf(userId) >= 0 || !userId) {
+                let isInGameMod = game.moderators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
+                let isInGameZom = game.zombies.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
+                let isInGameSpec = game.spectators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
+                if (isInGameSpec || isInGameZom || isInGameMod) {
                     zombieCount = game.originalZombies.length;
                 }
                 graph.push({

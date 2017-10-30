@@ -100,24 +100,20 @@ SERVICE.sendPasswordResetEmail = function(user) {
 
 SERVICE.sendMessage = function(message) {
     return new Promise(function(resolve, reject) {
-        const mailOptions = {
-            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
-            replyTo: "uwhumansvszombies@gmail.com",
-            subject: message.subject,
-            html: message.body,
-            attachments: message.fileData
-        };
         let recipients = message.to;
         if (!Array.isArray(recipients)) {
             recipients = [recipients];
         }
-        recipients = recipients.map(recipient => {
-            let option = clone(mailOptions);
-            option.to = recipient;
-            return sendMail.sendMail(option);
-        });
-
-        Promise.all(recipients)
+        const mailOptions = {
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
+            to: "uwhumansvszombies@gmail.com",
+            bcc: recipients,
+            subject: message.subject,
+            html: message.body,
+            attachments: message.fileData
+        };
+        sendMail.sendMail(mailOptions)
             .then(() => {
                 message.fileData.forEach(fileData => {
                     fs.unlink(fileData.path);
@@ -176,17 +172,14 @@ SERVICE.sendStartingEmail = function(toList, game, HTMLlore, team, attachments, 
         const mailOptions = {
             from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
             replyTo: "uwhumansvszombies@gmail.com",
+            to: "uwhumansvszombies@gmail.com",
+            bcc: toList,
             subject: "Welcome to the game",
             html,
             attachments
         };
-        toList = toList.map(recipient => {
-            let option = clone(mailOptions);
-            option.to = recipient;
-            return sendMail.sendMail(option);
-        });
 
-        Promise.all(toList)
+        sendMail.sendMail(mailOptions)
             .then(() => {
                 resolve("Email sent");
             })

@@ -11,9 +11,9 @@ function GetAllTrees(userId) {
         findAll()
             .then(games => {
                 let lastGame = games[games.length - 1];
-                let isInGameMod = lastGame.moderators.findIndex(x => x.toString() === userId) >= 0;
-                let isInGameZom = lastGame.zombies.findIndex(x => x.toString() === userId) >= 0;
-                let isInGameSpec = lastGame.spectators.findIndex(x => x.toString() === userId) >= 0;
+                let isInGameMod = lastGame.moderators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
+                let isInGameZom = lastGame.zombies.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
+                let isInGameSpec = lastGame.spectators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
                 if (!(isInGameMod || isInGameZom || isInGameSpec || new Date(lastGame.endDate) < new Date())) {
                     games.pop();
                 }

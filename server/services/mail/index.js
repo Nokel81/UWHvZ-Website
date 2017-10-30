@@ -172,7 +172,7 @@ SERVICE.sendStartingEmail = function(toList, game, HTMLlore, team, attachments, 
         const resolveData = clone(game);
         resolveData.HTMLlore = HTMLlore;
         resolveData.startingZombieNames = names.map(name => "<li>" + name + "</li>");
-        const html = relativeResolve("./emails/" + team + "Start.html", resolveData);
+        const html = relativeResolve("./emails/" + team.toLowerCase() + "Start.html", resolveData);
         const mailOptions = {
             from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
             replyTo: "uwhumansvszombies@gmail.com",

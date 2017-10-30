@@ -13,6 +13,7 @@ function Get(req, resolve, reject) {
                 delete game.humans;
                 delete game.zombies;
                 delete game.spectators;
+                delete game.originalZombies;
                 delete game.moderatorObjs;
                 delete game.humanObjs;
                 delete game.zombieObjs;

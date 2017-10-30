@@ -8,7 +8,7 @@ function Get(req, resolve, reject) {
     } = req.headers;
     findCurrentOrNext()
         .then(game => {
-            if (!game.moderators.find(x => x.toString() === userId.toString()) && !isSuper) {
+            if (!game.moderators.find(x => x.toString() === userId) && !isSuper) {
                 delete game.moderators;
                 delete game.humans;
                 delete game.zombies;

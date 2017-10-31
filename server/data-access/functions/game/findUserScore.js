@@ -11,8 +11,6 @@ function scoreFromReports(reports, userMap, player) {
     let stunDescriptions = [];
     let tagDescriptions = [];
     let stunTimes = {}; //This is the object that stores the last time a zombie was stunned (for point regeneration)
-    console.log(reports);
-    console.log(player);
     reports.forEach(report => {
         report.time = new Date(report.time);
         let tagger = report.tagger.toString();

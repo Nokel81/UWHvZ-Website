@@ -233,6 +233,18 @@ function GameService($http, AppSettings) {
             });
     };
 
+    SERVICE.ratifyAllReports = function (gameId, cb) {
+        let body = {
+            gameId
+        };
+        $http.put(AppSettings.apiUrl + "/report/all", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.deleteReport = function(reportId, gameId, cb) {
         $http.delete(AppSettings.apiUrl + "/report?reportId=" + reportId + "&gameId=" + gameId)
             .then(res => {

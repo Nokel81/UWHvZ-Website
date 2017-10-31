@@ -4,7 +4,7 @@ a.btn {
 
 .form-control, select, textarea {
     background-color: var(--hvz-yellow-light);
-    padding: 6px;
+    padding: 0.2rem;
 }
 
 .form-control:focus, .form-control.focus, select:focus, textarea:focus {
@@ -19,7 +19,7 @@ select {
     background-color: var(--hvz-text-light);
     border: 1px solid;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0.25rem;
     height: auto;
 }
 
@@ -29,6 +29,11 @@ select {
 
 input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
+}
+
+input[type="date"],
+input[type="time"] {
+    padding: 0rem 0.5rem;
 }
 
 input[type="color"]::-webkit-color-swatch {
@@ -149,8 +154,8 @@ button {
     line-height: 1.25;
     color: black;
     border: 1px solid var(--hvz-border);
-    border-radius: 5px;
-    margin: 5px 0px 0px 0px;
+    border-radius: 0.25rem;
+    margin: 0.25rem 0 0 0;
     max-width: inherit;
 }
 
@@ -167,7 +172,7 @@ textarea.form-control {
 label.form-control {
     max-height: fit-content;
     display: table;
-    padding: 8px;
+    padding: 0.36rem;
 }
 
 label.form-control:empty {
@@ -180,12 +185,12 @@ label.form-control:empty {
     width: -webkit-fill-available;
     width: -moz-available;
     line-height: 1.25;
-    padding: 8px;
+    padding: 0.36rem;
     color: 1px solid var(--hvz-border);
     border: 1px solid var(--hvz-border);
-    border-radius: 5px 0px 0px 5px;
+    border-radius: 0.25rem 0px 0px 0.25rem;
     border-right-width: 0px;
-    margin: 5px 0px 0px 0px;
+    margin: 0.25rem 0px 0px 0px;
     font-weight: bold;
     background-color: var(--hvz-text-light);
     height: 20px;
@@ -193,16 +198,16 @@ label.form-control:empty {
 }
 
 .form-label+.form-control {
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 0.25rem 0.25rem 0px;
 }
 
 .form-label+.accordian>label {
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 0.25rem 0.25rem 0px;
 }
 
 .form-control+.btn, .form-label+.btn {
-    border-radius: 0px 5px 5px 0px;
-    margin: 5px 0px 0px 0px;
+    border-radius: 0px 0.25rem 0.25rem 0px;
+    margin: 0.25rem 0px 0px 0px;
     border-left: none;
 }
 
@@ -211,11 +216,11 @@ label:disabled {
 }
 
 .form-block {
-    border-radius: 5px;
+    border-radius: 0.25rem;
 }
 
 .icon-form {
-    margin-top: 8px;
+    padding: 0.36rem;
 }
 
 .login-form {
@@ -234,7 +239,7 @@ label:disabled {
 }
 
 .login-form button {
-    margin-left: 5px;
+    margin-left: 0.25rem;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3),
@@ -252,6 +257,9 @@ label:disabled {
     }
     .cke_top {
         zoom: 2;
+    }
+    .form-control {
+        width: auto;
     }
 }
 

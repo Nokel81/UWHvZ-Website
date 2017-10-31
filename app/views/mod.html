@@ -133,13 +133,14 @@
                         <label class="form-label">Description:</label>
                         <label class="form-control disabled" ng-bind="report.description"></label>
                     </div>
-                    <div class="actions">
+                    <div class="actions text-right">
                         <button type="button" class="btn btn-danger" ng-click="deleteReport(report._id)"><i class="fa fa-trash-o"></i></button>
                         <button type="button" class="btn btn-warning" ng-click="ratifyReport(report._id)" ng-show="!report.ratified"><i class="fa fa-thumbs-o-up"></i></button>
                     </div>
                 </div>
             </div>
         </div>
+        <button class="btn btn-warning" type="button" ng-click="ratifyAll()">Ratify All</button>
     </uib-tab>
     <uib-tab index="5" heading="One Time Events">
         <div class="tuple-grid">

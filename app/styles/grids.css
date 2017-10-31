@@ -45,7 +45,7 @@
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto auto;
-    grid-template-areas: "description" "location" "time" "code" "actions";
+    grid-template-areas: "code" "time" "location" "description" "actions";
     border: 1px solid;
     padding: 0.25rem;
 }
@@ -55,17 +55,13 @@
     margin-bottom: 0px;
 }
 
-.stun-grid>.tuple-grid:nth-of-type(1)>*:last-child {
-    border-bottom: none;
-}
-
 .stun-grid>.tuple-grid:nth-of-type(2)>* {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
 
-.stun-grid>.tuple-grid:nth-of-type(n+3)>*,
-.stun-grid>.triple-grid:nth-of-type(n+3)>* {
+.stun-grid>.tuple-grid:nth-of-type(n+2)>*,
+.stun-grid>.triple-grid:nth-of-type(n+2)>* {
     border-top: none;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;

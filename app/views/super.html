@@ -6,25 +6,43 @@
             <label for="tab_games{{$index}}"><span ng-bind="game.name"></span> - <span ng-bind="getYear(game.startDate)"></span></label>
             <div class="accordian-content">
                 <div class="games-grid">
-                    <label class="form-label">Game Name:</label>
-                    <input class="form-control" type="text" ng-model="game.name">
-                    <label class="form-label">Game Description:</label>
-                    <input class="form-control" type="text" ng-model="game.description">
-                    <label class="form-label">Game Start Date:</label>
-                    <input class="form-control" type="datetime-local" ng-model="game.startDate">
-                    <label class="form-label">Game End Date:</label>
-                    <input class="form-control" type="datetime-local" ng-model="game.endDate">
-                    <label class="form-label">Game Officer Badge Value:</label>
-                    <input class="form-control" type="number" ng-model="game.officerValue">
-                    <label class="form-label">Game Major Building Pass Value:</label>
-                    <input class="form-control" type="number" ng-model="game.majorPassValue">
-                    <label class="form-label">Game Minor Building Pass Value:</label>
-                    <input class="form-control" type="number" ng-model="game.minorPassValue">
-                    <label class="form-label">Game Rail Pass Value:</label>
-                    <input class="form-control" type="number" ng-model="game.railPassValue">
-                    <label class="form-label">Game Human Supplied Level:</label>
-                    <input class="form-control" type="number" ng-model="game.suppliedValue">
-                    <div class="accordian">
+                    <div class="name tuple-grid">
+                        <label class="form-label">Game Name:</label>
+                        <input class="form-control" type="text" ng-model="game.name">
+                    </div>
+                    <div class="description tuple-grid">
+                        <label class="form-label">Game Description:</label>
+                        <input class="form-control" type="text" ng-model="game.description">
+                    </div>
+                    <div class="start tuple-grid">
+                        <label class="form-label">Game Start Date:</label>
+                        <input class="form-control" type="datetime-local" ng-model="game.startDate">
+                    </div>
+                    <div class="end tuple-grid">
+                        <label class="form-label">Game End Date:</label>
+                        <input class="form-control" type="datetime-local" ng-model="game.endDate">
+                    </div>
+                    <div class="officer tuple-grid">
+                        <label class="form-label">Game Officer Badge Value:</label>
+                        <input class="form-control" type="number" ng-model="game.officerValue">
+                    </div>
+                    <div class="major tuple-grid">
+                        <label class="form-label">Game Major Building Pass Value:</label>
+                        <input class="form-control" type="number" ng-model="game.majorPassValue">
+                    </div>
+                    <div class="minor tuple-grid">
+                        <label class="form-label">Game Minor Building Pass Value:</label>
+                        <input class="form-control" type="number" ng-model="game.minorPassValue">
+                    </div>
+                    <div class="rail tuple-grid">
+                        <label class="form-label">Game Rail Pass Value:</label>
+                        <input class="form-control" type="number" ng-model="game.railPassValue">
+                    </div>
+                    <div class="supplied tuple-grid">
+                        <label class="form-label">Game Human Supplied Level:</label>
+                        <input class="form-control" type="number" ng-model="game.suppliedValue">
+                    </div>
+                    <div class="locations accordian">
                         <input type="checkbox" id="tab_locations{{$index}}">
                         <label for="tab_locations{{$index}}">Game Sign Up Locations</label>
                         <div class="accordian-content">
@@ -38,7 +56,7 @@
                             <button class="right btn btn-success" type="button" ng-click="addLocation($rootIndex)"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="locdates accordian">
                         <input type="checkbox" id="tab_location_dates{{$index}}">
                         <label for="tab_location_dates{{$index}}">Game Sign Up Location Dates</label>
                         <div class="accordian-content">
@@ -56,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="dates accordian">
                         <input type="checkbox" id="tab_dates{{$index}}">
                         <label for="tab_dates{{$index}}">Game Sign Up Dates</label>
                         <div class="accordian-content">
@@ -68,7 +86,7 @@
                             <button class="right btn btn-success" type="button" ng-click="addDate($rootIndex)"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="moderators accordian">
                         <input type="checkbox" id="tab_moderators{{$index}}">
                         <label for="tab_moderators{{$index}}">Game Moderators</label>
                         <div class="accordian-content">
@@ -80,7 +98,7 @@
                             <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'moderator')"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="humans accordian">
                         <input type="checkbox" id="tab_humans{{$index}}">
                         <label for="tab_humans{{$index}}">Game Humans</label>
                         <div class="accordian-content">
@@ -92,7 +110,7 @@
                             <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'human')"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="zombies accordian">
                         <input type="checkbox" id="tab_zombies{{$index}}">
                         <label for="tab_zombies{{$index}}">Game Zombies</label>
                         <div class="accordian-content">
@@ -104,7 +122,7 @@
                             <button class="right btn btn-success" type="button" ng-click="addPlayer($rootIndex, 'zombie')"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <div class="accordian">
+                    <div class="spectators accordian">
                         <input type="checkbox" id="tab_spectators{{$index}}">
                         <label for="tab_spectators{{$index}}">Game Spectators</label>
                         <div class="accordian-content">

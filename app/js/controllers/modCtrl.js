@@ -280,6 +280,19 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
+    $scope.ratifyAll = function () {
+        if (!$window.confirm("Are you sure that you want to ratify all stun reports?")) {
+            return;
+        }
+        GameService.ratifyAllReports($scope.game._id, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                $scope.reports = res;
+            }
+        });
+    };
+
     $scope.deleteReport = function(reportId) {
         if (!$window.confirm("Are you sure that you want to delete that stun report?")) {
             return;
@@ -357,12 +370,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!code) {
             return;
         }
-        GameService.addPlayerByCode($scope.game._id, code, team, (err, games) => {
+        GameService.addPlayerByCode($scope.game._id, code, team, err => {
             if (err) {
                 return AlertService.danger(err);
             }
+            reset();
             AlertService.info("Player Added");
-            $scope.games = games;
         });
     };
 
@@ -372,12 +385,12 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         }
         let userId = $scope.game[team + "Objs"][index]._id;
         let gameId = $scope.game._id;
-        GameService.removePlayerById(gameId, userId, team, (err, games) => {
+        GameService.removePlayerById(gameId, userId, team, err => {
             if (err) {
                 return AlertService.danger(err);
             }
+            reset();
             AlertService.info("Player Removed");
-            $scope.games = games;
         });
     };
 

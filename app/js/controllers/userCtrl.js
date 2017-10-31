@@ -208,9 +208,14 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (currentlyTagging) {
             return;
         }
-        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time || !$scope.taggingCode.location) {
+        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time || !$scope.taggingCode.date || !$scope.taggingCode.location) {
             return AlertService.danger("Need more information");
         }
+        let date = $scope.taggingCode.date;
+        let time = $scope.taggingCode.time;
+        date.setHours(time.getHours());
+        date.setMinutes(time.getMinutes());
+        date.setMilliseconds(0);
         currentlyTagging = true;
         AlertService.info("Sending report");
         UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, $scope.taggingCode.time, (err, res) => {
@@ -221,6 +226,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 delete $scope.taggingCode.taggedDescription;
                 delete $scope.taggingCode.location;
                 delete $scope.taggingCode.time;
+                delete $scope.taggingCode.date;
                 AlertService.info(res);
             }
             currentlyTagging = false;

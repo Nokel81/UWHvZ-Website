@@ -65,28 +65,42 @@
         </div>
         <button class="btn btn-success text-right" type="button" ng-click="addCodes()" ng-show="supplyCodes">Add More Codes</button>
         <br>
-        <br>
         <div class="game-codes-grid" ng-repeat="code in supplyCodes">
-            <label class="form-label">Supply Code:</label>
-            <label class="form-control disabled" ng-bind="code.code"></label>
-            <label class="form-label">Value:</label>
-            <label class="form-control disabled" ng-bind="code.value"></label>
-            <label class="form-label">Used By:</label>
-            <label class="form-control disabled" ng-bind="code.usedByName"></label>
+            <div class="code tuple-grid">
+                <label class="form-label">Supply Code:</label>
+                <label class="form-control disabled" ng-bind="code.code"></label>
+            </div>
+            <div class="value tuple-grid">
+                <label class="form-label">Value:</label>
+                <label class="form-control disabled" ng-bind="code.value"></label>
+            </div>
+            <div class="used tuple-grid">
+                <label class="form-label">Used By:</label>
+                <label class="form-control disabled" ng-bind="code.usedByName"></label>
+            </div>
         </div>
     </uib-tab>
     <uib-tab index="3" heading="Players">
         <div class="text-centre" ng-hide="gamePlayers">
             <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
         </div>
+        <br>
         <div class="game-player-codes-grid" ng-repeat="player in gamePlayers">
-            <label class="form-label">Player Name:</label>
-            <label class="form-control disabled" ng-bind="player.playerName"></label>
-            <label class="form-label">Player Code:</label>
-            <label class="form-control disabled" ng-bind="player.playerCode"></label>
-            <label class="form-label">Player Email:</label>
-            <label class="form-control disabled"><b ng-show="player.confirmationToken" ng-bind="player.email"></b><span ng-hide="player.confirmationToken" ng-bind="player.email"></span></label>
-            <button class="btn btn-warning" ng-click="fix($index)" type="button">Fix</button>
+            <div class="name tuple-grid">
+                <label class="form-label">Player Name:</label>
+                <label class="form-control disabled" ng-bind="player.playerName"></label>
+            </div>
+            <div class="code tuple-grid">
+                <label class="form-label">Player Code:</label>
+                <label class="form-control disabled" ng-bind="player.playerCode"></label>
+            </div>
+            <div class="email tuple-grid">
+                <label class="form-label">Player Email:</label>
+                <label class="form-control disabled"><b ng-show="player.confirmationToken" ng-bind="player.email"></b><span ng-hide="player.confirmationToken" ng-bind="player.email"></span></label>
+            </div>
+            <div class="actions">
+                <button class="btn btn-warning" ng-click="fix($index)" type="button">Fix</button>
+            </div>
         </div>
     </uib-tab>
     <uib-tab index="4" heading="Player Reports">
@@ -97,20 +111,29 @@
             <input type="checkbox" id="tab_gameReports{{$index}}">
             <label for="tab_gameReports{{$index}}" ng-bind="day.name"></label>
             <div class="accordian-content">
+                <br>
                 <div class="report-grid" ng-repeat="report in day.reports">
-                    <label class="form-label">Tagger:</label>
-                    <label class="form-control disabled" ng-bind="report.taggerName"></label>
-                    <label class="form-label">Tagged:</label>
-                    <label class="form-control disabled" ng-bind="report.taggedName"></label>
-                    <label class="form-label">Time:</label>
-                    <label class="form-control disabled" ng-bind="report.timeString"></label>
-                    <label class="form-label">Location:</label>
-                    <label class="form-control disabled" ng-bind="report.location"></label>
-                    <label class="form-label">Description:</label>
-                    <label class="form-control disabled" ng-bind="report.description"></label>
-                    <label class="form-label">Type:</label>
-                    <label class="form-control disabled" ng-bind="report.reportType"></label>
-                    <div>
+                    <div class="tagger tuple-grid">
+                        <label class="form-label">{{report.reportType}}{{report.reportType[report.reportType.length - 1]}}er:</label>
+                        <label class="form-control disabled" ng-bind="report.taggerName"></label>
+                    </div>
+                    <div class="tagged tuple-grid">
+                        <label class="form-label">{{report.reportType}}{{report.reportType[report.reportType.length - 1]}}ed:</label>
+                        <label class="form-control disabled" ng-bind="report.taggedName"></label>
+                    </div>
+                    <div class="time tuple-grid">
+                        <label class="form-label">Time:</label>
+                        <label class="form-control disabled" ng-bind="report.timeString"></label>
+                    </div>
+                    <div class="location tuple-grid">
+                        <label class="form-label">Location:</label>
+                        <label class="form-control disabled" ng-bind="report.location"></label>
+                    </div>
+                    <div class="description tuple-grid">
+                        <label class="form-label">Description:</label>
+                        <label class="form-control disabled" ng-bind="report.description"></label>
+                    </div>
+                    <div class="actions">
                         <button type="button" class="btn btn-danger" ng-click="deleteReport(report._id)"><i class="fa fa-trash-o"></i></button>
                         <button type="button" class="btn btn-warning" ng-click="ratifyReport(report._id)" ng-show="!report.ratified"><i class="fa fa-thumbs-o-up"></i></button>
                     </div>
@@ -119,32 +142,50 @@
         </div>
     </uib-tab>
     <uib-tab index="5" heading="One Time Events">
-        <div class="one-time-grid">
+        <div class="tuple-grid">
             <label class="form-label">Unsupplied Death:</label>
             <button class="btn btn-danger" type="button" ng-click="unsuppliedDeath()">Commit</button>
         </div>
     </uib-tab>
     <uib-tab index="6" heading="Edit Game">
         <div class="games-grid">
-            <label class="form-label">Game Name:</label>
-            <input class="form-control" type="text" ng-model="game.name">
-            <label class="form-label">Game Description:</label>
-            <input class="form-control" type="text" ng-model="game.description">
-            <label class="form-label">Game Start Date:</label>
-            <input class="form-control" type="datetime-local" ng-model="game.startDate">
-            <label class="form-label">Game End Date:</label>
-            <input class="form-control" type="datetime-local" ng-model="game.endDate">
-            <label class="form-label">Game Officer Badge Value:</label>
-            <input class="form-control" type="number" ng-model="game.officerValue">
-            <label class="form-label">Game Major Building Pass Value:</label>
-            <input class="form-control" type="number" ng-model="game.majorPassValue">
-            <label class="form-label">Game Minor Building Pass Value:</label>
-            <input class="form-control" type="number" ng-model="game.minorPassValue">
-            <label class="form-label">Game Rail Pass Value:</label>
-            <input class="form-control" type="number" ng-model="game.railPassValue">
-            <label class="form-label">Game Human Supplied Level:</label>
-            <input class="form-control" type="number" ng-model="game.suppliedValue">
-            <div class="accordian">
+            <div class="name tuple-grid">
+                <label class="form-label">Game Name:</label>
+                <input class="form-control" type="text" ng-model="game.name">
+            </div>
+            <div class="description tuple-grid">
+                <label class="form-label">Game Description:</label>
+                <input class="form-control" type="text" ng-model="game.description">
+            </div>
+            <div class="start tuple-grid">
+                <label class="form-label">Game Start Date:</label>
+                <input class="form-control" type="datetime-local" ng-model="game.startDate">
+            </div>
+            <div class="end tuple-grid">
+                <label class="form-label">Game End Date:</label>
+                <input class="form-control" type="datetime-local" ng-model="game.endDate">
+            </div>
+            <div class="officer tuple-grid">
+                <label class="form-label">Game Officer Badge Value:</label>
+                <input class="form-control" type="number" ng-model="game.officerValue">
+            </div>
+            <div class="major tuple-grid">
+                <label class="form-label">Game Major Building Pass Value:</label>
+                <input class="form-control" type="number" ng-model="game.majorPassValue">
+            </div>
+            <div class="minor tuple-grid">
+                <label class="form-label">Game Minor Building Pass Value:</label>
+                <input class="form-control" type="number" ng-model="game.minorPassValue">
+            </div>
+            <div class="rail tuple-grid">
+                <label class="form-label">Game Rail Pass Value:</label>
+                <input class="form-control" type="number" ng-model="game.railPassValue">
+            </div>
+            <div class="supplied tuple-grid">
+                <label class="form-label">Game Human Supplied Level:</label>
+                <input class="form-control" type="number" ng-model="game.suppliedValue">
+            </div>
+            <div class="locations accordian">
                 <input type="checkbox" id="tab_locations{{$index}}">
                 <label for="tab_locations{{$index}}">Game Sign Up Locations</label>
                 <div class="accordian-content">
@@ -158,7 +199,7 @@
                     <button class="right btn btn-success" type="button" ng-click="addLocation()"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="locdates accordian">
                 <input type="checkbox" id="tab_location_dates{{$index}}">
                 <label for="tab_location_dates{{$index}}">Game Sign Up Location Dates</label>
                 <div class="accordian-content">
@@ -176,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="dates accordian">
                 <input type="checkbox" id="tab_dates{{$index}}">
                 <label for="tab_dates{{$index}}">Game Sign Up Dates</label>
                 <div class="accordian-content">
@@ -188,7 +229,7 @@
                     <button class="right btn btn-success" type="button" ng-click="addDate()"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="moderators accordian">
                 <input type="checkbox" id="tab_moderators{{$index}}">
                 <label for="tab_moderators{{$index}}">Game Moderators</label>
                 <div class="accordian-content">
@@ -200,7 +241,7 @@
                     <button class="right btn btn-success" type="button" ng-click="addPlayer('moderator')"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="humans accordian">
                 <input type="checkbox" id="tab_humans{{$index}}">
                 <label for="tab_humans{{$index}}">Game Humans</label>
                 <div class="accordian-content">
@@ -212,7 +253,7 @@
                     <button class="right btn btn-success" type="button" ng-click="addPlayer('human')"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="zombies accordian">
                 <input type="checkbox" id="tab_zombies{{$index}}">
                 <label for="tab_zombies{{$index}}">Game Zombies</label>
                 <div class="accordian-content">
@@ -224,7 +265,7 @@
                     <button class="right btn btn-success" type="button" ng-click="addPlayer('zombie')"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="accordian">
+            <div class="spectators accordian">
                 <input type="checkbox" id="tab_spectators{{$index}}">
                 <label for="tab_spectators{{$index}}">Game Spectators</label>
                 <div class="accordian-content">
@@ -236,8 +277,6 @@
                     <button class="right btn btn-success" type="button" ng-click="addPlayer('spectator')"><i class="fa fa-plus"></i></button>
                 </div>
             </div>
-        </div>
-        <div class="right">
             <button class="btn btn-success" type="button" ng-click="saveGame()"><i class="fa fa-save"></i></button>
         </div>
     </uib-tab>

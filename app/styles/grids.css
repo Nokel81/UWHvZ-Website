@@ -1,6 +1,7 @@
 .games-grid {
     display: grid;
-    grid-template-columns: 280px auto;
+    grid-template-columns: auto;
+    grid-template-areas: "name" "description" "start" "end" "officer" "major" "minor" "rail" "supplied" "locations" "locdates" "dates" "moderators" "humans" "zombies" "spectators" "actions";
 }
 
 .map-grid {
@@ -42,13 +43,42 @@
 
 .stun-grid {
     display: grid;
-    grid-template-columns: 200px 1fr 4rem;
-    padding: 0px 5px 5px 5px;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: "description" "location" "time" "code" "actions";
     border: 1px solid;
-    grid-template-areas: "labelR1 inputR1 inputR1"
-                         "labelR2 inputR2 inputR2"
-                         "labelR3 inputR3 inputR3"
-                         "labelR4 inputR4 submit";
+    padding: 0.25rem;
+}
+
+.stun-grid>*>* {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.stun-grid>.tuple-grid:nth-of-type(1)>*:last-child {
+    border-bottom: none;
+}
+
+.stun-grid>.tuple-grid:nth-of-type(2)>* {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.stun-grid>.tuple-grid:nth-of-type(n+3)>*,
+.stun-grid>.triple-grid:nth-of-type(n+3)>* {
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.stun-grid>.tuple-grid:nth-last-of-type(n+3)>*,
+.stun-grid>.triple-grid:nth-last-of-type(n+3)>* {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.stun-grid>.actions>* {
+    border-top: none;
 }
 
 .supply-grid {
@@ -133,17 +163,11 @@
     grid-template-columns: 175px 1fr 5px 200px 1fr 5px 175px 100px;
 }
 
-.games-grid .accordian,
-.games-grid .right {
-    grid-column: 1/3;
-}
-
 .home-grid>* {
     text-align: center;
 }
 
 .resetpassword-grid>input:nth-of-type(3),
-.stun-grid input:last-of-type,
 .supply-grid input:last-of-type,
 .verticies-grid input:last-of-type,
 .verticies-grid button:first-of-type,
@@ -157,49 +181,41 @@
 }
 
 .resetpassword-grid>label:nth-of-type(1),
-.settings-grid>label:nth-of-type(1),
-.stun-grid>label:nth-of-type(1) {
+.settings-grid>label:nth-of-type(1) {
     grid-area: labelR1;
 }
 
 .resetpassword-grid>label:nth-of-type(2),
-.settings-grid>label:nth-of-type(2),
-.stun-grid>label:nth-of-type(2) {
+.settings-grid>label:nth-of-type(2) {
     grid-area: labelR2;
 }
 
 .resetpassword-grid>label:nth-of-type(3),
-.settings-grid>label:nth-of-type(3),
-.stun-grid>label:nth-of-type(3) {
+.settings-grid>label:nth-of-type(3) {
     grid-area: labelR3;
 }
 
-.settings-grid>label:nth-of-type(4),
-.stun-grid>label:nth-of-type(4) {
+.settings-grid>label:nth-of-type(4) {
     grid-area: labelR4;
 }
 
 .resetpassword-grid>input:nth-of-type(1),
-.settings-grid>hvz-toggle:nth-of-type(1),
-.stun-grid>textarea {
+.settings-grid>hvz-toggle:nth-of-type(1) {
     grid-area: inputR1;
 }
 
 .resetpassword-grid>input:nth-of-type(2),
-.settings-grid>hvz-toggle:nth-of-type(2),
-.stun-grid>input:nth-of-type(1) {
+.settings-grid>hvz-toggle:nth-of-type(2) {
     grid-area: inputR2;
 }
 
 .resetpassword-grid>input:nth-of-type(3),
-.settings-grid>hvz-toggle:nth-of-type(3),
-.stun-grid>input:nth-of-type(2) {
+.settings-grid>hvz-toggle:nth-of-type(3) {
     grid-area: inputR3;
 }
 
 .settings-grid>input:nth-of-type(1),
-.settings-grid>button:nth-of-type(1),
-.stun-grid>input:nth-of-type(3) {
+.settings-grid>button:nth-of-type(1) {
     grid-area: inputR4;
 }
 
@@ -207,7 +223,6 @@
     grid-area: title;
 }
 
-.stun-grid>button,
 .settings-grid>.resetpassword-grid,
 .resetpassword-grid>button {
     grid-area: submit;
@@ -240,29 +255,48 @@
     margin-left: 10px;
 }
 
-.game-player-codes-grid>label:last-of-type {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
 .game-codes-grid {
     display: grid;
-    grid-template-columns: 175px 1fr 5px 200px 1fr 5px 175px 1fr;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-areas: "code value used";
+    grid-column-gap: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 .game-player-codes-grid {
     display: grid;
-    grid-template-columns: 125px 1fr 5px 125px 1fr 5px 125px 1fr 60px;
+    grid-template-columns: 2fr 1fr 3fr 1fr;
+    grid-template-areas: "name code email actions";
+    grid-column-gap: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 .report-grid {
     display: grid;
-    grid-template-columns: 80px 2fr 5px 80px 2fr 5px 60px 2fr 5px 100px 1fr 5px 110px 3fr 5px 60px 50px 5px 100px;
+    grid-template-columns: 3fr 3fr 2fr 1fr 5fr 1fr;
+    grid-template-areas: "tagger tagged time location description actions";
+    grid-column-gap: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
-.one-time-grid {
+.tuple-grid {
     display: grid;
-    grid-template-columns: 200px 100px;
+    grid-template-columns: auto 1fr;
+}
+
+.triple-grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+}
+
+.triple-grid>*:nth-child(2) {
+    border-radius: 0px;
+    border-right: none;
+}
+
+.triple-grid>*:nth-child(3) {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 .super-player-grid>*:last-child {
@@ -270,19 +304,12 @@
     border: 1px solid var(--hvz-border-dark);
 }
 
-.game-player-codes-grid:last-of-type {
-    margin-bottom: 5px;
-}
-
 .markers-grid>*:nth-child(1),
 .super-player-grid>*:nth-child(1),
 .polygon-grid>*:nth-child(1),
 .verticies-grid>*:nth-child(1),
 .game-signups-grid>*:nth-child(1),
-.game-start-grid>*:nth-child(1),
-.game-player-codes-grid>*:nth-child(1),
-.report-grid>*:nth-child(1),
-.game-codes-grid>*:nth-child(1) {
+.game-start-grid>*:nth-child(1) {
     grid-column: 1/2;
 }
 
@@ -291,10 +318,7 @@
 .polygon-grid>*:nth-child(2),
 .verticies-grid>*:nth-child(2),
 .game-signups-grid>*:nth-child(2),
-.game-start-grid>*:nth-child(2),
-.game-player-codes-grid>*:nth-child(2),
-.report-grid>*:nth-child(2),
-.game-codes-grid>*:nth-child(2) {
+.game-start-grid>*:nth-child(2) {
     grid-column: 2/3;
 }
 
@@ -303,10 +327,7 @@
 .polygon-grid>*:nth-child(3),
 .verticies-grid>*:nth-child(3),
 .game-signups-grid>*:nth-child(3),
-.game-start-grid>*:nth-child(3),
-.game-player-codes-grid>*:nth-child(3),
-.report-grid>*:nth-child(3),
-.game-codes-grid>*:nth-child(3) {
+.game-start-grid>*:nth-child(3) {
     grid-column: 4/5;
 }
 
@@ -315,10 +336,7 @@
 .polygon-grid>*:nth-child(4),
 .verticies-grid>*:nth-child(4),
 .game-signups-grid>*:nth-child(4),
-.game-start-grid>*:nth-child(4),
-.game-player-codes-grid>*:nth-child(4),
-.report-grid>*:nth-child(4),
-.game-codes-grid>*:nth-child(4) {
+.game-start-grid>*:nth-child(4) {
     grid-column: 5/6;
 }
 
@@ -326,10 +344,7 @@
 .super-player-grid>*:nth-child(5),
 .polygon-grid>*:nth-child(5),
 .game-signups-grid>*:nth-child(5),
-.game-start-grid>*:nth-child(5),
-.game-player-codes-grid>*:nth-child(5),
-.report-grid>*:nth-child(5),
-.game-codes-grid>*:nth-child(5) {
+.game-start-grid>*:nth-child(5) {
     grid-column: 7/8;
 }
 
@@ -337,10 +352,7 @@
 .super-player-grid>*:nth-child(6),
 .polygon-grid>*:nth-child(6),
 .game-signups-grid>*:nth-child(6),
-.game-start-grid>*:nth-child(6),
-.game-player-codes-grid>*:nth-child(6),
-.report-grid>*:nth-child(6),
-.game-codes-grid>*:nth-child(6) {
+.game-start-grid>*:nth-child(6) {
     grid-column: 8/9;
 }
 
@@ -348,41 +360,18 @@
 .super-player-grid>*:nth-child(7),
 .polygon-grid>*:nth-child(7),
 .game-signups-grid>*:nth-child(7),
-.report-grid>*:nth-child(7),
 .game-start-grid>*:nth-child(7) {
     grid-column: 10/11;
 }
 
-.report-grid>*:nth-child(8),
 .super-player-grid>*:nth-child(8),
 .markers-grid>*:nth-child(8) {
     grid-column: 11/12;
 }
 
-.report-grid>*:nth-child(9),
 .super-player-grid>*:nth-child(9),
 .markers-grid>*:nth-child(9) {
     grid-column: 13/14;
-}
-
-.report-grid>*:nth-child(10) {
-    grid-column: 14/15;
-}
-
-.report-grid>*:nth-child(11) {
-    grid-column: 16/17;
-}
-
-.report-grid>*:nth-child(12) {
-    grid-column: 17/18;
-}
-
-.report-grid>*:nth-child(13) {
-    grid-column: 19/20;
-}
-
-.report-grid>*:nth-child(14) {
-    grid-column: 20/21;
 }
 
 @media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
@@ -443,7 +432,7 @@
 @media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
         only screen and (-o-min-device-pixel-ratio: 13/10),
         only screen and (min-resolution: 120dpi),
-        only screen and (max-width: 1400px)
+        only screen and (max-width: 1450px)
     {
     /* This is for the super user page*/
     .markers-grid {
@@ -476,39 +465,30 @@
     }
 
     /* This is for the players view on the moderators page*/
-
     .game-player-codes-grid {
-        grid-template-columns: 125px 1fr;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas: "name" "code" "email" "actions";
     }
 
-    .game-player-codes-grid>*:nth-child(n+3) {
-        margin-top: 0;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+    .game-player-codes-grid>*>* {
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
-    .game-player-codes-grid>*:nth-child(n):nth-child(-n+4) {
-        border-bottom: none;
+    .game-player-codes-grid>.actions>* {
+        border-top: none;
     }
 
-    .game-player-codes-grid>*:nth-child(odd) {
-        border-bottom-left-radius: 0;
-        grid-column: 1/2;
+    .game-player-codes-grid>.tuple-grid:nth-of-type(n+2)>*{
+        border-top: none;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
     }
 
-    .game-player-codes-grid>*:nth-child(even) {
-        border-bottom-right-radius: 0;
-        grid-column: 2/3;
-    }
-
-    .game-player-codes-grid>label:last-of-type {
-        border-bottom-right-radius: 5px;
-    }
-
-    .game-player-codes-grid>button {
-        border-bottom-left-radius: 5px!important;
-        border: 1px solid var(--hvz-border)!important;
-        border-top: none!important;
+    .game-player-codes-grid>.tuple-grid:nth-last-of-type(n+3)>*{
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
     }
 }
 
@@ -533,5 +513,38 @@
     .polygon-grid>*:last-child {
         grid-row: 1/2;
         grid-column: 1/3;
+    }
+}
+
+@media  only screen and (-webkit-min-device-pixel-ratio: 1.3),
+        only screen and (-o-min-device-pixel-ratio: 13/10),
+        only screen and (min-resolution: 120dpi),
+        only screen and (max-width: 1900px)
+    {
+    /* This is for the moderator page reports page*/
+    .report-grid {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-areas: "tagger" "tagged" "time" "location" "description" "actions";
+    }
+
+    .report-grid>*>* {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .report-grid>.tuple-grid:nth-of-type(n+2)>*{
+        border-top: none;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .report-grid>.tuple-grid:nth-last-of-type(n+3)>*{
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .report-grid>.actions>* {
+        border-top: none;
     }
 }

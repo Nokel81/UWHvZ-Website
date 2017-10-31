@@ -27,6 +27,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     $scope.session = UserService.session;
     $scope.validRecipients = [];
     $scope.taggingCode = {};
+    $scope.supplyCodeReporting = {};
+    $scope.changingPassword = {};
+    $scope.message = {};
     $scope.userInfo = null;
     var currentlyTagging = false;
     var currentlySending = false;
@@ -121,10 +124,10 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             } else {
                 $scope.session = UserService.session;
                 $scope.user = user;
-                delete $scope.taggedCode;
-                delete $scope.taggedDescription;
-                delete $scope.location;
-                delete $scope.time;
+                delete $scope.taggingCode.taggedCode;
+                delete $scope.taggingCode.taggedDescription;
+                delete $scope.taggingCode.location;
+                delete $scope.taggingCode.time;
                 $rootScope.loggedIn = true;
                 UserService.getUserSettings(settings => {
                     $scope.settings = settings || {};
@@ -217,14 +220,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 delete $scope.taggingCode.taggedCode;
                 delete $scope.taggingCode.taggedDescription;
                 delete $scope.taggingCode.location;
-                delete $scope.taggineCode.time;
+                delete $scope.taggingCode.time;
                 AlertService.info(res);
             }
             currentlyTagging = false;
         });
     };
 
-    $scope.supplyCodeReporting = {};
     $scope.supplyCodeReport = function() {
         if (!$scope.supplyCodeReporting.supplyCode) {
             return;
@@ -239,7 +241,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.changingPassword = {};
     $scope.changePassword = function() {
         if (!$scope.changingPassword.newPassword) {
             return;
@@ -265,7 +266,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         });
     };
 
-    $scope.message = {};
     $scope.sendMessage = function() {
         if (currentlySending) {
             return;
@@ -275,6 +275,9 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         if (!$scope.message.messageSubject) {
             return AlertService.danger("Please type a subject");
+        }
+        if (!$scope.message.time) {
+            return AlertService.danger("Please set the time");
         }
         if (!CKEDITOR.instances.MessageBodyTextArea.getData()) {
             return AlertService.danger("Please type a message body");

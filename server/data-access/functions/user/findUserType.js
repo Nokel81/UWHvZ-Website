@@ -1,6 +1,7 @@
 const Promise = require("bluebird");
 
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const levels = rootRequire("server/constants.json").securityNames;
 
 function GetUserType(id, game) {
     id = id.toString();
@@ -12,19 +13,19 @@ function GetUserType(id, game) {
 
         promise.then(game => {
             if (game.moderators.findIndex(x => x.toString() === id.toString()) >= 0) {
-                resolve("Moderator");
+                resolve(levels.moderator);
             } else if (game.spectators.findIndex(x => x.toString() === id.toString()) >= 0) {
-                resolve("Spectator");
+                resolve(levels.spectator);
             } else if (game.humans.findIndex(x => x.toString() === id.toString()) >= 0) {
-                resolve("Human");
+                resolve(levels.human);
             } else if (game.zombies.findIndex(x => x.toString() === id.toString()) >= 0) {
-                resolve("Zombie");
+                resolve(levels.zombie);
             } else {
-                resolve("NonPlayer");
+                resolve(levels.nonplayer);
             }
         })
             .catch(() => {
-                resolve("NonPlayer");
+                resolve(levels.nonplayer);
             });
     });
 }

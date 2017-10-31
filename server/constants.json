@@ -6,5 +6,12 @@
         "toZombies": "Zombies",
         "toAllUsers": "AllUsers",
         "toHumans": "Humans"
+    },
+    "securityNames": {
+        "moderator": "Moderator",
+        "zombie": "Zombie",
+        "human": "Human",
+        "spectator": "Spectator",
+        "nonplayer": "NonPlayer"
     }
 }

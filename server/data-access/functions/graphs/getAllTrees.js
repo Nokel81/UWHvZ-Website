@@ -5,16 +5,14 @@ const averageColour = rootRequire("server/helpers/averageColour");
 const Report = rootRequire("server/schemas/report");
 const Settings = rootRequire("server/schemas/settings");
 const clone = rootRequire("server/helpers/clone");
+const levels = rootRequire("server/constants.json").securityNames;
 
-function GetAllTrees(userId) {
+function GetAllTrees(userType, isSuper) {
     return new Promise(function(resolve, reject) {
         findAll()
             .then(games => {
                 let lastGame = games[games.length - 1];
-                let isInGameMod = lastGame.moderators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                let isInGameZom = lastGame.zombies.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                let isInGameSpec = lastGame.spectators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                if (!(isInGameMod || isInGameZom || isInGameSpec || new Date(lastGame.endDate) < new Date())) {
+                if (!([levels.moderator, levels.zombie, levels.spectator].includes(userType) || isSuper || new Date(lastGame.endDate) < new Date())) {
                     games.pop();
                 }
                 return Promise.map(clone(games), game => {

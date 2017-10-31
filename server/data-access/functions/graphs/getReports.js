@@ -2,18 +2,16 @@ const Promise = require("bluebird");
 
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
 const Report = rootRequire("server/schemas/report");
+const levels = rootRequire("server/constants.json").securityNames;
 
-function GetReports(userId) {
+function GetReports(userType, isSuper) {
     return new Promise(function(resolve, reject) {
         let graph = [];
         let zombieCount = 0;
         let stunCount = 0;
         findCurrentOrNext()
             .then(game => {
-                let isInGameMod = game.moderators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                let isInGameZom = game.zombies.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                let isInGameSpec = game.spectators.findIndex(x => x.toString() === (userId || "").toString()) >= 0;
-                if (isInGameSpec || isInGameZom || isInGameMod) {
+                if ([levels.moderator, levels.zombie, levels.spectator].includes(userType) || isSuper) {
                     zombieCount = game.originalZombies.length;
                 }
                 graph.push({

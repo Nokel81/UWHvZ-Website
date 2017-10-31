@@ -3,9 +3,10 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     const {
-        userId
+        userType,
+        isSuper
     } = req.headers;
-    getAll(userId)
+    getAll(userType, isSuper)
         .then(graphs => {
             resolve(graphs);
         })

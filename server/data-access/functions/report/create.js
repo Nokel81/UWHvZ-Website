@@ -79,9 +79,6 @@ function Create(report) {
                 return report.validate();
             })
             .then(() => {
-                return report.save();
-            })
-            .then(() => {
                 let newZombies = [];
                 if (report.reportType === "Tag") {
                     newZombies.push(tagged._id);
@@ -110,8 +107,11 @@ function Create(report) {
                 if (taggerType === taggedType && taggerType === "Human") {
                     return mailService.sendTaggerEmail(tagger.email, tagged.playerName, report);
                 } else {
-                    resolve("You " + word + "ed " + tagged.playerName);
+                    return Promise.resolve();
                 }
+            })
+            .then(() => {
+                return report.save();
             })
             .then(() => {
                 resolve("You " + word + "ed " + tagged.playerName);

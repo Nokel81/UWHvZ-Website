@@ -218,7 +218,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         date.setMilliseconds(0);
         currentlyTagging = true;
         AlertService.info("Sending report");
-        UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, $scope.taggingCode.time, (err, res) => {
+        UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, date, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -281,9 +281,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
         if (!$scope.message.messageSubject) {
             return AlertService.danger("Please type a subject");
-        }
-        if (!$scope.message.time) {
-            return AlertService.danger("Please set the time");
         }
         if (!CKEDITOR.instances.MessageBodyTextArea.getData()) {
             return AlertService.danger("Please type a message body");

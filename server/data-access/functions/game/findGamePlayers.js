@@ -1,91 +1,82 @@
 const Promise = require("bluebird");
 
-const User = rootRequire("server/schemas/user");
-const Report = rootRequire("server/schemas/report");
 const Settings = rootRequire("server/schemas/settings");
 const findGameById = rootRequire("server/data-access/functions/game/findById");
+const findUserType = rootRequire("server/data-access/functions/user/findUserType");
 const findUserScore = rootRequire("server/data-access/functions/game/findUserScore");
-const clone = rootRequire("server/helpers/clone");
+const levels = rootRequire("server/constants.json").securityNames;
 
-function FindGamePlayers(gameId, userId) {
-    userId = userId == "null" || userId == "undefined" ? null : userId;
+function FindGamePlayers(gameId, userId, userType, isSuper) {
     return new Promise(function(resolve, reject) {
-        let zombieCount = 0;
-        let stunCount = 0;
+        let isLevelIndigo = [levels.spectator, levels.moderator].includes(userType) || isSuper;
+        let isLevelBlue = [levels.spectator, levels.moderator, levels.zombie].includes(userType) || isSuper;
+        let isLevelGreen = [levels.spectator, levels.moderator, levels.zombie, levels.human].includes(userType) || isSuper;
         let players = [];
-        let isModerator = false;
-        let isHuman = false;
+        let playerObjs = [];
         let game = null;
-        let gamePlayers = [];
         findGameById(gameId)
             .then(gameObj => {
                 game = gameObj;
-                zombieCount = game.zombies.length;
                 players = game.humans.concat(game.zombies).concat(game.spectators);
-                isModerator = game.moderators.indexOf(userId) >= 0;
-                isHuman = game.zombies.concat(game.spectators).indexOf(userId) < 0 && !isModerator;
-                return Report.count({
-                    gameId,
-                    reportType: "Stun"
-                }).exec();
-            })
-            .then(count => {
-                stunCount = count;
-                return User.find({
-                    _id: {
-                        $in: players
-                    }
-                }).select("playerName _id").sort("playerName").exec();
-            })
-            .then(users => {
-                return Promise.map(clone(users), user => {
-                    return new Promise(function(resolve, reject) {
-                        Settings.findOne({
-                            userId: user._id
-                        })
-                            .exec()
-                            .then(settings => {
-                                if (!settings.showScore && !isModerator) {
-                                    user.score = "HIDDEN";
-                                    resolve(user);
-                                } else {
-                                    return findUserScore(gameId, user._id, true);
-                                }
-                            })
+                playerObjs = game.humanObjs.concat(game.zombieObjs).concat(game.spectatorObjs);
+                let scores = [];
+                players.forEach(player => {
+                    scores.push(new Promise(function(resolve, reject) {
+                        let userScore;
+                        console.log(player);
+                        findUserScore(gameId, player, true)
                             .then(score => {
-                                user.score = score;
-                                resolve(user);
+                                userScore = score;
+                                return Settings.findOne({
+                                    userId: player
+                                }).exec();
+                            })
+                            .then(settings => {
+                                if (!settings.showScore && !isLevelIndigo) {
+                                    userScore = "HIDDEN";
+                                }
+                                return findUserType(player, game);
+                            })
+                            .then(playerType => {
+                                let user = playerObjs.find(p => p._id.toString() === player.toString());
+                                if (!isLevelBlue && playerType === levels.zombie) {
+                                    playerType = levels.human;
+                                }
+                                resolve({
+                                    playerName: user.playerName,
+                                    team: playerType,
+                                    score: userScore
+                                });
                             })
                             .catch(error => {
                                 reject(error);
                             });
-                    });
+                    }));
                 });
+                return Promise.all(scores);
             })
-            .then(users => {
-                users.forEach(user => {
-                    if (game.zombies.indexOf(user._id.toString()) >= 0) {
-                        user.team = isHuman ? "Human" : "Zombie";
-                    } else if (game.spectators.indexOf(user._id.toString()) >= 0) {
-                        user.team = "Spectator";
-                    } else {
-                        user.team = "Human";
+            .then(scores => {
+                scores = scores.sort((a, b) => {
+                    if (a.playerName < b.playerName) {
+                        return -1;
                     }
-                    delete user._id;
+                    if (a.playerName > b.playerName) {
+                        return 1;
+                    }
+                    return 0;
                 });
-                gamePlayers = users;
-                return User.find({
-                    _id: {
-                        $in: game.moderators
+                let mods = game.moderatorObjs.map(mod => {
+                    let res = {
+                        playerName: mod.playerName
+                    };
+                    if (isLevelGreen) {
+                        res.email = mod.email;
                     }
-                }).select(userId ? "playerName email" : "playerName").sort("playerName").exec();
-            })
-            .then(gameMods => {
+                    return res;
+                });
                 resolve({
-                    gameMods,
-                    gamePlayers,
-                    zombieCount,
-                    stunCount
+                    gameMods: mods,
+                    gamePlayers: scores
                 });
             })
             .catch(error => {

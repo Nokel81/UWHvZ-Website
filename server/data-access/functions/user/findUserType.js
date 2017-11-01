@@ -4,7 +4,6 @@ const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCur
 const levels = rootRequire("server/constants.json").securityNames;
 
 function GetUserType(id, game) {
-    id = id.toString();
     return new Promise(function(resolve) {
         let promise = Promise.resolve(game);
         if (!game) {

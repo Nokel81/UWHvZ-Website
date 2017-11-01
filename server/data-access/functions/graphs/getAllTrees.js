@@ -105,7 +105,15 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
-                                console.log(taggersWhoAreNotTagged);
+                                taggersWhoAreNotTagged.forEach(zom => {
+                                    edges.push({
+                                        from: "OZ",
+                                        to: zom,
+                                        arrows: {
+                                            to: true
+                                        }
+                                    });
+                                });
                                 nodes = nodes.filter(node => zombiesToKeep.indexOf(node.id) >= 0);
                                 // TODO: Add the surviving humans
                                 resolve({

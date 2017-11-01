@@ -21,16 +21,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         }
     });
 
-    $scope.buttonState = "logIn";
-    $scope.email = UserService.email;
-    $scope.password = UserService.password;
-    $scope.session = UserService.session;
-    $scope.validRecipients = [];
-    $scope.taggingCode = {};
-    $scope.supplyCodeReporting = {};
-    $scope.changingPassword = {};
-    $scope.message = {};
-    $scope.userInfo = null;
     var currentlyTagging = false;
     var currentlySending = false;
 
@@ -38,37 +28,60 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         return password.length >= 8 && password == passwordCheck;
     };
 
-    UserService.getBySession(user => {
-        $scope.user = user;
-        if (!user) {
-            return;
-        }
-        UserService.getUserSettings(settings => {
-            $scope.settings = settings || {};
-        });
-        UserService.getValidRecipients(user._id, (err, recipients) => {
-            if (recipients) {
-                $scope.validRecipients = recipients;
+    $scope.rand = function () {
+        return Math.random();
+    };
+
+    function reset() {
+        $scope.buttonState = "logIn";
+        $scope.session = UserService.session;
+        delete $scope.validRecipients;
+        $scope.taggingCode = {};
+        $scope.supplyCodeReporting = {};
+        $scope.changingPassword = {};
+        $scope.message = {};
+        $scope.userInfo = null;
+        UserService.getBySession(user => {
+            $scope.user = user;
+            if (!user) {
+                return;
             }
+            UserService.getUserSettings(settings => {
+                $scope.settings = settings || {};
+            });
+            UserService.getValidRecipients((err, recipients) => {
+                if (recipients) {
+                    $timeout(function () {
+                        $scope.validRecipients = JSON.parse(JSON.stringify(recipients));
+                    }, 500);
+                }
+            });
+            UserService.getUserType(type => {
+                $rootScope.isModerator = type === "Moderator";
+            });
+            UserService.isSuper(isSuper => {
+                $rootScope.isSuper = isSuper;
+            });
+            UserService.getUserInfo((err, info) => {
+                if (err) {
+                    return $scope.userInfo = "nogame";
+                }
+                if (info) {
+                    $scope.userInfo = {};
+                    $scope.userInfo.teamScore = info.teamScore;
+                    $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
+                    $scope.userInfo.playerStunScore = info.userScore.stunScore;
+                    $scope.userInfo.playerTagScore = info.userScore.tagScore;
+                    $scope.userInfo.playerSupplyScore = info.userScore.codeScore;
+                    $scope.userInfo.userType = info.userType;
+                    $scope.userInfo.stuns = info.userScore.stunDescriptions;
+                    $scope.userInfo.tags = info.userScore.tagDescriptions;
+                    $scope.userInfo.codes = info.userScore.codeDescriptions;
+                }
+            });
         });
-        UserService.getUserInfo(user._id, (err, info) => {
-            if (err) {
-                return $scope.userInfo = "nogame";
-            }
-            if (info) {
-                $scope.userInfo = info;
-                $scope.userInfo.teamScore = info.teamScore;
-                $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
-                $scope.userInfo.playerStunScore = info.userScore.stunScore;
-                $scope.userInfo.playerTagScore = info.userScore.tagScore;
-                $scope.userInfo.playerSupplyScore = info.userScore.codeScore;
-                $scope.userInfo.userType = info.userType;
-                $scope.userInfo.stuns = info.userScore.stunDescriptions;
-                $scope.userInfo.tags = info.userScore.tagDescriptions;
-                $scope.userInfo.codes = info.userScore.codeDescriptions;
-            }
-        });
-    });
+    }
+    reset();
 
     if ($location.search().token) {
         const token = $location.search().token;
@@ -124,25 +137,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             } else {
                 $scope.session = UserService.session;
                 $scope.user = user;
-                delete $scope.taggingCode.taggedCode;
-                delete $scope.taggingCode.taggedDescription;
-                delete $scope.taggingCode.location;
-                delete $scope.taggingCode.time;
                 $rootScope.loggedIn = true;
-                UserService.getUserSettings(settings => {
-                    $scope.settings = settings || {};
-                });
-                UserService.getUserType(type => {
-                    $rootScope.isModerator = type === "Moderator";
-                });
-                UserService.isSuper(isSuper => {
-                    $rootScope.isSuper = isSuper;
-                });
-                UserService.getValidRecipients(user._id, (err, recipients) => {
-                    if (recipients) {
-                        $scope.validRecipients = recipients;
-                    }
-                });
+                reset();
             }
         });
     };

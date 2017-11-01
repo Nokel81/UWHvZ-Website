@@ -269,7 +269,7 @@
 
 .report-grid {
     display: grid;
-    grid-template-columns: 3fr 3fr 2fr 1fr 5fr 1fr;
+    grid-template-columns: 3fr 3fr 2fr 2fr 5fr 1fr;
     grid-template-areas: "tagger tagged time location description actions";
     grid-column-gap: 0.25rem;
     padding-bottom: 0.25rem;

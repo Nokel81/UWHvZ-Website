@@ -238,7 +238,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.getValidRecipients = function(userId, cb) {
+    SERVICE.getValidRecipients = function(cb) {
         $http.get(AppSettings.apiUrl + "/message/recipients")
             .then(res => {
                 cb(null, res.data);
@@ -273,7 +273,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
             });
     };
 
-    SERVICE.getUserInfo = function(userId, cb) {
+    SERVICE.getUserInfo = function(cb) {
         $http.get(AppSettings.apiUrl + "/user/info")
             .then(res => {
                 cb(null, res.data);

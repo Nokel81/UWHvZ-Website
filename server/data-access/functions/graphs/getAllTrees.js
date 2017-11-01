@@ -64,7 +64,7 @@ function GetAllTrees(userType, isSuper) {
                             .then(reports => {
                                 let taggerWANtagged = {};
                                 reports.forEach(report => {
-                                    taggerWANtagged[report.toString()] = true;
+                                    taggerWANtagged[report.tagger.toString()] = true;
                                 });
                                 let taggersWhoAreNotTagged = Object.keys(taggerWANtagged);
                                 reports.forEach(report => {

@@ -72,7 +72,7 @@ function GetAllTrees(userType, isSuper) {
                                     }
                                     let i = taggersWhoAreNotTagged.findIndex(x => x.toString() === report.tagged.toString());
                                     if (i >= 0) {
-                                        taggersWhoAreNotTagged.splice(i, 1);
+                                        taggersWhoAreNotTagged = taggersWhoAreNotTagged.splice(i, 1);
                                     }
                                     edges.push({
                                         from: report.tagger,

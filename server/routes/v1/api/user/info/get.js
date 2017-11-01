@@ -3,9 +3,11 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     const {
-        userId
+        userId,
+        isSuper
     } = req.headers;
-    findUserInfo(userId)
+    const userIdQ = req.query.userId;
+    findUserInfo(isSuper && userIdQ ? userIdQ : userId)
         .then(info => {
             resolve(info);
         })

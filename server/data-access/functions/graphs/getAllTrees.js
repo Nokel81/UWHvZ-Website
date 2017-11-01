@@ -105,6 +105,7 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
+                                console.log(taggersWhoAreNotTagged);
                                 taggersWhoAreNotTagged.forEach(zom => {
                                     edges.push({
                                         from: "OZ",

@@ -72,7 +72,7 @@ function GetAllTrees(userType, isSuper) {
                                     }
                                     let i = taggersWhoAreNotTagged.findIndex(x => x.toString() === report.tagged.toString());
                                     if (i >= 0) {
-                                        taggersWhoAreNotTagged = taggersWhoAreNotTagged.splice(i, 1);
+                                        taggersWhoAreNotTagged.splice(i, 1);
                                     }
                                     edges.push({
                                         from: report.tagger,
@@ -85,10 +85,13 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
-                                console.log(taggersWhoAreNotTagged);
                                 game.originalZombies.forEach(zom => {
                                     if (zombiesToKeep.indexOf(zom.toString()) < 0) {
                                         zombiesToKeep.push(zom.toString());
+                                    }
+                                    let i = taggersWhoAreNotTagged.findIndex(x => x.toString() === zom.toString());
+                                    if (i >= 0) {
+                                        taggersWhoAreNotTagged.splice(i, 1);
                                     }
                                     edges.push({
                                         from: "OZ",
@@ -98,6 +101,7 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
+                                console.log(taggersWhoAreNotTagged);
                                 nodes = nodes.filter(node => zombiesToKeep.indexOf(node.id) >= 0);
                                 // TODO: Add the surviving humans
                                 resolve({

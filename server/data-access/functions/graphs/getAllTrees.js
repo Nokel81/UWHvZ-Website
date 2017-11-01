@@ -85,7 +85,8 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
-                                game.originalZombies.concat(taggersWhoAreNotTagged).forEach(zom => {
+                                console.log(taggersWhoAreNotTagged);
+                                game.originalZombies.forEach(zom => {
                                     if (zombiesToKeep.indexOf(zom.toString()) < 0) {
                                         zombiesToKeep.push(zom.toString());
                                     }

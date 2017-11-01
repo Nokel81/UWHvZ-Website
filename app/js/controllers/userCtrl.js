@@ -40,7 +40,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         $scope.supplyCodeReporting = {};
         $scope.changingPassword = {};
         $scope.message = {};
-        $scope.userInfo = null;
+        delete $scope.userInfo;
         UserService.getBySession(user => {
             $scope.user = user;
             if (!user) {

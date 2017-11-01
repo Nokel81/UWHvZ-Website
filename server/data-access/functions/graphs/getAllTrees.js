@@ -62,7 +62,11 @@ function GetAllTrees(userType, isSuper) {
                                 }).select("tagger tagged").exec();
                             })
                             .then(reports => {
-                                let taggersWhoAreNotTagged = reports.map(report => report.tagger.toString());
+                                let taggerWANtagged = {};
+                                reports.forEach(report => {
+                                    taggerWANtagged[report.toString()] = true;
+                                });
+                                let taggersWhoAreNotTagged = Object.keys(taggerWANtagged);
                                 reports.forEach(report => {
                                     if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
                                         zombiesToKeep.push(report.tagger.toString());

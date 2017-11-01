@@ -51,9 +51,7 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             });
             UserService.getValidRecipients((err, recipients) => {
                 if (recipients) {
-                    $timeout(function () {
-                        $scope.validRecipients = JSON.parse(JSON.stringify(recipients));
-                    }, 500);
+                    $scope.validRecipients = recipients;
                 }
             });
             UserService.getUserType(type => {

@@ -39,7 +39,25 @@ function Create(report) {
                             }
                             if (taggerType === "Zombie") {
                                 if (taggedType === "Zombie") {
-                                    reject("Zombies cannot tag other zombies");
+                                    return new Promise(function(resolve, reject) {
+                                        Report.findOne({
+                                            tagged: taggedObj._id,
+                                            type: "Tag"
+                                        })
+                                            .exec()
+                                            .then(() => {
+                                                reject("Zombies cannot tag other zombies");
+                                            })
+                                            .catch(() => {
+                                                if (gameObj.originalZombies.find(x => x.toString() === taggedObj._id.toString())) {
+                                                    return reject("Zombies cannot tag original zombies");
+                                                }
+                                                if (gameObj.starvedZombies.find(x => x.toString() === taggedObj._id.toString())) {
+                                                    return reject("Zombies cannot tag starved zombies");
+                                                }
+                                                resolve("Tag");
+                                            });
+                                    });
                                 } else {
                                     return Promise.resolve("Tag");
                                 }

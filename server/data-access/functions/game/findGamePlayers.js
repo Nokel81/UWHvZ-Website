@@ -23,7 +23,6 @@ function FindGamePlayers(gameId, userId, userType, isSuper) {
                 players.forEach(player => {
                     scores.push(new Promise(function(resolve, reject) {
                         let userScore;
-                        console.log(player);
                         findUserScore(gameId, player, true)
                             .then(score => {
                                 userScore = score;

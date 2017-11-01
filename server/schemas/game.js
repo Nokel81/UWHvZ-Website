@@ -47,6 +47,9 @@ const gameSchema = new Schema({
     originalZombies: {
         type: [Schema.Types.ObjectId]
     },
+    starvedZombies: {
+        type: [Schema.Types.ObjectId]
+    },
     suppliedValue: {
         type: Number,
         get: v => Math.round(v),
@@ -103,6 +106,18 @@ gameSchema.pre("validate", function(next) {
             return this.invalidate("signUpDates", "Must be before game's start time");
         }
     }
+
+    this.originalZombies.forEach(oz => {
+        if (!this.zombies.find(zom => zom.toString() === oz.toString())) {
+            return this.invalidate("originalZombies", "All original zombies must be zombies");
+        }
+    });
+
+    this.starvedZombies.forEach(sz => {
+        if (!this.zombies.find(zom => zom.toString() === sz.toString())) {
+            return this.invalidate("starvedZombies", "All original zombies must be zombies");
+        }
+    });
     next();
 });
 errorNotFound(gameSchema);

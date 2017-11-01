@@ -44,6 +44,9 @@ function UnsuppliedDeath(gameId) {
                     $push: {
                         zombies: {
                             $each: starvingHumans
+                        },
+                        starvedZombies: {
+                            $each: starvingHumans
                         }
                     },
                     $pullAll: {

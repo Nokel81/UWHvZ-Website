@@ -62,12 +62,17 @@ function GetAllTrees(userType, isSuper) {
                                 }).select("tagger tagged").exec();
                             })
                             .then(reports => {
+                                let taggersWhoAreNotTagged = reports.map(report => report.tagger.toString());
                                 reports.forEach(report => {
                                     if (zombiesToKeep.indexOf(report.tagger.toString()) < 0) {
                                         zombiesToKeep.push(report.tagger.toString());
                                     }
                                     if (zombiesToKeep.indexOf(report.tagged.toString()) < 0) {
                                         zombiesToKeep.push(report.tagged.toString());
+                                    }
+                                    let i = taggersWhoAreNotTagged.findIndex(x => x.toString() === report.tagged.toString());
+                                    if (i >= 0) {
+                                        taggersWhoAreNotTagged.splice(i, 1);
                                     }
                                     edges.push({
                                         from: report.tagger,
@@ -80,7 +85,7 @@ function GetAllTrees(userType, isSuper) {
                                         }
                                     });
                                 });
-                                game.originalZombies.forEach(zom => {
+                                game.originalZombies.concat(taggersWhoAreNotTagged).forEach(zom => {
                                     if (zombiesToKeep.indexOf(zom.toString()) < 0) {
                                         zombiesToKeep.push(zom.toString());
                                     }

@@ -2,40 +2,31 @@ const Promise = require("bluebird");
 
 const User = rootRequire("server/schemas/user");
 const findAll = rootRequire("server/data-access/functions/game/findAll");
-const findUserType = rootRequire("server/data-access/functions/user/findUserType");
-const findUserById = rootRequire("server/data-access/functions/user/findById");
 const recipientCodes = rootRequire("server/constants.json").recipientCodes;
+const levels = rootRequire("server/constants.json").securityNames;
 const webmasterEmail = rootRequire("server/config.json").webmasterEmail;
 
-function GetUserRecipients(userId) {
+function GetUserRecipients(userId, userType, isSuper) {
     return new Promise(function(resolve, reject) {
-        let user = null;
-        let userType = null;
         let userObjs = null;
         let recipients = [{
             title: "Webmaster",
             value: recipientCodes.toWebmaster
         }];
-        findUserById(userId)
-            .then(userObj => {
-                user = userObj;
-                return User.find({
-                    email: {
-                        $ne: webmasterEmail
-                    }
-                }).select("email playerName").sort("playerName").exec();
-            })
+        User.find({
+            email: {
+                $ne: webmasterEmail
+            }
+        })
+            .select("email playerName")
+            .sort("playerName")
+            .exec()
             .then(users => {
                 userObjs = users;
-                return findUserType(userId);
-            })
-            .then(type => {
-                userType = type;
                 return findAll();
             })
             .then(games => {
                 let hasCurrentGame = false;
-                const isSuper = user.email === webmasterEmail;
 
                 if (games.length === 0) {
                     return resolve(recipients);
@@ -47,7 +38,7 @@ function GetUserRecipients(userId) {
                         value: recipientCodes.toModerators
                     });
                 }
-                if ((userType === "NonPlayer" || userType === "Spectator") && !isSuper) {
+                if ([levels.nonplayer, levels.spectator].includes(userType) && !isSuper) {
                     return resolve(recipients);
                 }
                 if (isSuper) {
@@ -80,14 +71,14 @@ function GetUserRecipients(userId) {
                     title: "All Players",
                     value: recipientCodes.toAllPlayers
                 });
-                if (userType === "Human") {
+                if (userType === levels.human) {
                     return resolve(recipients);
                 }
                 recipients.push({
                     title: "Zombies",
                     value: recipientCodes.toZombies
                 });
-                if (userType === "Zombie") {
+                if (userType === levels.zombie) {
                     return resolve(recipients);
                 }
                 recipients.push({

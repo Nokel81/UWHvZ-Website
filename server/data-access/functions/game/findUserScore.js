@@ -17,7 +17,9 @@ function scoreFromReports(reports, userMap, player, game) {
         let tagger = report.tagger.toString();
         let tagged = report.tagged.toString();
         let thisTimeTagged = report.time.getTime();
-        let pointModification = game.pointModifications.find(pm => pm.start <= report.time && report.time <= pm.end);
+        console.error(Object.keys(game));
+        let pointModification = game.pointModifications.find(pm => new Date(pm.start) <= report.time && report.time <= new Date(pm.end));
+        console.log(pointModification);
         if (report.reportType === "Tag") {
             if (tagger === player) {
                 tagScore += 5;
@@ -45,10 +47,10 @@ function scoreFromReports(reports, userMap, player, game) {
                     return;
                 }
                 let pointWord = "point";
-                if (scoreRegenerated !== 1) {
+                if (scoreInvarient !== 1) {
                     pointWord += "s";
                 }
-                stunDescriptions.push(scoreRegenerated + " " + pointWord + " for stunning " + userMap[tagged] + " on " + getDateString(report.time));
+                stunDescriptions.push(scoreInvarient + " " + pointWord + " for stunning " + userMap[tagged] + " on " + getDateString(report.time));
             }
         } else {
             stunTimes[tagged] = {
@@ -64,7 +66,11 @@ function scoreFromReports(reports, userMap, player, game) {
                 if (!userMap) {
                     return;
                 }
-                stunDescriptions.push("5 points for stunning " + userMap[tagged] + " on " + getDateString(report.time));
+                let pointWord = "point";
+                if (scoreInvarient !== 1) {
+                    pointWord += "s";
+                }
+                stunDescriptions.push(scoreInvarient + " " + pointWord +" for stunning " + userMap[tagged] + " on " + getDateString(report.time));
             }
         }
     });

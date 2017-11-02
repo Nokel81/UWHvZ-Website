@@ -65,23 +65,7 @@ function Create(report) {
                                 if (taggedType === "Zombie") {
                                     return Promise.resolve("Stun");
                                 } else {
-                                    return new Promise(function(resolve, reject) {
-                                        Report.count({
-                                            tagged: tagged._id,
-                                            reportType: "Tag"
-                                        })
-                                        .exec()
-                                        .then(count => {
-                                            if (count > 0) {
-                                                reject("You cannot tag someone who has already been tagged");
-                                            } else {
-                                                resolve("Tag");
-                                            }
-                                        })
-                                        .catch(error => {
-                                            reject(error);
-                                        });
-                                    });
+                                    return Promise.resolve("Tag");
                                 }
                             }
                         });

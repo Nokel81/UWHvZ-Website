@@ -2,10 +2,10 @@ const Promise = require("bluebird");
 
 const User = rootRequire("server/schemas/user");
 
-function FindById(_id, withNonce) {
+function FindById(userId, withNonce) {
     return new Promise(function(resolve, reject) {
         User.findOne({
-            _id
+            _id: userId
         })
             .select("-password" + withNonce ? "" : " -nonce")
             .exec()

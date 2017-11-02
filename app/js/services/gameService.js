@@ -233,6 +233,19 @@ function GameService($http, AppSettings) {
             });
     };
 
+    SERVICE.swapReportType = function(reportId, gameId, cb) {
+        let body = {
+            reportId,
+            gameId
+        };
+        $http.put(AppSettings.apiUrl + "/report/swap", body)
+            .then(res => {
+                cb(null, res.data);
+            }, err => {
+                cb(err.data);
+            });
+    };
+
     SERVICE.ratifyAllReports = function (gameId, cb) {
         let body = {
             gameId

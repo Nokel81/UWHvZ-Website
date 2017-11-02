@@ -1,16 +1,17 @@
 const Promise = require("bluebird");
 const SupplyCode = rootRequire("server/schemas/supplyCode");
 const findCurrentOrNext = rootRequire("server/data-access/functions/game/findCurrentOrNext");
+const levels = rootRequire("server/constants.json").securityNames;
 
-function UseSupplyCode(info) {
+function UseSupplyCode(info, userType) {
     return new Promise(function(resolve, reject) {
         findCurrentOrNext()
             .then(game => {
-                if (game.humans.indexOf(info.userId.toString()) < 0) {
+                if (![levels.human, levels.moderator].includes(userType)) {
                     return reject("You have to be a human to use a supply code");
                 }
 
-                return SupplyCode.updateOne({
+                return SupplyCode.findOneAndUpdate({
                     code: info.code.toLowerCase(),
                     usedBy: {
                         $exists: false
@@ -20,6 +21,8 @@ function UseSupplyCode(info) {
                     $set: {
                         usedBy: info.userId
                     },
+                }, {
+                    new: true
                 })
                 .exec();
             })

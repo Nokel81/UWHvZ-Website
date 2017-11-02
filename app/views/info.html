@@ -51,12 +51,12 @@
             </ul>
         </uib-tab>
         <uib-tab index="1" heading="Players">
-            <div ng-hide="gamePlayers" class="text-centre">
-                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-            </div>
             <button class="btn btn-info" type="button" ng-click="showPlayers.Human = !showPlayers.Human">{{showPlayers.Human ? "Show" : "Hide"}} Humans</button>
             <button class="btn btn-info" type="button" ng-click="showPlayers.Zombie = !showPlayers.Zombie">{{showPlayers.Zombie ? "Show" : "Hide"}} Zombies</button>
             <button class="btn btn-info" type="button" ng-click="showPlayers.Spectator = !showPlayers.Spectator">{{showPlayers.Spectator ? "Show" : "Hide"}} Spectators</button>
+            <div ng-hide="gamePlayers" class="text-centre">
+                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            </div>
             <div ng-show="gamePlayers">
                 <div class="game-players-grid">
                     <b>Player Name</b>

@@ -3,7 +3,10 @@ const createErrorMessage = rootRequire("server/helpers/createErrorMessage");
 
 function Get(req, resolve, reject) {
     const code = req.body;
-    useSupplyCode(code)
+    const {
+        userType
+    } = req.headers;
+    useSupplyCode(code, userType)
         .then(message => {
             resolve(message);
         })

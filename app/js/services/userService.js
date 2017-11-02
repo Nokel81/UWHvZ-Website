@@ -276,6 +276,7 @@ function UserService($http, AppSettings, $cookies, $rootScope) {
     SERVICE.getUserInfo = function(cb) {
         $http.get(AppSettings.apiUrl + "/user/info")
             .then(res => {
+                console.log(res.data);
                 cb(null, res.data);
             }, err => {
                 cb(err.data);

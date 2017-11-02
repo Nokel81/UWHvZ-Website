@@ -267,6 +267,28 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         });
     };
 
+    $scope.swapReportType = function (reportId) {
+        let report = $scope.reports.reduce((sum, day) => {
+            if (sum) {
+                return sum;
+            }
+            let report = day.reports.find(report => report._id.toString() === reportId.toString());
+            return report;
+        }, null);
+        let from = report.reportType;
+        let to = from === "Tag" ? "Stun" : "Tag";
+        if (!$window.confirm("Are you sure that you want to switch from '" + from + "' to '" + to + "'?")) {
+            return;
+        }
+        GameService.swapReportType(reportId, $scope.game._id, (err, res) => {
+            if (err) {
+                AlertService.danger(err);
+            } else {
+                $scope.reports = res;
+            }
+        });
+    };
+
     $scope.ratifyReport = function(reportId) {
         if (!$window.confirm("Are you sure that you want to ratify this stun report?")) {
             return;

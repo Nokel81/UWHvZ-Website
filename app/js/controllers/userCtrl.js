@@ -63,18 +63,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
             UserService.getUserInfo((err, info) => {
                 if (err) {
                     return $scope.userInfo = "nogame";
-                }
-                if (info) {
-                    $scope.userInfo = {};
-                    $scope.userInfo.teamScore = info.teamScore;
-                    $scope.userInfo.playerScore = info.userScore.stunScore + info.userScore.tagScore + info.userScore.codeScore;
-                    $scope.userInfo.playerStunScore = info.userScore.stunScore;
-                    $scope.userInfo.playerTagScore = info.userScore.tagScore;
-                    $scope.userInfo.playerSupplyScore = info.userScore.codeScore;
-                    $scope.userInfo.userType = info.userType;
-                    $scope.userInfo.stuns = info.userScore.stunDescriptions;
-                    $scope.userInfo.tags = info.userScore.tagDescriptions;
-                    $scope.userInfo.codes = info.userScore.codeDescriptions;
+                } else {
+                    $scope.userInfo = info;
                 }
             });
         });

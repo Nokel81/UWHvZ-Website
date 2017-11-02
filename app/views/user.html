@@ -32,15 +32,15 @@
             <h3>Your score: <span ng-bind="userInfo.userScore.stunScore + userInfo.userScore.tagScore + userInfo.userScore.codeScore || '0'"></span></h3>
             <h5>Stuns: <span ng-bind="userInfo.userScore.stunScore || '0'"></span></h5>
             <ul>
-                <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span ng-bind="description"></span></li>
+                <li ng-repeat="description in userInfo.userScore.stunDescriptions"><span>{{description}}</span></li>
             </ul>
             <h5>Tags: <span ng-bind="userInfo.userScore.tagScore || '0'"></span></h5>
             <ul>
-                <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span ng-bind="description"></span></li>
+                <li ng-repeat="description in userInfo.userScore.tagDescriptions"><span>{{description}}</span></li>
             </ul>
             <h5>Supply Codes: <span ng-bind=" userInfo.userScore.codeScore || '0'"></span></h5>
             <ul>
-                <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span ng-bind="description"></span></li>
+                <li ng-repeat="description in userInfo.userScore.codeDescriptions"><span>{{description}}</span></li>
             </ul>
             <br>
             <h3>Your team score: <span ng-bind="userInfo.teamScore || '0'"></span></h3>

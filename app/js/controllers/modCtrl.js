@@ -360,6 +360,10 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         (($scope.game.signUpLocationDates || [])[location] || []).splice(date, 1);
     };
 
+    $scope.removePointMod = function (pm) {
+        ($scope.game.pointModifications || []).splice(pm, 1);
+    };
+
     $scope.addLocation = function() {
         ($scope.game.signUpLocations || []).push("");
         ($scope.game.signUpLocationDates || []).push([]);
@@ -375,6 +379,10 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
 
     $scope.addLocationDate = function (game, location) {
         (($scope.game.signUpLocationDates || [])[location] || []).push(new Date());
+    };
+
+    $scope.addPointMod = function() {
+        ($scope.game.pointModifications || []).push({});
     };
 
     $scope.removeModerator = function(mod) {
@@ -420,6 +428,15 @@ function ModCtrl($scope, $location, UserService, GameService, AlertService, $win
         if (!$scope.game) {
             return;
         }
+        $scope.game.pointModifications = $scope.game.pointModifications.map(pm => {
+            pm.start = pm.startDate;
+            pm.start.setHours(pm.startTime.getHours());
+            pm.start.setMinutes(pm.startTime.getMinutes());
+            pm.end = pm.endDate;
+            pm.end.setHours(pm.endTime.getHours());
+            pm.end.setMinutes(pm.endTime.getMinutes());
+            return pm;
+        });
         if ($scope.game._id) {
             GameService.updateGame($scope.game, (err, updatedGame) => {
                 if (err) {

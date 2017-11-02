@@ -22,6 +22,7 @@ function Update(game) {
                 newGame.majorPassValue = game.majorPassValue;
                 newGame.officerValue = game.officerValue;
                 newGame.isStarted = game.isStarted;
+                newGame.pointModifications = game.pointModifications;
                 return newGame.save();
             })
             .then(game => {

@@ -77,6 +77,41 @@
     border-top: none;
 }
 
+.point-mod-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas: "start" "end" "multiple" "offset" "actions";
+    padding 0.25rem;
+}
+
+.point-mod-grid>*>* {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.point-mod-grid>.tuple-grid:nth-of-type(2)>* {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.point-mod-grid>.tuple-grid:nth-of-type(n+2)>*,
+.point-mod-grid>.triple-grid:nth-of-type(n+2)>* {
+    border-top: none;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.point-mod-grid>.tuple-grid:nth-last-of-type(n+3)>*,
+.stun-grid>.triple-grid:nth-last-of-type(n+3)>* {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.point-mod-grid>.actions>* {
+    border-top: none;
+}
+
 .supply-grid {
     display: grid;
     grid-template-columns: 200px auto 7.1rem;

@@ -61,6 +61,8 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $rootScope.isSuper = isSuper;
             });
             UserService.getUserInfo((err, info) => {
+                console.log(err);
+                console.log(info);
                 if (err) {
                     return $scope.userInfo = "nogame";
                 } else {

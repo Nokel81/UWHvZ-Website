@@ -12,6 +12,17 @@ function GameService($http, AppSettings) {
                     game.endDate = new Date(game.endDate);
                     game.signUpDates = game.signUpDates.map(date => new Date(date));
                     game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
+                    if (game.pointModifications) {
+                        game.pointModifications = game.pointModifications.map(pm => {
+                            pm.start = new Date(pm.start);
+                            pm.end = new Date(pm.end);
+                            pm.startDate = new Date(pm.start);
+                            pm.startTime = new Date(pm.start);
+                            pm.endDate = new Date(pm.end);
+                            pm.endTime = new Date(pm.end);
+                            return pm;
+                        });
+                    }
                     cb(game);
                 } else {
                     cb(null);
@@ -109,6 +120,15 @@ function GameService($http, AppSettings) {
                 game.endDate = new Date(game.endDate);
                 game.signUpDates = game.signUpDates.map(date => new Date(date));
                 game.signUpLocationDates = game.signUpLocationDates.map(set => set.map(date => new Date(date)));
+                game.pointModifications = game.pointModifications.map(pm => {
+                    pm.start = new Date(pm.start);
+                    pm.end = new Date(pm.end);
+                    pm.startDate = new Date(pm.start);
+                    pm.startTime = new Date(pm.start);
+                    pm.endDate = new Date(pm.end);
+                    pm.endTime = new Date(pm.end);
+                    return pm;
+                });
                 cb(null, game);
             }, err => {
                 cb(err.data || {});

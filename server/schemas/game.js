@@ -50,6 +50,30 @@ const gameSchema = new Schema({
     starvedZombies: {
         type: [Schema.Types.ObjectId]
     },
+    pointModifications: {
+        type: [{
+            start: {
+                type: Date,
+                required: true
+            },
+            end: {
+                type: Date,
+                required: true
+            },
+            multiple: {
+                type: Number,
+                get: v => Math.round(v),
+                set: v => Math.round(v),
+                default: 1
+            },
+            offset: {
+                type: Number,
+                get: v => Math.round(v),
+                set: v => Math.round(v),
+                default: 0
+            }
+        }]
+    },
     suppliedValue: {
         type: Number,
         get: v => Math.round(v),
@@ -118,6 +142,20 @@ gameSchema.pre("validate", function(next) {
             return this.invalidate("starvedZombies", "All original zombies must be zombies");
         }
     });
+
+    this.pointModifications.sort((a, b) => {
+        return a.end.getTime() - b.end.getTime();
+    });
+
+    this.pointModifications.forEach((pm, index, set) => {
+        if (pm.start >= pm.end) {
+            return this.invalidate("pointModifications", "The start of any point modifcation range must be before its end");
+        }
+        if (index > 0 && pm.start < set[index - 1].end) {
+            return this.invalidate("pointModifications", "No two point modification ranges can intercect");
+        }
+    });
+    
     next();
 });
 errorNotFound(gameSchema);

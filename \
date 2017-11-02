@@ -3,7 +3,7 @@ const Promise = require("bluebird");
 const Report = rootRequire("server/schemas/report");
 const User = rootRequire("server/schemas/user");
 const SupplyCode = rootRequire("server/schemas/supplyCode");
-const findGameById = rootRequire("server/data-access/functions/game/findById");
+const findGameById = rootRequire("server/data-access/game/findById");
 const getDateString = rootRequire("server/helpers/getDateString");
 
 function scoreFromReports(reports, userMap, player, game) {
@@ -17,7 +17,6 @@ function scoreFromReports(reports, userMap, player, game) {
         let tagger = report.tagger.toString();
         let tagged = report.tagged.toString();
         let thisTimeTagged = report.time.getTime();
-        let pointModification = game.pointModifications.find(pm => pm.start <= report.time && report.time <= pm.end);
         if (report.reportType === "Tag") {
             if (tagger === player) {
                 tagScore += 5;
@@ -36,11 +35,7 @@ function scoreFromReports(reports, userMap, player, game) {
             stunTimes[tagged].value = Math.max(scoreRegenerated - 1, 0);
             stunTimes[tagged].time = thisTimeTagged;
             if (tagger === player) {
-                let scoreInvarient = scoreRegenerated;
-                if (pointModification) {
-                    scoreInvarient = scoreInvarient * pointModification.multiple + pointModification.offset;
-                }
-                stunScore += scoreInvarient;
+                stunScore += scoreRegenerated;
                 if (!userMap) {
                     return;
                 }
@@ -56,11 +51,7 @@ function scoreFromReports(reports, userMap, player, game) {
                 time: thisTimeTagged
             };
             if (tagger === player) {
-                let scoreInvarient = 5;
-                if (pointModification) {
-                    scoreInvarient = scoreInvarient * pointModification.multiple + pointModification.offset;
-                }
-                stunScore += scoreInvarient;
+                stunScore += 5;
                 if (!userMap) {
                     return;
                 }
@@ -124,7 +115,7 @@ function FindUserScore(gameId, playerId, forTeamScore, game) {
                     .then(users => {
                         let userMap = {}; //This is the store for player names for the descriptions
                         users.forEach(user => userMap[user._id] = user.playerName);
-                        let info = scoreFromReports(reports, userMap, playerId.toString(), game);
+                        let info = scoreFromReports(reports, userMap, playerId.toString());
                         info.codeScore = codeScore;
                         info.codeDescriptions = codeDescriptions;
                         resolve(info);

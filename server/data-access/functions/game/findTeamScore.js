@@ -18,7 +18,7 @@ function FindTeamScore(gameId, team) {
                 let userIds = team === levels.human ? game.humans : game.zombies;
                 let promises = [];
                 userIds.forEach(userId => {
-                    promises.push(findUserScore(gameId, userId, true));
+                    promises.push(findUserScore(gameId, userId, true, game));
                 });
                 return Promise.all(promises);
             })

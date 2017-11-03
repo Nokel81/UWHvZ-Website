@@ -9,33 +9,51 @@ const sendUnsuppliedEmail = rootRequire("server/data-access/functions/message/se
 function UnsuppliedDeath(gameId) {
     return new Promise(function(resolve, reject) {
         let starvingHumans = [];
+        let game;
         findGameById(gameId)
-            .then(game => {
-                if (!game.started) {
+            .then(gameObj => {
+                game = gameObj;
+                if (new Date() < game.startDate) {
                     return reject("Game has to be started");
                 }
                 starvingHumans = game.humans;
-                return Promise.each(game.humans, humanId => {
-                    return new Promise(function(resolve, reject) {
-                        findUserScore(gameId, humanId, true)
+                let points = [];
+                starvingHumans.forEach(user => {
+                    points.push(new Promise(function(resolve, reject) {
+                        findUserScore(gameId, user, true, game)
                             .then(score => {
-                                if (score >= game.suppliedValue) {
-                                    resolve();
-                                } else {
-                                    return findUserById(humanId);
-                                }
-                            })
-                            .then(users => {
-                                sendUnsuppliedEmail(users, game.suppliedValue);
-                            })
-                            .then(() => {
-                                resolve();
+                                resolve({
+                                    userId: user,
+                                    score
+                                });
                             })
                             .catch(error => {
                                 reject(error);
                             });
-                    });
+                    }));
                 });
+                return Promise.all(points);
+            })
+            .then(scores => {
+                scores = scores.filter(score => score.score < game.suppliedValue);
+                starvingHumans = scores.map(score => score.userId);
+
+                let emails = [];
+                starvingHumans.forEach(user => {
+                    emails.push(new Promise(function(resolve, reject) {
+                        findUserById(user)
+                            .then(userObj => {
+                                resolve(userObj.email);
+                            })
+                            .catch(error => {
+                                reject(error);
+                            });
+                    }));
+                });
+                return Promise.all(emails);
+            })
+            .then(emails => {
+                return sendUnsuppliedEmail(emails, game.suppliedValue);
             })
             .then(() => {
                 return Game.updateOne({

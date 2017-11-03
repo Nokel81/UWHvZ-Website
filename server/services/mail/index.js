@@ -190,25 +190,21 @@ SERVICE.sendStartingEmail = function(toList, game, HTMLlore, team, attachments, 
     });
 };
 
-SERVICE.sendUnsuppliedEmail = function(toList, names, suppliedValue) {
+SERVICE.sendUnsuppliedEmail = function(toList, suppliedValue) {
     return new Promise(function(resolve, reject) {
-        toList = toList.map((recipient, index) => {
-            const resolveData = {
-                suppliedValue,
-                toName: names[index]
-            };
-            const html = relativeResolve("./emails/unsupplied.html", resolveData);
-            const mailOptions = {
-                from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
-                replyTo: "uwhumansvszombies@gmail.com",
-                to: recipient,
-                subject: "Unsupplied Zombification",
-                html
-            };
-            return sendMail.sendMail(mailOptions);
-        });
-
-        Promise.all(toList)
+        const resolveData = {
+            suppliedValue
+        };
+        const html = relativeResolve("./emails/unsupplied.html", resolveData);
+        const mailOptions = {
+            from: "\"UW Humans vs Zombies\" hvz@csclub.uwaterloo.ca", // sender address
+            replyTo: "uwhumansvszombies@gmail.com",
+            to: "uwhumansvszombies@gmail.com",
+            bcc: toList,
+            subject: "Unsupplied Zombification",
+            html
+        };
+        sendMail.sendMail(mailOptions)
             .then(() => {
                 resolve("Email sent");
             })

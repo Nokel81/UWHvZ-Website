@@ -86,6 +86,36 @@
                             <button class="right btn btn-success" type="button" ng-click="addDate($rootIndex)"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
+                    <div class="modifications accordian">
+                        <input type="checkbox" id="tab_modifications{{$index}}">
+                        <label for="tab_modifications{{$index}}">Point Modification Ranges</label>
+                        <div class="accordian-content">
+                            <div class="point-mod-grid" ng-repeat="pm in game.pointModifications track by $index">
+                                <div class="start triple-grid">
+                                    <label class="form-label">Start:</label>
+                                    <input class="form-control" type="date" ng-model="game.pointModifications[$index].start">
+                                    <input class="form-control" type="time" ng-model="game.pointModifications[$index].start">
+                                </div>
+                                <div class="end triple-grid">
+                                    <label class="form-label">End:</label>
+                                    <input class="form-control" type="date" ng-model="game.pointModifications[$index].end">
+                                    <input class="form-control" type="time" ng-model="game.pointModifications[$index].end">
+                                </div>
+                                <div class="multiple tuple-grid">
+                                    <label class="form-label">Multiple:</label>
+                                    <input class="form-control" type="number" ng-model="game.pointModifications[$index].multiple">
+                                </div>
+                                <div class="offset tuple-grid">
+                                    <label class="form-label">Offset:</label>
+                                    <input class="form-control" type="number" ng-model="game.pointModifications[$index].offset">
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-danger" type="button" ng-click="removePointMod($rootIndex, $index)"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <button class="right btn btn-success" type="button" ng-click="addPointMod($rootIndex)"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
                     <div class="moderators accordian">
                         <input type="checkbox" id="tab_moderators{{$index}}">
                         <label for="tab_moderators{{$index}}">Game Moderators</label>

@@ -61,8 +61,6 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
                 $rootScope.isSuper = isSuper;
             });
             UserService.getUserInfo((err, info) => {
-                console.log(err);
-                console.log(info);
                 if (err) {
                     return $scope.userInfo = "nogame";
                 } else {
@@ -194,24 +192,25 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (currentlyTagging) {
             return;
         }
-        if (!$scope.taggingCode.taggedCode || !$scope.taggingCode.taggedDescription || !$scope.taggingCode.time || !$scope.taggingCode.date || !$scope.taggingCode.location) {
+        const {
+            taggedCode,
+            taggedDescription,
+            location,
+            date
+        } = $scope.taggingCode;
+        if (!taggedCode || !taggedDescription || !date || !location) {
             return AlertService.danger("Need more information");
         }
-        let date = $scope.taggingCode.date;
-        let time = $scope.taggingCode.time;
-        date.setHours(time.getHours());
-        date.setMinutes(time.getMinutes());
         date.setMilliseconds(0);
         currentlyTagging = true;
         AlertService.info("Sending report");
-        UserService.reportTag($scope.taggingCode.taggedCode, $scope.user._id, $scope.taggingCode.taggedDescription, $scope.taggingCode.location, date, (err, res) => {
+        UserService.reportTag(taggedCode, $scope.user._id, taggedDescription, location, date, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 delete $scope.taggingCode.taggedCode;
                 delete $scope.taggingCode.taggedDescription;
                 delete $scope.taggingCode.location;
-                delete $scope.taggingCode.time;
                 delete $scope.taggingCode.date;
                 AlertService.info(res);
             }
@@ -220,10 +219,13 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.supplyCodeReport = function() {
-        if (!$scope.supplyCodeReporting.supplyCode) {
+        const {
+            supplyCode
+        } = $scope.supplyCodeReporting;
+        if (!supplyCode) {
             return;
         }
-        UserService.reportSupplyCode($scope.supplyCodeReporting.supplyCode, $scope.user._id, (err, res) => {
+        UserService.reportSupplyCode(supplyCode, $scope.user._id, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
@@ -234,26 +236,31 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
     };
 
     $scope.changePassword = function() {
-        if (!$scope.changingPassword.newPassword) {
+        const {
+            newPassword,
+            newPasswordCheck,
+            oldPassword
+        } = $scope.changingPassword;
+        if (!newPassword) {
             return;
         }
-        if ($scope.changingPassword.newPassword !== $scope.changingPassword.newPasswordCheck) {
+        if (newPassword !== newPasswordCheck) {
             return AlertService.danger("New passwords don't match");
         }
-        if (!checkPasswords($scope.changingPassword.newPassword, $scope.changingPassword.newPasswordCheck)) {
+        if (!checkPasswords(newPassword, newPasswordCheck)) {
             return AlertService.danger("New password is not complex enough");
         }
-        UserService.changePassword($scope.changingPassword.oldPassword, $scope.changingPassword.newPassword, (err, res) => {
+        UserService.changePassword(oldPassword, newPassword, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {
                 AlertService.info(res);
                 $scope.buttonState = "logIn";
-                $scope.email = "";
-                $scope.password = "";
-                $scope.changingPassword.newPassword = "";
-                $scope.changingPassword.newPasswordCheck = "";
-                $scope.changingPassword.oldPassword = "";
+                delete $scope.email;
+                delete $scope.password;
+                delete $scope.changingPassword.newPassword;
+                delete $scope.changingPassword.newPasswordCheck;
+                delete $scope.changingPassword.oldPassword;
             }
         });
     };
@@ -262,26 +269,28 @@ function UserCtrl($scope, UserService, $cookies, AlertService, $location, $rootS
         if (currentlySending) {
             return;
         }
-        if (!$scope.message.messageTo) {
+        const {
+            messageTo,
+            messageSubject,
+            files
+        } = $scope.message;
+        if (!messageTo) {
             return AlertService.danger("Please select a recipient");
         }
-        if (!$scope.message.messageSubject) {
+        if (!messageSubject) {
             return AlertService.danger("Please type a subject");
         }
         if (!CKEDITOR.instances.MessageBodyTextArea.getData()) {
             return AlertService.danger("Please type a message body");
         }
         var fd = new FormData();
-        angular.forEach($scope.message.files, function(file) {
+        angular.forEach(files, function(file) {
             fd.append("file", file);
         });
         let messageBody = CKEDITOR.instances.MessageBodyTextArea.getData() + "<p>- " + $scope.user.playerName + "</p>";
-        if (["AllPlayers", "Moderators", "Zombies", "AllUsers", "Humans"].indexOf($scope.messageTo) >= 0) {
-            AlertService.info("With many recipients this message while take some time to send");
-        }
         currentlySending = true;
         AlertService.info("Sending message");
-        UserService.sendMessage($scope.message.messageTo, $scope.message.messageSubject, messageBody, fd, (err, res) => {
+        UserService.sendMessage(messageTo, messageSubject, messageBody, fd, (err, res) => {
             if (err) {
                 AlertService.danger(err);
             } else {

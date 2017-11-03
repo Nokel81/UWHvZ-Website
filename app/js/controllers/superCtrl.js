@@ -98,6 +98,10 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
         (((($scope.games || [])[game] || {}).signUpLocationDates || [])[location] || []).splice(date, 1);
     };
 
+    $scope.removePointMod = function (game, pm) {
+        ((($scope.games || [])[game] || {}).pointModifications || []).splice(pm, 1);
+    };
+
     $scope.addLocation = function(game) {
         ((($scope.games || [])[game] || {}).signUpLocations || []).push("");
         ((($scope.games || [])[game] || {}).signUpLocationDates || []).push([]);
@@ -113,6 +117,15 @@ function SuperCtrl($scope, UserService, $location, GameService, AlertService, $w
 
     $scope.addLocationDate = function (game, location) {
         (((($scope.games || [])[game] || {}).signUpLocationDates || [])[location] || []).push(new Date());
+    };
+
+    $scope.addPointMod = function(game) {
+        ((($scope.games || [])[game] || {}).signUpLocationDates || []).push({
+            start: new Date(),
+            end: new Date(),
+            multiple: 1,
+            offset: 0
+        });
     };
 
     $scope.addPlayer = function(game, team) {

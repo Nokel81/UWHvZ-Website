@@ -17,9 +17,7 @@ function scoreFromReports(reports, userMap, player, game) {
         let tagger = report.tagger.toString();
         let tagged = report.tagged.toString();
         let thisTimeTagged = report.time.getTime();
-        console.error(Object.keys(game));
         let pointModification = game.pointModifications.find(pm => new Date(pm.start) <= report.time && report.time <= new Date(pm.end));
-        console.log(pointModification);
         if (report.reportType === "Tag") {
             if (tagger === player) {
                 tagScore += 5;

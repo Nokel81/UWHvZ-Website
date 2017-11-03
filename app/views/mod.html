@@ -238,13 +238,13 @@
                     <div class="point-mod-grid" ng-repeat="pm in game.pointModifications track by $index">
                         <div class="start triple-grid">
                             <label class="form-label">Start:</label>
-                            <input class="form-control" type="date" ng-model="game.pointModifications[$index].startDate">
-                            <input class="form-control" type="time" ng-model="game.pointModifications[$index].startTime">
+                            <input class="form-control" type="date" ng-model="game.pointModifications[$index].start">
+                            <input class="form-control" type="time" ng-model="game.pointModifications[$index].start">
                         </div>
                         <div class="end triple-grid">
                             <label class="form-label">End:</label>
-                            <input class="form-control" type="date" ng-model="game.pointModifications[$index].endDate">
-                            <input class="form-control" type="time" ng-model="game.pointModifications[$index].endTime">
+                            <input class="form-control" type="date" ng-model="game.pointModifications[$index].end">
+                            <input class="form-control" type="time" ng-model="game.pointModifications[$index].end">
                         </div>
                         <div class="multiple tuple-grid">
                             <label class="form-label">Multiple:</label>
